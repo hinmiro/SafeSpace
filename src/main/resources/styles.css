@@ -1,0 +1,56 @@
+StackPane {
+    -fx-background-color: #f0f0f0;
+}
+
+.header {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-padding: 10;
+}
+
+.text-field {
+    -fx-pref-width: 300px;
+    -fx-padding: 10;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #fff;
+}
+
+.loginButton {
+    -fx-pref-width: 300px;
+    -fx-padding: 10;
+    -fx-background-color: #009688;
+    -fx-text-fill: #fff;
+    -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.loginButton:hover {
+    -fx-background-color: #017063;
+}
+
+.registerButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #009688;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+.registerButton:hover {
+    -fx-text-fill: #017063;
+    -fx-font-weight: bold;
+}
+
+.info-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666;
+}
+
+.small-label {
+    -fx-font-size: 12px;
+}
+
+
