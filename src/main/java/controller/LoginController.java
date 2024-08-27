@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -27,7 +28,19 @@ public class LoginController {
 
     @FXML
     public void initialize() {
+        loginButton.setOnMouseClicked(event -> handleLogin());
         registerButton.setOnMouseClicked(event -> handleRegisterLink(event));
+    }
+
+    private void handleLogin() {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        if ("username".equals(username) && "password".equals(password)) {
+            showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome!");
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Login Failed", "Incorrect username or password.");
+        }
     }
 
     private void handleRegisterLink(MouseEvent event) {
@@ -42,6 +55,14 @@ public class LoginController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
 

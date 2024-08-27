@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -28,8 +29,23 @@ public class RegisterController {
 
     @FXML
     public void initialize() {
+        registerButton.setOnAction(event -> handleRegister());
         backButton.setOnAction(event -> backLogin());
     }
+
+    private void handleRegister() {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        String confirmPassword = confirmPasswordField.getText();
+        String contactInfo = contactField.getText();
+
+         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || contactInfo.isEmpty()) {
+             showAlert(Alert.AlertType.ERROR, "Registration Failed", "Fill all the fields.");
+         } else if (!password.equals(confirmPassword)) {
+             showAlert(Alert.AlertType.ERROR, "Registration Failed", "Passwords do not match.");
+         } else { showAlert(Alert.AlertType.INFORMATION, "Registration Successful", "User created successfully.");
+            backLogin();  } }
+
 
     private void backLogin() {
         try {
@@ -43,6 +59,14 @@ public class RegisterController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+            Alert alert = new Alert(alertType);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
     }
 }
 
