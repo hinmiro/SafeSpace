@@ -12,10 +12,10 @@
 <StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="controller.RegisterController" stylesheets="@styles.css">
 
-    <VBox alignment="CENTER" spacing="20.0" >
+    <VBox alignment="CENTER" spacing="20.0">
         <ImageView fitHeight="80" fitWidth="80" preserveRatio="true">
             <image>
-                <Image url="@/kuvat/logo.png"/>
+                <Image url="@/kuvat/safespace.png"/>
             </image>
         </ImageView>
         <Label text="Create Your SafeSpace Account" styleClass="header"/>

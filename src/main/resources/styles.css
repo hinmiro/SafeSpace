@@ -1,56 +1,55 @@
 StackPane {
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: #FFFFFF; /* Valkoinen tausta */
 }
 
 .header {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333;
+    -fx-text-fill: #2B2D42; /* Tumma violetti */
     -fx-padding: 10;
 }
 
 .text-field {
     -fx-pref-width: 300px;
     -fx-padding: 10;
-    -fx-border-color: #ddd;
+    -fx-border-color: #E1E5F2; /* Vaaleanharmaa reunaväri */
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
-    -fx-background-color: #fff;
+    -fx-background-color: #E1E5F2; /* Vaaleanharmaa taustaväri */
 }
 
 .loginButton {
     -fx-pref-width: 300px;
     -fx-padding: 10;
-    -fx-background-color: #009688;
-    -fx-text-fill: #fff;
+    -fx-background-color: #2B2D42; /* Tumma violetti painikeväri */
+    -fx-text-fill: #FFFFFF; /* Valkoinen teksti */
     -fx-border-radius: 5px;
     -fx-font-size: 14px;
     -fx-cursor: hand;
 }
 
 .loginButton:hover {
-    -fx-background-color: #017063;
+    -fx-background-color: #9A7197; /* Lila hover-väri */
 }
 
 .registerButton {
     -fx-background-color: transparent;
-    -fx-text-fill: #009688;
+    -fx-text-fill: #2B2D42; /* Tumma violetti teksti */
     -fx-underline: true;
     -fx-cursor: hand;
 }
 
 .registerButton:hover {
-    -fx-text-fill: #017063;
+    -fx-text-fill: #9A7197; /* Lila hover-väri */
     -fx-font-weight: bold;
 }
 
 .info-label {
     -fx-font-size: 14px;
-    -fx-text-fill: #666;
+    -fx-text-fill: #9A7197; /* Lila teksti */
 }
 
 .small-label {
     -fx-font-size: 12px;
+    -fx-text-fill: #2B2D42; /* Tumma violetti teksti */
 }
-
-

@@ -17,7 +17,7 @@ public class View extends Application {
         stage.setScene(scene);
 
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/kuvat/logo.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/kuvat/safespace.png")));
 
         stage.setTitle("Login Page");
         stage.show();
