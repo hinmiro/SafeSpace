@@ -1,8 +1,6 @@
 package model;
 
 import com.google.gson.Gson;
-import controller.Controller;
-import controller.ControllerForModel;
 import services.ApiClient;
 
 import java.io.IOException;

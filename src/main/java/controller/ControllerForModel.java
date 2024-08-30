@@ -1,7 +1,6 @@
 package controller;
 
-import model.User;
 
-public interface ControllerForModel{
+public class ControllerForModel extends Controller{
 
 }

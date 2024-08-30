@@ -26,6 +26,9 @@ public class LoginController {
     @FXML
     private Button registerButton;
 
+    private ControllerForView controllerForView = new ControllerForView();
+
+
     @FXML
     public void initialize() {
         loginButton.setOnMouseClicked(event -> handleLogin());
@@ -35,6 +38,8 @@ public class LoginController {
     private void handleLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
+
+        controllerForView.login(username, password);
 
         if ("username".equals(username) && "password".equals(password)) {
             showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome!");
@@ -47,6 +52,10 @@ public class LoginController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/register.fxml"));
             Parent root = loader.load();
+
+            RegisterController registerController = loader.getController();
+            registerController.setControllerForView(controllerForView);
+
             Stage stage = (Stage) registerButton.getScene().getWindow();
 
             Scene scene = new Scene(root);
