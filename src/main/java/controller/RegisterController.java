@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -46,12 +47,21 @@ public class RegisterController {
         String confirmPassword = confirmPasswordField.getText();
         String contactInfo = contactField.getText();
 
-         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || contactInfo.isEmpty()) {
-             showAlert(Alert.AlertType.ERROR, "Registration Failed", "Fill all the fields.");
-         } else if (!password.equals(confirmPassword)) {
-             showAlert(Alert.AlertType.ERROR, "Registration Failed", "Passwords do not match.");
-         } else { showAlert(Alert.AlertType.INFORMATION, "Registration Successful", "User created successfully.");
-            backLogin();  } }
+        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || contactInfo.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Registration Failed", "Fill all the fields.");
+        } else if (!password.equals(confirmPassword)) {
+            showAlert(Alert.AlertType.ERROR, "Registration Failed", "Passwords do not match.");
+        }
+
+        String res = controllerForView.register(username, password, contactInfo);
+        System.out.println(res);
+        if (res.contains("ok")) {
+            showAlert(Alert.AlertType.INFORMATION, "Registration Successful", "User created successfully.");
+            backLogin();
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Registration Failed", "Server error");
+        }
+    }
 
 
     private void backLogin() {
@@ -69,11 +79,11 @@ public class RegisterController {
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
-            Alert alert = new Alert(alertType);
-            alert.setTitle(title);
-            alert.setHeaderText(null);
-            alert.setContentText(message);
-            alert.showAndWait();
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
 

@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.JsonObject;
 import model.UserModel;
 
 import java.io.IOException;
@@ -14,5 +15,15 @@ public class ControllerForView extends Controller {
             System.out.println("Error: " + e.getMessage());
         }
         return null;
+    }
+
+    public String register(String username, String password, String contactInfo) {
+        try {
+            return app.postRegister(username, password, contactInfo);
+
+        } catch (InterruptedException | IOException e) {
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
     }
 }
