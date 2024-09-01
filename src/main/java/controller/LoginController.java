@@ -35,6 +35,8 @@ public class LoginController {
         registerButton.setOnMouseClicked(event -> handleRegisterLink(event));
     }
 
+
+
     private void handleLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -42,11 +44,22 @@ public class LoginController {
         controllerForView.login(username, password);
 
         if ("username".equals(username) && "password".equals(password)) {
-            showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome!");
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setTitle("Front Page");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             showAlert(Alert.AlertType.ERROR, "Login Failed", "Incorrect username or password.");
         }
     }
+
 
     private void handleRegisterLink(MouseEvent event) {
         try {
