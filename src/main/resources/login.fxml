@@ -13,9 +13,9 @@
            fx:controller="controller.LoginController" stylesheets="@styles.css">
 
     <VBox alignment="CENTER" spacing="20.0">
-        <ImageView fitHeight="100" fitWidth="100" preserveRatio="true">
+        <ImageView fitHeight="150" fitWidth="150" preserveRatio="true">
             <image>
-                <Image url="@/kuvat/safespace.png"/>
+                <Image url="@/kuvat/safespaceLogo.png"/>
             </image>
         </ImageView>
         <Label text="SafeSpace" styleClass="header"/>
