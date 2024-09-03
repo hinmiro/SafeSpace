@@ -9,22 +9,24 @@ import java.net.http.HttpResponse;
 
 public class ApiClient {
 
-    private static final HttpClient client = HttpClient.newHttpClient();
+    private static HttpClient client = HttpClient.newHttpClient();
+    private static HttpResponse<String> res;
     private static final String url = "https://0e3c0758-5535-4c7c-a3b6-b958095f551f.mock.pstmn.io";
 
-    private ApiClient() {
-        throw new UnsupportedOperationException("Utility class");
+    public ApiClient(HttpClient client) {
+        ApiClient.client = client;
     }
 
-    public static String postLogin(String url, String json) throws IOException, InterruptedException {
+
+    public static String postLogin(String json) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url))
+                .uri(URI.create(url + "/login"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
         System.out.println(req);
 
-        HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
         System.out.println(res);
         return res.body();
     }
@@ -36,7 +38,7 @@ public class ApiClient {
                 .POST(HttpRequest.BodyPublishers.ofString(data))
                 .build();
 
-        HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
         System.out.println(res);
         return res.body();
     }

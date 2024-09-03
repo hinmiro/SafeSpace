@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import model.UserModel;
 
 import java.io.IOException;
 
@@ -39,9 +40,9 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        controllerForView.login(username, password);
+        UserModel user = controllerForView.login(username, password);
 
-        if ("username".equals(username) && "password".equals(password)) {
+        if (user != null) {
             showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome!");
         } else {
             showAlert(Alert.AlertType.ERROR, "Login Failed", "Incorrect username or password.");

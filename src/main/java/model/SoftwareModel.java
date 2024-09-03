@@ -11,10 +11,12 @@ public class SoftwareModel {
     Gson gson = new Gson();
     String mockUrl = "";
 
-    public String login(String username, String password) throws IOException, InterruptedException {
+    public UserModel login(String username, String password) throws IOException, InterruptedException {
         Login login = new Login(username, password);
+        String user = ApiClient.postLogin(gson.toJson(login));
+        UserModel userObject = gson.fromJson(user, UserModel.class);
 
-        return ApiClient.postLogin(mockUrl, gson.toJson(login));
+        return userObject;
     }
 
     public String postRegister(String username, String password, String contactInfo) throws IOException, InterruptedException {
