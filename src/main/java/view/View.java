@@ -8,18 +8,28 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
 public class View extends Application {
+
+    private Stage primaryStage;
+
     @Override
     public void start(Stage stage) throws Exception {
+        this.primaryStage = stage;
+        showLogin();
+    }
+
+    public void showLogin() throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login.fxml"));
         Parent root = fxmlLoader.load();
 
-        Scene scene = new Scene(root, 400, 500);
-        stage.setScene(scene);
-
+        Scene scene = new Scene(root, 350, 500);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Login Page");
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/kuvat/safespacelogo.png")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/kuvat/safespacelogo.png")));
+        primaryStage.show();
+    }
 
-        stage.setTitle("Login Page");
-        stage.show();
+    public static void main(String[] args) {
+        launch(args);
     }
 }

@@ -60,7 +60,7 @@ public class LoginController {
 
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
-                stage.setTitle("Front Page");
+                stage.setTitle("Main Page");
             } catch (IOException e) {
                 e.printStackTrace();
             }

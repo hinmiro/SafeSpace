@@ -8,12 +8,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.Region?>
+
 <StackPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
 
-    <VBox alignment="CENTER" spacing="20.0">
+    <VBox alignment="CENTER" spacing="20.0" minWidth="350">
         <Region prefHeight="30" />
         <ImageView fitHeight="190" fitWidth="190" preserveRatio="true">
             <image>
@@ -22,11 +22,15 @@
         </ImageView>
         <Label styleClass="header" text="SafeSpace" />
 
-        <TextField fx:id="usernameField" prefHeight="39.0" prefWidth="200.0" maxWidth="400.0" promptText="Username" styleClass="text-field">
+        <Label text="Username" styleClass="labelField"/>
+
+        <TextField fx:id="usernameField" maxWidth="400.0" promptText="Username" styleClass="text-field">
             <VBox.margin>
                 <Insets left="20" right="20" />
             </VBox.margin>
         </TextField>
+
+        <Label text="Password" styleClass="labelField"/>
 
         <PasswordField fx:id="passwordField" maxWidth="400.0" promptText="Password" styleClass="text-field">
             <VBox.margin>
@@ -38,5 +42,4 @@
         <Label styleClass="info-label" text="Don't have an account?" />
         <Button fx:id="registerButton" styleClass="registerButton" text="Register here" />
     </VBox>
-
 </StackPane>

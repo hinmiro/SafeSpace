@@ -26,8 +26,6 @@ public class RegisterController {
     @FXML
     private PasswordField confirmPasswordField;
     @FXML
-    private TextField contactField;
-    @FXML
     private Button registerButton;
     @FXML
     private Button backButton;
@@ -37,7 +35,6 @@ public class RegisterController {
     public void setControllerForView(ControllerForView controllerForView) {
         this.controllerForView = controllerForView;
     }
-
 
     @FXML
     public void initialize() {
@@ -82,16 +79,16 @@ public class RegisterController {
         }
     }
 
-
     private void backLogin() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
             Parent root = loader.load();
-            Stage stage = (Stage) backButton.getScene().getWindow();
 
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 350, 500);
+            Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Login Page");
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         } catch (IOException e) {
             e.printStackTrace();
         }
