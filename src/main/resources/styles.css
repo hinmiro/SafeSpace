@@ -38,7 +38,7 @@ StackPane, BorderPane {
 }
 
 .line {
-    -fx-background-color: #2B2D42;
+    -fx-background-color: #9A7197;
 }
 
 .mainbutton {
@@ -80,6 +80,23 @@ StackPane, BorderPane {
 .profile-info {
     -fx-font-size: 14px;
     -fx-text-fill: #2B2D42;
+}
+
+.newButton {
+    -fx-background-color: #2B2D42;
+    -fx-font-size: 16px;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 30px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-text-fill: #ffff;
+}
+
+.newButton:hover {
+    -fx-background-color: #9A7197;
+    -fx-cursor: hand;
 }
 
 /* login ja register */

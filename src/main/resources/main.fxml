@@ -26,7 +26,7 @@
                     <Label text="SafeSpace" styleClass="headerMain"/>
                 </center>
             </BorderPane>
-            <Region prefHeight="1" styleClass="line"/>
+            <Region prefHeight="1.5" styleClass="line"/>
         </VBox>
     </top>
 
@@ -36,10 +36,13 @@
     </center>
 
     <bottom>
-        <HBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER" styleClass="footer-background">
-            <Button text="Home" fx:id="homeButton" styleClass="mainbutton"/>
-            <Button text="Profile" fx:id="profileButton" styleClass="mainbutton"/>
-        </HBox>
+        <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+            <Button text="+" fx:id="newPostButton" styleClass="newButton" />
+            <HBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER" styleClass="footer-background">
+                <Button text="Home" fx:id="homeButton" styleClass="mainbutton"/>
+                <Button text="Profile" fx:id="profileButton" styleClass="mainbutton"/>
+            </HBox>
+        </VBox>
     </bottom>
 
 </BorderPane>

@@ -15,6 +15,8 @@ public class MainController {
 
     @FXML
     private Button profileButton;
+    @FXML
+    private Button newPostButton;
 
     private void switchScene(String fxmlFile, String title) throws IOException {
         Stage stage = (Stage) homeButton.getScene().getWindow();
@@ -23,6 +25,9 @@ public class MainController {
         Scene scene = new Scene(root, 350, 500);
         stage.setScene(scene);
         stage.setTitle(title);
+    }
+
+    private void handleNewPost() {
     }
 
     @FXML
@@ -42,5 +47,7 @@ public class MainController {
                 e.printStackTrace();
             }
         });
+
+        newPostButton.setOnAction(event -> handleNewPost());
     }
 }

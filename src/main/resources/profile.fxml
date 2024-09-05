@@ -26,14 +26,14 @@
                     <Label text="SafeSpace" styleClass="headerMain"/>
                 </center>
             </BorderPane>
-            <Region prefHeight="1" styleClass="line"/>
+            <Region prefHeight="1.5" styleClass="line"/>
         </VBox>
     </top>
 
     <center>
         <VBox alignment="CENTER" spacing="20.0">
             <ImageView fx:id="profileImageView" fitHeight="150" fitWidth="150"/>
-            <Button fx:id="changeProfilePictureButton" text="Change Profile Picture"/>
+            <Button fx:id="changeProfilePictureButton" text="Change"/>
         </VBox>
     </center>
 
