@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
+import model.LoginResponse;
+import model.UserModel;
 
 import java.io.IOException;
 
@@ -47,15 +49,15 @@ public class RegisterController {
         String confirmPassword = confirmPasswordField.getText();
         String contactInfo = contactField.getText();
 
-        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || contactInfo.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Registration Failed", "Fill all the fields.");
         } else if (!password.equals(confirmPassword)) {
             showAlert(Alert.AlertType.ERROR, "Registration Failed", "Passwords do not match.");
         }
 
-        String res = controllerForView.register(username, password, contactInfo);
-        System.out.println(res);
-        if (res.contains("ok")) {
+        UserModel user = controllerForView.register(username, password);
+        System.out.println(user);
+        if (user.getJwt() != null) {
             showAlert(Alert.AlertType.INFORMATION, "Registration Successful", "User created successfully.");
             backLogin();
         } else {
