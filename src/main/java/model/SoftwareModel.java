@@ -12,10 +12,14 @@ public class SoftwareModel {
 
     public UserModel login(String username, String password) throws IOException, InterruptedException {
         Login login = new Login(username, password);
-        String user = ApiClient.postLogin(gson.toJson(login));
-        UserModel userObject = gson.fromJson(user, UserModel.class);
-
-        return userObject;
+        HttpResponse<String> res = ApiClient.postLogin(gson.toJson(login));
+        if (res.statusCode() != 200) {
+            return null;
+        }
+        LoginResponse loginResponse = gson.fromJson(res.body(), LoginResponse.class);
+        UserModel user = loginResponse.getUser();
+        user.setJwt(loginResponse.getJwt());
+        return user;
     }
 
     public UserModel postRegister(String username, String password) throws IOException, InterruptedException {
