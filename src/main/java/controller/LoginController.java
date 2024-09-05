@@ -52,7 +52,7 @@ public class LoginController {
 
         UserModel user = controllerForView.login(username, password);
 
-        if (user != null) {
+        if (user.getJwt() != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
                 Parent root = loader.load();

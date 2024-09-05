@@ -28,7 +28,7 @@ public class ApiClient {
         System.out.println(req);
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        System.out.println(res);
+        System.out.println(res.statusCode());
         return res.body();
     }
 
