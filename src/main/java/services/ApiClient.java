@@ -19,17 +19,15 @@ public class ApiClient {
     }
 
 
-    public static String postLogin(String json) throws IOException, InterruptedException {
+    public static HttpResponse<String> postLogin(String json) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(authUrl + "/login"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
-        System.out.println(req);
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        System.out.println(res.statusCode());
-        return res.body();
+        return res;
     }
 
     public static HttpResponse<String> postRegister(String data) throws IOException, InterruptedException {
@@ -40,7 +38,6 @@ public class ApiClient {
                 .build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        System.out.println(res);
         return res;
     }
 

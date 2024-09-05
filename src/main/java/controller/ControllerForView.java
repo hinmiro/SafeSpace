@@ -1,9 +1,6 @@
 package controller;
 
-import com.google.gson.JsonObject;
-import model.LoginResponse;
 import model.UserModel;
-
 import java.io.IOException;
 
 public class ControllerForView extends Controller {
