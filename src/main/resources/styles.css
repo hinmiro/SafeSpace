@@ -1,5 +1,9 @@
-StackPane {
+StackPane, BorderPane {
     -fx-background-color: #FFFFFF;
+}
+
+.borderWide {
+    -fx-pref-width: 300px;
 }
 
 .header {
@@ -7,6 +11,30 @@ StackPane {
     -fx-font-weight: bold;
     -fx-text-fill: #2B2D42;
     -fx-padding: 10;
+}
+
+.header-background {
+    -fx-background-color: #2B2D42;
+    -fx-padding: 0px;
+}
+
+.headerMain {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 10px;
+    -fx-min-width: 0;
+}
+
+.logo {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 0px;
+    -fx-fit-height: 100%;
+    -fx-alignment: center;
+}
+
+.line {
+    -fx-background-color: #2B2D42;
 }
 
 .text-field {
@@ -28,7 +56,7 @@ StackPane {
     -fx-cursor: hand;
 }
 
-.loginButton:hover {
+.loginButton:hover, .mainbutton:hover {
     -fx-background-color: #9A7197;
 }
 
@@ -53,3 +81,30 @@ StackPane {
     -fx-font-size: 12px;
     -fx-text-fill: #2B2D42;
 }
+
+.mainlabel {
+    -fx-font-size: 18px;
+    -fx-padding: 20px;
+}
+
+.mainbutton {
+    -fx-background-color: #3b5998;
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.mainbutton:hover {
+    -fx-background-color: #9A7197;
+}
+
+.footer-background {
+    -fx-background-color: #E1E5F2;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+
+

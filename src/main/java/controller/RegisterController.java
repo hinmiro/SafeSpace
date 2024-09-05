@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +43,14 @@ public class RegisterController {
     public void initialize() {
         registerButton.setOnAction(event -> handleRegister());
         backButton.setOnAction(event -> backLogin());
+        usernameField.setOnKeyPressed(event -> handleEnterKey(event));
+        passwordField.setOnKeyPressed(event -> handleEnterKey(event));
+    }
+
+    private void handleEnterKey(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            handleRegister();
+        }
     }
 
     private void handleRegister() {
