@@ -57,7 +57,6 @@ public class RegisterController {
         String username = usernameField.getText();
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
-        String contactInfo = contactField.getText();
 
         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Registration Failed", "Fill all the fields.");
@@ -66,10 +65,18 @@ public class RegisterController {
         }
 
         UserModel user = controllerForView.register(username, password);
-        System.out.println(user);
         if (user.getJwt() != null) {
             showAlert(Alert.AlertType.INFORMATION, "Registration Successful", "User created successfully.");
-            backLogin();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) registerButton.getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setTitle("Front Page");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             showAlert(Alert.AlertType.ERROR, "Registration Failed", "Server error");
         }
