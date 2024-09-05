@@ -1,6 +1,14 @@
-StackPane {
+/* yleiset */
+
+StackPane, BorderPane {
     -fx-background-color: #FFFFFF;
 }
+
+.borderWide {
+    -fx-pref-width: 300px;
+}
+
+/* profiili ja main sivut */
 
 .header {
     -fx-font-size: 24px;
@@ -8,6 +16,90 @@ StackPane {
     -fx-text-fill: #2B2D42;
     -fx-padding: 10;
 }
+
+.header-background {
+    -fx-background-color: #2B2D42;
+    -fx-padding: 0px;
+}
+
+.headerMain {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 10px;
+    -fx-min-width: 0;
+}
+
+.logo {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 0px;
+    -fx-fit-height: 100%;
+    -fx-alignment: center;
+}
+
+.line {
+    -fx-background-color: #9A7197;
+}
+
+.mainbutton {
+    -fx-background-color: #3b5998;
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.mainbutton:hover {
+    -fx-background-color: #9A7197;
+}
+
+.footer-background {
+    -fx-background-color: #E1E5F2;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+.mainlabel {
+    -fx-font-size: 18px;
+    -fx-padding: 20px;
+}
+
+.headerMain {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 10px;
+}
+
+.profile-image {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 10px;
+}
+
+.profile-info {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2B2D42;
+}
+
+.newButton {
+    -fx-background-color: #2B2D42;
+    -fx-font-size: 16px;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 30px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-text-fill: #ffff;
+}
+
+.newButton:hover {
+    -fx-background-color: #9A7197;
+    -fx-cursor: hand;
+}
+
+/* login ja register */
 
 .text-field {
     -fx-pref-width: 300px;
@@ -28,7 +120,7 @@ StackPane {
     -fx-cursor: hand;
 }
 
-.loginButton:hover {
+.loginButton:hover, .mainbutton:hover {
     -fx-background-color: #9A7197;
 }
 
@@ -53,3 +145,14 @@ StackPane {
     -fx-font-size: 12px;
     -fx-text-fill: #2B2D42;
 }
+
+.labelField {
+    -fx-font-size: 12px;
+    -fx-text-fill: #2B2D42;
+    -fx-padding: 0 0 -15px 0;
+    -fx-alignment: center-left;
+    -fx-pref-width: 310px;
+}
+
+
+

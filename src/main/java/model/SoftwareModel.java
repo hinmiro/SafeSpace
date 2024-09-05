@@ -1,29 +1,40 @@
 package model;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import services.ApiClient;
 
 import java.io.IOException;
+import java.net.http.HttpResponse;
 
 
 public class SoftwareModel {
     Gson gson = new Gson();
-    String mockUrl = "";
 
     public UserModel login(String username, String password) throws IOException, InterruptedException {
         Login login = new Login(username, password);
-        String user = ApiClient.postLogin(gson.toJson(login));
-        UserModel userObject = gson.fromJson(user, UserModel.class);
-
-        return userObject;
+        HttpResponse<String> res = ApiClient.postLogin(gson.toJson(login));
+        if (res.statusCode() != 200) {
+            return null;
+        }
+        LoginResponse loginResponse = gson.fromJson(res.body(), LoginResponse.class);
+        UserModel user = loginResponse.getUser();
+        user.setJwt(loginResponse.getJwt());
+        return user;
     }
 
-    public String postRegister(String username, String password, String contactInfo) throws IOException, InterruptedException {
-        Register register = new Register(username, password, contactInfo);
+    public UserModel postRegister(String username, String password) throws IOException, InterruptedException {
+        Register register = new Register(username, password);
 
-        String res = ApiClient.postRegister(gson.toJson(register));;
-        return res;
+        HttpResponse<String> res = ApiClient.postRegister(gson.toJson(register));
+        if (res.statusCode() != 200) {
+            return null;
+        }
+        LoginResponse loginResponse = gson.fromJson(res.body(), LoginResponse.class);
+        UserModel user = loginResponse.getUser();
+        user.setJwt(loginResponse.getJwt());
+
+        System.out.println("user: " + user.getUsername() + user.getJwt());
+        return user;
 
     }
 }

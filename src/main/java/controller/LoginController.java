@@ -5,6 +5,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -34,9 +36,15 @@ public class LoginController {
     public void initialize() {
         loginButton.setOnMouseClicked(event -> handleLogin());
         registerButton.setOnMouseClicked(event -> handleRegisterLink(event));
+        usernameField.setOnKeyPressed(event -> handleEnterKey(event));
+        passwordField.setOnKeyPressed(event -> handleEnterKey(event));
     }
 
-
+    private void handleEnterKey(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            handleLogin();
+        }
+    }
 
     private void handleLogin() {
         String username = usernameField.getText();
@@ -44,16 +52,15 @@ public class LoginController {
 
         UserModel user = controllerForView.login(username, password);
 
-        if (user != null) {
-            showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Welcome!");
+        if (user.getJwt() != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) loginButton.getScene().getWindow();
 
-                Scene scene = new Scene(root);
+                Scene scene = new Scene(root, 350, 500);
                 stage.setScene(scene);
-                stage.setTitle("Front Page");
+                stage.setTitle("Main Page");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -88,5 +95,7 @@ public class LoginController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
 }
 

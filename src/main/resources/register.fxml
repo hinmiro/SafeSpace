@@ -8,21 +8,45 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Region?>
 
 <StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="controller.RegisterController" stylesheets="@styles.css">
+           fx:controller="controller.RegisterController" stylesheets="@styles.css" >
 
-    <VBox alignment="CENTER" spacing="20.0">
-        <ImageView fitHeight="130" fitWidth="130" preserveRatio="true">
+    <VBox alignment="CENTER" spacing="20.0" minWidth="350">
+        <Region prefHeight="30" />
+        <ImageView fitHeight="190" fitWidth="190" preserveRatio="true">
             <image>
-                <Image url="@/kuvat/safespaceLogo.png"/>
+                <Image url="@/kuvat/safespacelogo.png"/>
             </image>
         </ImageView>
         <Label text="Create Your SafeSpace Account" styleClass="header"/>
-        <TextField fx:id="contactField" promptText="Mobile Number or Email Address" styleClass="text-field"/>
-        <TextField fx:id="usernameField" promptText="Username" styleClass="text-field"/>
-        <PasswordField fx:id="passwordField" promptText="Password" styleClass="text-field"/>
-        <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" styleClass="text-field"/>
+
+        <Label text="Username" styleClass="labelField"/>
+
+        <TextField fx:id="usernameField" promptText="Username" maxWidth="400.0" styleClass="text-field">
+            <VBox.margin>
+                <Insets left="20" right="20" />
+            </VBox.margin>
+        </TextField>
+
+        <Label text="Password" styleClass="labelField"/>
+
+        <PasswordField fx:id="passwordField" promptText="Password" maxWidth="400.0" styleClass="text-field">
+            <VBox.margin>
+                <Insets left="20" right="20" />
+            </VBox.margin>
+        </PasswordField>
+
+        <Label text="Confirm Password" styleClass="labelField"/>
+
+        <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" maxWidth="400.0" styleClass="text-field">
+            <VBox.margin>
+                <Insets left="20" right="20" />
+            </VBox.margin>
+        </PasswordField>
+
         <Button fx:id="registerButton" text="Register" styleClass="loginButton"/>
         <Label text="Already have an account?" styleClass="info-label"/>
         <Button fx:id="backButton" text="Back to Login" styleClass="registerButton"/>

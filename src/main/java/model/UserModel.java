@@ -3,23 +3,17 @@ package model;
 public class UserModel {
     private String username;
     private String password;
-    private String contactInfo;
+    private String jwt;
 
-    public UserModel(String username, String password, String contactInfo) {
+    public UserModel(String username, String password) {
         this.username = username;
         this.password = password;
-        this.contactInfo = contactInfo;
     }
 
     public String getUsername() {
         return username;
     }
+    public String getJwt() { return jwt; }
+    public void setJwt(String token) {jwt = token;}
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getContactInfo() {
-        return contactInfo;
-    }
 }
