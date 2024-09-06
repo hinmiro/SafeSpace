@@ -63,8 +63,14 @@ public class LoginController {
 
         if (user.getJwt() != null) {
             try {
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
                 Parent root = loader.load();
+
+                MainController mainController = loader.getController();
+                mainController.setControllerForView(controllerForView);
+
+
                 Stage stage = (Stage) loginButton.getScene().getWindow();
 
                 Scene scene = new Scene(root, 350, 500);

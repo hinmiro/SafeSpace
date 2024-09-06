@@ -3,7 +3,9 @@ package model;
 import com.google.gson.Gson;
 import services.ApiClient;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 
@@ -20,8 +22,7 @@ public class SoftwareModel {
 
         UserModel user = loginResponse.getUser();
         user.setJwt(loginResponse.getJwt());
-        System.out.println("bio: " + user.getBio());
-        System.out.println("id: " + user.getUserId());
+
         return user;
     }
 
@@ -36,9 +37,12 @@ public class SoftwareModel {
         UserModel user = loginResponse.getUser();
         user.setJwt(loginResponse.getJwt());
 
-        System.out.println("user: " + user.getUsername() + user.getJwt());
         return user;
+    }
 
+    public boolean postPicture(File file) throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.postPicture(file);
+        return res.statusCode() == 200;
     }
 }
 

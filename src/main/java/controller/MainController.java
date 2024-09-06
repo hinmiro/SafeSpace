@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class MainController {
 
+    private ControllerForView controllerForView;
+
     @FXML
     private Button homeButton;
 
@@ -18,10 +20,15 @@ public class MainController {
     @FXML
     private Button newPostButton;
 
+
     private void switchScene(String fxmlFile, String title) throws IOException {
         Stage stage = (Stage) homeButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = fxmlLoader.load();
+
+        ProfileController profileController = fxmlLoader.getController();
+        profileController.setControllerForView(controllerForView);
+
         Scene scene = new Scene(root, 350, 500);
         stage.setScene(scene);
         stage.setTitle(title);
@@ -49,5 +56,9 @@ public class MainController {
         });
 
         newPostButton.setOnAction(event -> handleNewPost());
+    }
+
+    public void setControllerForView(ControllerForView controller) {
+        this.controllerForView = controller;
     }
 }

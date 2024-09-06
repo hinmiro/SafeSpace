@@ -21,6 +21,8 @@ import javafx.scene.shape.Circle;
 
 public class ProfileController {
 
+    private ControllerForView controllerForView;
+
     @FXML
     private ImageView profileImageView;
 
@@ -32,6 +34,7 @@ public class ProfileController {
 
     @FXML
     private Button profileButton;
+
 
     @FXML
     public void initialize() {
@@ -64,6 +67,7 @@ public class ProfileController {
 
         if (selectedFile != null) {
             try {
+                // controllerForView.uploadProfilePicture(selectedFile); THIS IS FOR UPLOADING PICTURE TO SERVER
                 Image newImage = new Image(selectedFile.toURI().toString());
                 profileImageView.setImage(newImage);
                 makeCircle(profileImageView);
@@ -102,6 +106,10 @@ public class ProfileController {
         profileImageView.setOnMouseClicked((MouseEvent event) -> {
             changeProfilePicture();
         });
+    }
+
+    public void setControllerForView(ControllerForView controller) {
+        controllerForView = controller;
     }
 
 }
