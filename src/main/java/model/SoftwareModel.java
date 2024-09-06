@@ -17,8 +17,11 @@ public class SoftwareModel {
             return null;
         }
         LoginResponse loginResponse = gson.fromJson(res.body(), LoginResponse.class);
+
         UserModel user = loginResponse.getUser();
         user.setJwt(loginResponse.getJwt());
+        System.out.println("bio: " + user.getBio());
+        System.out.println("id: " + user.getUserId());
         return user;
     }
 

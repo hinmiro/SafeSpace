@@ -50,7 +50,16 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Login failed", "Username or password is missing.");
+            return;
+        }
+
         UserModel user = controllerForView.login(username, password);
+        if (user == null) {
+            showAlert(Alert.AlertType.ERROR, "Login failed", "Username or password is wrong.");
+            return;
+        }
 
         if (user.getJwt() != null) {
             try {

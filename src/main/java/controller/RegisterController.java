@@ -62,6 +62,11 @@ public class RegisterController {
         }
 
         UserModel user = controllerForView.register(username, password);
+        if (user == null) {
+            showAlert(Alert.AlertType.INFORMATION, "Register failed", "Username is already taken.");
+            return;
+        }
+
         if (user.getJwt() != null) {
             showAlert(Alert.AlertType.INFORMATION, "Registration Successful", "User created successfully.");
             try {
