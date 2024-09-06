@@ -25,16 +25,12 @@ public class ProfileController {
 
     @FXML
     private ImageView profileImageView;
-
     @FXML
     private Button changeProfilePictureButton;
-
     @FXML
     private Button homeButton;
-
     @FXML
     private Button profileButton;
-
 
     @FXML
     public void initialize() {
@@ -81,7 +77,7 @@ public class ProfileController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 350, 500);
+            Scene scene = new Scene(root, 350, 550);
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Main Page");
@@ -111,5 +107,4 @@ public class ProfileController {
     public void setControllerForView(ControllerForView controller) {
         controllerForView = controller;
     }
-
 }

@@ -13,24 +13,20 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import model.UserModel;
-
 import java.io.IOException;
 
 public class LoginController {
+
     @FXML
     private TextField usernameField;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private Button loginButton;
-
     @FXML
     private Button registerButton;
 
     private ControllerForView controllerForView = new ControllerForView();
-
 
     @FXML
     public void initialize() {
@@ -73,7 +69,7 @@ public class LoginController {
 
                 Stage stage = (Stage) loginButton.getScene().getWindow();
 
-                Scene scene = new Scene(root, 350, 500);
+                Scene scene = new Scene(root, 350, 550);
                 stage.setScene(scene);
                 stage.setTitle("Main Page");
             } catch (IOException e) {
@@ -83,7 +79,6 @@ public class LoginController {
             showAlert(Alert.AlertType.ERROR, "Login Failed", "Incorrect username or password.");
         }
     }
-
 
     private void handleRegisterLink(MouseEvent event) {
         try {
@@ -110,7 +105,5 @@ public class LoginController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
 }
 
