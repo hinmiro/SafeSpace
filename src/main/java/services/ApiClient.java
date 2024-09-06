@@ -38,6 +38,8 @@ public class ApiClient {
                 .build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println("code: " + res.statusCode());
+        System.out.println("body: " + res.body());
         return res;
     }
 

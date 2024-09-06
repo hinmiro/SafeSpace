@@ -29,7 +29,7 @@ public class SoftwareModel {
         Register register = new Register(username, password);
 
         HttpResponse<String> res = ApiClient.postRegister(gson.toJson(register));
-        if (res.statusCode() != 200) {
+        if (res.statusCode() != 201) {
             return null;
         }
         LoginResponse loginResponse = gson.fromJson(res.body(), LoginResponse.class);
