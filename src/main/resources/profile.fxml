@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.ProfileController" stylesheets="@styles.css" styleClass="borderWide">
@@ -25,6 +26,15 @@
                 <center>
                     <Label text="SafeSpace" styleClass="headerMain"/>
                 </center>
+                <right>
+                    <VBox alignment="CENTER">
+                        <Button text="≡" fx:id="settingsProfileID" styleClass="settingsProfile">
+                            <VBox.margin>
+                                <Insets left="10" right="20" />
+                            </VBox.margin>
+                        </Button>
+                    </VBox>
+                </right>
             </BorderPane>
             <Region prefHeight="1.5" styleClass="line"/>
         </VBox>

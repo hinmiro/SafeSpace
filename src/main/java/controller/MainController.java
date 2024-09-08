@@ -5,9 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.io.IOException;
+import javafx.scene.layout.VBox;
 
 public class MainController {
 
@@ -25,6 +29,8 @@ public class MainController {
     private Button leaveMessageButton;
     @FXML
     private Pane newWindow;
+    @FXML
+    private VBox contentBox;
 
     @FXML
     private void initialize() {
@@ -44,9 +50,15 @@ public class MainController {
             }
         });
 
-        newPostButton.setOnAction(event -> menuVisible());
-        createPostButton.setOnAction(event -> showNewWindow());
-        leaveMessageButton.setOnAction(event -> {});
+        leaveMessageButton.setOnAction(event -> {
+            try {
+                switchScene("/messages.fxml", "Messages");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        newPostButton.setOnAction(event -> showNewWindow());
     }
 
     protected void switchScene(String fxmlFile, String title) throws IOException {
@@ -64,33 +76,41 @@ public class MainController {
         stage.setTitle(title);
     }
 
-    private void menuVisible() {
-        boolean isVisible = createPostButton.isVisible();
-        createPostButton.setVisible(!isVisible);
-        leaveMessageButton.setVisible(!isVisible);
-    }
-
     private void showNewWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/newPost.fxml"));
             Parent newPostPane = loader.load();
 
+            NewPostController newPostController = loader.getController();
+            newPostController.setControllerForView(controllerForView);
+            newPostController.setMainController(this);
+
             newWindow.getChildren().clear();
             newWindow.getChildren().add(newPostPane);
 
-            createPostButton.setVisible(false);
-            leaveMessageButton.setVisible(false);
             newPostButton.setVisible(false);
 
             newWindow.setVisible(true);
-
-            NewPostController newPostController = loader.getController();
-            newPostController.setMainController(this);
-
-            newPostController.setControllerForView(controllerForView);
-
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void updateContent(Image image, String caption, String textPost) {
+        if (image != null) {
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(280);
+            imageView.setPreserveRatio(true);
+            contentBox.getChildren().add(imageView);
+        }
+
+        if (caption != null && !caption.trim().isEmpty()) {
+            Label captionLabel = new Label(caption);
+            contentBox.getChildren().add(captionLabel);
+        }
+        if (textPost != null && !textPost.trim().isEmpty()) {
+            Label textPostLabel = new Label(textPost);
+            contentBox.getChildren().add(textPostLabel);
         }
     }
 
