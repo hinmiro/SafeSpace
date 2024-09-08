@@ -86,6 +86,9 @@ public class MainController {
 
             NewPostController newPostController = loader.getController();
             newPostController.setMainController(this);
+
+            newPostController.setControllerForView(controllerForView);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

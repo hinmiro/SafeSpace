@@ -4,16 +4,16 @@ public class UserModel {
     private String username;
     private String password;
     private String jwt;
-    private String bio, profilePictureUrl;
-    private String userId;
+    private String bio, profilePictureID;
+    private String userID;
 
 
     public UserModel(String username, String password, String userId) {
         this.username = username;
         this.password = password;
         this.bio = "";
-        this.profilePictureUrl = "";
-        this.userId = userId;
+        this.profilePictureID = "";
+        this.userID = userId;
     }
 
     public String getUsername() {
@@ -28,12 +28,12 @@ public class UserModel {
 
     public void setBio(String bio) { this.bio = bio; }
 
-    public void setProfilePictureUrl(String url) { this.profilePictureUrl = url; }
+    public void setProfilePictureUrl(String url) { this.profilePictureID = url; }
 
     public String getBio() { return bio; }
 
-    public String getProfilePictureUrl() { return profilePictureUrl; }
+    public String getProfilePictureUrl() { return profilePictureID; }
 
-    public String getUserId() { return userId; }
+    public String getUserId() { return userID; }
 
 }

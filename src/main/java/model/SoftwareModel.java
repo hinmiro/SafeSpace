@@ -1,12 +1,16 @@
 package model;
 
 import com.google.gson.Gson;
+import okhttp3.internal.ws.RealWebSocket;
 import services.ApiClient;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SoftwareModel {
@@ -44,5 +48,27 @@ public class SoftwareModel {
         HttpResponse<String> res = ApiClient.postPicture(file);
         return res.statusCode() == 200;
     }
+
+    public UserModel updateUser(String username, String password, String bio, String profilePictureId) throws IOException, InterruptedException {
+        Map<String, String> dataMap = new HashMap<>();
+        if (username != null) { dataMap.put("username", username); }
+        if (password != null) { dataMap.put("password", password); }
+        if (bio != null) { dataMap.put("bio", bio); }
+        if (profilePictureId != null) { dataMap.put("profilePictureID", profilePictureId); }
+
+        String jsonData = gson.toJson(dataMap);
+
+        HttpResponse<String> res = ApiClient.updateUser(jsonData);
+
+        if (res.statusCode() != 200) {
+            return null;
+        }
+        UserModel updatedUser = gson.fromJson(res.body(), UserModel.class);
+        updatedUser.setJwt(SessionManager.getInstance().getLoggedUser().getJwt());    // Setting jwt token to be token of updated user
+        SessionManager.getInstance().setLoggedUser(updatedUser);
+
+        return updatedUser;
+    }
+
 }
 

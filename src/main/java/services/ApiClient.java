@@ -32,6 +32,7 @@ public class ApiClient {
                 .build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println(res.body());
         return res;
     }
 
@@ -64,4 +65,42 @@ public class ApiClient {
         return res;
     }
 
+    public HttpResponse<String> newPost(String text, File file) throws IOException, InterruptedException {
+        UserModel user = SessionManager.getInstance().getLoggedUser();
+        postPicture(file);
+        return null; // UNFINISHED NEED POST PICTURE ENDPOINT
+    }
+
+    public static HttpResponse<String> updateUser(String data) throws IOException, InterruptedException {
+        UserModel user = SessionManager.getInstance().getLoggedUser();
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/users/" + user.getUserId()))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + user.getJwt())
+                .PUT(HttpRequest.BodyPublishers.ofString(data))
+                .build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println("BODY: " + res.body()); // THIS RETURNS RAW PASSWORD, HANDLE IT
+
+        return res;
+    }
+
+    public static HttpResponse<String> getAllPosts() throws IOException, InterruptedException {
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/post"))
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println(res.statusCode());
+        System.out.println(res.body());
+
+        return res;
+    }
+
+    public static HttpResponse<String> sendLike() { return null; }
 }
