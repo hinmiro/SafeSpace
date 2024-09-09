@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import model.LoginResponse;
 import model.UserModel;
-
 import java.io.IOException;
 
 public class RegisterController {
@@ -42,6 +41,7 @@ public class RegisterController {
         backButton.setOnAction(event -> backLogin());
         usernameField.setOnKeyPressed(event -> handleEnterKey(event));
         passwordField.setOnKeyPressed(event -> handleEnterKey(event));
+        confirmPasswordField.setOnKeyPressed(event -> handleEnterKey(event));
     }
 
     private void handleEnterKey(KeyEvent event) {
@@ -62,15 +62,20 @@ public class RegisterController {
         }
 
         UserModel user = controllerForView.register(username, password);
+        if (user == null) {
+            showAlert(Alert.AlertType.INFORMATION, "Register failed", "Username is already taken.");
+            return;
+        }
+
         if (user.getJwt() != null) {
             showAlert(Alert.AlertType.INFORMATION, "Registration Successful", "User created successfully.");
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) registerButton.getScene().getWindow();
-                Scene scene = new Scene(root);
+                Scene scene = new Scene(root, 350, 550);
                 stage.setScene(scene);
-                stage.setTitle("Front Page");
+                stage.setTitle("Main Page");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -84,7 +89,7 @@ public class RegisterController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
             Parent root = loader.load();
 
-            Scene scene = new Scene(root, 350, 500);
+            Scene scene = new Scene(root, 350, 550);
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Login Page");

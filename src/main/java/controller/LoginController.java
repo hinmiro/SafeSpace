@@ -13,24 +13,20 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import model.UserModel;
-
 import java.io.IOException;
 
 public class LoginController {
+
     @FXML
     private TextField usernameField;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private Button loginButton;
-
     @FXML
     private Button registerButton;
 
     private ControllerForView controllerForView = new ControllerForView();
-
 
     @FXML
     public void initialize() {
@@ -50,15 +46,30 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Login failed", "Username or password is missing.");
+            return;
+        }
+
         UserModel user = controllerForView.login(username, password);
+        if (user == null) {
+            showAlert(Alert.AlertType.ERROR, "Login failed", "Username or password is wrong.");
+            return;
+        }
 
         if (user.getJwt() != null) {
             try {
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
                 Parent root = loader.load();
+
+                MainController mainController = loader.getController();
+                mainController.setControllerForView(controllerForView);
+
+
                 Stage stage = (Stage) loginButton.getScene().getWindow();
 
-                Scene scene = new Scene(root, 350, 500);
+                Scene scene = new Scene(root, 350, 550);
                 stage.setScene(scene);
                 stage.setTitle("Main Page");
             } catch (IOException e) {
@@ -68,7 +79,6 @@ public class LoginController {
             showAlert(Alert.AlertType.ERROR, "Login Failed", "Incorrect username or password.");
         }
     }
-
 
     private void handleRegisterLink(MouseEvent event) {
         try {
@@ -95,7 +105,5 @@ public class LoginController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
 }
 

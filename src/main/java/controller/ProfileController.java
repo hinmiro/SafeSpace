@@ -21,15 +21,14 @@ import javafx.scene.shape.Circle;
 
 public class ProfileController {
 
+    private ControllerForView controllerForView;
+
     @FXML
     private ImageView profileImageView;
-
     @FXML
     private Button changeProfilePictureButton;
-
     @FXML
     private Button homeButton;
-
     @FXML
     private Button profileButton;
 
@@ -59,11 +58,13 @@ public class ProfileController {
         FileChooser fileChooser = new FileChooser();
         fileChooser
                 .getExtensionFilters()
-                .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
+                .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif",
+                        "*.webp", "*.svg"));
         File selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
 
         if (selectedFile != null) {
             try {
+                // controllerForView.uploadProfilePicture(selectedFile); THIS IS FOR UPLOADING PICTURE TO SERVER
                 Image newImage = new Image(selectedFile.toURI().toString());
                 profileImageView.setImage(newImage);
                 makeCircle(profileImageView);
@@ -77,7 +78,7 @@ public class ProfileController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 350, 500);
+            Scene scene = new Scene(root, 350, 550);
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Main Page");
@@ -104,4 +105,7 @@ public class ProfileController {
         });
     }
 
+    public void setControllerForView(ControllerForView controller) {
+        controllerForView = controller;
+    }
 }

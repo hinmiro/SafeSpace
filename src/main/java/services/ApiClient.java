@@ -1,6 +1,10 @@
 package services;
 
 
+import model.SessionManager;
+import model.UserModel;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -13,6 +17,7 @@ public class ApiClient {
     private static HttpResponse<String> res;
     private static final String url = "http://10.120.32.76:8080/api/v1";
     private static final String authUrl = "http://10.120.32.76:8080/auth";
+    private static final String pictureUrl = "http://10.120.32.76:8080/";
 
     public ApiClient(HttpClient client) {
         ApiClient.client = client;
@@ -27,6 +32,7 @@ public class ApiClient {
                 .build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println(res.body());
         return res;
     }
 
@@ -38,7 +44,63 @@ public class ApiClient {
                 .build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println("code: " + res.statusCode());
+        System.out.println("body: " + res.body());
         return res;
     }
 
+    public static HttpResponse<String> postPicture(File file) throws IOException, InterruptedException {
+        UserModel user = SessionManager.getInstance().getLoggedUser();
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(pictureUrl))
+                .header("Content-Type", "multipart/form-data")
+                .header("Authorization", "Bearer " + user.getJwt())
+                .POST(HttpRequest.BodyPublishers.ofFile(file.toPath()))
+                .build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println("body: " + res.body());
+        System.out.println("code: " + res.statusCode());
+        return res;
+    }
+
+    public HttpResponse<String> newPost(String text, File file) throws IOException, InterruptedException {
+        UserModel user = SessionManager.getInstance().getLoggedUser();
+        postPicture(file);
+        return null; // UNFINISHED NEED POST PICTURE ENDPOINT
+    }
+
+    public static HttpResponse<String> updateUser(String data) throws IOException, InterruptedException {
+        UserModel user = SessionManager.getInstance().getLoggedUser();
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/users/" + user.getUserId()))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + user.getJwt())
+                .PUT(HttpRequest.BodyPublishers.ofString(data))
+                .build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println("BODY: " + res.body()); // THIS RETURNS RAW PASSWORD, HANDLE IT
+
+        return res;
+    }
+
+    public static HttpResponse<String> getAllPosts() throws IOException, InterruptedException {
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/post"))
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println(res.statusCode());
+        System.out.println(res.body());
+
+        return res;
+    }
+
+    public static HttpResponse<String> sendLike() { return null; }
 }

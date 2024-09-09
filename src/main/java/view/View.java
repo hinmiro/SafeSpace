@@ -21,9 +21,10 @@ public class View extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login.fxml"));
         Parent root = fxmlLoader.load();
 
-        Scene scene = new Scene(root, 350, 500);
+        Scene scene = new Scene(root, 350, 550);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Login Page");
+        primaryStage.setResizable(false);
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/kuvat/safespacelogo.png")));
         primaryStage.show();
