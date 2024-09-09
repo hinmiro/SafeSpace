@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 public class NewPostController {
 
@@ -50,7 +49,7 @@ public class NewPostController {
             } else if (hasTextPost && !hasImage) {
                 mainController.updateContent(null, null, textPost);
             }
-            mainController.closeNewWindow();
+            handleClose();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Incomplete Post");
@@ -69,7 +68,7 @@ public class NewPostController {
 
     @FXML
     private void handleClose() {
-        mainController.closeNewWindow();
+
     }
 
     public void setMainController(MainController mainController) {

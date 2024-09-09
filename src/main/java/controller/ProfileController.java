@@ -58,7 +58,8 @@ public class ProfileController {
         FileChooser fileChooser = new FileChooser();
         fileChooser
                 .getExtensionFilters()
-                .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
+                .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif",
+                        "*.webp", "*.svg"));
         File selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
 
         if (selectedFile != null) {

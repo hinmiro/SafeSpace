@@ -9,9 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import java.io.IOException;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MainController {
 
@@ -24,8 +25,6 @@ public class MainController {
     @FXML
     private Button newPostButton;
     @FXML
-    private Button createPostButton;
-    @FXML
     private Button leaveMessageButton;
     @FXML
     private Pane newWindow;
@@ -36,7 +35,7 @@ public class MainController {
     private void initialize() {
         homeButton.setOnAction(event -> {
             try {
-                switchScene("/main.fxml", "Home Page");
+                switchScene("/main.fxml", "Main Page");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -85,12 +84,10 @@ public class MainController {
             newPostController.setControllerForView(controllerForView);
             newPostController.setMainController(this);
 
-            newWindow.getChildren().clear();
-            newWindow.getChildren().add(newPostPane);
-
-            newPostButton.setVisible(false);
-
-            newWindow.setVisible(true);
+            Stage stage = (Stage) newWindow.getScene().getWindow();
+            Scene scene = new Scene(newPostPane);
+            stage.setScene(scene);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,11 +109,6 @@ public class MainController {
             Label textPostLabel = new Label(textPost);
             contentBox.getChildren().add(textPostLabel);
         }
-    }
-
-    public void closeNewWindow() {
-        newWindow.setVisible(false);
-        newPostButton.setVisible(true);
     }
 
     public void setControllerForView(ControllerForView controller) {
