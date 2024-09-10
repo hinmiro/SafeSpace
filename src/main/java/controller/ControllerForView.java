@@ -5,8 +5,12 @@ import model.UserModel;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class ControllerForView extends Controller {
+
+    public static BlockingQueue<String> feedQueue = new LinkedBlockingQueue<>();
 
     public UserModel login(String username, String password) {
         try {

@@ -7,11 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+import java.util.concurrent.BlockingQueue;
 
 public class MainController {
 
     private ControllerForView controllerForView;
+    private BlockingQueue<String> feedQueue = ControllerForView.feedQueue;
 
     @FXML
     private Button homeButton;
@@ -46,7 +49,10 @@ public class MainController {
 
         newPostButton.setOnAction(event -> menuVisible());
         createPostButton.setOnAction(event -> showNewWindow());
-        leaveMessageButton.setOnAction(event -> {});
+        leaveMessageButton.setOnAction(event -> {
+        });
+
+        processQueue();
     }
 
     protected void switchScene(String fxmlFile, String title) throws IOException {
@@ -101,5 +107,19 @@ public class MainController {
 
     public void setControllerForView(ControllerForView controller) {
         this.controllerForView = controller;
+    }
+
+    private void processQueue() {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    String data = feedQueue.take();
+                    System.out.println("From controller: " + data);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }
