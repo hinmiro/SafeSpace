@@ -5,11 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,6 +23,12 @@ public class MainController {
     private Button newPostButton;
     @FXML
     private Button leaveMessageButton;
+    @FXML
+    private HBox postMenu;
+    @FXML
+    private Button createPicPostButton;
+    @FXML
+    private Button createTextPostButton;
     @FXML
     private Pane newWindow;
 
@@ -55,7 +58,22 @@ public class MainController {
             }
         });
 
-        newPostButton.setOnAction(event -> showNewWindow());
+        newPostButton.setOnAction(event -> togglePostMenu());
+
+        createPicPostButton.setOnAction(event -> openPicPostForm());
+        createTextPostButton.setOnAction(event -> openTextPostForm());
+    }
+
+    private void togglePostMenu() {
+        postMenu.setVisible(!postMenu.isVisible());
+    }
+
+    private void openPicPostForm() {
+        showNewPostWindow();
+    }
+
+    private void openTextPostForm() {
+        showNewTextWindow();
     }
 
     protected void switchScene(String fxmlFile, String title) throws IOException {
@@ -73,7 +91,7 @@ public class MainController {
         stage.setTitle(title);
     }
 
-    private void showNewWindow() {
+    private void showNewPostWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/newPost.fxml"));
             Parent newPostPane = loader.load();
@@ -84,6 +102,24 @@ public class MainController {
 
             Stage stage = (Stage) newWindow.getScene().getWindow();
             Scene scene = new Scene(newPostPane);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showNewTextWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/newText.fxml"));
+            Parent newPostPane2 = loader.load();
+
+            NewPostController newPostController = loader.getController();
+            newPostController.setControllerForView(controllerForView);
+            newPostController.setMainController(this);
+
+            Stage stage = (Stage) newWindow.getScene().getWindow();
+            Scene scene = new Scene(newPostPane2);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

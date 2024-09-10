@@ -19,7 +19,7 @@ public class MessageController {
     private void initialize() {
         homeButton.setOnAction(event -> {
             try {
-                switchScene("/main.fxml", "Home Page");
+                switchScene("/main.fxml", "Main Page");
             } catch (IOException e) {
                 e.printStackTrace();
             }
