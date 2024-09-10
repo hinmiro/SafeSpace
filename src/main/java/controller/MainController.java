@@ -28,8 +28,6 @@ public class MainController {
     private Button leaveMessageButton;
     @FXML
     private Pane newWindow;
-    @FXML
-    private VBox contentBox;
 
     @FXML
     private void initialize() {
@@ -90,24 +88,6 @@ public class MainController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void updateContent(Image image, String caption, String textPost) {
-        if (image != null) {
-            ImageView imageView = new ImageView(image);
-            imageView.setFitWidth(280);
-            imageView.setPreserveRatio(true);
-            contentBox.getChildren().add(imageView);
-        }
-
-        if (caption != null && !caption.trim().isEmpty()) {
-            Label captionLabel = new Label(caption);
-            contentBox.getChildren().add(captionLabel);
-        }
-        if (textPost != null && !textPost.trim().isEmpty()) {
-            Label textPostLabel = new Label(textPost);
-            contentBox.getChildren().add(textPostLabel);
         }
     }
 
