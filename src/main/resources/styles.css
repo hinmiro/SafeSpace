@@ -312,6 +312,39 @@ StackPane, BorderPane {
     -fx-cursor: hand;
 }
 
+/* log out dialog */
+
+.dialog-box {
+    -fx-padding: 20px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+}
+
+.dialog-box Label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+
+.dialog-box Button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 5 10;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+}
+
+.dialog-box Button:hover {
+    -fx-background-color: #0056b3;
+}
+
+.dialog-box Button:pressed {
+    -fx-background-color: #004085;
+}
 
 
 

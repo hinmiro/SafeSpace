@@ -41,7 +41,7 @@
     </top>
 
     <center>
-
+        <Label text="No messages yet..." />
     </center>
 
     <bottom>
