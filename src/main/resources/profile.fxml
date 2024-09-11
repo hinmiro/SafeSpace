@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.ProfileController" stylesheets="@styles.css" styleClass="borderWide">
@@ -25,15 +26,52 @@
                 <center>
                     <Label text="SafeSpace" styleClass="headerMain"/>
                 </center>
+                <right>
+                    <VBox alignment="CENTER">
+                        <Button text="≡" fx:id="settingsProfileID" styleClass="settingsProfile">
+                            <VBox.margin>
+                                <Insets left="10" right="20" />
+                            </VBox.margin>
+                        </Button>
+                    </VBox>
+                </right>
             </BorderPane>
             <Region prefHeight="1.5" styleClass="line"/>
         </VBox>
     </top>
 
     <center>
-        <VBox alignment="CENTER" spacing="20.0">
-            <ImageView fx:id="profileImageView" fitHeight="150" fitWidth="150"/>
-            <Button fx:id="changeProfilePictureButton" text="Change"/>
+        <VBox alignment="TOP_LEFT" spacing="20.0" BorderPane.alignment="CENTER">
+            <HBox alignment="TOP_LEFT" spacing="20.0">
+                <ImageView fx:id="profileImageView" fitHeight="100" fitWidth="100">
+                    <HBox.margin>
+                        <Insets top="7" left="7"/>
+                    </HBox.margin>
+                </ImageView>
+                <VBox alignment="CENTER_LEFT" spacing="5.0">
+                    <Label fx:id="usernameLabel" text="Username" styleClass="usernameLabel" />
+                    <Label fx:id="registeredLabel" text="Registered: 01.01.2024" styleClass="registeredLabel" />
+                </VBox>
+            </HBox>
+
+            <VBox alignment="CENTER_LEFT" spacing="5.0">
+                <Label fx:id="nameLabel" text="Full Name" styleClass="nameLabel">
+                    <VBox.margin>
+                        <Insets left="10"  />
+                    </VBox.margin>
+                </Label>
+                <Label fx:id="bioLabel" text="Bio goes here..." styleClass="bioLabel">
+                    <VBox.margin>
+                        <Insets left="10" />
+                    </VBox.margin>
+                </Label>
+            </VBox>
+
+            <Region prefHeight="1.5" styleClass="line"/>
+
+            <VBox fx:id="postArea" alignment="CENTER" spacing="10.0">
+                <Label text="No posts yet..." />
+            </VBox>
         </VBox>
     </center>
 
@@ -43,4 +81,6 @@
             <Button text="Profile" fx:id="profileButton" styleClass="mainbutton"/>
         </HBox>
     </bottom>
+
 </BorderPane>
+

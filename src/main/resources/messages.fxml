@@ -8,11 +8,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.MainController" stylesheets="@styles.css" styleClass="borderWide">
+            fx:controller="controller.MessageController" stylesheets="@styles.css" styleClass="borderWide">
 
     <top>
         <VBox>
@@ -42,21 +41,11 @@
     </top>
 
     <center>
-        <VBox fx:id="contentBox" alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER" minHeight="300">
-        </VBox>
-        <Pane fx:id="newWindow" visible="false"/>
+        <Label text="No messages yet..." />
     </center>
 
     <bottom>
         <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
-
-            <HBox fx:id="postMenu" alignment="CENTER" spacing="10.0" visible="false">
-                <Button fx:id="createPicPostButton" text="Create Picture Post" styleClass="createPost"/>
-                <Button fx:id="createTextPostButton" text="Create Text Post" styleClass="createPost" />
-            </HBox>
-
-            <Button text="+" fx:id="newPostButton" styleClass="newButton" />
-
             <HBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER" styleClass="footer-background">
                 <Button text="Home" fx:id="homeButton" styleClass="mainbutton"/>
                 <Button text="Profile" fx:id="profileButton" styleClass="mainbutton"/>

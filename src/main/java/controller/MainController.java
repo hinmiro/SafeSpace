@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -23,9 +24,13 @@ public class MainController {
     @FXML
     private Button newPostButton;
     @FXML
-    private Button createPostButton;
-    @FXML
     private Button leaveMessageButton;
+    @FXML
+    private HBox postMenu;
+    @FXML
+    private Button createPicPostButton;
+    @FXML
+    private Button createTextPostButton;
     @FXML
     private Pane newWindow;
 
@@ -33,7 +38,7 @@ public class MainController {
     private void initialize() {
         homeButton.setOnAction(event -> {
             try {
-                switchScene("/main.fxml", "Home Page");
+                switchScene("/main.fxml", "Main Page");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -47,12 +52,32 @@ public class MainController {
             }
         });
 
-        newPostButton.setOnAction(event -> menuVisible());
-        createPostButton.setOnAction(event -> showNewWindow());
         leaveMessageButton.setOnAction(event -> {
+            try {
+                switchScene("/messages.fxml", "Messages");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
+        newPostButton.setOnAction(event -> togglePostMenu());
+
+        createPicPostButton.setOnAction(event -> openPicPostForm());
+        createTextPostButton.setOnAction(event -> openTextPostForm());
+
         processQueue();
+    }
+
+    private void togglePostMenu() {
+        postMenu.setVisible(!postMenu.isVisible());
+    }
+
+    private void openPicPostForm() {
+        showNewPostWindow();
+    }
+
+    private void openTextPostForm() {
+        showNewTextWindow();
     }
 
     protected void switchScene(String fxmlFile, String title) throws IOException {
@@ -70,39 +95,40 @@ public class MainController {
         stage.setTitle(title);
     }
 
-    private void menuVisible() {
-        boolean isVisible = createPostButton.isVisible();
-        createPostButton.setVisible(!isVisible);
-        leaveMessageButton.setVisible(!isVisible);
-    }
-
-    private void showNewWindow() {
+    private void showNewPostWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/newPost.fxml"));
             Parent newPostPane = loader.load();
 
-            newWindow.getChildren().clear();
-            newWindow.getChildren().add(newPostPane);
-
-            createPostButton.setVisible(false);
-            leaveMessageButton.setVisible(false);
-            newPostButton.setVisible(false);
-
-            newWindow.setVisible(true);
-
             NewPostController newPostController = loader.getController();
+            newPostController.setControllerForView(controllerForView);
             newPostController.setMainController(this);
 
-            newPostController.setControllerForView(controllerForView);
-
+            Stage stage = (Stage) newWindow.getScene().getWindow();
+            Scene scene = new Scene(newPostPane);
+            stage.setScene(scene);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void closeNewWindow() {
-        newWindow.setVisible(false);
-        newPostButton.setVisible(true);
+    private void showNewTextWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/newText.fxml"));
+            Parent newPostPane2 = loader.load();
+
+            NewPostController newPostController = loader.getController();
+            newPostController.setControllerForView(controllerForView);
+            newPostController.setMainController(this);
+
+            Stage stage = (Stage) newWindow.getScene().getWindow();
+            Scene scene = new Scene(newPostPane2);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setControllerForView(ControllerForView controller) {
