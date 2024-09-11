@@ -263,16 +263,6 @@ StackPane, BorderPane {
     -fx-font-size: 14px;
 }
 
-.textPostArea {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #ddd;
-    -fx-border-width: 1px;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-padding: 10px;
-    -fx-font-size: 14px;
-}
-
 .captionLabel, .textPostLabel {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
@@ -292,6 +282,8 @@ StackPane, BorderPane {
 }
 
 .postButton:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
     -fx-background-color: linear-gradient(to right, #1a1c30, #2a2d45);
     -fx-cursor: hand;
 }
@@ -310,6 +302,31 @@ StackPane, BorderPane {
 .closeButton:hover {
     -fx-background-color: #9A7197;
     -fx-cursor: hand;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(gaussian, #373333, 5, 0.5, 0, 2);
+}
+
+.postPage2 {
+    -fx-background-image: url("kuvat/safespacelogo.png");
+    -fx-background-size: cover;
+    -fx-alignment: center;
+}
+
+.textPostArea {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+}
+
+.textPostArea:focused {
+    -fx-border-color: #f9f9f9;
+    -fx-border-width: 2px;
+    -fx-background-color: #f9f9f9;
 }
 
 /* log out dialog */
@@ -345,6 +362,53 @@ StackPane, BorderPane {
 .dialog-box Button:pressed {
     -fx-background-color: #004085;
 }
+
+/* profiilin menu */
+
+.menu-item {
+    -fx-background-color: #9A7197;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffff;
+}
+
+.menu-item:hover {
+    -fx-background-color: #3b5998;
+}
+
+/* update info */
+
+.text-field2 {
+    -fx-pref-width: 300px;
+    -fx-padding: 10;
+    -fx-border-color: #E1E5F2;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #E1E5F2;
+}
+
+.password-field2 {
+    -fx-pref-width: 300px;
+    -fx-padding: 10;
+    -fx-border-color: #E1E5F2;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #E1E5F2;
+}
+
+.headerLabel {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 15 0;
+    -fx-text-fill: #333;
+}
+
+.otherLabel {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+}
+
+
 
 
 

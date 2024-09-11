@@ -51,8 +51,9 @@ public class ProfileController {
         settingsContextMenu = new ContextMenu();
         MenuItem editProfileItem = new MenuItem("Edit Profile");
         MenuItem editInfoItem = new MenuItem("Update Info");
+        editInfoItem.setOnAction(event -> openUpdateInfoPage());
         MenuItem logOutItem = new MenuItem("Log Out");
-        logOutItem.setOnAction(event -> showCustomDialog());
+        logOutItem.setOnAction(event -> showLogOut());
 
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, logOutItem);
         settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
@@ -62,7 +63,7 @@ public class ProfileController {
         settingsContextMenu.show(settingsProfileID, Side.BOTTOM, 0, 0);
     }
 
-    private void showCustomDialog() {
+    private void showLogOut() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/logout.fxml"));
             Parent root = fxmlLoader.load();
@@ -75,6 +76,20 @@ public class ProfileController {
             LogOutController logOutController = fxmlLoader.getController();
             logOutController.setDialogStage(stage);
             logOutController.setMainView(new View());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void openUpdateInfoPage() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/updateInfo.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Update Info");
+            stage.setScene(new Scene(root, 350, 550));
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

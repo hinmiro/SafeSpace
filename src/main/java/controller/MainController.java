@@ -78,6 +78,7 @@ public class MainController {
 
     protected void switchScene(String fxmlFile, String title) throws IOException {
         Stage stage = (Stage) homeButton.getScene().getWindow();
+        stage.setResizable(false);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = fxmlLoader.load();
 
@@ -101,6 +102,7 @@ public class MainController {
             newPostController.setMainController(this);
 
             Stage stage = (Stage) newWindow.getScene().getWindow();
+            stage.setResizable(false);
             Scene scene = new Scene(newPostPane);
             stage.setScene(scene);
             stage.show();
@@ -119,6 +121,7 @@ public class MainController {
             newPostController.setMainController(this);
 
             Stage stage = (Stage) newWindow.getScene().getWindow();
+            stage.setResizable(false);
             Scene scene = new Scene(newPostPane2);
             stage.setScene(scene);
             stage.show();
