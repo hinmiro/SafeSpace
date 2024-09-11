@@ -1,13 +1,19 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import model.PostListCell;
 
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
@@ -33,6 +39,8 @@ public class MainController {
     private Button createTextPostButton;
     @FXML
     private Pane newWindow;
+    @FXML
+    private ListView<String> feedListView;
 
     @FXML
     private void initialize() {
@@ -64,6 +72,8 @@ public class MainController {
 
         createPicPostButton.setOnAction(event -> openPicPostForm());
         createTextPostButton.setOnAction(event -> openTextPostForm());
+
+        feedListView.setCellFactory(param -> new PostListCell());
 
         processQueue();
     }
@@ -140,7 +150,16 @@ public class MainController {
             while (true) {
                 try {
                     String data = feedQueue.take();
-                    System.out.println("From controller: " + data);
+                    System.out.println(data);
+                    Platform.runLater(() -> {
+                        feedListView.getItems().add(data);
+                        feedListView.setOnMouseClicked((evt) -> {
+                            evt.consume();
+                            System.out.println("click: " + feedListView.getSelectionModel().getSelectedItem());
+                        });
+                        feedListView.scrollTo(feedListView.getItems().size() -1);
+                    });
+                    // System.out.println("From controller: " + data);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     e.printStackTrace();
@@ -148,4 +167,6 @@ public class MainController {
             }
         }).start();
     }
+
+
 }
