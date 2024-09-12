@@ -117,6 +117,7 @@ public class ProfileController {
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Main Page");
+
         } catch (IOException e) {
             e.printStackTrace();
         }

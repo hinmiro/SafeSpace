@@ -1,5 +1,7 @@
 package services;
 
+import model.SharedData;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -32,12 +34,7 @@ public class Feed implements Runnable {
     }
 
     private void processEvent(String event) {
-        try {
-            queue.put(event);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            e.printStackTrace();
-        }
+        SharedData.getInstance().addEvent(event);
     }
 
     @Override
