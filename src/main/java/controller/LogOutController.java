@@ -35,10 +35,10 @@ public class LogOutController {
         this.mainView = mainView;
     }
 
-
-    // todo
     private void handleLogOut() throws Exception {
-        mainView.showLogin();
+        if (mainView != null) {
+            mainView.showLogin();
+        }
         if (dialogStage != null) {
             dialogStage.close();
         }

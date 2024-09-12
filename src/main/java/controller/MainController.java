@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -31,6 +32,8 @@ public class MainController {
     private Button createTextPostButton;
     @FXML
     private Pane newWindow;
+    @FXML
+    private Label noPostsLabel;
 
     @FXML
     private void initialize() {
@@ -62,6 +65,7 @@ public class MainController {
 
         createPicPostButton.setOnAction(event -> openPicPostForm());
         createTextPostButton.setOnAction(event -> openTextPostForm());
+        checkIfNoPosts();
     }
 
     private void togglePostMenu() {
@@ -129,6 +133,17 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
+    public void checkIfNoPosts() {
+        boolean noPosts = true;
+
+        if (noPosts) {
+            noPostsLabel.setVisible(true);
+        } else {
+            noPostsLabel.setVisible(false);
+        }
+    }
+
 
     public void setControllerForView(ControllerForView controller) {
         this.controllerForView = controller;

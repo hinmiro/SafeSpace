@@ -58,7 +58,7 @@
                     <Insets left="15" right="15" />
                 </VBox.margin>
             </PasswordField>
-            <Label text="Confirm password: " styleClass="otherLabel" />
+            <Label text="Confirm password: * " styleClass="otherLabel" />
             <PasswordField fx:id="confirmPasswordField" promptText="Confirm new password" styleClass="password-field2">
                 <VBox.margin>
                     <Insets left="15" right="15" />

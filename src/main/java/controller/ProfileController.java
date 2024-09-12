@@ -35,6 +35,12 @@ public class ProfileController {
     private Button profileButton;
     @FXML
     private Button settingsProfileID;
+    @FXML
+    private Label noPostsLabel;
+    @FXML
+    private View mainView;
+    @FXML
+    private Stage dialogStage;
 
     @FXML
     public void initialize() {
@@ -57,6 +63,8 @@ public class ProfileController {
 
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, logOutItem);
         settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
+
+        checkIfNoPosts();
     }
 
     private void showContextMenu(MouseEvent event) {
@@ -65,17 +73,19 @@ public class ProfileController {
 
     private void showLogOut() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/logout.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Log Out");
-            stage.setScene(new Scene(root));
-            stage.show();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/logOut.fxml"));
+            Parent logoutRoot = loader.load();
 
-            LogOutController logOutController = fxmlLoader.getController();
-            logOutController.setDialogStage(stage);
-            logOutController.setMainView(new View());
+            LogOutController logOutController = loader.getController();
+            logOutController.setDialogStage(dialogStage);
+            logOutController.setMainView(mainView);
+
+            Scene logoutScene = new Scene(logoutRoot);
+            Stage dialogStage = new Stage();
+            dialogStage.setScene(logoutScene);
+            logOutController.setDialogStage(dialogStage);
+
+            dialogStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -157,5 +167,15 @@ public class ProfileController {
 
     public void setControllerForView(ControllerForView controller) {
         controllerForView = controller;
+    }
+
+    public void checkIfNoPosts() {
+        boolean noPosts = true;
+
+        if (noPosts) {
+            noPostsLabel.setVisible(true);
+        } else {
+            noPostsLabel.setVisible(false);
+        }
     }
 }

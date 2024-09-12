@@ -41,7 +41,9 @@
     </top>
 
     <center>
-        <Label text="No messages yet..." />
+        <VBox fx:id="contentBox" alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER" minHeight="300">
+            <Label fx:id="noMessagesLabel" text="No messages yet..." styleClass="noPostsLabel" />
+        </VBox>
     </center>
 
     <bottom>
