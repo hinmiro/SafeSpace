@@ -15,17 +15,16 @@
 
     <VBox alignment="CENTER" minWidth="350" spacing="20.0">
         <Region prefHeight="10" />
-        <ImageView fitHeight="200" fitWidth="200" preserveRatio="true">
+        <ImageView fitHeight="250" fitWidth="250" preserveRatio="true">
             <Image url="@/kuvat/safespacelogo.png"/>
         </ImageView>
         <Label styleClass="header" text="SafeSpace" />
-        <Region prefHeight="1" />
 
         <Label styleClass="labelField" text="Username" />
 
         <TextField fx:id="usernameField" maxWidth="400.0" promptText="Username" styleClass="text-field">
             <VBox.margin>
-                <Insets left="10" right="10" />
+                <Insets bottom="10" left="20" right="20" />
             </VBox.margin>
         </TextField>
 
@@ -33,12 +32,15 @@
 
         <PasswordField fx:id="passwordField" maxWidth="400.0" promptText="Password" styleClass="text-field">
             <VBox.margin>
-                <Insets left="10" right="10" />
+                <Insets left="20" right="20" />
             </VBox.margin>
         </PasswordField>
 
+        <Region prefHeight="0.5" />
         <Button fx:id="loginButton" styleClass="loginButton" text="Log In" />
-        <Region prefHeight="5" />
+        <Region prefHeight="15" />
+        <Region prefHeight="1.5" styleClass="line"/>
+        <Region prefHeight="2" />
         <Label styleClass="info-label" text="Don't have an account?" />
         <Button fx:id="registerButton" styleClass="registerButton" text="Register here" />
         <Label fx:id="serverError" text="Connection to server failed..." textFill="#df0a0a"/>

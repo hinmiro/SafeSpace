@@ -15,13 +15,12 @@
            fx:controller="controller.RegisterController" stylesheets="@styles.css" >
 
     <VBox alignment="CENTER" spacing="20.0" minWidth="350">
-        <Region prefHeight="20" />
-        <ImageView fitHeight="190" fitWidth="190" preserveRatio="true">
+        <Region prefHeight="10" />
+        <ImageView fitHeight="250" fitWidth="250" preserveRatio="true">
             <image>
                 <Image url="@/kuvat/safespacelogo.png"/>
             </image>
         </ImageView>
-        <Region prefHeight="10" />
         <Label text="Create Your SafeSpace Account" styleClass="header"/>
         <Region prefHeight="1" />
 
@@ -29,7 +28,7 @@
 
         <TextField fx:id="usernameField" promptText="Username" maxWidth="400.0" styleClass="text-field">
             <VBox.margin>
-                <Insets left="20" right="20" />
+                <Insets bottom="10" left="20" right="20" />
             </VBox.margin>
         </TextField>
 
@@ -37,7 +36,7 @@
 
         <PasswordField fx:id="passwordField" promptText="Password" maxWidth="400.0" styleClass="text-field">
             <VBox.margin>
-                <Insets left="20" right="20" />
+                <Insets bottom="10" left="20" right="20" />
             </VBox.margin>
         </PasswordField>
 
@@ -45,12 +44,13 @@
 
         <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" maxWidth="400.0" styleClass="text-field">
             <VBox.margin>
-                <Insets left="20" right="20" />
+                <Insets bottom="5" left="20" right="20" />
             </VBox.margin>
         </PasswordField>
 
         <Button fx:id="registerButton" text="Register" styleClass="loginButton"/>
         <Region prefHeight="2" />
+        <Region prefHeight="1.5" styleClass="line"/>
         <Label text="Already have an account?" styleClass="info-label"/>
         <Button fx:id="backButton" text="Back to Login" styleClass="registerButton"/>
     </VBox>
