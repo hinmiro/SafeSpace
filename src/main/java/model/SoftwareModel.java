@@ -1,14 +1,13 @@
 package model;
 
 import com.google.gson.Gson;
-import okhttp3.internal.ws.RealWebSocket;
+import controller.ControllerForView;
 import services.ApiClient;
+import services.Feed;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +25,10 @@ public class SoftwareModel {
 
         UserModel user = loginResponse.getUser();
         user.setJwt(loginResponse.getJwt());
+
+        Feed feed = new Feed(ControllerForView.feedQueue);
+        Thread feedThread = new Thread(feed);
+        feedThread.start();
 
         return user;
     }

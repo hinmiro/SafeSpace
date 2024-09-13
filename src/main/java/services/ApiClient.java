@@ -18,6 +18,7 @@ public class ApiClient {
     private static final String url = "http://10.120.32.76:8080/api/v1";
     private static final String authUrl = "http://10.120.32.76:8080/auth";
     private static final String pictureUrl = "http://10.120.32.76:8080/";
+    private static final String sseUrl = "http://localhost:8081/";
 
     public ApiClient(HttpClient client) {
         ApiClient.client = client;
@@ -87,10 +88,10 @@ public class ApiClient {
         return res;
     }
 
-    public static HttpResponse<String> getAllPosts() throws IOException, InterruptedException {
+    public static HttpResponse<String> getPosts() throws IOException, InterruptedException {
 
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url + "/post"))
+                .uri(URI.create(sseUrl + "posts/"))
                 .header("Content-Type", "application/json")
                 .GET()
                 .build();
@@ -99,7 +100,7 @@ public class ApiClient {
         System.out.println(res.statusCode());
         System.out.println(res.body());
 
-        return res;
+        return null;
     }
 
     public static HttpResponse<String> sendLike() { return null; }
