@@ -50,6 +50,7 @@
             <ListView fx:id="feedListView" layoutX="20" layoutY="100" prefHeight="300.0" prefWidth="200.0" />
             <Label fx:id="noPostsLabel" text="Nothing on main feed..." styleClass="noPostsLabel"/>
         </VBox>
+        <!-- <Pane fx:id="newWindow" visible="false"/>  -->
     </center>
 
     <bottom>

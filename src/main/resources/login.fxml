@@ -14,18 +14,17 @@
 <StackPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
 
     <VBox alignment="CENTER" minWidth="350" spacing="20.0">
-        <Region prefHeight="30" />
-        <ImageView fitHeight="190" fitWidth="190" preserveRatio="true">
+        <Region prefHeight="10" />
+        <ImageView fitHeight="250" fitWidth="250" preserveRatio="true">
             <Image url="@/kuvat/safespacelogo.png"/>
         </ImageView>
         <Label styleClass="header" text="SafeSpace" />
-
 
         <Label styleClass="labelField" text="Username" />
 
         <TextField fx:id="usernameField" maxWidth="400.0" promptText="Username" styleClass="text-field">
             <VBox.margin>
-                <Insets left="20" right="20" />
+                <Insets bottom="10" left="20" right="20" />
             </VBox.margin>
         </TextField>
 
@@ -37,7 +36,11 @@
             </VBox.margin>
         </PasswordField>
 
+        <Region prefHeight="0.5" />
         <Button fx:id="loginButton" styleClass="loginButton" text="Log In" />
+        <Region prefHeight="15" />
+        <Region prefHeight="1.5" styleClass="line"/>
+        <Region prefHeight="2" />
         <Label styleClass="info-label" text="Don't have an account?" />
         <Button fx:id="registerButton" styleClass="registerButton" text="Register here" />
         <Label fx:id="serverError" text="Connection to server failed..." textFill="#df0a0a"/>

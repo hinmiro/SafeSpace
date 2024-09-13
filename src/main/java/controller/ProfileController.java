@@ -56,6 +56,7 @@ public class ProfileController {
         // menu
         settingsContextMenu = new ContextMenu();
         MenuItem editProfileItem = new MenuItem("Edit Profile");
+        editProfileItem.setOnAction(event -> openEditProfilePage());
         MenuItem editInfoItem = new MenuItem("Update Info");
         editInfoItem.setOnAction(event -> openUpdateInfoPage());
         MenuItem logOutItem = new MenuItem("Log Out");
@@ -98,7 +99,21 @@ public class ProfileController {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Update Info");
-            stage.setScene(new Scene(root, 350, 550));
+            stage.setScene(new Scene(root, 360, 800));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void openEditProfilePage() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/editProfile.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Edit Profile");
+            stage.setScene(new Scene(root, 360, 800));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,7 +153,7 @@ public class ProfileController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 350, 550);
+            Scene scene = new Scene(root, 360, 800);
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Main Page");

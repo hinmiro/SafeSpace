@@ -57,7 +57,7 @@ public class MessageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = fxmlLoader.load();
 
-        Scene scene = new Scene(root, 350, 550);
+        Scene scene = new Scene(root, 360, 800);
         stage.setScene(scene);
         stage.setTitle(title);
     }

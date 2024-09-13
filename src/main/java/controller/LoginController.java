@@ -72,7 +72,7 @@ public class LoginController {
 
                 Stage stage = (Stage) loginButton.getScene().getWindow();
 
-                Scene scene = new Scene(root, 350, 550);
+                Scene scene = new Scene(root, 360, 800);
                 stage.setScene(scene);
                 stage.setTitle("Main Page");
             } catch (IOException e) {
@@ -93,7 +93,7 @@ public class LoginController {
 
             Stage stage = (Stage) registerButton.getScene().getWindow();
 
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 360, 800);
             stage.setScene(scene);
             stage.setTitle("Register Page");
         } catch (IOException e) {

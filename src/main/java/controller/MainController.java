@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.PostListCell;
 import model.SharedData;
@@ -44,6 +45,8 @@ public class MainController {
     private Label noPostsLabel;
     @FXML
     private ListView<String> feedListView;
+    @FXML
+    private VBox contentBox;
 
     @FXML
     private void initialize() {
@@ -110,7 +113,7 @@ public class MainController {
             profileController.setControllerForView(controllerForView);
         }
 
-        Scene scene = new Scene(root, 350, 550);
+        Scene scene = new Scene(root, 360, 800);
         stage.setScene(scene);
         stage.setTitle(title);
 
@@ -171,7 +174,6 @@ public class MainController {
             noPostsLabel.setVisible(false);
         }*/
     }
-
 
     public void setControllerForView(ControllerForView controller) {
         this.controllerForView = controller;
