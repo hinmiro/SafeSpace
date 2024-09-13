@@ -4,7 +4,8 @@ public class UserModel {
     private String username;
     private String password;
     private String jwt;
-    private String bio, profilePictureID;
+    private String bio;
+    private String profilePictureID;
     private String userID;
     private String dateOfCreation;
 

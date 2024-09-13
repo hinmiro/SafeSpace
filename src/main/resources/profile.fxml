@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.ProfileController" stylesheets="@styles.css" styleClass="borderWide">
+<BorderPane styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProfileController">
 
     <top>
         <VBox>
@@ -19,16 +18,16 @@
                 <left>
                     <ImageView fitHeight="100" fitWidth="80" preserveRatio="true">
                         <image>
-                            <Image url="@/kuvat/safespacelogo.png"/>
+                            <Image url="@/kuvat/safespacelogo.png" />
                         </image>
                     </ImageView>
                 </left>
                 <center>
-                    <Label text="SafeSpace" styleClass="headerMain"/>
+                    <Label styleClass="headerMain" text="SafeSpace" />
                 </center>
                 <right>
                     <VBox alignment="CENTER">
-                        <Button text="≡" fx:id="settingsProfileID" styleClass="settingsProfile">
+                        <Button fx:id="settingsProfileID" styleClass="settingsProfile" text="≡">
                             <VBox.margin>
                                 <Insets left="10" right="20" />
                             </VBox.margin>
@@ -36,7 +35,7 @@
                     </VBox>
                 </right>
             </BorderPane>
-            <Region prefHeight="1.5" styleClass="line"/>
+            <Region prefHeight="1.5" styleClass="line" />
         </VBox>
     </top>
 
@@ -45,55 +44,54 @@
             <HBox alignment="TOP_LEFT" spacing="20.0">
                 <ImageView fx:id="profileImageView" fitHeight="100" fitWidth="100">
                     <HBox.margin>
-                        <Insets top="7" left="7"/>
+                        <Insets left="7" top="7" />
                     </HBox.margin>
                 </ImageView>
                 <VBox alignment="CENTER_LEFT" spacing="5.0">
-                    <Label fx:id="usernameLabel" text="Username" styleClass="usernameLabel" />
-                    <Label fx:id="registeredLabel" text="Registered: 01.01.2024" styleClass="registeredLabel" />
+                    <Label id="usernameLabel" fx:id="usernameLabel" styleClass="usernameLabel" text="Username" />
+                    <Label id="createdDateLabel" fx:id="registeredLabel" styleClass="registeredLabel" text="Registered: 01.01.2024" />
                 </VBox>
             </HBox>
 
             <VBox alignment="CENTER_LEFT" spacing="5.0">
-                <Label fx:id="nameLabel" text="Full Name" styleClass="nameLabel">
+                <Label fx:id="nameLabel" styleClass="nameLabel" text="Full Name">
                     <VBox.margin>
-                        <Insets left="10"  />
+                        <Insets left="10" />
                     </VBox.margin>
                 </Label>
-                <Label fx:id="bioLabel" text="Bio goes here..." styleClass="bioLabel">
+                <Label fx:id="bioLabel" styleClass="bioLabel" text="Bio goes here...">
                     <VBox.margin>
                         <Insets left="10" />
                     </VBox.margin>
                 </Label>
             </VBox>
 
-            <Region prefHeight="1.5" styleClass="line"/>
+            <Region prefHeight="1.5" styleClass="line" />
 
             <HBox alignment="CENTER" spacing="20.0">
                 <VBox alignment="CENTER" spacing="10.0">
-                    <Label text="Followers:" styleClass="followersLabel"/>
-                    <Label fx:id="followersCountLabel" text="0" styleClass="followingLabel"/>
+                    <Label styleClass="followersLabel" text="Followers:" />
+                    <Label fx:id="followersCountLabel" styleClass="followingLabel" text="0" />
                 </VBox>
                 <VBox alignment="CENTER" spacing="10.0">
-                    <Label text="Following:" styleClass="followersLabel"/>
-                    <Label fx:id="followingCountLabel" text="0" styleClass="followingLabel"/>
+                    <Label styleClass="followersLabel" text="Following:" />
+                    <Label fx:id="followingCountLabel" styleClass="followingLabel" text="0" />
                 </VBox>
             </HBox>
 
-            <Region prefHeight="1.5" styleClass="line"/>
+            <Region prefHeight="1.5" styleClass="line" />
 
             <VBox fx:id="postArea" alignment="CENTER" spacing="10.0">
-                <Label fx:id="noPostsLabel" text="No posts yet..." styleClass="noPostsLabel" />
+                <Label fx:id="noPostsLabel" styleClass="noPostsLabel" text="No posts yet..." />
             </VBox>
         </VBox>
     </center>
 
     <bottom>
-        <HBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER" styleClass="footer-background">
-            <Button text="Home" fx:id="homeButton" styleClass="mainbutton"/>
-            <Button text="Profile" fx:id="profileButton" styleClass="mainbutton"/>
+        <HBox alignment="CENTER" spacing="15.0" styleClass="footer-background" BorderPane.alignment="CENTER">
+            <Button fx:id="homeButton" styleClass="mainbutton" text="Home" />
+            <Button fx:id="profileButton" styleClass="mainbutton" text="Profile" />
         </HBox>
     </bottom>
 
 </BorderPane>
-

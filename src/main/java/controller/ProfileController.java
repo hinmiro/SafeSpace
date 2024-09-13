@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import javafx.scene.shape.Circle;
+import model.SessionManager;
 import view.View;
 
 public class ProfileController {
@@ -41,9 +42,19 @@ public class ProfileController {
     private View mainView;
     @FXML
     private Stage dialogStage;
+    @FXML
+    public Label usernameLabel;
+    @FXML
+    public Label registeredLabel;
+    @FXML
+    public Label bioLabel;
 
     @FXML
     public void initialize() {
+        usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
+        registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
+        bioLabel.setText(SessionManager.getInstance().getLoggedUser().getBio() == null ? "..." : SessionManager.getInstance().getLoggedUser().getBio());
+
         profileImageView.setImage(createPlaceholderImage(150, 150));
         makeCircle(profileImageView);
 
