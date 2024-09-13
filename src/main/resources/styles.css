@@ -8,8 +8,6 @@ StackPane, BorderPane {
     -fx-pref-width: 300px;
 }
 
-/* profiili ja main sivut */
-
 .header {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
@@ -52,17 +50,30 @@ StackPane, BorderPane {
     -fx-border-radius: 5px;
 }
 
+/* main */
+
+.noPostsLabel {
+    -fx-font-family: "Arial";
+    -fx-font-size: 16px;
+    -fx-text-fill: #777;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-opacity: 0.7;
+}
+
+/* profiili */
+
 .mainlabel {
     -fx-font-size: 18px;
     -fx-padding: 20px;
 }
-
+/*
 .headerMain {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-text-fill: #FFFFFF;
     -fx-padding: 10px;
-}
+}*/
 
 .profile-image {
     -fx-background-color: #FFFFFF;
@@ -163,11 +174,35 @@ StackPane, BorderPane {
     -fx-cursor: hand;
 }
 
+.followersLabel {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2B2D42;
+}
+
+.followingLabel {
+    -fx-font-size: 16px;
+    -fx-text-fill: #3b5998;
+}
+
+/* profiilin menu */
+
+.menu-item {
+    -fx-background-color: #E1E5F2;
+    -fx-font-size: 14px;
+    -fx-border-color: #ffff;
+    -fx-border-width: 0.5;
+}
+
+.menu-item:hover {
+    -fx-background-color: #D1D7E3 !important;
+}
+
 /* login ja register */
 
 .text-field {
     -fx-pref-width: 300px;
-    -fx-padding: 10;
+    -fx-padding: 15;
     -fx-border-color: #E1E5F2;
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
@@ -176,7 +211,7 @@ StackPane, BorderPane {
 
 .loginButton {
     -fx-pref-width: 300px;
-    -fx-padding: 10;
+    -fx-padding: 15;
     -fx-background-color: #2B2D42;
     -fx-text-fill: #FFFFFF;
     -fx-border-radius: 5px;
@@ -217,16 +252,6 @@ StackPane, BorderPane {
     -fx-alignment: center-left;
     -fx-pref-width: 310px;
 }
-
-.noPostsLabel {
-    -fx-font-family: "Arial";
-    -fx-font-size: 16px;
-    -fx-text-fill: #777;
-    -fx-font-weight: bold;
-    -fx-alignment: center;
-    -fx-opacity: 0.7;
-}
-
 
 /* new post */
 
@@ -372,20 +397,6 @@ StackPane, BorderPane {
 .dialog-box Button:pressed {
     -fx-background-color: #004085;
 }
-
-/* profiilin menu */
-
-.menu-item {
-    -fx-background-color: #E1E5F2;
-    -fx-font-size: 14px;
-    -fx-border-color: #ffff;
-    -fx-border-width: 0.5;
-}
-
-.menu-item:hover {
-    -fx-background-color: #D1D7E3 !important;
-}
-
 
 /* update info */
 

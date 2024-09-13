@@ -13,20 +13,21 @@
 
 <StackPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
 
-    <VBox alignment="CENTER" spacing="20.0" minWidth="350">
-        <Region prefHeight="30" />
-        <ImageView fitHeight="190" fitWidth="190" preserveRatio="true">
+    <VBox alignment="CENTER" spacing="20.0" maxWidth="350" minWidth="300">
+        <Region prefHeight="10" />
+        <ImageView fitHeight="200" fitWidth="200" preserveRatio="true">
             <image>
                 <Image url="@/kuvat/safespacelogo.png" />
             </image>
         </ImageView>
         <Label styleClass="header" text="SafeSpace" />
+        <Region prefHeight="1" />
 
         <Label text="Username" styleClass="labelField"/>
 
         <TextField fx:id="usernameField" maxWidth="400.0" promptText="Username" styleClass="text-field">
             <VBox.margin>
-                <Insets left="20" right="20" />
+                <Insets left="10" right="10" />
             </VBox.margin>
         </TextField>
 
@@ -34,12 +35,14 @@
 
         <PasswordField fx:id="passwordField" maxWidth="400.0" promptText="Password" styleClass="text-field">
             <VBox.margin>
-                <Insets left="20" right="20" />
+                <Insets left="10" right="10" />
             </VBox.margin>
         </PasswordField>
 
         <Button fx:id="loginButton" styleClass="loginButton" text="Log In" />
+        <Region prefHeight="5" />
         <Label styleClass="info-label" text="Don't have an account?" />
         <Button fx:id="registerButton" styleClass="registerButton" text="Register here" />
     </VBox>
 </StackPane>
+

@@ -50,7 +50,7 @@ public class NewPostController {
 
             Stage stage = new Stage();
             stage.setTitle("Main Page");
-            Scene scene = new Scene(root, 350, 550);
+            Scene scene = new Scene(root, 360, 800);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

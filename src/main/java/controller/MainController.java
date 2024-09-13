@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -34,6 +35,8 @@ public class MainController {
     private Pane newWindow;
     @FXML
     private Label noPostsLabel;
+    @FXML
+    private VBox contentBox;
 
     @FXML
     private void initialize() {
@@ -91,7 +94,7 @@ public class MainController {
             profileController.setControllerForView(controllerForView);
         }
 
-        Scene scene = new Scene(root, 350, 550);
+        Scene scene = new Scene(root, 360, 800);
         stage.setScene(scene);
         stage.setTitle(title);
     }
@@ -143,7 +146,6 @@ public class MainController {
             noPostsLabel.setVisible(false);
         }
     }
-
 
     public void setControllerForView(ControllerForView controller) {
         this.controllerForView = controller;

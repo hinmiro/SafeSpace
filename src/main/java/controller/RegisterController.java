@@ -73,7 +73,7 @@ public class RegisterController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) registerButton.getScene().getWindow();
-                Scene scene = new Scene(root, 350, 550);
+                Scene scene = new Scene(root, 360, 800);
                 stage.setScene(scene);
                 stage.setTitle("Main Page");
             } catch (IOException e) {
@@ -89,7 +89,7 @@ public class RegisterController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
             Parent root = loader.load();
 
-            Scene scene = new Scene(root, 350, 550);
+            Scene scene = new Scene(root, 360, 800);
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Login Page");
