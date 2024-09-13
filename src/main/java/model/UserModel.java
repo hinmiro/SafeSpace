@@ -6,14 +6,16 @@ public class UserModel {
     private String jwt;
     private String bio, profilePictureID;
     private String userID;
+    private String dateOfCreation;
 
 
-    public UserModel(String username, String password, String userId) {
+    public UserModel(String username, String password, String userId, String dateOfCreation) {
         this.username = username;
         this.password = password;
         this.bio = "";
         this.profilePictureID = "";
         this.userID = userId;
+        this.dateOfCreation = dateOfCreation;
     }
 
     public String getUsername() {
@@ -35,5 +37,7 @@ public class UserModel {
     public String getProfilePictureUrl() { return profilePictureID; }
 
     public String getUserId() { return userID; }
+
+    public String getDateOfCreation() { return dateOfCreation; }
 
 }

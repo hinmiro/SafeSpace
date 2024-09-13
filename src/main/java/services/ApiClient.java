@@ -97,7 +97,7 @@ public class ApiClient {
         UserModel user = SessionManager.getInstance().getLoggedUser();
 
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url + "/users/" + user.getUserId()))
+                .uri(URI.create(url + "/users/update"))
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer " + user.getJwt())
                 .PUT(HttpRequest.BodyPublishers.ofString(data))
@@ -109,20 +109,6 @@ public class ApiClient {
         return res;
     }
 
-    public static HttpResponse<String> getPosts() throws IOException, InterruptedException {
-
-        HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(sseUrl + "posts/"))
-                .header("Content-Type", "application/json")
-                .GET()
-                .build();
-
-        res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        System.out.println(res.statusCode());
-        System.out.println(res.body());
-
-        return null;
-    }
 
     public static HttpResponse<String> sendLike() {
         return null;
@@ -174,10 +160,36 @@ public class ApiClient {
         return res.statusCode();
     }
 
-    public static int addFriend(String json) throws IOException, InterruptedException {
+    public static int addFriend(String id) throws IOException, InterruptedException {
 
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url + "/users/friends/" + SessionManager.getInstance().getLoggedUser().getUserId()))
+                .uri(URI.create(url + "/users/friends/" + id))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        return res.statusCode();
+    }
+
+    public static HttpResponse<String> getAllFriends() throws IOException, InterruptedException {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/users/friends"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .GET().build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        return res;
+    }
+
+    // Posts
+
+    public static int createPost(String json) throws IOException, InterruptedException {
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/post"))
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
                 .POST(HttpRequest.BodyPublishers.ofString(json))
@@ -185,5 +197,62 @@ public class ApiClient {
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
         return res.statusCode();
+    }
+
+    public static int updatePost(String postId, String json) throws IOException, InterruptedException {
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/post/" + postId))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        return res.statusCode();
+    }
+
+    public static HttpResponse<String> getPosts() throws IOException, InterruptedException {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/post"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .GET().build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        return res;
+    }
+
+    public static HttpResponse<String> deletePost(String postId) throws IOException, InterruptedException {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/post/" + postId))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .DELETE().build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        return res;
+    }
+
+    public static HttpResponse<String> likePost(String postId) throws IOException, InterruptedException {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/post/" + postId + "/like"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .POST(HttpRequest.BodyPublishers.noBody()).build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        return res;
+    }
+
+    public static HttpResponse<String> removeLike(String postId) throws IOException, InterruptedException {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/post/" + postId + "/remove"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .POST(HttpRequest.BodyPublishers.noBody()).build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        return res;
     }
 }

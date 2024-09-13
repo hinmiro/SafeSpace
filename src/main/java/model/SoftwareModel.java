@@ -21,14 +21,12 @@ public class SoftwareModel {
         if (res.statusCode() != 200) {
             return null;
         }
-        LoginResponse loginResponse = gson.fromJson(res.body(), LoginResponse.class);
+        UserModel user = gson.fromJson(res.body(), UserModel.class);
+        System.out.println(user.getDateOfCreation());
 
-        UserModel user = loginResponse.getUser();
-        user.setJwt(loginResponse.getJwt());
-
-        Feed feed = new Feed(ControllerForView.feedQueue);
-        Thread feedThread = new Thread(feed);
-        feedThread.start();
+        //Feed feed = new Feed(ControllerForView.feedQueue); DISABLED main feed thread for developing
+        //Thread feedThread = new Thread(feed);
+        //feedThread.start();
 
         return user;
     }
@@ -40,11 +38,8 @@ public class SoftwareModel {
         if (res.statusCode() != 201) {
             return null;
         }
-        LoginResponse loginResponse = gson.fromJson(res.body(), LoginResponse.class);
-        UserModel user = loginResponse.getUser();
-        user.setJwt(loginResponse.getJwt());
 
-        return user;
+        return gson.fromJson(res.body(), UserModel.class);
     }
 
     public boolean postPicture(File file) throws IOException, InterruptedException {
@@ -52,7 +47,7 @@ public class SoftwareModel {
         return res.statusCode() == 200;
     }
 
-    public UserModel updateUser(String username, String password, String bio, String profilePictureId) throws IOException, InterruptedException {
+    public boolean updateUser(String username, String password, String bio, String profilePictureId) throws IOException, InterruptedException {
         Map<String, String> dataMap = new HashMap<>();
         if (username != null) { dataMap.put("username", username); }
         if (password != null) { dataMap.put("password", password); }
@@ -64,13 +59,14 @@ public class SoftwareModel {
         HttpResponse<String> res = ApiClient.updateUser(jsonData);
 
         if (res.statusCode() != 200) {
-            return null;
+            return false;
         }
         UserModel updatedUser = gson.fromJson(res.body(), UserModel.class);
-        updatedUser.setJwt(SessionManager.getInstance().getLoggedUser().getJwt());    // Setting jwt token to be token of updated user
+        System.out.println(updatedUser.getJwt());
+        //updatedUser.setJwt(SessionManager.getInstance().getLoggedUser().getJwt());    // Setting jwt token to be token of updated user
         SessionManager.getInstance().setLoggedUser(updatedUser);
 
-        return updatedUser;
+        return true;
     }
 
 }

@@ -49,4 +49,9 @@ public class ControllerForView extends Controller {
         }
     }
 
+    // Returns true if update success, then should render popup in front view example profile updated successfully
+    public boolean updateProfile(String username, String password, String bio, String profilePictureId) throws IOException, InterruptedException {
+        return app.updateUser(username, password, bio, profilePictureId);
+    }
+
 }
