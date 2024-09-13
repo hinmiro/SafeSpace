@@ -1,10 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -13,10 +10,14 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import model.UserModel;
+import services.ApiClient;
+
 import java.io.IOException;
 
 public class LoginController {
 
+    @FXML
+    public Label serverError;
     @FXML
     private TextField usernameField;
     @FXML
@@ -29,7 +30,9 @@ public class LoginController {
     private ControllerForView controllerForView = new ControllerForView();
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException, InterruptedException {
+        serverError.setVisible(!ApiClient.isServerAvailable());
+
         loginButton.setOnMouseClicked(event -> handleLogin());
         registerButton.setOnMouseClicked(event -> handleRegisterLink(event));
         usernameField.setOnKeyPressed(event -> handleEnterKey(event));
@@ -105,5 +108,6 @@ public class LoginController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }
 
