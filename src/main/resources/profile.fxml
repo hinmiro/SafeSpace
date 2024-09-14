@@ -82,7 +82,11 @@
             <Region prefHeight="1.5" styleClass="line" />
 
             <VBox fx:id="postArea" alignment="CENTER" spacing="10.0">
-                <Label fx:id="noPostsLabel" styleClass="noPostsLabel" text="No posts yet..." />
+                <Label fx:id="noPostsLabel" styleClass="noPostsLabel" text="No posts yet...">
+                    <VBox.margin>
+                        <Insets top="30" />
+                    </VBox.margin>
+                </Label>
             </VBox>
         </VBox>
     </center>

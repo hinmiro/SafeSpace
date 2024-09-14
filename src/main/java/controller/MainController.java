@@ -135,7 +135,7 @@ public class MainController {
             newPostController.setControllerForView(controllerForView);
             newPostController.setMainController(this);
 
-            Stage stage = (Stage) newWindow.getScene().getWindow();
+            Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
             Scene scene = new Scene(newPostPane);
             stage.setScene(scene);
@@ -150,11 +150,11 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/newText.fxml"));
             Parent newPostPane2 = loader.load();
 
-            NewPostController newPostController = loader.getController();
-            newPostController.setControllerForView(controllerForView);
-            newPostController.setMainController(this);
+            NewTextController newTextController = loader.getController();
+            newTextController.setControllerForView(controllerForView);
+            newTextController.setMainController(this);
 
-            Stage stage = (Stage) newWindow.getScene().getWindow();
+            Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
             Scene scene = new Scene(newPostPane2);
             stage.setScene(scene);

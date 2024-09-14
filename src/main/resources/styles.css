@@ -32,7 +32,7 @@ StackPane, BorderPane {
 }
 
 .mainbutton {
-    -fx-background-color: #3b5998;
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
     -fx-text-fill: white;
     -fx-padding: 8px 16px;
     -fx-font-size: 13px;
@@ -41,7 +41,7 @@ StackPane, BorderPane {
 }
 
 .mainbutton:hover {
-    -fx-background-color: #9A7197;
+    -fx-background-color: #0056b3;
 }
 
 .footer-background {
@@ -67,13 +67,6 @@ StackPane, BorderPane {
     -fx-font-size: 18px;
     -fx-padding: 20px;
 }
-/*
-.headerMain {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #FFFFFF;
-    -fx-padding: 10px;
-}*/
 
 .profile-image {
     -fx-background-color: #FFFFFF;
@@ -97,13 +90,18 @@ StackPane, BorderPane {
     -fx-text-fill: #ffff;
 }
 
-.newButton:hover, .createPost:hover, .messageButton:hover, .settingsProfile:hover {
+.newButton:hover, .createPost:hover {
     -fx-background-color: #9A7197;
     -fx-cursor: hand;
 }
 
+.messageButton:hover, .settingsProfile:hover {
+    -fx-background-color: #0056b3;
+    -fx-cursor: hand;
+}
+
 .messageButton {
-    -fx-background-color: #3b5998;
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
     -fx-font-size: 20px;
     -fx-pref-width: 50px;
     -fx-pref-height: 30px;
@@ -115,7 +113,7 @@ StackPane, BorderPane {
 }
 
 .settingsProfile {
-    -fx-background-color: #3b5998;
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
     -fx-font-size: 20px;
     -fx-pref-width: 50px;
     -fx-pref-height: 30px;
@@ -219,8 +217,10 @@ StackPane, BorderPane {
     -fx-cursor: hand;
 }
 
-.loginButton:hover, .mainbutton:hover {
+.loginButton:hover {
     -fx-background-color: #9A7197;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
 }
 
 .registerButton {
@@ -256,23 +256,24 @@ StackPane, BorderPane {
 /* new post */
 
 .postPage {
-    -fx-background-color: #f0f2f5;
     -fx-alignment: center;
 }
 
-.headerLabel {
+.headerLabel, .textPostLabel {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-padding: 15 0;
     -fx-text-fill: #333;
+    -fx-padding: 15 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
 }
 
 .chooseImageButton {
-    -fx-background-color: #007bff;
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
     -fx-text-fill: #ffffff;
     -fx-padding: 10 20;
     -fx-border-radius: 5;
     -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
 }
 
 .chooseImageButton:hover {
@@ -284,22 +285,23 @@ StackPane, BorderPane {
     -fx-border-color: #007bff;
     -fx-border-width: 3;
     -fx-border-radius: 10;
-    -fx-padding: 5;
-    -fx-background-color: #f9f9f9; /* why is this not working :( */
+    -fx-background-color: #f9f9f9;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
 }
 
 .captionArea {
-    -fx-background-color: #ffffff;
+    -fx-background-color: rgba(255, 255, 255, 0.9);
     -fx-border-color: #ddd;
     -fx-border-width: 1px;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-padding: 10px;
     -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0, 1);
 }
 
 .captionLabel, .textPostLabel {
-    -fx-font-size: 16px;
+    -fx-font-size: 15px;
     -fx-font-weight: bold;
     -fx-text-fill: #333;
     -fx-padding: 5 0;
@@ -313,7 +315,7 @@ StackPane, BorderPane {
     -fx-border-radius: 5px;
     -fx-cursor: hand;
     -fx-alignment: center;
-    -fx-effect: dropshadow(gaussian, #333, 5, 0.5, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.5, 0, 2);
 }
 
 .postButton:hover {
@@ -324,7 +326,7 @@ StackPane, BorderPane {
 }
 
 .closeButton {
-    -fx-background-color: #3b5998;
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
     -fx-pref-width: 50px;
     -fx-pref-height: 30px;
     -fx-border-radius: 5px;
@@ -335,22 +337,18 @@ StackPane, BorderPane {
 }
 
 .closeButton:hover {
-    -fx-background-color: #9A7197;
+    -fx-background-color: #0056b3;
     -fx-cursor: hand;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
     -fx-effect: dropshadow(gaussian, #373333, 5, 0.5, 0, 2);
 }
 
-.postPage2 {
-    -fx-background-image: url("kuvat/safespacelogo.png");
-    -fx-background-size: cover;
-    -fx-alignment: center;
-}
+/* text postaukset */
 
 .textPostArea {
-    -fx-background-color: rgba(255, 255, 255, 0.8);
-    -fx-border-color: #ddd;
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-border-color: #ccc;
     -fx-border-width: 1px;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
@@ -359,9 +357,45 @@ StackPane, BorderPane {
 }
 
 .textPostArea:focused {
-    -fx-border-color: #f9f9f9;
+    -fx-border-color: #0077cc;
     -fx-border-width: 2px;
-    -fx-background-color: #f9f9f9;
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+}
+
+.editorToolbar {
+    -fx-padding: 5px 0;
+}
+
+.boldButton, .italicButton, .listButton {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 4px 8px;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1px;
+}
+
+.boldButton:hover, .italicButton:hover, .listButton:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.inspirationLabel {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #444;
+}
+
+.inspirationText {
+    -fx-font-size: 12px;
+    -fx-background-color: rgba(240, 240, 240, 0.8);
+    -fx-padding: 10px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-text-fill: #777;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 0);
 }
 
 /* log out dialog */
@@ -380,7 +414,7 @@ StackPane, BorderPane {
 }
 
 .dialog-box Button {
-    -fx-background-color: #007bff;
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-padding: 5 10;
