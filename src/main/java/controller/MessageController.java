@@ -26,6 +26,7 @@ public class MessageController {
         checkIfNoMessages();
 
         leaveMessageButton.setText("x");
+        leaveMessageButton.setStyle("-fx-font-size: 16px;");
 
         leaveMessageButton.setOnAction(event -> {
             try {

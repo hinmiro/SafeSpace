@@ -259,7 +259,7 @@ StackPane, BorderPane {
     -fx-alignment: center;
 }
 
-.headerLabel {
+.headerLabelPost {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: #333;
@@ -327,6 +327,7 @@ StackPane, BorderPane {
 
 .closeButton {
     -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-font-size: 16px;
     -fx-pref-width: 50px;
     -fx-pref-height: 30px;
     -fx-border-radius: 5px;
@@ -463,6 +464,7 @@ StackPane, BorderPane {
     -fx-font-weight: bold;
     -fx-padding: 10 0;
     -fx-text-fill: #333;
+
 }
 
 .otherLabel {
@@ -470,7 +472,17 @@ StackPane, BorderPane {
     -fx-text-fill: #666;
 }
 
-.text-field2, .password-field2, .bio-field {
+.text-field2, .password-field2 {
+    -fx-pref-width: 300px;
+    -fx-padding: 15;
+    -fx-border-color: #E1E5F2;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #fff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 0);
+}
+
+.bio-field {
     -fx-pref-width: 300px;
     -fx-padding: 10;
     -fx-border-color: #E1E5F2;

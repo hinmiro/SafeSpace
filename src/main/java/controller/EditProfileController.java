@@ -30,10 +30,6 @@ public class EditProfileController {
     @FXML
     private ImageView profileImageView;
     @FXML
-    private Button homeButton;
-    @FXML
-    private Button profileButton;
-    @FXML
     private View mainView;
     @FXML
     public Label usernameLabel;
@@ -51,9 +47,6 @@ public class EditProfileController {
 
         profileImageView.setImage(createPlaceholderImage(150, 150));
         makeCircle(profileImageView);
-
-        homeButton.setOnAction(event -> navigateTo("/main.fxml"));
-        profileButton.setOnAction(event -> navigateTo("/profile.fxml"));
 
         clickProfilePic(profileImageView);
         profileImageView.setCursor(Cursor.HAND);
@@ -107,20 +100,6 @@ public class EditProfileController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private void navigateTo(String fxmlFile) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 360, 800);
-            Stage stage = (Stage) homeButton.getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("Main Page");
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

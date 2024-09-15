@@ -27,7 +27,7 @@
                 </center>
                 <right>
                     <VBox alignment="CENTER">
-                        <Button fx:id="closeButton" onAction="#handleClose" prefHeight="26.0" prefWidth="27.0" styleClass="closeButton" text="X" >
+                        <Button fx:id="closeButton" onAction="#handleClose" prefHeight="26.0" prefWidth="27.0" styleClass="closeButton" text="x" >
                             <VBox.margin>
                                 <Insets left="10" right="20" />
                             </VBox.margin>
@@ -48,7 +48,7 @@
             <ImageView fitHeight="120" fitWidth="120" preserveRatio="true">
                 <Image url="@/kuvat/newPost.png"/>
             </ImageView>
-            <Label styleClass="headerLabel" text="Capture &amp; Share" />
+            <Label styleClass="headerLabelPost" text="Capture &amp; Share" />
             <Button fx:id="chooseImageButton" styleClass="chooseImageButton" text="Choose Image" />
             <ImageView fx:id="imageView" fitHeight="166.0" fitWidth="202.0" preserveRatio="true" styleClass="imagePreview" />
 
