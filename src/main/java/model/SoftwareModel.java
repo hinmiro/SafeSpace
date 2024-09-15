@@ -69,5 +69,14 @@ public class SoftwareModel {
         return true;
     }
 
+    public boolean createNewPost(String text) throws IOException, InterruptedException {
+        Map<String, String> data = new HashMap<>();
+        data.put("post_content", text);
+        String jsonData = gson.toJson(data);
+
+        HttpResponse<String> res = ApiClient.createPost(jsonData);
+        return res.statusCode() == 201;
+    }
+
 }
 

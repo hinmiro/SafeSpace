@@ -26,7 +26,23 @@ public class NewTextController {
     @FXML
     private void initialize() {
         closeButton.setOnAction(event -> handleClose());
+        postButton.setOnAction(event -> handlePost());
         setRandomQuote();
+    }
+
+    @FXML
+    private void handlePost() {
+        try {
+            boolean res = controllerForView.sendPost(textPostArea.getText());
+            if (res) {
+                showAlert("Info", "New post sent!");
+                handleClose();
+            } else {
+                showAlert("Info", "Spectacular error has occurred...");
+            }
+        } catch (IOException | InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @FXML
@@ -92,5 +108,13 @@ public class NewTextController {
 
     public void setControllerForView(ControllerForView controllerForView) {
         this.controllerForView = controllerForView;
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
