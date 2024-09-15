@@ -62,9 +62,6 @@ public class ProfileController {
         homeButton.setOnAction(event -> navigateTo("/main.fxml"));
         profileButton.setOnAction(event -> navigateTo("/profile.fxml"));
 
-        clickProfilePic(profileImageView);
-        profileImageView.setCursor(Cursor.HAND);
-
         // menu
         settingsContextMenu = new ContextMenu();
         MenuItem editProfileItem = new MenuItem("Edit Profile");
@@ -142,24 +139,16 @@ public class ProfileController {
         imageView.setClip(clip);
     }
 
-    private void changeProfilePicture() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser
-                .getExtensionFilters()
-                .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif",
-                        "*.webp", "*.svg"));
-        File selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
+    private WritableImage createPlaceholderImage(int width, int height) {
+        WritableImage image = new WritableImage(width, height);
+        Canvas canvas = new Canvas(width, height);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        if (selectedFile != null) {
-            try {
-                // controllerForView.uploadProfilePicture(selectedFile); THIS IS FOR UPLOADING PICTURE TO SERVER
-                Image newImage = new Image(selectedFile.toURI().toString());
-                profileImageView.setImage(newImage);
-                makeCircle(profileImageView);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        gc.setFill(Color.LIGHTGRAY);
+        gc.fillOval(0, 0, width, height);
+
+        gc.getCanvas().snapshot(null, image);
+        return image;
     }
 
     private void navigateTo(String fxmlFile) {
@@ -174,24 +163,6 @@ public class ProfileController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private WritableImage createPlaceholderImage(int width, int height) {
-        WritableImage image = new WritableImage(width, height);
-        Canvas canvas = new Canvas(width, height);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        gc.setFill(Color.LIGHTGRAY);
-        gc.fillOval(0, 0, width, height);
-
-        gc.getCanvas().snapshot(null, image);
-        return image;
-    }
-
-    private void clickProfilePic(ImageView profileImageView) {
-        profileImageView.setOnMouseClicked((MouseEvent event) -> {
-            changeProfilePicture();
-        });
     }
 
     public void setControllerForView(ControllerForView controller) {

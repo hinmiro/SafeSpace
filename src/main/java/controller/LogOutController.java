@@ -38,8 +38,12 @@ public class LogOutController {
     }
 
     private void handleLogOut() throws Exception {
-        mainController.stopQueueProcessing();
+        if (mainController != null) {
+            mainController.stopQueueProcessing();
+        }
+
         SessionManager.getInstance().closeSession();
+
         if (mainView != null) {
             mainView.showLogin();
         }

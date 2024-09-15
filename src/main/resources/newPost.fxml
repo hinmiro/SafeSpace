@@ -48,7 +48,7 @@
             <ImageView fitHeight="120" fitWidth="120" preserveRatio="true">
                 <Image url="@/kuvat/newPost.png"/>
             </ImageView>
-            <Label styleClass="headerLabel" text="Snap &amp; Share" />
+            <Label styleClass="headerLabel" text="Capture &amp; Share" />
             <Button fx:id="chooseImageButton" styleClass="chooseImageButton" text="Choose Image" />
             <ImageView fx:id="imageView" fitHeight="166.0" fitWidth="202.0" preserveRatio="true" styleClass="imagePreview" />
 

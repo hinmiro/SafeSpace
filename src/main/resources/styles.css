@@ -259,7 +259,7 @@ StackPane, BorderPane {
     -fx-alignment: center;
 }
 
-.headerLabel, .textPostLabel {
+.headerLabel {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: #333;
@@ -354,6 +354,7 @@ StackPane, BorderPane {
     -fx-background-radius: 5;
     -fx-padding: 10px;
     -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0, 1);
 }
 
 .textPostArea:focused {
@@ -404,32 +405,55 @@ StackPane, BorderPane {
     -fx-padding: 20px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0, 0, 5);
 }
 
 .dialog-box Label {
     -fx-font-size: 16px;
     -fx-text-fill: #333;
     -fx-font-weight: bold;
+    -fx-padding-bottom: 10px;
 }
 
 .dialog-box Button {
     -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
     -fx-text-fill: white;
     -fx-font-size: 14px;
-    -fx-padding: 5 10;
-    -fx-background-radius: 5px;
-    -fx-border-radius: 5px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 25px;
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
 }
 
 .dialog-box Button:hover {
     -fx-background-color: #0056b3;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
 }
 
 .dialog-box Button:pressed {
     -fx-background-color: #004085;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.dialog-box #logOutButton {
+    -fx-background-color: linear-gradient(to bottom, #b235dc, #7823c8);
+}
+
+.dialog-box #logOutButton:hover {
+    -fx-background-color: #7823c8;
+}
+
+.dialog-box #logOutButton:pressed {
+    -fx-background-color: #7823c8;
+}
+
+.dialog-box HBox {
+    -fx-alignment: center;
+    -fx-spacing: 15px;
 }
 
 /* update info */
@@ -446,7 +470,7 @@ StackPane, BorderPane {
     -fx-text-fill: #666;
 }
 
-.text-field2, .password-field2 {
+.text-field2, .password-field2, .bio-field {
     -fx-pref-width: 300px;
     -fx-padding: 10;
     -fx-border-color: #E1E5F2;
@@ -460,7 +484,22 @@ StackPane, BorderPane {
     -fx-border-color: #3b5998;
 }
 
+/* edit profile */
 
+.editProfileButton {
+    -fx-padding: 10;
+    -fx-background-color: #2B2D42;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 25px;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.editProfileButton:hover {
+    -fx-background-color: #9A7197;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
 
 
 
