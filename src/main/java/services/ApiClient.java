@@ -186,7 +186,7 @@ public class ApiClient {
 
     // Posts
 
-    public static int createPost(String json) throws IOException, InterruptedException {
+    public static HttpResponse<String> createPost(String json) throws IOException, InterruptedException {
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url + "/post"))
@@ -196,7 +196,7 @@ public class ApiClient {
                 .build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        return res.statusCode();
+        return res;
     }
 
     public static int updatePost(String postId, String json) throws IOException, InterruptedException {

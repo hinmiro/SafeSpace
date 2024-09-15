@@ -54,4 +54,8 @@ public class ControllerForView extends Controller {
         return app.updateUser(username, password, bio, profilePictureId);
     }
 
+    public boolean sendPost(String text) throws IOException, InterruptedException {
+        return app.createNewPost(text);
+    }
+
 }
