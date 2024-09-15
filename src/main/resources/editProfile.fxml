@@ -18,7 +18,7 @@
         <VBox>
             <BorderPane styleClass="header-background">
                 <left>
-                    <ImageView fitHeight="120" fitWidth="100" preserveRatio="true">
+                    <ImageView fitHeight="100" fitWidth="80" preserveRatio="true">
                         <image>
                             <Image url="@/kuvat/safespacelogo.png" />
                         </image>
@@ -37,7 +37,7 @@
                     </VBox>
                 </right>
             </BorderPane>
-            <Region prefHeight="2" styleClass="line" />
+            <Region prefHeight="1.5" styleClass="line" />
         </VBox>
     </top>
 
