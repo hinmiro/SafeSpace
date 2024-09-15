@@ -57,8 +57,8 @@
         <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
 
             <HBox fx:id="postMenu" alignment="CENTER" spacing="10.0" visible="false">
-                <Button fx:id="createPicPostButton" text="Create Picture Post" styleClass="createPost"/>
-                <Button fx:id="createTextPostButton" text="Create Text Post" styleClass="createPost" />
+                <Button fx:id="createPicPostButton" text="Share an image" styleClass="createPost"/>
+                <Button fx:id="createTextPostButton" text="Share your thoughts" styleClass="createPost" />
             </HBox>
 
             <Button text="+" fx:id="newPostButton" styleClass="newButton" />

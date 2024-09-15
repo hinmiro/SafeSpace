@@ -7,11 +7,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="550" prefWidth="350" styleClass="postPage" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewPostController">
+<BorderPane prefHeight="800" prefWidth="360" styleClass="postPage" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewPostController">
 
     <top>
         <VBox>
@@ -40,15 +39,16 @@
         </VBox>
     </top>
 
-    <HBox alignment="TOP_LEFT" />
-
     <VBox alignment="CENTER" spacing="15">
         <Region prefHeight="1.5" styleClass="line" />
     </VBox>
 
     <center>
         <VBox alignment="CENTER" spacing="20">
-            <Label styleClass="headerLabel" text="Create a New Post" />
+            <ImageView fitHeight="120" fitWidth="120" preserveRatio="true">
+                <Image url="@/kuvat/newPost.png"/>
+            </ImageView>
+            <Label styleClass="headerLabel" text="Snap &amp; Share" />
             <Button fx:id="chooseImageButton" styleClass="chooseImageButton" text="Choose Image" />
             <ImageView fx:id="imageView" fitHeight="166.0" fitWidth="202.0" preserveRatio="true" styleClass="imagePreview" />
 
@@ -65,7 +65,7 @@
                 </TextArea>
             </VBox>
 
-            <Button fx:id="postButton" styleClass="postButton" text="Post">
+            <Button fx:id="postButton" prefHeight="40" prefWidth="150" styleClass="postButton" text="Post">
             <VBox.margin>
                 <Insets bottom="20" />
             </VBox.margin>

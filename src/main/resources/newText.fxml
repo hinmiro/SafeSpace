@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="550" prefWidth="350" styleClass="postPage2" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewPostController">
+<BorderPane prefHeight="800" prefWidth="360" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewTextController">
 
     <top>
         <VBox>
@@ -40,37 +40,48 @@
         </VBox>
     </top>
 
-    <HBox alignment="TOP_LEFT" />
-
-    <VBox alignment="CENTER" spacing="15">
-        <Region prefHeight="1.5" styleClass="line" />
-    </VBox>
-
     <center>
-        <VBox spacing="20">
-            <Label prefHeight="74.0" prefWidth="162.0" styleClass="textPostLabel" text="Share Your Thoughts:">
+        <VBox spacing="20" alignment="CENTER">
+            <VBox alignment="TOP_RIGHT">
+                <Label text="Need inspiration?" styleClass="inspirationLabel">
+                    <VBox.margin>
+                        <Insets bottom="10" left="10" right="10" />
+                    </VBox.margin>
+                </Label>
+                <Label fx:id="inspirationText" styleClass="inspirationText" text="Write something that made you smile today!">
+                    <VBox.margin>
+                        <Insets left="10" right="10" />
+                    </VBox.margin>
+                </Label>
+            </VBox>
+
+            <ImageView fitHeight="130" fitWidth="130" preserveRatio="true">
+                <Image url="@/kuvat/newText.png"/>
+            </ImageView>
+            <Label styleClass="textPostLabel" text="What's on your mind? ">
                 <VBox.margin>
                     <Insets left="10" right="10" />
                 </VBox.margin>
             </Label>
-            <TextArea fx:id="textPostArea" prefHeight="271.0" prefRowCount="6" prefWidth="330.0" promptText="What's on your mind..." styleClass="textPostArea">
+
+            <HBox spacing="8" alignment="CENTER" styleClass="editorToolbar">
+                <Button text="B" styleClass="boldButton" onAction="#boldText" />
+                <Button text="I" styleClass="italicButton" onAction="#italicText" />
+                <Button text="List" styleClass="listButton" onAction="#addList" />
+            </HBox>
+
+            <TextArea fx:id="textPostArea" prefHeight="271.0" prefRowCount="6" prefWidth="330.0" promptText="Enter text here" styleClass="textPostArea">
                 <VBox.margin>
                     <Insets left="10" right="10" />
                 </VBox.margin>
             </TextArea>
+
+            <Button fx:id="postButton" prefHeight="40" prefWidth="150" styleClass="postButton" text="Post">
+                <VBox.margin>
+                    <Insets bottom="30" />
+                </VBox.margin>
+            </Button>
         </VBox>
     </center>
-
-    <bottom>
-        <VBox alignment="CENTER">
-         <children>
-                  <Button fx:id="postButton" prefHeight="0.0" prefWidth="62.0" styleClass="postButton" text="Post">
-                   <VBox.margin>
-                       <Insets bottom="30" />
-                   </VBox.margin>
-               </Button>
-         </children>
-        </VBox>
-    </bottom>
 
 </BorderPane>
