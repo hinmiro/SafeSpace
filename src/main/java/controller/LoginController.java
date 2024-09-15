@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import model.UserModel;
 import services.ApiClient;
+import view.View;
 
 import java.io.IOException;
 
@@ -28,6 +29,7 @@ public class LoginController {
     private Button registerButton;
 
     private ControllerForView controllerForView = new ControllerForView();
+    private View mainView;
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
@@ -37,6 +39,7 @@ public class LoginController {
         registerButton.setOnMouseClicked(event -> handleRegisterLink(event));
         usernameField.setOnKeyPressed(event -> handleEnterKey(event));
         passwordField.setOnKeyPressed(event -> handleEnterKey(event));
+
     }
 
     private void handleEnterKey(KeyEvent event) {
@@ -68,6 +71,7 @@ public class LoginController {
 
                 MainController mainController = loader.getController();
                 mainController.setControllerForView(controllerForView);
+                mainController.setMainView(mainView);
 
 
                 Stage stage = (Stage) loginButton.getScene().getWindow();
@@ -107,6 +111,10 @@ public class LoginController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void setMainView(View view) {
+        mainView = view;
     }
 
 }

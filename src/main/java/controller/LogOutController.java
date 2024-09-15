@@ -15,6 +15,7 @@ public class LogOutController {
 
     private Stage dialogStage;
     private View mainView;
+    private MainController mainController;
 
     @FXML
     private void initialize() {
@@ -37,11 +38,14 @@ public class LogOutController {
     }
 
     private void handleLogOut() throws Exception {
+        mainController.stopQueueProcessing();
+        SessionManager.getInstance().closeSession();
         if (mainView != null) {
             mainView.showLogin();
         }
         if (dialogStage != null) {
             dialogStage.close();
+
         }
     }
 
@@ -49,5 +53,9 @@ public class LogOutController {
         if (dialogStage != null) {
             dialogStage.close();
         }
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 }

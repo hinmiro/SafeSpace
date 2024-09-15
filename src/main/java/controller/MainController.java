@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.PostListCell;
 import model.SharedData;
+import view.View;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,6 +24,7 @@ public class MainController {
     private ControllerForView controllerForView;
     private volatile boolean stopQueueProcessingFlag = true;
     private Thread queueThread;
+    private View mainView;
 
 
     @FXML
@@ -101,21 +103,27 @@ public class MainController {
         showNewTextWindow();
     }
 
-    protected synchronized void switchScene(String fxmlFile, String title) throws IOException {
-        stopQueueProcessing();
+    protected void switchScene(String fxmlFile, String title) throws IOException {
         Stage stage = (Stage) homeButton.getScene().getWindow();
         stage.setResizable(false);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = fxmlLoader.load();
 
-        if (fxmlFile.equals("/profile.fxml")) {
-            ProfileController profileController = fxmlLoader.getController();
-            profileController.setControllerForView(controllerForView);
-        }
-
         Scene scene = new Scene(root, 360, 800);
         stage.setScene(scene);
         stage.setTitle(title);
+
+
+        if (fxmlFile.equals("/profile.fxml")) {
+            stopQueueProcessing();
+
+            ProfileController profileController = fxmlLoader.getController();
+            profileController.setControllerForView(controllerForView);
+            profileController.setMainController(this);
+            profileController.setMainView(mainView);
+            profileController.setDialogStage(stage);
+
+        }
 
         if (fxmlFile.equals("/main.fxml")) {
             MainController mainController = fxmlLoader.getController();
@@ -166,7 +174,8 @@ public class MainController {
 
     public void checkIfNoPosts() {
         if (SharedData.getInstance().getEventQueue().isEmpty()) {
-        }
+            noPostsLabel.setVisible(true);
+        } else noPostsLabel.setVisible(false);
 
        /* if (noPosts) {
             noPostsLabel.setVisible(true);
@@ -186,18 +195,12 @@ public class MainController {
                 while (!stopQueueProcessingFlag) {
                     try {
                         String data = SharedData.getInstance().takeEvent();
-                        System.out.println(data);
                         Platform.runLater(() -> {
                             feedListView.getItems().add(data);
-                            feedListView.setOnMouseClicked((evt) -> {
-                                evt.consume();
-                                System.out.println("click: " + feedListView.getSelectionModel().getSelectedItem());
-                            });
                             feedListView.scrollTo(feedListView.getItems().size() - 1);
                         });
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
-                        e.printStackTrace();
                     }
                 }
             });
@@ -205,17 +208,20 @@ public class MainController {
         }
     }
 
-    private synchronized void stopQueueProcessing() {
+    public synchronized void stopQueueProcessing() {
         stopQueueProcessingFlag = true;
         if (queueThread != null) {
             queueThread.interrupt();
         }
     }
 
+
     private void loadEvents() {
         List<String> events = SharedData.getInstance().getEvents();
         System.out.println(events);
         feedListView.getItems().setAll(events);
     }
+
+    public void setMainView(View view) { mainView = view; }
 
 }

@@ -27,6 +27,7 @@ public class ProfileController {
 
     private ControllerForView controllerForView;
     private ContextMenu settingsContextMenu;
+    private MainController mainController;
 
     @FXML
     private ImageView profileImageView;
@@ -91,6 +92,7 @@ public class ProfileController {
             LogOutController logOutController = loader.getController();
             logOutController.setDialogStage(dialogStage);
             logOutController.setMainView(mainView);
+            logOutController.setMainController(mainController);
 
             Scene logoutScene = new Scene(logoutRoot);
             Stage dialogStage = new Stage();
@@ -204,5 +206,17 @@ public class ProfileController {
         } else {
             noPostsLabel.setVisible(false);
         }
+    }
+
+    public void setMainView(View view) {
+        this.mainView = view;
+    }
+
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 }
