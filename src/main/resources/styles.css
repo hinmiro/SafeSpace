@@ -482,16 +482,6 @@ StackPane, BorderPane {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 0);
 }
 
-.bio-field {
-    -fx-pref-width: 300px;
-    -fx-padding: 10;
-    -fx-border-color: #E1E5F2;
-    -fx-border-width: 1px;
-    -fx-border-radius: 5px;
-    -fx-background-color: #fff;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 0);
-}
-
 .text-field2:focused, .password-field2:focused {
     -fx-border-color: #3b5998;
 }
@@ -511,6 +501,16 @@ StackPane, BorderPane {
     -fx-background-color: #9A7197;
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
+}
+
+.bio-field {
+    -fx-pref-width: 300px;
+    -fx-padding: 10;
+    -fx-border-color: #E1E5F2;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #fff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 0);
 }
 
 
