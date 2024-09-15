@@ -24,9 +24,9 @@ public class SoftwareModel {
         UserModel user = gson.fromJson(res.body(), UserModel.class);
         System.out.println(user.getDateOfCreation());
 
-        //Feed feed = new Feed(ControllerForView.feedQueue); DISABLED main feed thread for developing
-        //Thread feedThread = new Thread(feed);
-        //feedThread.start();
+        Feed feed = new Feed(ControllerForView.feedQueue);
+        Thread feedThread = new Thread(feed);
+        feedThread.start();
 
         return user;
     }
