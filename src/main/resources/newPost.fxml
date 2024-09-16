@@ -49,13 +49,17 @@
                 <Image url="@/kuvat/newPost.png"/>
             </ImageView>
             <Label styleClass="headerLabelPost" text="Capture &amp; Share" />
-            <Button fx:id="chooseImageButton" styleClass="chooseImageButton" text="Choose Image" />
-            <ImageView fx:id="imageView" fitHeight="166.0" fitWidth="202.0" preserveRatio="true" styleClass="imagePreview" />
+            <Button fx:id="chooseImageButton" styleClass="chooseImageButton" text="Choose Image">
+            <VBox.margin>
+                <Insets bottom="10" />
+            </VBox.margin>
+            </Button>
+            <ImageView fx:id="imageView" preserveRatio="true" styleClass="imagePreview" />
 
             <VBox spacing="10">
                 <Label styleClass="captionLabel" text="Add a Caption (optional):">
                     <VBox.margin>
-                        <Insets left="10" right="10" />
+                        <Insets top="10" left="10" right="10" />
                     </VBox.margin>
                 </Label>
                 <TextArea fx:id="captionTextArea" prefRowCount="2" promptText="Write a caption..." styleClass="captionArea">
