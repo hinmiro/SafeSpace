@@ -26,6 +26,7 @@ public class SharedData {
     }
 
     public void addEvent(String event) {
+        System.out.println(event);
         events.add(event);
         try {
             eventQueue.put(event);

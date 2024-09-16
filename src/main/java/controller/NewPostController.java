@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -30,11 +31,16 @@ public class NewPostController {
 
         closeButton.setOnAction(event -> handleClose());
         postButton.setOnAction(event -> handleNewPost());
+        chooseImageButton.setOnAction(event -> handleImagePost());
     }
 
     @FXML
-    private void handleNewPost() {
+    private void handleImagePost() {}
 
+    @FXML
+    private void handleNewPost() {
+        FileChooser fileChooser = new FileChooser();
+        System.out.println("dsd");
     }
 
     @FXML

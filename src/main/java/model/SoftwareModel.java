@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import controller.ControllerForView;
 import services.ApiClient;
 import services.Feed;
+import services.FeedStream;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class SoftwareModel {
         System.out.println(user.getDateOfCreation());
 
 //        Feed feed = new Feed(ControllerForView.feedQueue);
+//        FeedStream feed = new FeedStream(ControllerForView.feedQueue);
 //        Thread feedThread = new Thread(feed);
 //        feedThread.start();
 

@@ -1,7 +1,13 @@
 package services;
 
 import model.SharedData;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -9,39 +15,39 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class Feed implements Runnable {
+public class FeedStream implements Runnable {
 
     private static String url = "http://localhost:8081/posts/events";
     private BlockingQueue<String> queue;
     private static final int MAX_RETRIES = 5;
     private static final int RETRY_DELAY_SECONDS = 5;
+    private WebClient webClient;
 
-
-    public Feed(BlockingQueue<String> queue) {
+    public FeedStream(BlockingQueue<String> queue) {
         this.queue = queue;
+        this.webClient = WebClient.create();
     }
 
     public void startListeningToSSE() {
-        HttpClient client = HttpClient.newBuilder().build();
-        HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url))
+        Flux<String> eventStream = webClient.get()
+                .uri(url)
                 .header("Accept", "text/event-stream")
-                .build();
+                .retrieve()
+                .bodyToFlux(String.class);
 
-        client.sendAsync(req, HttpResponse.BodyHandlers.ofLines())
-                .thenApply(HttpResponse::body)
-                .thenAccept(lines -> lines.forEach(line -> {
+        eventStream.subscribe(
+                line -> {
+                    System.out.println("Read line: " + line); // Log each line read
                     if (!line.isEmpty() && !line.startsWith(":")) {
-                        System.out.println("recived line: " + line);
+                        System.out.println("received line: " + line);
                         processEvent(line);
                     }
-                }))
-                .exceptionally(e -> {
-                    e.printStackTrace();
+                },
+                error -> {
+                    error.printStackTrace();
                     retryConnection();
-                    return null;
-                })
-                .join();
+                }
+        );
     }
 
     private void processEvent(String event) {
