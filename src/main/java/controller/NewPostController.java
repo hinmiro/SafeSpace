@@ -14,7 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -32,7 +31,7 @@ public class NewPostController {
     @FXML
     private Button closeButton;
 
-    @FXML
+    @FXML             
     private void initialize() {
         closeButton.setOnAction(event -> handleClose());
         postButton.setOnAction(event -> handleNewPost());

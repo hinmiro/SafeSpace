@@ -20,7 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import javafx.scene.shape.Circle;
 import model.SessionManager;
+import model.SoftwareModel;
 import view.View;
+import model.UserModel;
 
 public class EditProfileController {
 
@@ -39,6 +41,14 @@ public class EditProfileController {
     public Label bioLabel;
     @FXML
     private Button closeButton;
+    @FXML
+    private TextField fullNameField;
+    @FXML
+    private TextArea bioField;
+    @FXML
+    private Button uploadImageButton;
+    @FXML
+    private Label nameLabel;
 
     @FXML
     public void initialize() {
@@ -73,6 +83,55 @@ public class EditProfileController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void handleImageUpload(ActionEvent actionEvent) {
+        changeProfilePicture();
+    }
+
+    public void handleSaveChanges(ActionEvent actionEvent) {
+        String originalBio = SessionManager.getInstance().getLoggedUser().getBio();
+        String originalProfilePictureID = SessionManager.getInstance().getLoggedUser().getProfilePictureUrl();
+        String newName = fullNameField.getText().trim();
+        String newBio = bioField.getText().trim();
+        String newProfilePictureID = profileImageView.getImage().getUrl();
+
+        SessionManager.getInstance().setFullName(newName);
+
+        if (!newBio.equals(originalBio) || !newProfilePictureID.equals(originalProfilePictureID)) {
+            SessionManager.getInstance().getLoggedUser().setBio(newBio);
+            SessionManager.getInstance().getLoggedUser().setProfilePictureUrl(newProfilePictureID);
+
+            try {
+                ControllerForView controller = new ControllerForView();
+                boolean updateSuccess = controller.updateProfile(null, null, newBio, newProfilePictureID);
+
+                if (updateSuccess) {
+                    ProfileController profileController = new ProfileController();
+                    profileController.updateNameLabel(newName);
+
+                    showAlert("Changes saved successfully.", Alert.AlertType.INFORMATION);
+                } else {
+                    showAlert("Failed to save changes.", Alert.AlertType.ERROR);
+                }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                showAlert("An error occurred while saving changes.", Alert.AlertType.ERROR);
+            }
+        } else {
+            showAlert("No changes made.", Alert.AlertType.WARNING);
+        }
+    }
+
+
+    private void showAlert(String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle("Updates");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     private void makeCircle(ImageView imageView) {
         Circle clip = new Circle(
@@ -119,12 +178,6 @@ public class EditProfileController {
         profileImageView.setOnMouseClicked((MouseEvent event) -> {
             changeProfilePicture();
         });
-    }
-
-    public void handleSaveChanges(ActionEvent actionEvent) {
-    }
-
-    public void handleImageUpload(ActionEvent actionEvent) {
     }
 
     public void setControllerForView(ControllerForView controller) {
