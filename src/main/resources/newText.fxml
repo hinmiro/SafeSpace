@@ -70,7 +70,7 @@
                 <Button onAction="#addList" styleClass="listButton" text="List" />
             </HBox>
 
-            <TextArea id="textWithoutImg" fx:id="textPostArea" prefHeight="271.0" prefRowCount="6" prefWidth="330.0" promptText="Enter text here" styleClass="textPostArea">
+            <TextArea fx:id="textPostArea" prefHeight="271.0" prefRowCount="6" prefWidth="330.0" promptText="Enter text here" styleClass="textPostArea">
                 <VBox.margin>
                     <Insets left="10" right="10" />
                 </VBox.margin>

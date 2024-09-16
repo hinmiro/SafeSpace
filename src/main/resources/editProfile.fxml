@@ -29,7 +29,7 @@
                 </center>
                 <right>
                     <VBox alignment="CENTER">
-                        <Button fx:id="closeButton" onAction="#handleClose" prefHeight="26.0" prefWidth="27.0" styleClass="closeButton" text="X" >
+                        <Button fx:id="closeButton" onAction="#handleClose" prefHeight="26.0" prefWidth="27.0" styleClass="closeButton" text="X">
                             <VBox.margin>
                                 <Insets left="10" right="20" />
                             </VBox.margin>
@@ -46,10 +46,10 @@
             <VBox alignment="CENTER" spacing="10.0">
                 <ImageView fx:id="profileImageView" fitHeight="150" fitWidth="150" preserveRatio="true">
                     <VBox.margin>
-                        <Insets left="10" right="10" bottom="10" />
+                        <Insets bottom="10" left="10" right="10" />
                     </VBox.margin>
                 </ImageView>
-                <Button fx:id="uploadImageButton" onAction="#handleImageUpload" text="Upload Image" styleClass="mainbutton"/>
+                <Button fx:id="uploadImageButton" onAction="#handleImageUpload" styleClass="mainbutton" text="Upload Image" />
             </VBox>
 
             <HBox alignment="CENTER" spacing="40.0">
@@ -62,12 +62,12 @@
             <VBox alignment="CENTER_LEFT" spacing="10.0">
                 <Label fx:id="nameLabel" styleClass="nameLabel" text="Full Name">
                     <VBox.margin>
-                        <Insets right="20" left="20" />
+                        <Insets left="20" right="20" />
                     </VBox.margin>
                 </Label>
-                <TextField fx:id="fullNameField" styleClass="textField" promptText="Enter your full name" maxWidth="400">
+                <TextField fx:id="fullNameField" maxWidth="400" promptText="Enter your full name" styleClass="textField">
                     <VBox.margin>
-                        <Insets right="20" left="20" />
+                        <Insets left="20" right="20" />
                     </VBox.margin>
                 </TextField>
             </VBox>
@@ -75,17 +75,17 @@
             <VBox alignment="CENTER_LEFT" spacing="10.0">
                 <Label fx:id="bioLabel" styleClass="bioLabel" text="Bio">
                     <VBox.margin>
-                        <Insets right="20" left="20" />
+                        <Insets left="20" right="20" />
                     </VBox.margin>
                 </Label>
-                <TextArea fx:id="bioField" styleClass="bio-field" promptText="Enter your bio" prefRowCount="4" maxWidth="400">
+                <TextArea id="bioTextField" fx:id="bioField" maxWidth="400" prefRowCount="4" promptText="Enter your bio" styleClass="bio-field">
                     <VBox.margin>
-                        <Insets right="20" left="20" />
+                        <Insets left="20" right="20" />
                     </VBox.margin>
                 </TextArea>
             </VBox>
 
-            <Button fx:id="saveChangesButton" onAction="#handleSaveChanges" text="Save Changes" styleClass="editProfileButton" maxWidth="200">
+            <Button fx:id="saveChangesButton" maxWidth="200" onAction="#handleSaveChanges" styleClass="editProfileButton" text="Save Changes">
                 <VBox.margin>
                     <Insets top="20" />
                 </VBox.margin>

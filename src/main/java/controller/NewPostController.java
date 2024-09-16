@@ -19,7 +19,7 @@ public class NewPostController {
     @FXML
     private ImageView imageView;
     @FXML
-    private TextArea textWithoutImg;
+    private TextArea textPostArea;
     @FXML
     private Button postButton;
     @FXML
@@ -34,6 +34,7 @@ public class NewPostController {
 
     @FXML
     private void handleNewPost() {
+
     }
 
     @FXML
