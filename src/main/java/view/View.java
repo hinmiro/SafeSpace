@@ -42,29 +42,6 @@ public class View extends Application {
         }
     }
 
-    public void showMain() throws Exception {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/main.fxml"));
-            Parent root = fxmlLoader.load();
-
-            MainController mainController = fxmlLoader.getController();
-            mainController.setMainView(this);
-
-            Scene scene = new Scene(root, 360, 800);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Main Page");
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-
-
     public static void main(String[] args) {
         launch(args);
     }
