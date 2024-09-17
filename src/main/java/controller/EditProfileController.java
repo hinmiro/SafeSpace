@@ -16,18 +16,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.io.IOException;
+
 import javafx.scene.shape.Circle;
 import model.SessionManager;
-import model.SoftwareModel;
 import view.View;
-import model.UserModel;
 
 public class EditProfileController {
 
     private ControllerForView controllerForView;
     private MainController mainController;
+    private ProfileController profileController;
 
     @FXML
     private ImageView profileImageView;
@@ -42,13 +43,15 @@ public class EditProfileController {
     @FXML
     private Button closeButton;
     @FXML
-    private TextField fullNameField;
+    private TextField usernameField;
     @FXML
     private TextArea bioField;
     @FXML
     private Button uploadImageButton;
     @FXML
     private Label nameLabel;
+    @FXML
+    private Button saveChangesButton;
 
     @FXML
     public void initialize() {
@@ -61,6 +64,7 @@ public class EditProfileController {
         clickProfilePic(profileImageView);
         profileImageView.setCursor(Cursor.HAND);
         closeButton.setOnAction(event -> handleClose());
+        saveChangesButton.setOnAction(this::handleSaveChanges);
     }
 
     @FXML
@@ -90,37 +94,23 @@ public class EditProfileController {
     }
 
     public void handleSaveChanges(ActionEvent actionEvent) {
-        String originalBio = SessionManager.getInstance().getLoggedUser().getBio();
-        String originalProfilePictureID = SessionManager.getInstance().getLoggedUser().getProfilePictureUrl();
-        String newName = fullNameField.getText().trim();
+        String newName = usernameField.getText().trim();
         String newBio = bioField.getText().trim();
         String newProfilePictureID = profileImageView.getImage().getUrl();
 
-        SessionManager.getInstance().setFullName(newName);
 
-        if (!newBio.equals(originalBio) || !newProfilePictureID.equals(originalProfilePictureID)) {
-            SessionManager.getInstance().getLoggedUser().setBio(newBio);
-            SessionManager.getInstance().getLoggedUser().setProfilePictureUrl(newProfilePictureID);
+        try {
+            boolean updateSuccess = controllerForView.updateProfile(newName, null, newBio, newProfilePictureID);
 
-            try {
-                ControllerForView controller = new ControllerForView();
-                boolean updateSuccess = controller.updateProfile(null, null, newBio, newProfilePictureID);
-
-                if (updateSuccess) {
-                    ProfileController profileController = new ProfileController();
-                    profileController.updateNameLabel(newName);
-
-                    showAlert("Changes saved successfully.", Alert.AlertType.INFORMATION);
-                } else {
-                    showAlert("Failed to save changes.", Alert.AlertType.ERROR);
-                }
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-                showAlert("An error occurred while saving changes.", Alert.AlertType.ERROR);
+            if (updateSuccess) {
+                //profileController.updateNameLabel(newName);
+                showAlert("Changes saved successfully.", Alert.AlertType.INFORMATION);
             }
-        } else {
-            showAlert("No changes made.", Alert.AlertType.WARNING);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            showAlert("An error occurred while saving changes.", Alert.AlertType.ERROR);
         }
+
     }
 
 
@@ -182,6 +172,10 @@ public class EditProfileController {
 
     public void setControllerForView(ControllerForView controller) {
         controllerForView = controller;
+    }
+
+    public void setProfileController(ProfileController controller) {
+        profileController = controller;
     }
 
     public void setMainView(View view) {

@@ -16,8 +16,10 @@ public class SoftwareModel {
     Gson gson = new Gson();
 
     public UserModel login(String username, String password) throws IOException, InterruptedException {
-        Login login = new Login(username, password);
-        HttpResponse<String> res = ApiClient.postLogin(gson.toJson(login));
+        Map<String, String> loginData = new HashMap<>();
+        loginData.put("username", username);
+        loginData.put("password", password);
+        HttpResponse<String> res = ApiClient.postLogin(gson.toJson(loginData));
         if (res.statusCode() != 200) {
             return null;
         }
@@ -33,9 +35,11 @@ public class SoftwareModel {
     }
 
     public UserModel postRegister(String username, String password) throws IOException, InterruptedException {
-        Register register = new Register(username, password);
+        Map<String, String> registerData = new HashMap<>();
+        registerData.put("username", username);
+        registerData.put("password", password);
 
-        HttpResponse<String> res = ApiClient.postRegister(gson.toJson(register));
+        HttpResponse<String> res = ApiClient.postRegister(gson.toJson(registerData));
         if (res.statusCode() != 201) {
             return null;
         }
@@ -64,7 +68,6 @@ public class SoftwareModel {
         }
         UserModel updatedUser = gson.fromJson(res.body(), UserModel.class);
         System.out.println(updatedUser.getJwt());
-        //updatedUser.setJwt(SessionManager.getInstance().getLoggedUser().getJwt());    // Setting jwt token to be token of updated user
         SessionManager.getInstance().setLoggedUser(updatedUser);
 
         return true;

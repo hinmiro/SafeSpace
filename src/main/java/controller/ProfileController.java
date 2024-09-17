@@ -50,7 +50,6 @@ public class ProfileController {
 
     @FXML
     public void initialize() {
-        updateNameLabel(SessionManager.getInstance().getFullName());
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
         bioLabel.setText(SessionManager.getInstance().getLoggedUser().getBio() == null ? "..." : SessionManager.getInstance().getLoggedUser().getBio());
@@ -117,8 +116,12 @@ public class ProfileController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/editProfile.fxml"));
             Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
+            EditProfileController editProfileController = fxmlLoader.getController();
+            editProfileController.setControllerForView(controllerForView);
+            editProfileController.setProfileController(this);
+
+            Stage stage = (Stage) profileButton.getScene().getWindow();
+            //stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Edit Profile");
             stage.setScene(new Scene(root, 360, 800));
             stage.show();
@@ -156,6 +159,7 @@ public class ProfileController {
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Main Page");
+            MainController mainController = fxmlLoader.getController();
             mainController.setControllerForView(controllerForView);
 
         } catch (IOException e) {
@@ -167,11 +171,6 @@ public class ProfileController {
         controllerForView = controller;
     }
 
-    public void updateNameLabel(String newName) {
-        if (nameLabel != null) {
-            nameLabel.setText(newName);
-        }
-    }
 
     public void setMainView(View view) {
         this.mainView = view;

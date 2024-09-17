@@ -54,11 +54,6 @@
             </HBox>
 
             <VBox alignment="CENTER_LEFT" spacing="5.0">
-                <Label fx:id="nameLabel" styleClass="nameLabel" text="Full Name">
-                    <VBox.margin>
-                        <Insets left="10" />
-                    </VBox.margin>
-                </Label>
                 <Label fx:id="bioLabel" styleClass="bioLabel" text="Bio goes here...">
                     <VBox.margin>
                         <Insets left="10" />
