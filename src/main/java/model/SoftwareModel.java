@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import controller.ControllerForView;
 import services.ApiClient;
 import services.Feed;
-import services.FeedStream;
 
 import java.io.File;
 import java.io.IOException;
