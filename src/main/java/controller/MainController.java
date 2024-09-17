@@ -176,12 +176,6 @@ public class MainController {
         if (SharedData.getInstance().getEventQueue().isEmpty()) {
             noPostsLabel.setVisible(true);
         } else noPostsLabel.setVisible(false);
-
-       /* if (noPosts) {
-            noPostsLabel.setVisible(true);
-        } else {
-            noPostsLabel.setVisible(false);
-        }*/
     }
 
     public void setControllerForView(ControllerForView controller) {

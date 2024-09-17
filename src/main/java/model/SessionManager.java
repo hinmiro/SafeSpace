@@ -4,6 +4,7 @@ public class SessionManager {
 
     private static SessionManager INSTANCE;
     private static UserModel loggedUser;
+    private String fullName;
 
     private SessionManager() {
     }
@@ -19,6 +20,14 @@ public class SessionManager {
 
     public UserModel getLoggedUser() {
         return loggedUser;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public void closeSession() {

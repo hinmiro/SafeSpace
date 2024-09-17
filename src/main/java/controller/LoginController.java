@@ -59,7 +59,7 @@ public class LoginController {
 
         UserModel user = controllerForView.login(username, password);
         if (user == null) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Username or password is wrong.");
+            showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect username or password.");
             return;
         }
 

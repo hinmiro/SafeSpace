@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -19,6 +20,8 @@ public class MessageController {
     private Button leaveMessageButton;
     @FXML
     private Label noMessagesLabel;
+    @FXML
+    private VBox contentBox;
 
     @FXML
     private void initialize() {
@@ -26,6 +29,7 @@ public class MessageController {
         checkIfNoMessages();
 
         leaveMessageButton.setText("x");
+        leaveMessageButton.setStyle("-fx-font-size: 16px;");
 
         leaveMessageButton.setOnAction(event -> {
             try {
@@ -63,9 +67,7 @@ public class MessageController {
     }
 
     public void checkIfNoMessages() {
-        boolean noPosts = true;
-
-        if (noPosts) {
+        if (contentBox.getChildren().isEmpty() || (contentBox.getChildren().size() == 1 && contentBox.getChildren().contains(noMessagesLabel))) {
             noMessagesLabel.setVisible(true);
         } else {
             noMessagesLabel.setVisible(false);

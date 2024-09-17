@@ -3,21 +3,17 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
-import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.io.File;
 import java.io.IOException;
 import javafx.scene.shape.Circle;
 import model.SessionManager;
@@ -49,9 +45,12 @@ public class ProfileController {
     public Label registeredLabel;
     @FXML
     public Label bioLabel;
+    @FXML
+    public Label nameLabel;
 
     @FXML
     public void initialize() {
+        updateNameLabel(SessionManager.getInstance().getFullName());
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
         bioLabel.setText(SessionManager.getInstance().getLoggedUser().getBio() == null ? "..." : SessionManager.getInstance().getLoggedUser().getBio());
@@ -73,8 +72,6 @@ public class ProfileController {
 
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, logOutItem);
         settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
-
-        checkIfNoPosts();
     }
 
     private void showContextMenu(MouseEvent event) {
@@ -170,13 +167,9 @@ public class ProfileController {
         controllerForView = controller;
     }
 
-    public void checkIfNoPosts() {
-        boolean noPosts = true;
-
-        if (noPosts) {
-            noPostsLabel.setVisible(true);
-        } else {
-            noPostsLabel.setVisible(false);
+    public void updateNameLabel(String newName) {
+        if (nameLabel != null) {
+            nameLabel.setText(newName);
         }
     }
 

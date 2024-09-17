@@ -27,7 +27,7 @@
                 </center>
                 <right>
                     <VBox alignment="CENTER">
-                        <Button fx:id="closeButton" onAction="#handleClose" prefHeight="26.0" prefWidth="27.0" styleClass="closeButton" text="X" >
+                        <Button fx:id="closeButton" onAction="#handleClose" styleClass="closeButton" text="x" >
                             <VBox.margin>
                                 <Insets left="10" right="20" />
                             </VBox.margin>
@@ -40,38 +40,52 @@
     </top>
 
     <center>
-        <VBox alignment="CENTER" spacing="20.0">
-            <Label text="Update Your Information" styleClass="headerLabel" />
-            <Label text="Change username: " styleClass="otherLabel" />
-            <TextField fx:id="usernameField" promptText="Enter new username" styleClass="text-field2" >
-                <VBox.margin>
-                    <Insets left="15" right="15" />
-                </VBox.margin>
-            </TextField>
-            <HBox alignment="CENTER" spacing="10.0" >
-                <Button text="Update Username" onAction="#updateUsername" styleClass="mainbutton" />
-            </HBox>
-            <Region prefHeight="1.5" styleClass="line" />
-            <Label text="Change password: " styleClass="otherLabel" />
-            <PasswordField fx:id="passwordField" promptText="Enter new password" styleClass="password-field2">
-                <VBox.margin>
-                    <Insets left="15" right="15" />
-                </VBox.margin>
-            </PasswordField>
-            <Label text="Confirm password: * " styleClass="otherLabel" />
-            <PasswordField fx:id="confirmPasswordField" promptText="Confirm new password" styleClass="password-field2">
-                <VBox.margin>
-                    <Insets left="15" right="15" />
-                </VBox.margin>
-            </PasswordField>
-            <HBox alignment="CENTER" spacing="10.0">
-                <Button text="Update Password" onAction="#updatePassword" styleClass="mainbutton">
-                    <HBox.margin>
-                        <Insets bottom="30" />
-                    </HBox.margin>
-                </Button>
-            </HBox>
-        </VBox>
+        <StackPane>
+            <VBox alignment="CENTER" spacing="20.0">
+                <Label text="Update Your Information" styleClass="headerLabel" />
+                <Label text="Change username: " styleClass="otherLabel" />
+                <TextField fx:id="usernameField" promptText="Enter new username" styleClass="text-field2" >
+                    <VBox.margin>
+                        <Insets left="15" right="15" />
+                    </VBox.margin>
+                </TextField>
+                <HBox alignment="CENTER" spacing="10.0" >
+                    <Button text="Update Username" onAction="#updateUsername" styleClass="mainbutton" />
+                </HBox>
+                <Region prefHeight="1.5" styleClass="line" />
+                <Label text="Change password: " styleClass="otherLabel" />
+                <PasswordField fx:id="passwordField" promptText="Enter new password" styleClass="password-field2">
+                    <VBox.margin>
+                        <Insets left="15" right="15" />
+                    </VBox.margin>
+                </PasswordField>
+                <Label text="Confirm password: * " styleClass="otherLabel" />
+                <PasswordField fx:id="confirmPasswordField" promptText="Confirm new password" styleClass="password-field2">
+                    <VBox.margin>
+                        <Insets left="15" right="15" />
+                    </VBox.margin>
+                </PasswordField>
+                <HBox alignment="CENTER" spacing="10.0">
+                    <Button text="Update Password" onAction="#updatePassword" styleClass="mainbutton">
+                        <HBox.margin>
+                            <Insets bottom="30" />
+                        </HBox.margin>
+                    </Button>
+                </HBox>
+            </VBox>
+
+            <ImageView fx:id="topImage" fitHeight="100" fitWidth="100" preserveRatio="true" StackPane.alignment="TOP_RIGHT">
+                <image>
+                    <Image url="@/kuvat/updateInfo.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="bottomImage" fitHeight="100" fitWidth="100" preserveRatio="true" StackPane.alignment="BOTTOM_LEFT" >
+                <image>
+                    <Image url="@/kuvat/updateInfo2.png"/>
+                </image>
+            </ImageView>
+        </StackPane>
     </center>
 
 </BorderPane>
