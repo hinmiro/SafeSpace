@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class UpdateInfoController {
 
-    private ControllerForView controllerForView;
+    private ControllerForView controllerForView = ControllerForView.getInstance();
     @FXML
     private TextField usernameField;
     @FXML
@@ -63,7 +63,6 @@ public class UpdateInfoController {
             Parent root = loader.load();
 
             ProfileController profileController = loader.getController();
-            profileController.setControllerForView(controllerForView);
 
             Stage stage = new Stage();
             stage.setTitle("Profile Page");

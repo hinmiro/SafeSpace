@@ -11,8 +11,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ControllerForView extends Controller {
 
     public static BlockingQueue<String> feedQueue = new LinkedBlockingQueue<>();
+    private static ControllerForView INSTANCE;
 
-    public UserModel login(String username, String password) {
+    private ControllerForView() {}
+
+    public static ControllerForView getInstance() {
+        INSTANCE = INSTANCE == null ? new ControllerForView() : INSTANCE;
+        return INSTANCE;
+    }
+
+
+    public  UserModel login(String username, String password) {
         try {
             UserModel user = app.login(username, password);
             if (user != null) {

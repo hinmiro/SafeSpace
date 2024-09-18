@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public class NewPostController {
 
-    private ControllerForView controllerForView;
+    private ControllerForView controllerForView = ControllerForView.getInstance();
     private MainController mainController;
 
     @FXML
@@ -53,7 +53,6 @@ public class NewPostController {
             Parent root = loader.load();
 
             MainController mainController = loader.getController();
-            mainController.setControllerForView(controllerForView);
 
             Stage stage = new Stage();
             stage.setTitle("Main Page");
@@ -104,7 +103,4 @@ public class NewPostController {
         this.mainController = mainController;
     }
 
-    public void setControllerForView(ControllerForView controllerForView) {
-        this.controllerForView = controllerForView;
-    }
 }

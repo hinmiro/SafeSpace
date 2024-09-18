@@ -26,7 +26,7 @@ import view.View;
 
 public class EditProfileController {
 
-    private ControllerForView controllerForView;
+    private final ControllerForView controllerForView = ControllerForView.getInstance();
     private MainController mainController;
     private ProfileController profileController;
 
@@ -76,7 +76,6 @@ public class EditProfileController {
             Parent root = loader.load();
 
             ProfileController profileController = loader.getController();
-            profileController.setControllerForView(controllerForView);
 
             Stage stage = new Stage();
             stage.setTitle("Profile Page");
@@ -170,9 +169,6 @@ public class EditProfileController {
         });
     }
 
-    public void setControllerForView(ControllerForView controller) {
-        controllerForView = controller;
-    }
 
     public void setProfileController(ProfileController controller) {
         profileController = controller;

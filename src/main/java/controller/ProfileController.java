@@ -14,14 +14,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+
 import javafx.scene.shape.Circle;
 import model.SessionManager;
 import view.View;
 
 public class ProfileController {
 
-    private ControllerForView controllerForView;
+    private ControllerForView controllerForView = ControllerForView.getInstance();
     private ContextMenu settingsContextMenu;
     private MainController mainController;
 
@@ -117,9 +119,8 @@ public class ProfileController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/editProfile.fxml"));
             Parent root = fxmlLoader.load();
             EditProfileController editProfileController = fxmlLoader.getController();
-            editProfileController.setControllerForView(controllerForView);
             editProfileController.setProfileController(this);
-
+            editProfileController.setMainView(mainView);
             Stage stage = (Stage) profileButton.getScene().getWindow();
             //stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Edit Profile");
@@ -160,15 +161,11 @@ public class ProfileController {
             stage.setScene(scene);
             stage.setTitle("Main Page");
             MainController mainController = fxmlLoader.getController();
-            mainController.setControllerForView(controllerForView);
+            mainController.setMainView(mainView);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void setControllerForView(ControllerForView controller) {
-        controllerForView = controller;
     }
 
 

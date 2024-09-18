@@ -21,7 +21,7 @@ import java.util.List;
 
 public class MainController {
 
-    private ControllerForView controllerForView;
+    private ControllerForView controllerForView = ControllerForView.getInstance();
     private volatile boolean stopQueueProcessingFlag = true;
     private Thread queueThread;
     private View mainView;
@@ -118,7 +118,6 @@ public class MainController {
             stopQueueProcessing();
 
             ProfileController profileController = fxmlLoader.getController();
-            profileController.setControllerForView(controllerForView);
             profileController.setMainController(this);
             profileController.setMainView(mainView);
             profileController.setDialogStage(stage);
@@ -127,10 +126,19 @@ public class MainController {
 
         if (fxmlFile.equals("/main.fxml")) {
             MainController mainController = fxmlLoader.getController();
-            mainController.setControllerForView(controllerForView);
             mainController.loadEvents();
+            System.out.println("maini view " + mainView.getClass());
             mainController.stopQueueProcessingFlag = false;
             mainController.startQueueProcessing();
+        }
+
+        if (fxmlFile.equals("/messages.fxml")) {
+            stopQueueProcessing();
+
+            MessageController messageController = fxmlLoader.getController();
+            messageController.setMainView(mainView);
+            messageController.setMainController(this);
+
         }
     }
 
@@ -140,7 +148,6 @@ public class MainController {
             Parent newPostPane = loader.load();
 
             NewPostController newPostController = loader.getController();
-            newPostController.setControllerForView(controllerForView);
             newPostController.setMainController(this);
 
             Stage stage = (Stage) feedListView.getScene().getWindow();
@@ -159,7 +166,6 @@ public class MainController {
             Parent newPostPane2 = loader.load();
 
             NewTextController newTextController = loader.getController();
-            newTextController.setControllerForView(controllerForView);
             newTextController.setMainController(this);
 
             Stage stage = (Stage) feedListView.getScene().getWindow();
@@ -178,9 +184,6 @@ public class MainController {
         } else noPostsLabel.setVisible(false);
     }
 
-    public void setControllerForView(ControllerForView controller) {
-        this.controllerForView = controller;
-    }
 
     private synchronized void startQueueProcessing() {
         stopQueueProcessingFlag = false;
@@ -217,5 +220,6 @@ public class MainController {
     }
 
     public void setMainView(View view) { mainView = view; }
+
 
 }
