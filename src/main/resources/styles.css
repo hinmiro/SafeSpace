@@ -456,26 +456,42 @@ StackPane, BorderPane {
     -fx-font-weight: bold;
     -fx-padding: 10 0;
     -fx-text-fill: #333;
-
 }
 
 .otherLabel {
     -fx-font-size: 14px;
     -fx-text-fill: #666;
+    -fx-font-weight: bold;
 }
 
-.text-field2, .password-field2 {
+.password-field2 {
     -fx-pref-width: 300px;
-    -fx-padding: 15;
-    -fx-border-color: #E1E5F2;
-    -fx-border-width: 1px;
-    -fx-border-radius: 5px;
-    -fx-background-color: #fff;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 0);
 }
 
-.text-field2:focused, .password-field2:focused {
-    -fx-border-color: #3b5998;
+.password-strength-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #888;
+}
+
+.password-field2.weak {
+    -fx-background-color: #ffdddd;
+}
+
+.password-field2.medium {
+    -fx-background-color: #ffffcc;
+}
+
+.password-field2.strong {
+    -fx-background-color: #ccffcc;
+}
+
+.password-requirements {
+    -fx-font-size: 12px;
+    -fx-text-fill: #555;
+}
+
+.password-requirements .check-icon {
+    -fx-fill: green;
 }
 
 /* edit profile */

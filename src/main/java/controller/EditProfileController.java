@@ -16,10 +16,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.IOException;
-
 import javafx.scene.shape.Circle;
 import model.SessionManager;
 import view.View;
@@ -97,12 +95,10 @@ public class EditProfileController {
         String newBio = bioField.getText().trim();
         String newProfilePictureID = profileImageView.getImage().getUrl();
 
-
         try {
             boolean updateSuccess = controllerForView.updateProfile(newName, null, newBio, newProfilePictureID);
 
             if (updateSuccess) {
-                //profileController.updateNameLabel(newName);
                 showAlert("Changes saved successfully.", Alert.AlertType.INFORMATION);
             }
         } catch (IOException | InterruptedException e) {

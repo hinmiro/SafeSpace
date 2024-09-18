@@ -47,8 +47,6 @@ public class ProfileController {
     public Label registeredLabel;
     @FXML
     public Label bioLabel;
-    @FXML
-    public Label nameLabel;
 
     @FXML
     public void initialize() {
@@ -66,7 +64,7 @@ public class ProfileController {
         settingsContextMenu = new ContextMenu();
         MenuItem editProfileItem = new MenuItem("Edit Profile");
         editProfileItem.setOnAction(event -> openEditProfilePage());
-        MenuItem editInfoItem = new MenuItem("Update Info");
+        MenuItem editInfoItem = new MenuItem("Edit Password");
         editInfoItem.setOnAction(event -> openUpdateInfoPage());
         MenuItem logOutItem = new MenuItem("Log Out");
         logOutItem.setOnAction(event -> showLogOut());
@@ -104,6 +102,9 @@ public class ProfileController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/updateInfo.fxml"));
             Parent root = fxmlLoader.load();
+            UpdateInfoController updateInfoController = fxmlLoader.getController();
+            updateInfoController.setUpdateInfoController(this);
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Update Info");
@@ -156,6 +157,7 @@ public class ProfileController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = fxmlLoader.load();
+
             Scene scene = new Scene(root, 360, 800);
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
