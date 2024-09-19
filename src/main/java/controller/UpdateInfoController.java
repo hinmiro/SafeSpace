@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import view.View;
 
 import java.io.IOException;
 
@@ -13,6 +14,8 @@ public class UpdateInfoController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private ProfileController profileController;
+    private MainController mainController;
+
     @FXML
     private TextField usernameField;
     @FXML
@@ -23,6 +26,8 @@ public class UpdateInfoController {
     private Button closeButton;
     @FXML
     private Label passwordStrengthLabel;
+    @FXML
+    private View mainView;
 
     @FXML
     private void initialize() {
@@ -41,6 +46,8 @@ public class UpdateInfoController {
             Parent root = loader.load();
 
             ProfileController profileController = loader.getController();
+            profileController.setMainView(mainView);
+            profileController.setMainController(mainController);
 
             Stage stage = new Stage();
             stage.setTitle("Profile Page");
@@ -121,9 +128,13 @@ public class UpdateInfoController {
     }
 
 
-    public void setUpdateInfoController(ProfileController controller) {
+    public void setProfileController(ProfileController controller) {
         profileController = controller;
     }
+
+    public void setMainView(View mainView) { this.mainView = mainView; }
+
+    public void setMainController(MainController mainController) { this.mainController = mainController; }
 
 }
 

@@ -2,14 +2,17 @@ package model;
 
 import com.google.gson.Gson;
 import controller.ControllerForView;
+import javafx.geometry.Pos;
 import services.ApiClient;
 import services.Feed;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 
 
 public class SoftwareModel {
@@ -23,15 +26,8 @@ public class SoftwareModel {
         if (res.statusCode() != 200) {
             return null;
         }
-        UserModel user = gson.fromJson(res.body(), UserModel.class);
-        System.out.println(user.getDateOfCreation());
 
-//        Feed feed = new Feed(ControllerForView.feedQueue);
-//        FeedStream feed = new FeedStream(ControllerForView.feedQueue);
-//        Thread feedThread = new Thread(feed);
-//        feedThread.start();
-
-        return user;
+        return gson.fromJson(res.body(), UserModel.class);
     }
 
     public UserModel postRegister(String username, String password) throws IOException, InterruptedException {
@@ -80,6 +76,20 @@ public class SoftwareModel {
 
         HttpResponse<String> res = ApiClient.createPost(jsonData);
         return res.statusCode() == 201;
+    }
+
+    public void startMainFeedThread() throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.getPosts();
+        if (res.statusCode() == 200) {
+            Post[] posts = gson.fromJson(res.body(), Post[].class);
+            for (Post p : posts) {
+                SharedData.getInstance().addEvent(p);
+            }
+
+            Feed feed = new Feed();
+            Thread feedThread = new Thread(feed);
+            feedThread.start();
+        }
     }
 
 }

@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import javafx.scene.shape.Circle;
 import model.SessionManager;
+import model.SharedData;
 import view.View;
 
 public class ProfileController {
@@ -81,7 +82,6 @@ public class ProfileController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/logOut.fxml"));
             Parent logoutRoot = loader.load();
-
             LogOutController logOutController = loader.getController();
             logOutController.setDialogStage(dialogStage);
             logOutController.setMainView(mainView);
@@ -103,7 +103,9 @@ public class ProfileController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/updateInfo.fxml"));
             Parent root = fxmlLoader.load();
             UpdateInfoController updateInfoController = fxmlLoader.getController();
-            updateInfoController.setUpdateInfoController(this);
+            updateInfoController.setProfileController(this);
+            updateInfoController.setMainView(mainView);
+            updateInfoController.setMainController(mainController);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -122,6 +124,7 @@ public class ProfileController {
             EditProfileController editProfileController = fxmlLoader.getController();
             editProfileController.setProfileController(this);
             editProfileController.setMainView(mainView);
+            editProfileController.setMainController(mainController);
             Stage stage = (Stage) profileButton.getScene().getWindow();
             //stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Edit Profile");
@@ -157,12 +160,12 @@ public class ProfileController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = fxmlLoader.load();
-
             Scene scene = new Scene(root, 360, 800);
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Main Page");
             MainController mainController = fxmlLoader.getController();
+            //mainController.loadEvents();
             mainController.setMainView(mainView);
 
         } catch (IOException e) {
@@ -182,4 +185,5 @@ public class ProfileController {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
+
 }

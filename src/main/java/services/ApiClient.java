@@ -20,7 +20,6 @@ public class ApiClient {
     private static final String url = "http://10.120.32.76:8080/api/v1";
     private static final String authUrl = "http://10.120.32.76:8080/auth";
     private static final String pictureUrl = "http://10.120.32.76:8080/";
-    private static final String sseUrl = "http://localhost:8081/";
 
     public ApiClient(HttpClient client) {
         ApiClient.client = client;

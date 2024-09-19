@@ -1,5 +1,7 @@
 package services;
 
+import com.google.gson.Gson;
+import model.Post;
 import model.SharedData;
 
 import java.net.URI;
@@ -7,18 +9,20 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Feed implements Runnable {
 
-    private static String url = "http://localhost:8081/posts/events";
-    private BlockingQueue<String> queue;
-    private static final int MAX_RETRIES = 5;
-    private static final int RETRY_DELAY_SECONDS = 5;
+    private static String url = "http://localhost:8081/api/v1/events";
+    private BlockingQueue<Post> queue;
+    private Gson gson;
 
 
-    public Feed(BlockingQueue<String> queue) {
-        this.queue = queue;
+    public Feed() {
+        gson = new Gson();
     }
 
     public void startListeningToSSE() {
@@ -30,38 +34,28 @@ public class Feed implements Runnable {
 
         client.sendAsync(req, HttpResponse.BodyHandlers.ofLines())
                 .thenApply(HttpResponse::body)
-                .thenAccept(lines -> lines.forEach(line -> {
-                    if (!line.isEmpty() && !line.startsWith(":")) {
-                        System.out.println("recived line: " + line);
-                        processEvent(line);
-                    }
-                }))
+                .thenAccept(lines -> {
+                    System.out.println("here it comes " + lines);
+                    lines.forEach(line -> {
+                        if (line.startsWith("data:")) {
+                            String event = line.substring(5).trim();
+                            processEvent(event);
+                        }
+                    });
+                })
                 .exceptionally(e -> {
                     e.printStackTrace();
-                    retryConnection();
                     return null;
                 })
                 .join();
     }
 
     private void processEvent(String event) {
-        SharedData.getInstance().addEvent(event);
+        Pattern pattern = Pattern.compile("data:(\\{.*})");
+        Post post = gson.fromJson(event, Post.class);
+        SharedData.getInstance().addEvent(post);
     }
 
-    private void retryConnection() {
-        for (int i = 1; i <= MAX_RETRIES; i++) {
-            try {
-                System.out.println("Retrying connection... Attempt " + i);
-                TimeUnit.SECONDS.sleep(RETRY_DELAY_SECONDS);
-                startListeningToSSE();
-                break;
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                System.out.println("Retry interrupted");
-                break;
-            }
-        }
-    }
 
     @Override
     public void run() {

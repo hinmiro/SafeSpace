@@ -7,13 +7,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class SharedData {
     private static SharedData instance;
-    private List<String> events;
-    private BlockingQueue<String> eventQueue;
+    private BlockingQueue<Post> postQueue;
+    private ArrayList<Post> posts;
 
 
     private SharedData() {
-        events = new ArrayList<>();
-        eventQueue = new LinkedBlockingQueue<>();
+        postQueue = new LinkedBlockingQueue<>();
+        posts = new ArrayList<>();
     }
 
     public static synchronized SharedData getInstance() {
@@ -21,26 +21,28 @@ public class SharedData {
         return instance;
     }
 
-    public List<String> getEvents() {
-        return events;
-    }
-
-    public void addEvent(String event) {
-        System.out.println(event);
-        events.add(event);
+    public void addEvent(Post event) {
         try {
-            eventQueue.put(event);
+            postQueue.put(event);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             e.printStackTrace();
         }
     }
 
-    public String takeEvent() throws InterruptedException {
-        return eventQueue.take();
+    public Post takeEvent() throws InterruptedException {
+
+        Post post = postQueue.take();
+        posts.add(post);
+        return post;
     }
 
-    public BlockingQueue<String> getEventQueue() {
-        return eventQueue;
+    public BlockingQueue<Post> getEventQueue() {
+        return postQueue;
     }
+
+    public ArrayList<Post> getPosts() {
+        return posts;
+    }
+
 }

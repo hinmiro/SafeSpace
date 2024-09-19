@@ -1,5 +1,6 @@
 package controller;
 
+import model.Post;
 import model.SessionManager;
 import model.UserModel;
 
@@ -10,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class ControllerForView extends Controller {
 
-    public static BlockingQueue<String> feedQueue = new LinkedBlockingQueue<>();
+    public static BlockingQueue<Post> feedQueue = new LinkedBlockingQueue<>();
     private static ControllerForView INSTANCE;
 
     private ControllerForView() {}
@@ -26,6 +27,7 @@ public class ControllerForView extends Controller {
             UserModel user = app.login(username, password);
             if (user != null) {
                 SessionManager.getInstance().setLoggedUser(user);
+                app.startMainFeedThread();
                 return user;
             }
         } catch (InterruptedException | IOException e) {
@@ -65,6 +67,10 @@ public class ControllerForView extends Controller {
 
     public boolean sendPost(String text) throws IOException, InterruptedException {
         return app.createNewPost(text);
+    }
+
+    public BlockingQueue<Post> getFeed() {
+        return feedQueue;
     }
 
 }
