@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.scene.control.ListView;
 import model.SessionManager;
 import model.UserModel;
 
@@ -11,8 +12,27 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ControllerForView extends Controller {
 
     public static BlockingQueue<String> feedQueue = new LinkedBlockingQueue<>();
+    private static ControllerForView INSTANCE;
 
-    public UserModel login(String username, String password) {
+    private ControllerForView() {}
+
+    public static ControllerForView getInstance() {
+        INSTANCE = INSTANCE == null ? new ControllerForView() : INSTANCE;
+        return INSTANCE;
+    }
+
+    private ListView<String> feedListView;
+
+    public void setFeedListView(ListView<String> listView) {
+        this.feedListView = listView;
+    }
+
+    public ListView<String> getFeedListView() {
+        return feedListView;
+    }
+
+
+    public  UserModel login(String username, String password) {
         try {
             UserModel user = app.login(username, password);
             if (user != null) {

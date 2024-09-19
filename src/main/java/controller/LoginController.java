@@ -28,7 +28,7 @@ public class LoginController {
     @FXML
     private Button registerButton;
 
-    private ControllerForView controllerForView = new ControllerForView();
+    private ControllerForView controllerForView = ControllerForView.getInstance();
     private View mainView;
 
     @FXML
@@ -70,7 +70,6 @@ public class LoginController {
                 Parent root = loader.load();
 
                 MainController mainController = loader.getController();
-                mainController.setControllerForView(controllerForView);
                 mainController.setMainView(mainView);
 
 
@@ -93,7 +92,6 @@ public class LoginController {
             Parent root = loader.load();
 
             RegisterController registerController = loader.getController();
-            registerController.setControllerForView(controllerForView);
 
             Stage stage = (Stage) registerButton.getScene().getWindow();
 

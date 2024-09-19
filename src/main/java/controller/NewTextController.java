@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class NewTextController {
 
-    private ControllerForView controllerForView;
+    private ControllerForView controllerForView = ControllerForView.getInstance();
     private MainController mainController;
 
     @FXML
@@ -35,10 +35,10 @@ public class NewTextController {
         try {
             boolean res = controllerForView.sendPost(textPostArea.getText());
             if (res) {
-                showAlert("Info", "New post sent!");
+                showAlert("New post sent!");
                 handleClose();
             } else {
-                showAlert("Info", "Spectacular error has occurred...");
+                showAlert("Spectacular error has occurred...");
             }
         } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
@@ -54,7 +54,6 @@ public class NewTextController {
             Parent root = loader.load();
 
             MainController mainController = loader.getController();
-            mainController.setControllerForView(controllerForView);
 
             Stage stage = new Stage();
             stage.setTitle("Main Page");
@@ -106,13 +105,10 @@ public class NewTextController {
         this.mainController = mainController;
     }
 
-    public void setControllerForView(ControllerForView controllerForView) {
-        this.controllerForView = controllerForView;
-    }
 
-    private void showAlert(String title, String message) {
+    private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
+        alert.setTitle("info");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

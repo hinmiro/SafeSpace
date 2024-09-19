@@ -27,7 +27,7 @@
                 </center>
                 <right>
                     <VBox alignment="CENTER">
-                        <Button fx:id="closeButton" onAction="#handleClose" prefHeight="26.0" prefWidth="27.0" styleClass="closeButton" text="x" >
+                        <Button fx:id="closeButton" prefHeight="26.0" prefWidth="27.0" styleClass="closeButton" text="x" >
                             <VBox.margin>
                                 <Insets left="10" right="20" />
                             </VBox.margin>

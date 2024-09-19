@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import view.View;
+
 import java.io.IOException;
 
 public class MessageController {
@@ -22,6 +24,11 @@ public class MessageController {
     private Label noMessagesLabel;
     @FXML
     private VBox contentBox;
+    @FXML
+    private View mainView;
+
+    private MainController mainController;
+    private ControllerForView controllerForView = ControllerForView.getInstance();
 
     @FXML
     private void initialize() {
@@ -64,6 +71,18 @@ public class MessageController {
         Scene scene = new Scene(root, 360, 800);
         stage.setScene(scene);
         stage.setTitle(title);
+
+        if (fxmlFile.equals("/profile.fxml")) {
+            ProfileController profileController = fxmlLoader.getController();
+            profileController.setMainView(mainView);
+            //profileController.setDialogStage(stage);
+
+        }
+
+        if (fxmlFile.equals("/main.fxml")) {
+            MainController mainController = fxmlLoader.getController();
+            mainController.setMainView(mainView);
+        }
     }
 
     public void checkIfNoMessages() {
@@ -73,4 +92,13 @@ public class MessageController {
             noMessagesLabel.setVisible(false);
         }
     }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+    public void setMainView(View view) {
+        this.mainView = view;
+    }
+
 }

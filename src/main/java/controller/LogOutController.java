@@ -43,7 +43,6 @@ public class LogOutController {
         }
 
         SessionManager.getInstance().closeSession();
-
         if (mainView != null) {
             mainView.showLogin();
         }
@@ -62,4 +61,6 @@ public class LogOutController {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
+
+
 }

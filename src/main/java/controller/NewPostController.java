@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
@@ -20,7 +21,7 @@ import java.io.IOException;
 
 public class NewPostController {
 
-    private ControllerForView controllerForView;
+    private ControllerForView controllerForView = ControllerForView.getInstance();
     private MainController mainController;
 
     @FXML
@@ -44,16 +45,12 @@ public class NewPostController {
     private void handleNewPost() {
     }
 
-    @FXML
     private void handleClose() {
-        closeButton.getScene().getWindow().hide();
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
             Parent root = loader.load();
 
             MainController mainController = loader.getController();
-            mainController.setControllerForView(controllerForView);
 
             Stage stage = new Stage();
             stage.setTitle("Main Page");
@@ -104,7 +101,4 @@ public class NewPostController {
         this.mainController = mainController;
     }
 
-    public void setControllerForView(ControllerForView controllerForView) {
-        this.controllerForView = controllerForView;
-    }
 }

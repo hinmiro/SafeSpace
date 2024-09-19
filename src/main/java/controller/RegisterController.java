@@ -28,11 +28,7 @@ public class RegisterController {
     @FXML
     private Button backButton;
 
-    private ControllerForView controllerForView;
-
-    public void setControllerForView(ControllerForView controllerForView) {
-        this.controllerForView = controllerForView;
-    }
+    private ControllerForView controllerForView = ControllerForView.getInstance();
 
     @FXML
     public void initialize() {
