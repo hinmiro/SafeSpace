@@ -11,12 +11,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.Post;
 import model.PostListCell;
 import model.SharedData;
 import view.View;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
 
 public class MainController {
 
@@ -24,6 +26,7 @@ public class MainController {
     private volatile boolean stopQueueProcessingFlag = true;
     private Thread queueThread;
     private View mainView;
+    private ArrayList<Post> posts;
 
     @FXML
     private Button homeButton;
@@ -40,11 +43,17 @@ public class MainController {
     @FXML
     private Button createTextPostButton;
     @FXML
+    private Pane newWindow;
+    @FXML
     private Label noPostsLabel;
     @FXML
-    private ListView<String> feedListView;
+    private ListView<Post> feedListView;
     @FXML
     private VBox contentBox;
+
+    public MainController() {
+        this.posts = new ArrayList<>();
+    }
 
     @FXML
     private void initialize() {
@@ -79,7 +88,7 @@ public class MainController {
 
         feedListView.setCellFactory(param -> new PostListCell());
         loadEvents();
-        checkIfNoPosts();
+        //checkIfNoPosts();
         if (stopQueueProcessingFlag) {
             startQueueProcessing();
             stopQueueProcessingFlag = false;
@@ -123,7 +132,6 @@ public class MainController {
         if (fxmlFile.equals("/main.fxml")) {
             MainController mainController = fxmlLoader.getController();
             mainController.loadEvents();
-            System.out.println("maini view " + mainView.getClass());
             mainController.stopQueueProcessingFlag = false;
             mainController.startQueueProcessing();
         }
@@ -187,11 +195,15 @@ public class MainController {
             queueThread = new Thread(() -> {
                 while (!stopQueueProcessingFlag) {
                     try {
-                        String data = SharedData.getInstance().takeEvent();
-                        Platform.runLater(() -> {
-                            feedListView.getItems().add(data);
-                            feedListView.scrollTo(feedListView.getItems().size() - 1);
-                        });
+                        Post post = SharedData.getInstance().takeEvent();
+                        if (post != null) {
+                            Platform.runLater(() -> {
+                                feedListView.getItems().add(post);
+                                feedListView.scrollTo(feedListView.getItems().size() - 1);
+                            });
+                        } else {
+                            Thread.sleep(100);
+                        }
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
@@ -199,7 +211,9 @@ public class MainController {
             });
             queueThread.start();
         }
+
     }
+
 
     public synchronized void stopQueueProcessing() {
         stopQueueProcessingFlag = true;
@@ -209,13 +223,15 @@ public class MainController {
     }
 
 
-    private void loadEvents() {
-        List<String> events = SharedData.getInstance().getEvents();
-        System.out.println(events);
-        feedListView.getItems().setAll(events);
+    public void loadEvents() {
+        feedListView.getItems().setAll(SharedData.getInstance().getPosts());
+        feedListView.scrollTo(feedListView.getItems().size() - 1);
     }
 
-    public void setMainView(View view) { mainView = view; }
+    public void setMainView(View view) {
+        mainView = view;
+    }
+
 
 
 }
