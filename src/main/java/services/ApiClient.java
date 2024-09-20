@@ -3,15 +3,12 @@ package services;
 
 import model.SessionManager;
 import model.UserModel;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ApiClient {
 
@@ -182,6 +179,18 @@ public class ApiClient {
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
         return res;
     }
+
+    public static HttpResponse<String> getUsernameByUserID(int userID) throws IOException, InterruptedException {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/users/" + userID))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .GET().build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        return res;
+    }
+
 
     // Posts
 

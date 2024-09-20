@@ -9,11 +9,9 @@ public class UserModel {
     private String profilePictureID;
     private String userID;
     private String dateOfCreation;
-    private ArrayList<UserModel> friends;
-    private ArrayList<Post> likedPosts;
-    private ArrayList<Post> posts;
-
-
+    private ArrayList<Integer> friends;
+    private ArrayList<Integer> likedPosts;
+    private ArrayList<Integer> posts;
 
     public UserModel(String username, String userId, String dateOfCreation) {
         this.username = username;
@@ -48,27 +46,27 @@ public class UserModel {
 
     public String getDateOfCreation() { return dateOfCreation; }
 
-    public ArrayList<UserModel> getFriends() {
+    public ArrayList<Integer> getFriends() {
         return friends;
     }
 
-    public void setFriends(ArrayList<UserModel> friends) {
+    public void setFriends(ArrayList<Integer> friends) {
         this.friends = friends;
     }
 
-    public ArrayList<Post> getLikedPosts() {
+    public ArrayList<Integer> getLikedPosts() {
         return likedPosts;
     }
 
-    public void setLikedPosts(ArrayList<Post> likedPosts) {
+    public void setLikedPosts(ArrayList<Integer> likedPosts) {
         this.likedPosts = likedPosts;
     }
 
-    public ArrayList<Post> getPosts() {
+    public ArrayList<Integer> getPosts() {
         return posts;
     }
 
-    public void setPosts(ArrayList<Post> posts) {
+    public void setPosts(ArrayList<Integer> posts) {
         this.posts = posts;
     }
 

@@ -17,8 +17,6 @@ public class UpdateInfoController {
     private MainController mainController;
 
     @FXML
-    private TextField usernameField;
-    @FXML
     private PasswordField passwordField;
     @FXML
     private PasswordField confirmPasswordField;
@@ -26,18 +24,10 @@ public class UpdateInfoController {
     private Button closeButton;
     @FXML
     private Label passwordStrengthLabel;
-
-    @FXML
-    private Label passwordStrengthLabel;
     @FXML
     private View mainView;
 
     @FXML
-    private void initialize() {
-        closeButton.setOnAction(event -> handleClose());
-        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
-            updatePasswordStrength(newValue);
-        });
     private void initialize() {
         closeButton.setOnAction(event -> handleClose());
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {

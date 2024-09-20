@@ -15,7 +15,6 @@ import model.Post;
 import model.PostListCell;
 import model.SharedData;
 import view.View;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
@@ -42,8 +41,6 @@ public class MainController {
     private Button createPicPostButton;
     @FXML
     private Button createTextPostButton;
-    @FXML
-    private Pane newWindow;
     @FXML
     private Label noPostsLabel;
     @FXML
@@ -93,7 +90,6 @@ public class MainController {
             startQueueProcessing();
             stopQueueProcessingFlag = false;
         }
-
     }
 
     private void togglePostMenu() {
@@ -188,7 +184,6 @@ public class MainController {
         } else noPostsLabel.setVisible(false);
     }
 
-
     private synchronized void startQueueProcessing() {
         stopQueueProcessingFlag = false;
         if (queueThread == null || !queueThread.isAlive()) {
@@ -211,9 +206,7 @@ public class MainController {
             });
             queueThread.start();
         }
-
     }
-
 
     public synchronized void stopQueueProcessing() {
         stopQueueProcessingFlag = true;
@@ -221,7 +214,6 @@ public class MainController {
             queueThread.interrupt();
         }
     }
-
 
     public void loadEvents() {
         feedListView.getItems().setAll(SharedData.getInstance().getPosts());
@@ -231,7 +223,4 @@ public class MainController {
     public void setMainView(View view) {
         mainView = view;
     }
-
-
-
 }

@@ -521,8 +521,57 @@ StackPane, BorderPane {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 0);
 }
 
+/* uusi teksti postaus */
 
+.post-cell {
+    -fx-background-color: #ffffff;
+    -fx-padding: 10;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-border-color: #e0e0e0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+}
 
+.username {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #2c3e50;
+}
+
+.post-content {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+    -fx-line-spacing: 1.5;
+}
+
+.like-button {
+    -fx-background-color: rgb(132, 228, 132);
+    -fx-padding: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+    -fx-transition: all 0.2s;
+}
+
+.like-button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-background-color: #dcdcdc;
+}
+
+.like-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.username-box {
+    -fx-padding: 5;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+    -fx-background-color: #f0f0f0;
+}
+
+/* uusi kuva postaus */
 
 
 

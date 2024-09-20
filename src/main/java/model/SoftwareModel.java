@@ -1,15 +1,11 @@
 package model;
 
 import com.google.gson.Gson;
-import controller.ControllerForView;
-import javafx.geometry.Pos;
 import services.ApiClient;
 import services.Feed;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.http.HttpResponse;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -91,6 +87,24 @@ public class SoftwareModel {
             feedThread.start();
         }
     }
+
+    public String getUsernameByPostCreatorID(int userID) throws IOException, InterruptedException {
+        HttpResponse<String> response = ApiClient.getUsernameByUserID(userID);
+
+        if (response.statusCode() == 200) {
+            Gson gson = new Gson();
+            try {
+                UserModel userResponse = gson.fromJson(response.body(), UserModel.class);
+                return userResponse.getUsername();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
 
 }
 
