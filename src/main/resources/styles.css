@@ -530,22 +530,41 @@ StackPane, BorderPane {
     -fx-background-radius: 8;
     -fx-border-color: #e0e0e0;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-cursor: hand;
 }
 
 .username {
     -fx-font-weight: bold;
     -fx-font-size: 16px;
     -fx-text-fill: #2c3e50;
+    -fx-fill: #333;
 }
 
 .post-content {
     -fx-font-size: 14px;
     -fx-text-fill: #34495e;
     -fx-line-spacing: 1.5;
+    -fx-fill: #666;
+}
+
+.comment-button {
+    -fx-background-color: linear-gradient(to bottom, #d6a6e7, #a65ea1);
+    -fx-padding: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+    -fx-transition: all 0.2s;
+}
+
+.comment-button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-background-color: linear-gradient(to bottom, #c385d8, #8f3f7e);
+    -fx-cursor: hand;
 }
 
 .like-button {
-    -fx-background-color: rgb(132, 228, 132);
+    -fx-background-color: linear-gradient(to bottom, #85e4a4, #57b657);
     -fx-padding: 5;
     -fx-background-radius: 5;
     -fx-cursor: hand;
@@ -556,10 +575,11 @@ StackPane, BorderPane {
 .like-button:hover {
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
-    -fx-background-color: #dcdcdc;
+    -fx-background-color: linear-gradient(to bottom, #6dbd8a, #459f45);
+    -fx-cursor: hand;
 }
 
-.like-text {
+.like-text, .comment-text {
     -fx-font-size: 12px;
     -fx-text-fill: #7f8c8d;
 }
@@ -569,6 +589,38 @@ StackPane, BorderPane {
     -fx-background-radius: 5;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
     -fx-background-color: #f0f0f0;
+    -fx-border-radius: 5;
+}
+
+.post-date {
+    -fx-font-size: 10px;
+    -fx-text-fill: #8e8e8e;
+}
+
+/* uusi teksti postaus modaali */
+
+.comment-section {
+    -fx-background-color: #f0f0f0;
+    -fx-padding: 15;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-spacing: 10;
+}
+
+.comment-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+    -fx-padding: 5 0;
+}
+
+.close-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #373333;
+    -fx-font-size: 16px;
+    -fx-alignment: top-right;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
 }
 
 /* uusi kuva postaus */

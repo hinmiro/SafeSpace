@@ -105,6 +105,23 @@ public class SoftwareModel {
         }
     }
 
+    public boolean likePost(String postId) throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.likePost(postId);
+        return res.statusCode() == 200;
+    }
+
+    public boolean removeLike(String postId) throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.removeLike(postId);
+        return res.statusCode() == 200;
+    }
+
+    public Post getPostById(String postId) throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.getPostById(postId);
+        if (res.statusCode() == 200) {
+            return gson.fromJson(res.body(), Post.class);
+        }
+        return null;
+    }
 
 }
 

@@ -249,7 +249,8 @@ public class ApiClient {
                 .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
                 .POST(HttpRequest.BodyPublishers.noBody()).build();
 
-        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
+
         return res;
     }
 
@@ -261,6 +262,18 @@ public class ApiClient {
                 .POST(HttpRequest.BodyPublishers.noBody()).build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        return res;
+    }
+
+    public static HttpResponse<String> getPostById(String postId) throws IOException, InterruptedException {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/post/" + postId))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .GET().build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+
         return res;
     }
 }

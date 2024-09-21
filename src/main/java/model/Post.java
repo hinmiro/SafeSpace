@@ -1,6 +1,6 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Post {
     private int postID;
@@ -9,14 +9,17 @@ public class Post {
     private String postPictureID;
     private String postDate;
     private int likeCount;
+    private int commentCount;
+    private List<Integer> likers;
 
-    public Post(int postID, int postCreatorID, String postContent, String postPictureID, String postDate, int likeCount) {
+    public Post(int postID, int postCreatorID, String postContent, String postPictureID, String postDate, int likeCount, int commentCount) {
         this.postID = postID;
         this.postCreatorID = postCreatorID;
         this.postContent = postContent;
         this.postPictureID = postPictureID == null ? "" : postPictureID;
         this.postDate = postDate;
         this.likeCount = likeCount;
+        this.commentCount = commentCount;
     }
 
     public int getPostID() {
@@ -59,11 +62,28 @@ public class Post {
         this.postDate = postDate;
     }
 
-    public int getLikeCount() {
-        return likeCount;
-    }
-
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
+
+    public List<Integer> getLikers() {
+        return likers;
+    }
+
+    public void setLikers(List<Integer> likers) {
+        this.likers = likers;
+    }
+
+    public int getLikeCount() {
+        return likers != null ? likers.size() : 0;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
 }
