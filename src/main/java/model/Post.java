@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Post {
@@ -11,6 +12,7 @@ public class Post {
     private int likeCount;
     private int commentCount;
     private List<Integer> likers;
+    private boolean likedByUser;
 
     public Post(int postID, int postCreatorID, String postContent, String postPictureID, String postDate, int likeCount, int commentCount) {
         this.postID = postID;
@@ -20,6 +22,7 @@ public class Post {
         this.postDate = postDate;
         this.likeCount = likeCount;
         this.commentCount = commentCount;
+        this.likers = new ArrayList<>();
     }
 
     public int getPostID() {
@@ -76,6 +79,14 @@ public class Post {
 
     public int getLikeCount() {
         return likers != null ? likers.size() : 0;
+    }
+
+    public boolean isLikedByUser(int currentUserId) {
+        return likers != null && likers.contains(currentUserId);
+    }
+
+    public void setLikedByUser(boolean likedByUser) {
+        this.likedByUser = likedByUser;
     }
 
     public int getCommentCount() {

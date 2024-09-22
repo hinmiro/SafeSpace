@@ -98,7 +98,7 @@ public class PostListCell extends ListCell<Post> {
 
         ScrollPane scrollPane = new ScrollPane(contentBox);
         scrollPane.setFitToWidth(true);
-        Scene scene = new Scene(scrollPane, 300, 500);
+        Scene scene = new Scene(scrollPane, 300, 550);
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         modalStage.setScene(scene);
         modalStage.showAndWait();
@@ -166,18 +166,33 @@ public class PostListCell extends ListCell<Post> {
         Text likes = new Text(String.valueOf(item.getLikeCount()));
         likes.getStyleClass().add("like-text");
 
-        // todo remove like (tried, but wtf????)
         likeButton.setOnAction(event -> {
             try {
-                boolean liked = softwareModel.likePost(String.valueOf(item.getPostID()));
+                UserModel currentUser = SessionManager.getInstance().getLoggedUser();
 
-                if (liked) {
-                    item.setLikeCount(item.getLikeCount() + 1);
-                    likes.setText(String.valueOf(item.getLikeCount()));
-                    System.out.println("Tykkäyksiä: " + item.getLikeCount() + " ei sano ees oikein kosk ei päivity reaaliajas lol");
-                    likeButton.setStyle("-fx-background-color: rgb(92, 172, 92); -fx-border-color: #f4f3f3; -fx-border-width: 2px; -fx-background-radius: 5px; -fx-border-radius: 5px;");
+                int currentUserId = currentUser.getUserId();
+
+                if (item.isLikedByUser(currentUserId)) {
+                    boolean likeRemoved = softwareModel.removeLike(String.valueOf(item.getPostID()));
+                    if (likeRemoved) {
+                        item.getLikers().remove(Integer.valueOf(currentUserId));
+                        item.setLikeCount(item.getLikeCount() - 1);
+                        likes.setText(String.valueOf(item.getLikeCount()));
+                        item.setLikedByUser(false);
+                        likeButton.setStyle("-fx-background-color: linear-gradient(to bottom, #85e4a4, #57b657);");
+                    } else {
+                        System.out.println("Tykkäyksen poistaminen epäonnistui.");
+                    }
                 } else {
-                    System.out.println("ei onnistu");
+                    boolean liked = softwareModel.likePost(String.valueOf(item.getPostID()));
+                    if (liked) {
+                        item.getLikers().add(currentUserId);
+                        item.setLikeCount(item.getLikeCount() + 1);
+                        likes.setText(String.valueOf(item.getLikeCount()));
+                        item.setLikedByUser(true);
+                    } else {
+                        System.out.println("Tykkäys epäonnistui.");
+                    }
                 }
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();

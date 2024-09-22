@@ -7,17 +7,17 @@ public class UserModel {
     private String jwt;
     private String bio;
     private String profilePictureID;
-    private String userID;
+    private int id;
     private String dateOfCreation;
     private ArrayList<Integer> friends;
     private ArrayList<Integer> likedPosts;
     private ArrayList<Integer> posts;
 
-    public UserModel(String username, String userId, String dateOfCreation) {
+    public UserModel(String username, int id, String dateOfCreation) {
         this.username = username;
         this.bio = "";
         this.profilePictureID = "";
-        this.userID = userId;
+        this.id = id;
         this.dateOfCreation = dateOfCreation;
         friends = new ArrayList<>();
         posts = new ArrayList<>();
@@ -42,7 +42,7 @@ public class UserModel {
 
     public String getProfilePictureUrl() { return profilePictureID; }
 
-    public String getUserId() { return userID; }
+    public int getUserId() { return id; }
 
     public String getDateOfCreation() { return dateOfCreation; }
 
