@@ -9,6 +9,10 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class ApiClient {
 
@@ -16,7 +20,8 @@ public class ApiClient {
     private static HttpResponse<String> res;
     private static final String url = "http://10.120.32.76:8080/api/v1";
     private static final String authUrl = "http://10.120.32.76:8080/auth";
-    private static final String pictureUrl = "http://10.120.32.76:8080/";
+    private static final String pictureUrl = "http://localhost:8081/api/v1/storage";    // TEMPORARY testing
+    private static final String pictureGet = "http://localhost:8081";   // TEMPORARY testing
 
     public ApiClient(HttpClient client) {
         ApiClient.client = client;
@@ -62,30 +67,41 @@ public class ApiClient {
                 .build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        System.out.println("code: " + res.statusCode());
-        System.out.println("body: " + res.body());
         return res;
     }
 
-    public static HttpResponse<String> postPicture(File file) throws IOException, InterruptedException {
+    public static HttpResponse<String> postProfilePicture(File file) throws IOException, InterruptedException {
         UserModel user = SessionManager.getInstance().getLoggedUser();
 
+        String boundary = UUID.randomUUID().toString();
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(pictureUrl))
-                .header("Content-Type", "multipart/form-data")
+                .uri(URI.create(pictureUrl + "/profile"))
+                .header("Content-Type", "multipart/form-data; boundary=" + boundary)
                 .header("Authorization", "Bearer " + user.getJwt())
-                .POST(HttpRequest.BodyPublishers.ofFile(file.toPath()))
+                .POST(ofMimeMultipartData(file.toPath(), boundary))
                 .build();
+        System.out.println("request " + req.toString());
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        System.out.println("body: " + res.body());
-        System.out.println("code: " + res.statusCode());
         return res;
+    }
+
+    // For constructing multipart form data
+    private static HttpRequest.BodyPublisher ofMimeMultipartData(Path filePath, String boundary) throws IOException {
+        var byteArrays = new ArrayList<byte[]>();
+
+        byteArrays.add(("--" + boundary + "\r\n").getBytes());
+        byteArrays.add(("Content-Disposition: form-data; name=\"file\"; filename=\"" + filePath.getFileName() + "\"\r\n").getBytes());
+        byteArrays.add(("Content-Type: " + Files.probeContentType(filePath) + "\r\n\r\n").getBytes());
+        byteArrays.add(Files.readAllBytes(filePath));
+        byteArrays.add(("\r\n--" + boundary + "--\r\n").getBytes());
+
+        return HttpRequest.BodyPublishers.ofByteArrays(byteArrays);
     }
 
     public HttpResponse<String> newPost(String text, File file) throws IOException, InterruptedException {
         UserModel user = SessionManager.getInstance().getLoggedUser();
-        postPicture(file);
+        postProfilePicture(file);
         return null; // UNFINISHED NEED POST PICTURE ENDPOINT
     }
 
@@ -100,7 +116,7 @@ public class ApiClient {
                 .build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        System.out.println("BODY: " + res.body());
+        System.out.println("BODY from updateUser(): " + res.body());
 
         return res;
     }
@@ -276,4 +292,27 @@ public class ApiClient {
 
         return res;
     }
+
+    // Images
+
+    public static HttpResponse<byte[]> getProfileImg() throws IOException, InterruptedException {
+        String[] formats = {"image/jpeg", "image/png"};
+        HttpResponse<byte[]> response = null;
+
+        for (String format : formats) {
+            HttpRequest req = HttpRequest.newBuilder()
+                    .uri(URI.create(pictureGet+ "/" + SessionManager.getInstance().getLoggedUser().getProfilePictureUrl()))
+                    .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                    .GET()
+                    .build();
+
+            response = client.send(req, HttpResponse.BodyHandlers.ofByteArray());
+            System.out.println("response from apiclient " + response);
+            if (response.statusCode() == 200) {
+                break;
+            }
+        }
+        return response;
+    }
+
 }

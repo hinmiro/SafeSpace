@@ -40,6 +40,8 @@ public class View extends Application {
         }
     }
 
+    public Stage getPrimaryStage() {return primaryStage;}
+
     public static void main(String[] args) {
         launch(args);
     }

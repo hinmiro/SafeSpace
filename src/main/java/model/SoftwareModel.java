@@ -1,14 +1,16 @@
 package model;
 
 import com.google.gson.Gson;
+import javafx.scene.image.Image;
 import services.ApiClient;
 import services.Feed;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
 
 
 public class SoftwareModel {
@@ -39,9 +41,10 @@ public class SoftwareModel {
         return gson.fromJson(res.body(), UserModel.class);
     }
 
-    public boolean postPicture(File file) throws IOException, InterruptedException {
-        HttpResponse<String> res = ApiClient.postPicture(file);
-        return res.statusCode() == 200;
+    public String postPicture(File file) throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.postProfilePicture(file);
+        System.out.println("should be img name: " + res.body());
+        return res.body();
     }
 
     public boolean updateUser(String username, String password, String bio, String profilePictureId) throws IOException, InterruptedException {
@@ -121,6 +124,16 @@ public class SoftwareModel {
             return gson.fromJson(res.body(), Post.class);
         }
         return null;
+    }
+
+    public Image getProfileImage() throws IOException, InterruptedException {
+        HttpResponse<byte[]> res = ApiClient.getProfileImg();
+        if (res.statusCode() == 200) {
+            byte[] imageBytes = res.body();
+            return new Image(new ByteArrayInputStream(imageBytes));
+        }else {
+            throw new IOException("Failed to fetch image: " + res.statusCode());
+        }
     }
 
 }
