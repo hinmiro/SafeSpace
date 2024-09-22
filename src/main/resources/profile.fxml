@@ -82,6 +82,8 @@
                         <Insets top="30" />
                     </VBox.margin>
                 </Label>
+                <VBox fx:id="userPostsVBox" spacing="10.0" visible="false">
+                </VBox>
             </VBox>
         </VBox>
     </center>

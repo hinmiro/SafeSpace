@@ -548,6 +548,14 @@ StackPane, BorderPane {
     -fx-fill: #333;
 }
 
+.username:hover {
+    -fx-text-fill: linear-gradient(to bottom, #d6a6e7, #a65ea1);
+}
+
+.username:pressed {
+    -fx-text-fill: #a65ea1;
+}
+
 .post-content {
     -fx-font-size: 14px;
     -fx-text-fill: #34495e;
