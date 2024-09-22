@@ -41,8 +41,8 @@ public class SoftwareModel {
         return gson.fromJson(res.body(), UserModel.class);
     }
 
-    public String postPicture(File file) throws IOException, InterruptedException {
-        HttpResponse<String> res = ApiClient.postProfilePicture(file);
+    public String postPicture(File file, String endpoint) throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.postPicture(file, endpoint);
         System.out.println("should be img name: " + res.body());
         return res.body();
     }
@@ -71,6 +71,16 @@ public class SoftwareModel {
     public boolean createNewPost(String text) throws IOException, InterruptedException {
         Map<String, String> data = new HashMap<>();
         data.put("post_content", text);
+        String jsonData = gson.toJson(data);
+
+        HttpResponse<String> res = ApiClient.createPost(jsonData);
+        return res.statusCode() == 201;
+    }
+
+    public boolean createNewPostWithImage(String text, String imageId) throws IOException, InterruptedException {
+        Map<String, String> data = new HashMap<>();
+        data.put("post_content", text);
+        data.put("post_pictureID", imageId);
         String jsonData = gson.toJson(data);
 
         HttpResponse<String> res = ApiClient.createPost(jsonData);
@@ -133,6 +143,16 @@ public class SoftwareModel {
             return new Image(new ByteArrayInputStream(imageBytes));
         }else {
             throw new IOException("Failed to fetch image: " + res.statusCode());
+        }
+    }
+
+    public Image getPostImage(String id) throws IOException, InterruptedException {
+        HttpResponse<byte[]> res = ApiClient.getPostImage(id);
+        if (res.statusCode() == 200) {
+            byte[] imageBytes = res.body();
+            return new Image(new ByteArrayInputStream(imageBytes));
+        } else {
+            throw new IOException("Failed to fetch image, " + res.statusCode());
         }
     }
 

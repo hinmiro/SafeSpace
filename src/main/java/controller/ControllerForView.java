@@ -58,13 +58,18 @@ public class ControllerForView extends Controller {
     public boolean updateProfile(String username, String password, String bio, File image) throws IOException, InterruptedException {
         String profilePictureId = null;
         if (image != null) {
-            profilePictureId = app.postPicture(image);
+            profilePictureId = app.postPicture(image, "/profile");
         }
         return app.updateUser(username, password, bio, profilePictureId);
     }
 
     public boolean sendPost(String text) throws IOException, InterruptedException {
         return app.createNewPost(text);
+    }
+
+    public boolean sendPostWithImage(String text, File image) throws IOException, InterruptedException {
+        String imageId = app.postPicture(image, "/post");
+        return app.createNewPostWithImage(text, imageId);
     }
 
     public BlockingQueue<Post> getFeed() {
@@ -76,6 +81,16 @@ public class ControllerForView extends Controller {
         try {
             img = app.getProfileImage();
         } catch (InterruptedException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return img;
+    }
+
+    public Image getPostPicture(String id) {
+        Image img = null;
+        try {
+            img = app.getPostImage(id);
+        }catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
         }
         return img;

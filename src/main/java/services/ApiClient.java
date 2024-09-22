@@ -3,6 +3,7 @@ package services;
 
 import model.SessionManager;
 import model.UserModel;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -70,12 +71,12 @@ public class ApiClient {
         return res;
     }
 
-    public static HttpResponse<String> postProfilePicture(File file) throws IOException, InterruptedException {
+    public static HttpResponse<String> postPicture(File file, String endPoint) throws IOException, InterruptedException {
         UserModel user = SessionManager.getInstance().getLoggedUser();
 
         String boundary = UUID.randomUUID().toString();
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(pictureUrl + "/profile"))
+                .uri(URI.create(pictureUrl + endPoint))
                 .header("Content-Type", "multipart/form-data; boundary=" + boundary)
                 .header("Authorization", "Bearer " + user.getJwt())
                 .POST(ofMimeMultipartData(file.toPath(), boundary))
@@ -99,11 +100,6 @@ public class ApiClient {
         return HttpRequest.BodyPublishers.ofByteArrays(byteArrays);
     }
 
-    public HttpResponse<String> newPost(String text, File file) throws IOException, InterruptedException {
-        UserModel user = SessionManager.getInstance().getLoggedUser();
-        postProfilePicture(file);
-        return null; // UNFINISHED NEED POST PICTURE ENDPOINT
-    }
 
     public static HttpResponse<String> updateUser(String data) throws IOException, InterruptedException {
         UserModel user = SessionManager.getInstance().getLoggedUser();
@@ -296,23 +292,31 @@ public class ApiClient {
     // Images
 
     public static HttpResponse<byte[]> getProfileImg() throws IOException, InterruptedException {
-        String[] formats = {"image/jpeg", "image/png"};
         HttpResponse<byte[]> response = null;
 
-        for (String format : formats) {
-            HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create(pictureGet+ "/" + SessionManager.getInstance().getLoggedUser().getProfilePictureUrl()))
-                    .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
-                    .GET()
-                    .build();
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(pictureGet + "/" + SessionManager.getInstance().getLoggedUser().getProfilePictureUrl()))
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .GET()
+                .build();
 
-            response = client.send(req, HttpResponse.BodyHandlers.ofByteArray());
-            System.out.println("response from apiclient " + response);
-            if (response.statusCode() == 200) {
-                break;
-            }
-        }
+        response = client.send(req, HttpResponse.BodyHandlers.ofByteArray());
         return response;
     }
+
+    public static HttpResponse<byte[]> getPostImage(String id) throws IOException, InterruptedException {
+        HttpResponse<byte[]> res = null;
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(pictureGet + "/post/" + id))
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .GET()
+                .build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofByteArray());
+        System.out.println(res);
+        return res;
+    }
+
 
 }
