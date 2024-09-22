@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
@@ -16,6 +17,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
 
 import javafx.scene.shape.Circle;
 import model.SessionManager;
@@ -55,8 +59,17 @@ public class ProfileController {
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
         bioLabel.setText(SessionManager.getInstance().getLoggedUser().getBio() == null ? "..." : SessionManager.getInstance().getLoggedUser().getBio());
 
+
         profileImageView.setImage(createPlaceholderImage(150, 150));
         makeCircle(profileImageView);
+
+        if (!SessionManager.getInstance().getLoggedUser().getProfilePictureUrl().equals("default")) {
+            try {
+                profileImageView.setImage(controllerForView.getProfilePicture());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         homeButton.setOnAction(event -> navigateTo("/main.fxml"));
         profileButton.setOnAction(event -> navigateTo("/profile.fxml"));
@@ -107,8 +120,8 @@ public class ProfileController {
             updateInfoController.setMainView(mainView);
             updateInfoController.setMainController(mainController);
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
+            Stage stage = (Stage) profileButton.getScene().getWindow();
+//            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Update Info");
             stage.setScene(new Scene(root, 360, 800));
             stage.show();
