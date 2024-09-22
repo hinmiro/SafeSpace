@@ -1,5 +1,6 @@
 package model;
 
+import controller.ControllerForView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -32,6 +33,10 @@ public class PostListCell extends ListCell<Post> {
 
             VBox contentBox = new VBox();
             contentBox.setSpacing(5);
+
+            if (item.getPostPictureID() != null) { // this is in wrong place
+                addPostImage(contentBox, item);
+            }
 
             addUserInfo(contentBox, item);
 
@@ -248,5 +253,15 @@ public class PostListCell extends ListCell<Post> {
         commentSection.getChildren().add(commentText);
 
         contentBox.getChildren().add(commentSection);
+    }
+
+    private void addPostImage(VBox contentBox, Post item) {
+        VBox imageSection = new VBox();
+        Image image = ControllerForView.getInstance().getPostPicture(item.getPostPictureID());
+        System.out.println(item.getPostPictureID());
+        ImageView imageView = new ImageView(image);
+        imageSection.getChildren().add(imageView);
+        contentBox.getChildren().add(imageSection);
+
     }
 }

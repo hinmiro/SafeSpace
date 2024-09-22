@@ -27,6 +27,8 @@ public class EditProfileController {
     private final ControllerForView controllerForView = ControllerForView.getInstance();
     private MainController mainController;
     private ProfileController profileController;
+    private Image newImage;
+    private File selectedFile;
 
     @FXML
     private ImageView profileImageView;
@@ -53,8 +55,11 @@ public class EditProfileController {
     public void initialize() {
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
-
-        profileImageView.setImage(createPlaceholderImage(150, 150));
+        if (SessionManager.getInstance().getLoggedUser().getProfilePictureUrl().equals("default")) {
+            profileImageView.setImage(createPlaceholderImage(150, 150));
+        } else {
+            profileImageView.setImage(controllerForView.getProfilePicture());
+        }
         makeCircle(profileImageView);
 
         clickProfilePic(profileImageView);
@@ -89,10 +94,10 @@ public class EditProfileController {
     public void handleSaveChanges(ActionEvent actionEvent) {
         String newName = usernameField.getText().trim();
         String newBio = bioField.getText().trim();
-        String newProfilePictureID = profileImageView.getImage().getUrl();
+        //String newProfilePictureID = profileImageView.getImage().getUrl();
 
         try {
-            boolean updateSuccess = controllerForView.updateProfile(newName, null, newBio, newProfilePictureID);
+            boolean updateSuccess = controllerForView.updateProfile(newName, null, newBio, selectedFile);
 
             if (updateSuccess) {
                 showAlert("Changes saved successfully.", Alert.AlertType.INFORMATION);
@@ -103,6 +108,8 @@ public class EditProfileController {
         }
 
     }
+
+
 
 
     private void showAlert(String message, Alert.AlertType alertType) {
@@ -123,24 +130,25 @@ public class EditProfileController {
         imageView.setClip(clip);
     }
 
-    private void changeProfilePicture() {
+    private File changeProfilePicture() {
         FileChooser fileChooser = new FileChooser();
         fileChooser
                 .getExtensionFilters()
                 .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif",
                         "*.webp", "*.svg"));
-        File selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
+        selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
 
         if (selectedFile != null) {
             try {
-                // controllerForView.uploadProfilePicture(selectedFile); THIS IS FOR UPLOADING PICTURE TO SERVER
-                Image newImage = new Image(selectedFile.toURI().toString());
+                newImage = new Image(selectedFile.toURI().toString());
                 profileImageView.setImage(newImage);
                 makeCircle(profileImageView);
+                return selectedFile;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        return null;
     }
 
     private WritableImage createPlaceholderImage(int width, int height) {

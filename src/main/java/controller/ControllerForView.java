@@ -1,11 +1,13 @@
 package controller;
 
+import javafx.scene.image.Image;
 import model.Post;
 import model.SessionManager;
 import model.UserModel;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -51,17 +53,13 @@ public class ControllerForView extends Controller {
         return null;
     }
 
-    public boolean uploadProfilePicture(File file) {
-        try {
-            return app.postPicture(file);
-        } catch (InterruptedException | IOException e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
-    }
 
     // Returns true if update success, then should render popup in front view example profile updated successfully
-    public boolean updateProfile(String username, String password, String bio, String profilePictureId) throws IOException, InterruptedException {
+    public boolean updateProfile(String username, String password, String bio, File image) throws IOException, InterruptedException {
+        String profilePictureId = null;
+        if (image != null) {
+            profilePictureId = app.postPicture(image, "/profile");
+        }
         return app.updateUser(username, password, bio, profilePictureId);
     }
 
@@ -69,8 +67,33 @@ public class ControllerForView extends Controller {
         return app.createNewPost(text);
     }
 
+    public boolean sendPostWithImage(String text, File image) throws IOException, InterruptedException {
+        String imageId = app.postPicture(image, "/post");
+        return app.createNewPostWithImage(text, imageId);
+    }
+
     public BlockingQueue<Post> getFeed() {
         return feedQueue;
+    }
+
+    public Image getProfilePicture() {
+        Image img = null;
+        try {
+            img = app.getProfileImage();
+        } catch (InterruptedException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return img;
+    }
+
+    public Image getPostPicture(String id) {
+        Image img = null;
+        try {
+            img = app.getPostImage(id);
+        }catch (InterruptedException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return img;
     }
 
 }

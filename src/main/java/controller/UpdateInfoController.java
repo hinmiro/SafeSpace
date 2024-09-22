@@ -26,10 +26,14 @@ public class UpdateInfoController {
     private Label passwordStrengthLabel;
     @FXML
     private View mainView;
+    @FXML
+    private Button mainButton;
 
     @FXML
     private void initialize() {
         closeButton.setOnAction(event -> handleClose());
+        //mainButton.setOnAction(event -> updatePassword());
+
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
             updatePasswordStrength(newValue);
         });
@@ -99,6 +103,7 @@ public class UpdateInfoController {
                 boolean success = controllerForView.updateProfile(null, password, null, null);
                 if (success) {
                     showAlert(Alert.AlertType.INFORMATION, "Info Updated", "Password updated successfully.");
+                    handleClose();
                 } else {
                     showAlert(Alert.AlertType.ERROR, "Update Failed", "Failed to update password.");
                 }

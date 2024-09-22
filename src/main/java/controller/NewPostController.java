@@ -23,6 +23,7 @@ public class NewPostController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private MainController mainController;
+    private File selectedFile;
 
     @FXML
     private Button chooseImageButton;
@@ -32,6 +33,8 @@ public class NewPostController {
     private Button postButton;
     @FXML
     private Button closeButton;
+    @FXML
+    private TextArea captionTextArea;
 
     @FXML
     private void initialize() {
@@ -43,6 +46,16 @@ public class NewPostController {
 
     @FXML
     private void handleNewPost() {
+        String text = captionTextArea.getText();
+        try {
+            boolean response = controllerForView.sendPostWithImage(text, selectedFile);
+            if (response) {
+                handleClose();
+            }
+        } catch (InterruptedException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     private void handleClose() {
@@ -52,7 +65,7 @@ public class NewPostController {
 
             MainController mainController = loader.getController();
 
-            Stage stage = new Stage();
+            Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.setTitle("Main Page");
             Scene scene = new Scene(root, 360, 800);
             stage.setScene(scene);
@@ -79,7 +92,7 @@ public class NewPostController {
                 .getExtensionFilters()
                 .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif",
                         "*.webp", "*.svg"));
-        File selectedFile = fileChooser.showOpenDialog(imageView.getScene().getWindow());
+        selectedFile = fileChooser.showOpenDialog(imageView.getScene().getWindow());
 
         if (selectedFile != null) {
             try {

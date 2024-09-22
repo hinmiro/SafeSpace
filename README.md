@@ -1,2 +1,2 @@
 # SafeSpace G2
-todo: EVERYTHING
+todo: likes, comments, friends, posts with pic

@@ -1,7 +1,11 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.SessionManager;
 import view.View;
@@ -41,7 +45,16 @@ public class LogOutController {
         mainController.stopQueueProcessing();
 
         SessionManager.getInstance().closeSession();
-        mainView.showLogin();
+        // Load the logout scene
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+        Parent loginRoot = loader.load();
+        Scene loginScene = new Scene(loginRoot);
+
+        // Get the current stage and set the new scene
+        Stage stage = mainView.getPrimaryStage();
+        stage.setScene(loginScene);
+        stage.setTitle("Login");
+
         if (dialogStage != null) {
             dialogStage.close();
 
