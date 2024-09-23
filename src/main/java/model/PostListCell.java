@@ -20,7 +20,7 @@ public class PostListCell extends ListCell<Post> {
     private SoftwareModel softwareModel = new SoftwareModel();
 
     @Override
-    protected void updateItem(Post item, boolean empty) {
+    public void updateItem(Post item, boolean empty) {
         super.updateItem(item, empty);
         if (empty || item == null) {
             setText(null);

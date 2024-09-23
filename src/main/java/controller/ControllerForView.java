@@ -4,10 +4,10 @@ import javafx.scene.image.Image;
 import model.Post;
 import model.SessionManager;
 import model.UserModel;
-
 import java.io.File;
 import java.io.IOException;
-import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -23,8 +23,7 @@ public class ControllerForView extends Controller {
         return INSTANCE;
     }
 
-
-    public  UserModel login(String username, String password) {
+    public UserModel login(String username, String password) {
         try {
             UserModel user = app.login(username, password);
             if (user != null) {
@@ -43,6 +42,7 @@ public class ControllerForView extends Controller {
             UserModel user = app.postRegister(username, password);
             if (user != null) {
                 SessionManager.getInstance().setLoggedUser(user);
+                app.startMainFeedThread();
                 return user;
             }
             return app.postRegister(username, password);
@@ -95,5 +95,23 @@ public class ControllerForView extends Controller {
         }
         return img;
     }
+
+    public List<Post> getUserPosts() throws IOException, InterruptedException {
+        UserModel user = SessionManager.getInstance().getLoggedUser();
+        UserModel updatedUser = app.getUserById(user.getUserId());
+        if (updatedUser != null) {
+            user.setPosts(updatedUser.getPosts());
+            List<Post> posts = new ArrayList<>();
+            for (Integer postId : user.getPosts()) {
+                Post post = app.getPostById(String.valueOf(postId));
+                if (post != null) {
+                    posts.add(post);
+                }
+            }
+            return posts;
+        }
+        return new ArrayList<>();
+    }
+
 
 }

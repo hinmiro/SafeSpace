@@ -156,5 +156,14 @@ public class SoftwareModel {
         }
     }
 
+    public UserModel getUserById(int id) throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.getUserById(id);
+        if (res.statusCode() == 200) {
+            UserModel user = gson.fromJson(res.body(), UserModel.class);
+            return user;
+        }
+        return null;
+    }
+
 }
 
