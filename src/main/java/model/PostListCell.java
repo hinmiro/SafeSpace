@@ -4,10 +4,7 @@ import controller.ControllerForView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -85,7 +82,19 @@ public class PostListCell extends ListCell<Post> {
 
         contentBox.getChildren().add(buttonBox);
 
-        addUserInfo(contentBox, item);
+        try {
+            String username = softwareModel.getUsernameByPostCreatorID(item.getPostCreatorID());
+            VBox usernameBox = new VBox();
+            usernameBox.setPadding(new Insets(5));
+            usernameBox.getStyleClass().add("username-box");
+
+            Label usernameLabel = SharedData.createClickableUsername(username, item.getPostCreatorID());
+            usernameBox.getChildren().add(usernameLabel);
+
+            contentBox.getChildren().add(usernameBox);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Text postDate = new Text(item.getPostDate());
         postDate.getStyleClass().add("post-date");

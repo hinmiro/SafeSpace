@@ -1,7 +1,8 @@
 package model;
 
+import javafx.scene.control.Label;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -45,4 +46,14 @@ public class SharedData {
         return posts;
     }
 
+    public static Label createClickableUsername(String username, int userId) {
+        Label usernameLabel = new Label(username);
+        usernameLabel.getStyleClass().add("username");
+        usernameLabel.setStyle(" -fx-cursor: hand;");
+
+        usernameLabel.setOnMouseClicked(event -> {
+        });
+
+        return usernameLabel;
+    }
 }
