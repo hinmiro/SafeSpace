@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<BorderPane maxHeight="800.0" minHeight="0.0" styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
 
     <top>
         <VBox>
@@ -42,10 +42,7 @@
 
     <center>
         <VBox fx:id="contentBox" alignment="CENTER" minHeight="300" spacing="20.0" BorderPane.alignment="CENTER">
-            <ImageView fx:id="loadingBox" fitHeight="498.0" fitWidth="262.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@/kuvat/coggers-poggers.gif"/>
-            </ImageView>
-            <ListView fx:id="feedListView" layoutX="20" layoutY="100" prefHeight="650" prefWidth="360">
+            <ListView fx:id="feedListView" layoutX="20" layoutY="100" prefHeight="561.0" prefWidth="300.0">
                 <Label fx:id="noPostsLabel" styleClass="noPostsLabel" text="Nothing on main feed..." />
             </ListView>
         </VBox>
@@ -54,7 +51,12 @@
 
     <bottom>
         <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
-
+            <Label fx:id="loadingBox" text="LOADING POSTS..." />
+            <ImageView fx:id="loadingBox2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" >
+                <image>
+                    <Image url="@/kuvat/coggers-poggers.gif" />
+                </image>
+            </ImageView>
             <HBox fx:id="postMenu" alignment="CENTER" spacing="10.0" visible="false">
                 <Button fx:id="createPicPostButton" styleClass="createPost" text="Share an image" />
                 <Button fx:id="createTextPostButton" styleClass="createPost" text="Share your thoughts" />

@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -48,6 +49,10 @@ public class MainController {
     private ListView<Post> feedListView;
     @FXML
     private VBox contentBox;
+    @FXML
+    private Label loadingBox;
+    @FXML
+    private ImageView loadingBox2;
 
     public MainController() {
         this.posts = new ArrayList<>();
@@ -187,6 +192,7 @@ public class MainController {
 
     private synchronized void startQueueProcessing() {
         stopQueueProcessingFlag = false;
+        loadingBox.setVisible(true);
         if (queueThread == null || !queueThread.isAlive()) {
             queueThread = new Thread(() -> {
                 while (!stopQueueProcessingFlag) {
@@ -196,6 +202,10 @@ public class MainController {
                             Platform.runLater(() -> {
                                 feedListView.getItems().add(post);
                                 feedListView.scrollTo(feedListView.getItems().size() - 1);
+                                loadingBox.setVisible(false);
+                                loadingBox.setManaged(false);
+                                loadingBox2.setVisible(false);
+                                loadingBox2.setManaged(false);
                             });
                         } else {
                             Thread.sleep(100);
@@ -206,6 +216,7 @@ public class MainController {
                 }
             });
             queueThread.start();
+
         }
     }
 
