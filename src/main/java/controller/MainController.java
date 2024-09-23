@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Post;
 import model.PostListCell;
+import model.ScreenUtil;
 import model.SharedData;
 import view.View;
 import java.io.IOException;
@@ -110,7 +111,7 @@ public class MainController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = fxmlLoader.load();
 
-        Scene scene = new Scene(root, 360, 800);
+        Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
         stage.setScene(scene);
         stage.setTitle(title);
 

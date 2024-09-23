@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.ScreenUtil;
 import view.View;
 
 import java.io.IOException;
@@ -53,7 +54,7 @@ public class UpdateInfoController {
 
             Stage stage = new Stage();
             stage.setTitle("Profile Page");
-            Scene scene = new Scene(root, 360, 800);
+            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
