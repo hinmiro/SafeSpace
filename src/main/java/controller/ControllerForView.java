@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.scene.image.Image;
+import model.Comment;
 import model.Post;
 import model.SessionManager;
 import model.UserModel;
@@ -8,6 +9,7 @@ import model.UserModel;
 import java.io.File;
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -43,9 +45,10 @@ public class ControllerForView extends Controller {
             UserModel user = app.postRegister(username, password);
             if (user != null) {
                 SessionManager.getInstance().setLoggedUser(user);
+                app.startMainFeedThread();
                 return user;
             }
-            return app.postRegister(username, password);
+            //return app.postRegister(username, password);
 
         } catch (InterruptedException | IOException e) {
             System.out.println("Error: " + e.getMessage());
@@ -94,6 +97,15 @@ public class ControllerForView extends Controller {
             System.out.println(e.getMessage());
         }
         return img;
+    }
+
+    public ArrayList<Comment> getPostCommentsById(String id) {
+        try {
+            return app.getCommentsByPostId(id);
+        } catch (InterruptedException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
 }

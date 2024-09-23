@@ -35,7 +35,6 @@ public class Feed implements Runnable {
         client.sendAsync(req, HttpResponse.BodyHandlers.ofLines())
                 .thenApply(HttpResponse::body)
                 .thenAccept(lines -> {
-                    System.out.println("here it comes " + lines);
                     lines.forEach(line -> {
                         if (line.startsWith("data:")) {
                             String event = line.substring(5).trim();

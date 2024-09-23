@@ -9,6 +9,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -156,5 +158,14 @@ public class SoftwareModel {
         }
     }
 
+    public ArrayList<Comment> getCommentsByPostId(String id) throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.getCommentsByPostId(id);
+        if (res.statusCode() == 200) {
+            Comment[] commentsArray = gson.fromJson(res.body(), Comment[].class);
+            return new ArrayList<>(Arrays.asList(commentsArray));
+        } else {
+            throw new IOException("Failed to fetch comment: " + res.statusCode());
+        }
+    }
 }
 

@@ -33,6 +33,10 @@ public class ProfileController {
     private MainController mainController;
 
     @FXML
+    public Label followersCountLabel;
+    @FXML
+    public Label followingCountLabel;
+    @FXML
     private ImageView profileImageView;
     @FXML
     private Button homeButton;
