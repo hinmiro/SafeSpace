@@ -48,7 +48,7 @@ public class NewTextController {
 
     @FXML
     private void handleClose() {
-        closeButton.getScene().getWindow().hide();
+        //closeButton.getScene().getWindow().hide();
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
@@ -56,7 +56,7 @@ public class NewTextController {
 
             MainController mainController = loader.getController();
 
-            Stage stage = new Stage();
+            Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.setTitle("Main Page");
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
