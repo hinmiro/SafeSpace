@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.ScreenUtil;
 import view.View;
 
 import java.io.IOException;
@@ -68,7 +69,7 @@ public class MessageController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = fxmlLoader.load();
 
-        Scene scene = new Scene(root, 360, 800);
+        Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
         stage.setScene(scene);
         stage.setTitle(title);
 

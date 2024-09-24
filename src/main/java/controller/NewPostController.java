@@ -16,6 +16,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.ScreenUtil;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -67,7 +69,7 @@ public class NewPostController {
 
             Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.setTitle("Main Page");
-            Scene scene = new Scene(root, 360, 800);
+            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
