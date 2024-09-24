@@ -18,6 +18,7 @@ import java.io.IOException;
 
 public class PostListCell extends ListCell<Post> {
     private SoftwareModel softwareModel = new SoftwareModel();
+    private UserModel user = SessionManager.getInstance().getLoggedUser();
 
     @Override
     public void updateItem(Post item, boolean empty) {
@@ -52,8 +53,9 @@ public class PostListCell extends ListCell<Post> {
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
             hBox.setOnMousePressed(evt -> {
-                openPostDetailModal(item);
+                openPostDetailModal(item, (Stage) hBox.getScene().getWindow());
             });
+
 
             hBox.getChildren().addAll(contentBox, spacer);
             hBox.getStyleClass().add("post-cell");
@@ -62,7 +64,7 @@ public class PostListCell extends ListCell<Post> {
         }
     }
 
-    private void openPostDetailModal(Post item) {
+    private void openPostDetailModal(Post item, Stage primaryStage) {
         Stage modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
         modalStage.setTitle("Post");
@@ -88,9 +90,9 @@ public class PostListCell extends ListCell<Post> {
             usernameBox.setPadding(new Insets(5));
             usernameBox.getStyleClass().add("username-box");
 
-            Label usernameLabel = SharedData.createClickableUsername(username, item.getPostCreatorID());
-            usernameBox.getChildren().add(usernameLabel);
+            Label usernameLabel = SharedData.createClickableUsername(username, item.getPostCreatorID(), modalStage);
 
+            usernameBox.getChildren().add(usernameLabel);
             contentBox.getChildren().add(usernameBox);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -264,4 +266,6 @@ public class PostListCell extends ListCell<Post> {
         contentBox.getChildren().add(imageSection);
 
     }
+
+
 }

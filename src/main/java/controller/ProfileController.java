@@ -19,7 +19,6 @@ import java.util.List;
 import javafx.scene.shape.Circle;
 import model.Post;
 import model.PostListCell;
-import model.ScreenUtil;
 import model.SessionManager;
 import view.View;
 
@@ -55,7 +54,7 @@ public class ProfileController {
     private ScrollPane scrollPane;
 
     @FXML
-    public void initialize() throws IOException, InterruptedException {
+    public void initialize() {
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
         bioLabel.setText(SessionManager.getInstance().getLoggedUser().getBio() == null ? "..." : SessionManager.getInstance().getLoggedUser().getBio());
@@ -92,7 +91,7 @@ public class ProfileController {
     public void displayUserPosts(ScrollPane scrollPane, VBox userPostsVBox, Label noPostsLabel) {
         List<Post> posts;
         try {
-            posts = controllerForView.getUserPosts();
+            posts = controllerForView.getUserPostsUserProfile();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return;
@@ -153,7 +152,7 @@ public class ProfileController {
             Stage stage = (Stage) profileButton.getScene().getWindow();
 //            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Update Info");
-            stage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
+            stage.setScene(new Scene(root, 360, 800));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -171,7 +170,7 @@ public class ProfileController {
             Stage stage = (Stage) profileButton.getScene().getWindow();
             //stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Edit Profile");
-            stage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
+            stage.setScene(new Scene(root, 360, 800));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -204,7 +203,7 @@ public class ProfileController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = fxmlLoader.load();
 
-            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+            Scene scene = new Scene(root, 360, 800);
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Main Page");

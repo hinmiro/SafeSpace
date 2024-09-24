@@ -96,7 +96,7 @@ public class ControllerForView extends Controller {
         return img;
     }
 
-    public List<Post> getUserPosts() throws IOException, InterruptedException {
+    public List<Post> getUserPostsUserProfile() throws IOException, InterruptedException {
         UserModel user = SessionManager.getInstance().getLoggedUser();
         UserModel updatedUser = app.getUserById(user.getUserId());
         if (updatedUser != null) {
@@ -112,6 +112,31 @@ public class ControllerForView extends Controller {
         }
         return new ArrayList<>();
     }
+
+    public UserModel getUserById(int userId) {
+        try {
+            return app.getUserById(userId);
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error fetching user: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public List<Post> getUserPostsUserProfile(int userId) throws IOException, InterruptedException {
+        UserModel user = app.getUserById(userId);
+        if (user != null) {
+            List<Post> posts = new ArrayList<>();
+            for (Integer postId : user.getPosts()) {
+                Post post = app.getPostById(String.valueOf(postId));
+                if (post != null) {
+                    posts.add(post);
+                }
+            }
+            return posts;
+        }
+        return new ArrayList<>();
+    }
+
 
 
 }

@@ -647,6 +647,23 @@ StackPane, BorderPane {
 /* uusi kuva postaus */
 
 
+/* user profiili */
+
+.follow-button, .message-button {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-font-size: 13px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.follow-button:hover, .message-button:hover {
+    -fx-background-color: #0056b3;
+}
+
+
+
 
 
 
