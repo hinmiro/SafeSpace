@@ -90,7 +90,7 @@ public class PostListCell extends ListCell<Post> {
             usernameBox.setPadding(new Insets(5));
             usernameBox.getStyleClass().add("username-box");
 
-            Label usernameLabel = SharedData.createClickableUsername(username, item.getPostCreatorID(), modalStage);
+            Label usernameLabel = SharedData.createClickableUsername(username, item.getPostCreatorID(), primaryStage, modalStage);
 
             usernameBox.getChildren().add(usernameLabel);
             contentBox.getChildren().add(usernameBox);
@@ -119,6 +119,7 @@ public class PostListCell extends ListCell<Post> {
         modalStage.setScene(scene);
         modalStage.showAndWait();
     }
+
 
     private void addUserInfo(VBox contentBox, Post item) {
         try {

@@ -2,6 +2,9 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -12,13 +15,16 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import model.*;
-
+import view.View;
 import java.io.IOException;
 import java.util.List;
 
 public class UserProfileController {
     private ControllerForView controllerForView = ControllerForView.getInstance();
+    private View mainView;
+
     @FXML private Label usernameLabel;
     @FXML private Label bioLabel;
     @FXML private Label registeredLabel;
@@ -28,13 +34,64 @@ public class UserProfileController {
     @FXML private VBox userPostsVBox;
     @FXML private ScrollPane scrollPane;
     @FXML private Label noPostsLabel;
+    @FXML
+    private Button homeButton;
+    @FXML
+    private Button profileButton;
+    @FXML
+    private Button leaveMessageButton;
 
     public void initialize(int userId) {
         fetchUserData(userId);
 
+        homeButton.setOnAction(event -> {
+            try {
+                switchScene("/main.fxml", "Main Page");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        profileButton.setOnAction(event -> {
+            try {
+                switchScene("/profile.fxml", "Profile Page");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        leaveMessageButton.setOnAction(event -> {
+            try {
+                switchScene("/messages.fxml", "Messages");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         profileImageView.setImage(createPlaceholderImage(150, 150));
         makeCircle(profileImageView);
         displayUserPosts(scrollPane, userPostsVBox, noPostsLabel, userId);
+    }
+
+    private void switchScene(String fxmlFile, String title) throws IOException {
+        Stage stage = (Stage) homeButton.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent root = fxmlLoader.load();
+
+        Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+        stage.setScene(scene);
+        stage.setTitle(title);
+
+        if (fxmlFile.equals("/profile.fxml")) {
+            ProfileController profileController = fxmlLoader.getController();
+            profileController.setMainView(mainView);
+
+        }
+
+        if (fxmlFile.equals("/main.fxml")) {
+            MainController mainController = fxmlLoader.getController();
+            mainController.setMainView(mainView);
+        }
     }
 
     private void fetchUserData(int userId) {
@@ -102,4 +159,5 @@ public class UserProfileController {
         gc.getCanvas().snapshot(null, image);
         return image;
     }
+
 }

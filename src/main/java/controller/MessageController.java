@@ -25,9 +25,8 @@ public class MessageController {
     private Label noMessagesLabel;
     @FXML
     private VBox contentBox;
-    @FXML
-    private View mainView;
 
+    private View mainView;
     private MainController mainController;
     private ControllerForView controllerForView = ControllerForView.getInstance();
 
@@ -76,7 +75,6 @@ public class MessageController {
         if (fxmlFile.equals("/profile.fxml")) {
             ProfileController profileController = fxmlLoader.getController();
             profileController.setMainView(mainView);
-            //profileController.setDialogStage(stage);
 
         }
 

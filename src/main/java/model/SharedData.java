@@ -51,12 +51,14 @@ public class SharedData {
         return posts;
     }
 
-    public static Label createClickableUsername(String username, int userId, Stage primaryStage) {
+    public static Label createClickableUsername(String username, int userId, Stage primaryStage, Stage modalStage) {
         Label usernameLabel = new Label(username);
         usernameLabel.getStyleClass().add("username");
         usernameLabel.setStyle("-fx-cursor: hand;");
 
         usernameLabel.setOnMouseClicked(event -> {
+            modalStage.close();
+
             openUserProfile(primaryStage, userId);
         });
 
@@ -77,5 +79,6 @@ public class SharedData {
             e.printStackTrace();
         }
     }
+
 
 }
