@@ -43,7 +43,6 @@ public class SoftwareModel {
 
     public String postPicture(File file, String endpoint) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.postPicture(file, endpoint);
-        System.out.println("should be img name: " + res.body());
         return res.body();
     }
 
@@ -142,7 +141,7 @@ public class SoftwareModel {
             byte[] imageBytes = res.body();
             return new Image(new ByteArrayInputStream(imageBytes));
         }else {
-            throw new IOException("Failed to fetch image: " + res.statusCode());
+            throw new IOException();
         }
     }
 
@@ -152,7 +151,7 @@ public class SoftwareModel {
             byte[] imageBytes = res.body();
             return new Image(new ByteArrayInputStream(imageBytes));
         } else {
-            throw new IOException("Failed to fetch image, " + res.statusCode());
+            throw new IOException();
         }
     }
 
