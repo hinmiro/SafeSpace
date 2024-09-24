@@ -548,6 +548,14 @@ StackPane, BorderPane {
     -fx-fill: #333;
 }
 
+.username:hover {
+    -fx-text-fill: linear-gradient(to bottom, #d6a6e7, #a65ea1);
+}
+
+.username:pressed {
+    -fx-text-fill: #a65ea1;
+}
+
 .post-content {
     -fx-font-size: 14px;
     -fx-text-fill: #34495e;
@@ -637,6 +645,23 @@ StackPane, BorderPane {
 }
 
 /* uusi kuva postaus */
+
+
+/* user profiili sivu */
+
+.follow-button, .message-button {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-font-size: 13px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.follow-button:hover, .message-button:hover {
+    -fx-background-color: #0056b3;
+}
+
 
 
 

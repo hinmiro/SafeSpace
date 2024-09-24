@@ -203,6 +203,17 @@ public class ApiClient {
         return res;
     }
 
+    public static HttpResponse<String> getUserById(int userId) throws IOException, InterruptedException {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/users/" + userId))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .GET().build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println(res.body());
+        return res;
+    }
 
     // Posts
 

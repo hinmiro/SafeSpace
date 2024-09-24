@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import javafx.scene.shape.Circle;
+import model.ScreenUtil;
 import model.SessionManager;
 import view.View;
 
@@ -78,7 +79,7 @@ public class EditProfileController {
 
             Stage stage = new Stage();
             stage.setTitle("Profile Page");
-            Scene scene = new Scene(root, 360, 800);
+            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

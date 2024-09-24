@@ -1,7 +1,13 @@
 package model;
 
+import controller.UserProfileController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -44,5 +50,35 @@ public class SharedData {
     public ArrayList<Post> getPosts() {
         return posts;
     }
+
+    public static Label createClickableUsername(String username, int userId, Stage primaryStage, Stage modalStage) {
+        Label usernameLabel = new Label(username);
+        usernameLabel.getStyleClass().add("username");
+        usernameLabel.setStyle("-fx-cursor: hand;");
+
+        usernameLabel.setOnMouseClicked(event -> {
+            modalStage.close();
+
+            openUserProfile(primaryStage, userId);
+        });
+
+        return usernameLabel;
+    }
+
+    public static void openUserProfile(Stage primaryStage, int userId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(SharedData.class.getResource("/userProfile.fxml"));
+            Parent root = loader.load();
+
+            UserProfileController controller = loader.getController();
+            controller.initialize(userId);
+
+            primaryStage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
+            primaryStage.setTitle("User Profile");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

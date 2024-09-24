@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
+import model.ScreenUtil;
 import model.UserModel;
 import java.io.IOException;
 
@@ -68,7 +69,7 @@ public class RegisterController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) registerButton.getScene().getWindow();
-                Scene scene = new Scene(root, 360, 800);
+                Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
                 stage.setScene(scene);
                 stage.setTitle("Main Page");
             } catch (IOException e) {
@@ -84,7 +85,7 @@ public class RegisterController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
             Parent root = loader.load();
 
-            Scene scene = new Scene(root, 360, 800);
+            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Login Page");

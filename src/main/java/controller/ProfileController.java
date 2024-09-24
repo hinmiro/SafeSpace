@@ -8,22 +8,18 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-
+import java.util.List;
 import javafx.scene.shape.Circle;
+import model.Post;
+import model.PostListCell;
 import model.SessionManager;
-import model.SharedData;
 import view.View;
 
 public class ProfileController {
@@ -52,6 +48,10 @@ public class ProfileController {
     public Label registeredLabel;
     @FXML
     public Label bioLabel;
+    @FXML
+    private VBox userPostsVBox;
+    @FXML
+    private ScrollPane scrollPane;
 
     @FXML
     public void initialize() {
@@ -85,6 +85,35 @@ public class ProfileController {
 
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, logOutItem);
         settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
+        displayUserPosts(scrollPane, userPostsVBox, noPostsLabel);
+    }
+
+    public void displayUserPosts(ScrollPane scrollPane, VBox userPostsVBox, Label noPostsLabel) {
+        List<Post> posts;
+        try {
+            posts = controllerForView.getUserPostsUserProfile();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        if (posts.isEmpty()) {
+            noPostsLabel.setVisible(true);
+            scrollPane.setVisible(false);
+        } else {
+            noPostsLabel.setVisible(false);
+            scrollPane.setVisible(true);
+            userPostsVBox.getChildren().clear();
+
+            for (Post post : posts) {
+                PostListCell postCell = new PostListCell();
+                postCell.updateItem(post, false);
+                userPostsVBox.getChildren().add(postCell);
+            }
+
+            scrollPane.setContent(userPostsVBox);
+            scrollPane.setFitToWidth(true);
+        }
     }
 
     private void showContextMenu(MouseEvent event) {

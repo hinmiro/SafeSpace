@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
+import model.ScreenUtil;
 
 import java.io.IOException;
 
@@ -28,7 +29,7 @@ public class View extends Application {
             LoginController loginController = fxmlLoader.getController();
             loginController.setMainView(this);
 
-            Scene scene = new Scene(root, 360, 800);
+            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             primaryStage.setScene(scene);
             primaryStage.setTitle("Login Page");
             primaryStage.setResizable(false);

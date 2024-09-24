@@ -4,10 +4,7 @@ import controller.ControllerForView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -21,9 +18,10 @@ import java.io.IOException;
 
 public class PostListCell extends ListCell<Post> {
     private SoftwareModel softwareModel = new SoftwareModel();
+    private UserModel user = SessionManager.getInstance().getLoggedUser();
 
     @Override
-    protected void updateItem(Post item, boolean empty) {
+    public void updateItem(Post item, boolean empty) {
         super.updateItem(item, empty);
         if (empty || item == null) {
             setText(null);
@@ -55,8 +53,9 @@ public class PostListCell extends ListCell<Post> {
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
             hBox.setOnMousePressed(evt -> {
-                openPostDetailModal(item);
+                openPostDetailModal(item, (Stage) hBox.getScene().getWindow());
             });
+
 
             hBox.getChildren().addAll(contentBox, spacer);
             hBox.getStyleClass().add("post-cell");
@@ -65,7 +64,7 @@ public class PostListCell extends ListCell<Post> {
         }
     }
 
-    private void openPostDetailModal(Post item) {
+    private void openPostDetailModal(Post item, Stage primaryStage) {
         Stage modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
         modalStage.setTitle("Post");
@@ -85,7 +84,19 @@ public class PostListCell extends ListCell<Post> {
 
         contentBox.getChildren().add(buttonBox);
 
-        addUserInfo(contentBox, item);
+        try {
+            String username = softwareModel.getUsernameByPostCreatorID(item.getPostCreatorID());
+            VBox usernameBox = new VBox();
+            usernameBox.setPadding(new Insets(5));
+            usernameBox.getStyleClass().add("username-box");
+
+            Label usernameLabel = SharedData.createClickableUsername(username, item.getPostCreatorID(), primaryStage, modalStage);
+
+            usernameBox.getChildren().add(usernameLabel);
+            contentBox.getChildren().add(usernameBox);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Text postDate = new Text(item.getPostDate());
         postDate.getStyleClass().add("post-date");
@@ -108,6 +119,7 @@ public class PostListCell extends ListCell<Post> {
         modalStage.setScene(scene);
         modalStage.showAndWait();
     }
+
 
     private void addUserInfo(VBox contentBox, Post item) {
         try {
@@ -255,4 +267,6 @@ public class PostListCell extends ListCell<Post> {
         contentBox.getChildren().add(imageSection);
 
     }
+
+
 }

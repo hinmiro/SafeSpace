@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import model.ScreenUtil;
 import model.UserModel;
 import services.ApiClient;
 import view.View;
@@ -75,7 +76,7 @@ public class LoginController {
 
                 Stage stage = (Stage) loginButton.getScene().getWindow();
 
-                Scene scene = new Scene(root, 360, 800);
+                Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
                 stage.setScene(scene);
                 stage.setTitle("Main Page");
             } catch (IOException e) {
@@ -95,7 +96,7 @@ public class LoginController {
 
             Stage stage = (Stage) registerButton.getScene().getWindow();
 
-            Scene scene = new Scene(root, 360, 800);
+            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.setTitle("Register Page");
         } catch (IOException e) {

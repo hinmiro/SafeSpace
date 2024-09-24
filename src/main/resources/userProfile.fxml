@@ -9,12 +9,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
-<BorderPane styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProfileController">
 
+<BorderPane styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserProfileController">
     <top>
         <VBox>
             <BorderPane styleClass="header-background">
@@ -26,11 +25,11 @@
                     </ImageView>
                 </left>
                 <center>
-                    <Label styleClass="headerMain" text="SafeSpace" />
+                    <Label styleClass="headerMain" text="User Profile" />
                 </center>
                 <right>
                     <VBox alignment="CENTER">
-                        <Button fx:id="settingsProfileID" styleClass="settingsProfile" text="≡">
+                        <Button fx:id="leaveMessageButton" styleClass="messageButton" text="✉">
                             <VBox.margin>
                                 <Insets left="10" right="20" />
                             </VBox.margin>
@@ -45,24 +44,29 @@
     <center>
         <VBox alignment="TOP_LEFT" spacing="20.0" BorderPane.alignment="CENTER">
             <HBox alignment="TOP_LEFT" spacing="20.0">
-                <ImageView fx:id="profileImageView" fitHeight="100" fitWidth="100">
+                <ImageView fx:id="profileImageView" fitHeight="100" fitWidth="100" >
                     <HBox.margin>
                         <Insets left="7" top="7" />
                     </HBox.margin>
                 </ImageView>
                 <VBox alignment="CENTER_LEFT" spacing="5.0">
-                    <Label id="usernameLabel" fx:id="usernameLabel" styleClass="usernameLabel" text="Username" />
-                    <Label id="createdDateLabel" fx:id="registeredLabel" styleClass="registeredLabel" text="Registered: 01.01.2024" />
+                    <Label fx:id="usernameLabel" styleClass="usernameLabel" />
+                    <Label fx:id="registeredLabel" styleClass="registeredLabel" />
                 </VBox>
             </HBox>
 
             <VBox alignment="CENTER_LEFT" spacing="5.0">
-                <Label fx:id="bioLabel" styleClass="bioLabel" text="Bio goes here...">
+                <Label fx:id="bioLabel" styleClass="bioLabel" >
                     <VBox.margin>
                         <Insets left="10" />
                     </VBox.margin>
                 </Label>
+                <HBox spacing="10.0" alignment="CENTER">
+                    <Button fx:id="followButton" text="Follow" onAction="#handleFollowButton" styleClass="follow-button"/>
+                    <Button fx:id="messageButton" text="Message" onAction="#handleMessageButton" styleClass="message-button"/>
+                </HBox>
             </VBox>
+
 
             <Separator prefHeight="1.5" orientation="HORIZONTAL" />
 
@@ -90,7 +94,6 @@
                     <VBox fx:id="userPostsVBox" spacing="10.0" />
                 </ScrollPane>
             </StackPane>
-
         </VBox>
     </center>
 
@@ -100,5 +103,4 @@
             <Button fx:id="profileButton" styleClass="mainbutton" text="Profile" />
         </HBox>
     </bottom>
-
 </BorderPane>
