@@ -164,5 +164,13 @@ public class SoftwareModel {
         return null;
     }
 
+    public void getUserArrays() throws IOException, InterruptedException {
+        UserModel user = SessionManager.getInstance().getLoggedUser();
+        HttpResponse<String> res = ApiClient.getUserById(user.getUserId());
+        if (res.statusCode() == 200) {
+            UserModel userFromId = gson.fromJson(res.body(), UserModel.class);
+            user.setArrays(userFromId.getLikedPosts(), userFromId.getPosts(), userFromId.getFriends());
+        }
+    }
 }
 

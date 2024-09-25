@@ -211,7 +211,6 @@ public class ApiClient {
                 .GET().build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        System.out.println(res.body());
         return res;
     }
 

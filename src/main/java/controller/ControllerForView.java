@@ -28,6 +28,8 @@ public class ControllerForView extends Controller {
             UserModel user = app.login(username, password);
             if (user != null) {
                 SessionManager.getInstance().setLoggedUser(user);
+                app.getUserArrays();
+
                 app.startMainFeedThread();
                 return user;
             }
@@ -137,6 +139,11 @@ public class ControllerForView extends Controller {
         return new ArrayList<>();
     }
 
-
-
+    public void removeLike(int postId) {
+        try {
+            app.removeLike(String.valueOf(postId));
+        } catch (InterruptedException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

@@ -70,4 +70,19 @@ public class UserModel {
         this.posts = posts;
     }
 
+    public void addLikedPost(int postId) {
+        likedPosts.add(postId);
+    }
+
+    public void removeLikedPost(int postId) {
+        likedPosts.remove((Integer) postId);
+    }
+
+    public void setArrays(ArrayList<Integer> likedPosts, ArrayList<Integer> posts, ArrayList<Integer> friends) {
+        this.likedPosts = likedPosts;
+        this.posts = posts;
+        this.friends = friends;
+
+    }
+
 }

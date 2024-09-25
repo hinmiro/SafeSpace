@@ -188,14 +188,14 @@ public class PostListCell extends ListCell<Post> {
                 UserModel currentUser = SessionManager.getInstance().getLoggedUser();
 
                 int currentUserId = currentUser.getUserId();
-
-                if (item.isLikedByUser(currentUserId)) {
+                if (SessionManager.getInstance().getLoggedUser().getLikedPosts().contains(item.getPostID())) {
                     boolean likeRemoved = softwareModel.removeLike(String.valueOf(item.getPostID()));
                     if (likeRemoved) {
-                        item.getLikers().remove(Integer.valueOf(currentUserId));
+//                        item.getLikers().remove(Integer.valueOf(currentUserId));
+                        SessionManager.getInstance().getLoggedUser().removeLikedPost(item.getPostID());
                         item.setLikeCount(item.getLikeCount() - 1);
                         likes.setText(String.valueOf(item.getLikeCount()));
-                        item.setLikedByUser(false);
+//                        item.setLikedByUser(false);
                         likeButton.setStyle("-fx-background-color: linear-gradient(to bottom, #85e4a4, #57b657);");
                     } else {
                         System.out.println("Tykkäyksen poistaminen epäonnistui.");
@@ -203,7 +203,8 @@ public class PostListCell extends ListCell<Post> {
                 } else {
                     boolean liked = softwareModel.likePost(String.valueOf(item.getPostID()));
                     if (liked) {
-                        item.getLikers().add(currentUserId);
+//                        item.getLikers().add(currentUserId);
+                        SessionManager.getInstance().getLoggedUser().addLikedPost(item.getPostID());
                         item.setLikeCount(item.getLikeCount() + 1);
                         likes.setText(String.valueOf(item.getLikeCount()));
                         item.setLikedByUser(true);
@@ -234,7 +235,7 @@ public class PostListCell extends ListCell<Post> {
         commentButton.setGraphic(commentIcon);
         commentButton.getStyleClass().add("comment-button");
 
-        Text comments = new Text(String.valueOf(item.getCommentCount()));
+        Text comments = new Text(String.valueOf(0));
         comments.getStyleClass().add("comment-text");
 
         commentBox.getChildren().addAll(commentButton, comments);
