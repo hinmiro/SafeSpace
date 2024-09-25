@@ -51,8 +51,6 @@ public class MainController {
     private VBox contentBox;
     @FXML
     private Label loadingBox;
-    @FXML
-    private ImageView loadingBox2;
 
     public MainController() {
         this.posts = new ArrayList<>();
@@ -191,6 +189,8 @@ public class MainController {
     }
 
     private synchronized void startQueueProcessing() {
+        loadingBox.setVisible(true);
+        loadingBox.setManaged(true);
         stopQueueProcessingFlag = false;
         loadingBox.setVisible(true);
         if (queueThread == null || !queueThread.isAlive()) {
@@ -204,8 +204,6 @@ public class MainController {
                                 feedListView.scrollTo(feedListView.getItems().size() - 1);
                                 loadingBox.setVisible(false);
                                 loadingBox.setManaged(false);
-                                loadingBox2.setVisible(false);
-                                loadingBox2.setManaged(false);
                             });
                         } else {
                             Thread.sleep(100);
@@ -230,6 +228,7 @@ public class MainController {
     public void loadEvents() {
         feedListView.getItems().setAll(SharedData.getInstance().getPosts());
         feedListView.scrollTo(feedListView.getItems().size() - 1);
+
     }
 
     public void setMainView(View view) {
