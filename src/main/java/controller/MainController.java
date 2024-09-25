@@ -189,16 +189,18 @@ public class MainController {
     }
 
     private synchronized void startQueueProcessing() {
-        loadingBox.setVisible(true);
-        loadingBox.setManaged(true);
+
         stopQueueProcessingFlag = false;
         loadingBox.setVisible(true);
         if (queueThread == null || !queueThread.isAlive()) {
             queueThread = new Thread(() -> {
                 while (!stopQueueProcessingFlag) {
                     try {
+
                         Post post = SharedData.getInstance().takeEvent();
                         if (post != null) {
+                            loadingBox.setVisible(true);
+                            loadingBox.setManaged(true);
                             Platform.runLater(() -> {
                                 feedListView.getItems().add(post);
                                 feedListView.scrollTo(feedListView.getItems().size() - 1);
@@ -215,7 +217,9 @@ public class MainController {
             });
             queueThread.start();
 
+
         }
+
     }
 
     public synchronized void stopQueueProcessing() {

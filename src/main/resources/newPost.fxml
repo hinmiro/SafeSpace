@@ -44,7 +44,7 @@
     </VBox>
 
     <center>
-        <VBox alignment="CENTER" spacing="20">
+        <VBox alignment="CENTER" spacing="5">
             <ImageView fitHeight="120" fitWidth="120" preserveRatio="true">
                 <Image url="@/kuvat/newPost.png" />
             </ImageView>
@@ -59,7 +59,7 @@
             <VBox spacing="10">
                 <Label styleClass="captionLabel" text="Add a Caption (optional):">
                     <VBox.margin>
-                        <Insets left="10" right="10" top="10" />
+                        <Insets left="10" right="10" top="5" />
                     </VBox.margin>
                 </Label>
                 <TextArea fx:id="captionTextArea" prefRowCount="2" promptText="Write a caption..." styleClass="captionArea">
@@ -71,7 +71,7 @@
 
             <Button fx:id="postButton" prefHeight="40" prefWidth="150" styleClass="postButton" text="Post">
             <VBox.margin>
-                <Insets bottom="20" />
+                <Insets bottom="50" />
             </VBox.margin>
             </Button>
         </VBox>
