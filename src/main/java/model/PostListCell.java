@@ -15,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PostListCell extends ListCell<Post> {
     private SoftwareModel softwareModel = new SoftwareModel();
@@ -238,11 +239,19 @@ public class PostListCell extends ListCell<Post> {
 
         VBox.setMargin(commentSection, new Insets(20, 0, 0, 0));
 
-
-        // todo real comments
-        Text commentText = new Text("This is a comment");
-        commentText.getStyleClass().add("comment-text");
-        commentSection.getChildren().add(commentText);
+        // todo comment input
+        ArrayList<Comment> comments = ControllerForView.getInstance().getPostCommentsById(String.valueOf(item.getPostID()));
+        if (comments != null) {
+            comments.forEach(comment -> {
+                Text commentText = new Text(comment.getCommentContent());
+                commentText.getStyleClass().add("comment-text");
+                commentSection.getChildren().add(commentText);
+            });
+        } else {
+            Text commentText = new Text("No comments");
+            commentText.getStyleClass().add("comment-text");
+            commentSection.getChildren().add(commentText);
+        }
 
         contentBox.getChildren().add(commentSection);
     }

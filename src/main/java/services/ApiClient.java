@@ -327,5 +327,19 @@ public class ApiClient {
         return res;
     }
 
+    // Comments
+
+    public static HttpResponse<String> getCommentsByPostId(String id) throws IOException, InterruptedException {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/post/" + id + "/comment"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", SessionManager.getInstance().getLoggedUser().getJwt())
+                .GET()
+                .build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        return res;
+    }
+
 
 }
