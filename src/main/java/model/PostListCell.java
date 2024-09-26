@@ -262,7 +262,6 @@ public class PostListCell extends ListCell<Post> {
     private void addPostImage(VBox contentBox, Post item) {
         VBox imageSection = new VBox();
         Image image = ControllerForView.getInstance().getPostPicture(item.getPostPictureID());
-        System.out.println(item.getPostPictureID());
         ImageView imageView = new ImageView(image);
         imageSection.getChildren().add(imageView);
         contentBox.getChildren().add(imageSection);
