@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 import javafx.scene.shape.Circle;
+import model.CoggerSpinner;
 import model.Post;
 import model.PostListCell;
 import model.SessionManager;
@@ -77,6 +78,8 @@ public class ProfileController {
 
         homeButton.setOnAction(event -> navigateTo("/main.fxml"));
         profileButton.setOnAction(event -> navigateTo("/profile.fxml"));
+
+
 
         // menu
         settingsContextMenu = new ContextMenu();

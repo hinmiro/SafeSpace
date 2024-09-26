@@ -12,10 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Post;
-import model.PostListCell;
-import model.ScreenUtil;
-import model.SharedData;
+import model.*;
 import view.View;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +25,8 @@ public class MainController {
     private Thread queueThread;
     private View mainView;
     private ArrayList<Post> posts;
+    private ImageView coggerImageView;
+    private Stage coggerStage;
 
     @FXML
     private Button homeButton;
@@ -192,6 +191,7 @@ public class MainController {
 
         stopQueueProcessingFlag = false;
         loadingBox.setVisible(true);
+
         if (queueThread == null || !queueThread.isAlive()) {
             queueThread = new Thread(() -> {
                 while (!stopQueueProcessingFlag) {

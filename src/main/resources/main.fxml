@@ -51,7 +51,9 @@
 
     <bottom>
         <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
-            <Label fx:id="loadingBox" text="LOADING POSTS..." visible="false" managed="false"/>
+            <Label fx:id="loadingBox" text="LOADING POSTS..." />
+            <ImageView fx:id="loadingBox2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" >
+            </ImageView>
             <HBox fx:id="postMenu" alignment="CENTER" spacing="10.0" visible="false">
                 <Button fx:id="createPicPostButton" styleClass="createPost" text="Share an image" />
                 <Button fx:id="createTextPostButton" styleClass="createPost" text="Share your thoughts" />
