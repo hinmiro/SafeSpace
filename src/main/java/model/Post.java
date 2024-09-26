@@ -6,6 +6,7 @@ import java.util.List;
 public class Post {
     private int postID;
     private int postCreatorID;
+    private String postCreatorName;
     private String postContent;
     private String postPictureID;
     private String postDate;
@@ -13,9 +14,10 @@ public class Post {
     private List<Integer> likers;
     private boolean likedByUser;
 
-    public Post(int postID, int postCreatorID, String postContent, String postPictureID, String postDate, int likeCount) {
+    public Post(int postID, int postCreatorID,String postCreatorName, String postContent, String postPictureID, String postDate, int likeCount) {
         this.postID = postID;
         this.postCreatorID = postCreatorID;
+        this.postCreatorName = postCreatorName;
         this.postContent = postContent;
         this.postPictureID = postPictureID == null ? "" : postPictureID;
         this.postDate = postDate;
@@ -37,6 +39,8 @@ public class Post {
     public void setPostCreatorID(int postCreatorID) {
         this.postCreatorID = postCreatorID;
     }
+
+    public String getPostCreatorName() { return postCreatorName; }
 
     public String getPostContent() {
         return postContent;

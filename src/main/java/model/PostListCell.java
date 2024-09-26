@@ -84,19 +84,15 @@ public class PostListCell extends ListCell<Post> {
 
         contentBox.getChildren().add(buttonBox);
 
-        try {
-            String username = softwareModel.getUsernameByPostCreatorID(item.getPostCreatorID());
-            VBox usernameBox = new VBox();
-            usernameBox.setPadding(new Insets(5));
-            usernameBox.getStyleClass().add("username-box");
+        //String username = softwareModel.getUsernameByPostCreatorID(item.getPostCreatorID());
+        VBox usernameBox = new VBox();
+        usernameBox.setPadding(new Insets(5));
+        usernameBox.getStyleClass().add("username-box");
 
-            Label usernameLabel = SharedData.createClickableUsername(username, item.getPostCreatorID(), primaryStage, modalStage);
+        Label usernameLabel = SharedData.createClickableUsername(item.getPostCreatorName(), item.getPostCreatorID(), primaryStage, modalStage);
 
-            usernameBox.getChildren().add(usernameLabel);
-            contentBox.getChildren().add(usernameBox);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        usernameBox.getChildren().add(usernameLabel);
+        contentBox.getChildren().add(usernameBox);
 
         Text postDate = new Text(item.getPostDate());
         postDate.getStyleClass().add("post-date");
@@ -122,20 +118,16 @@ public class PostListCell extends ListCell<Post> {
 
 
     private void addUserInfo(VBox contentBox, Post item) {
-        try {
-            String username = softwareModel.getUsernameByPostCreatorID(item.getPostCreatorID());
-            VBox usernameBox = new VBox();
-            usernameBox.setPadding(new Insets(5));
-            usernameBox.getStyleClass().add("username-box");
+        //String username = softwareModel.getUsernameByPostCreatorID(item.getPostCreatorID());
+        VBox usernameBox = new VBox();
+        usernameBox.setPadding(new Insets(5));
+        usernameBox.getStyleClass().add("username-box");
 
-            Text usernameText = new Text(username);
-            usernameText.getStyleClass().add("username");
-            usernameBox.getChildren().add(usernameText);
+        Text usernameText = new Text(item.getPostCreatorName());
+        usernameText.getStyleClass().add("username");
+        usernameBox.getChildren().add(usernameText);
 
-            contentBox.getChildren().add(usernameBox);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        contentBox.getChildren().add(usernameBox);
     }
 
     private void addPostDetails(VBox contentBox, Post item) {
@@ -187,15 +179,12 @@ public class PostListCell extends ListCell<Post> {
             try {
                 UserModel currentUser = SessionManager.getInstance().getLoggedUser();
 
-                int currentUserId = currentUser.getUserId();
                 if (SessionManager.getInstance().getLoggedUser().getLikedPosts().contains(item.getPostID())) {
                     boolean likeRemoved = softwareModel.removeLike(String.valueOf(item.getPostID()));
                     if (likeRemoved) {
-//                        item.getLikers().remove(Integer.valueOf(currentUserId));
                         SessionManager.getInstance().getLoggedUser().removeLikedPost(item.getPostID());
                         item.setLikeCount(item.getLikeCount() - 1);
                         likes.setText(String.valueOf(item.getLikeCount()));
-//                        item.setLikedByUser(false);
                         likeButton.setStyle("-fx-background-color: linear-gradient(to bottom, #85e4a4, #57b657);");
                     } else {
                         System.out.println("Tykkäyksen poistaminen epäonnistui.");
@@ -203,7 +192,6 @@ public class PostListCell extends ListCell<Post> {
                 } else {
                     boolean liked = softwareModel.likePost(String.valueOf(item.getPostID()));
                     if (liked) {
-//                        item.getLikers().add(currentUserId);
                         SessionManager.getInstance().getLoggedUser().addLikedPost(item.getPostID());
                         item.setLikeCount(item.getLikeCount() + 1);
                         likes.setText(String.valueOf(item.getLikeCount()));

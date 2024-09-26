@@ -100,22 +100,22 @@ public class SoftwareModel {
         }
     }
 
-    public String getUsernameByPostCreatorID(int userID) throws IOException, InterruptedException {
-        HttpResponse<String> response = ApiClient.getUsernameByUserID(userID);
-
-        if (response.statusCode() == 200) {
-            Gson gson = new Gson();
-            try {
-                UserModel userResponse = gson.fromJson(response.body(), UserModel.class);
-                return userResponse.getUsername();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        } else {
-            return null;
-        }
-    }
+//    public String getUsernameByPostCreatorID(int userID) throws IOException, InterruptedException {
+//        HttpResponse<String> response = ApiClient.getUsernameByUserID(userID);
+//
+//        if (response.statusCode() == 200) {
+//            Gson gson = new Gson();
+//            try {
+//                UserModel userResponse = gson.fromJson(response.body(), UserModel.class);
+//                return userResponse.getUsername();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return null;
+//            }
+//        } else {
+//            return null;
+//        }
+//    }
 
     public boolean likePost(String postId) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.likePost(postId);
