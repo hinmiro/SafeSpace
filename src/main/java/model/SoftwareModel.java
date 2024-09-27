@@ -177,11 +177,26 @@ public class SoftwareModel {
 
     public ArrayList<Comment> getCommentsByPostId(String id) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getCommentsByPostId(id);
+        System.out.println("comment res " + res.body());
         if (res.statusCode() == 200) {
             Comment[] commentsArray = gson.fromJson(res.body(), Comment[].class);
             return new ArrayList<>(Arrays.asList(commentsArray));
         } else {
             throw new IOException("Failed to fetch comment: " + res.statusCode());
+        }
+    }
+
+    public void postComment(String comment, String postId) {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("commentContent", comment);
+        String jsonData = gson.toJson(data);
+
+        try {
+            HttpResponse<String> res = ApiClient.postComment(jsonData, postId);
+            System.out.println("comments body " + res.body());
+
+        }catch (InterruptedException | IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

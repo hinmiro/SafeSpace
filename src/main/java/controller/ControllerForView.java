@@ -159,4 +159,8 @@ public class ControllerForView extends Controller {
         return null;
     }
 
+    public void addComment(String comment, int postId) {
+        app.postComment(comment, String.valueOf(postId));
+    }
+
 }
