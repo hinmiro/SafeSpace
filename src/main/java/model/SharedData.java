@@ -8,11 +8,15 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class SharedData {
     private static SharedData instance;
+
+    private List<LikeListener> likeListeners;
+
     private BlockingQueue<Post> postQueue;
     private BlockingQueue<Like> likeQueue;
 
@@ -23,6 +27,7 @@ public class SharedData {
     private SharedData() {
         postQueue = new LinkedBlockingQueue<>();
         likeQueue = new LinkedBlockingQueue<>();
+        likeListeners = new ArrayList<>();
         posts = new ArrayList<>();
         likes = new ArrayList<>();
     }
@@ -43,6 +48,7 @@ public class SharedData {
 
     public void addLike(Like like) {
         likeQueue.add(like);
+        notifyLikeListeners(like);
     }
 
     public Post takeEvent() throws InterruptedException {
@@ -94,6 +100,20 @@ public class SharedData {
             primaryStage.setTitle("User Profile");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void registerLikeListener(LikeListener listener) {
+        likeListeners.add(listener);
+    }
+
+    public void unregisterLikeListener(LikeListener listener) {
+        likeListeners.remove(listener);
+    }
+
+    private void notifyLikeListeners(Like like) {
+        for (LikeListener listener : likeListeners) {
+            listener.onLikeAdded(like);
         }
     }
 

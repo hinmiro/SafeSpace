@@ -247,8 +247,9 @@ public class MainController {
     public void handleLikeAdded(Like like) {
 
         for (Post post : feedListView.getItems()) {
+            System.out.println("i guess we are not here");
             if (post.getPostID() == like.getPostId()) {
-                System.out.println("post likecount " + post.getLikeCount());
+                System.out.println("post like count " + post.getLikeCount());
                 post.setLikeCount(post.getLikeCount() + 1);
                 feedListView.refresh();
                 break;
