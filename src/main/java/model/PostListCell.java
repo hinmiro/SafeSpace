@@ -179,8 +179,6 @@ public class PostListCell extends ListCell<Post> {
 
         likeButton.setOnAction(event -> {
             try {
-                UserModel currentUser = SessionManager.getInstance().getLoggedUser();
-
                 if (SessionManager.getInstance().getLoggedUser().getLikedPosts().contains(item.getPostID())) {
                     boolean likeRemoved = softwareModel.removeLike(String.valueOf(item.getPostID()));
                     if (likeRemoved) {
@@ -195,7 +193,7 @@ public class PostListCell extends ListCell<Post> {
                     boolean liked = softwareModel.likePost(String.valueOf(item.getPostID()));
                     if (liked) {
                         SessionManager.getInstance().getLoggedUser().addLikedPost(item.getPostID());
-                        item.setLikeCount(item.getLikeCount() + 1);
+                        //item.setLikeCount(item.getLikeCount() + 1);
                         likes.setText(String.valueOf(item.getLikeCount()));
                         item.setLikedByUser(true);
                     } else {
@@ -224,6 +222,7 @@ public class PostListCell extends ListCell<Post> {
         Button commentButton = new Button();
         commentButton.setGraphic(commentIcon);
         commentButton.getStyleClass().add("comment-button");
+        commentButton.setDisable(true);
 
         Text comments = new Text(String.valueOf(0));
         comments.getStyleClass().add("comment-text");

@@ -14,12 +14,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class SharedData {
     private static SharedData instance;
     private BlockingQueue<Post> postQueue;
+    private BlockingQueue<Like> likeQueue;
+
     private ArrayList<Post> posts;
+    private ArrayList<Like> likes;
 
 
     private SharedData() {
         postQueue = new LinkedBlockingQueue<>();
+        likeQueue = new LinkedBlockingQueue<>();
         posts = new ArrayList<>();
+        likes = new ArrayList<>();
     }
 
     public static synchronized SharedData getInstance() {
@@ -36,16 +41,28 @@ public class SharedData {
         }
     }
 
-    public Post takeEvent() throws InterruptedException {
+    public void addLike(Like like) {
+        likeQueue.add(like);
+    }
 
+    public Post takeEvent() throws InterruptedException {
         Post post = postQueue.take();
         posts.add(post);
         return post;
     }
 
+    public Like takeLike() throws InterruptedException {
+        Like like = likeQueue.take();
+        System.out.println("taking like " + like.getUserId());
+        likes.add(like);
+        return like;
+    }
+
     public BlockingQueue<Post> getEventQueue() {
         return postQueue;
     }
+
+    public BlockingQueue<Like> getLikeQueue() { return likeQueue; }
 
     public ArrayList<Post> getPosts() {
         return posts;

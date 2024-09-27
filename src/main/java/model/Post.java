@@ -28,16 +28,8 @@ public class Post {
         return postID;
     }
 
-    public void setPostID(int postID) {
-        this.postID = postID;
-    }
-
     public int getPostCreatorID() {
         return postCreatorID;
-    }
-
-    public void setPostCreatorID(int postCreatorID) {
-        this.postCreatorID = postCreatorID;
     }
 
     public String getPostCreatorName() { return postCreatorName; }
@@ -60,10 +52,6 @@ public class Post {
 
     public String getPostDate() {
         return postDate;
-    }
-
-    public void setPostDate(String postDate) {
-        this.postDate = postDate;
     }
 
     public void setLikeCount(int likeCount) {

@@ -2,6 +2,7 @@ package services;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import model.Like;
 import model.Post;
 import model.SessionManager;
 import model.SharedData;
@@ -71,10 +72,17 @@ public class Feed implements Runnable {
             }
 
             if (eventType.equals("like_added")) {
-                Type type = new TypeToken<HashMap<String, Object>>(){}.getType();
-                HashMap<String, Object> eventDataMap = gson.fromJson(eventDataLine, type);
-                System.out.println("userId: " + eventDataMap.get("userID"));    // Remember to convert int they are double
-                System.out.println("postId: " + eventDataMap.get("postID"));
+                Like like = gson.fromJson(eventDataLine, Like.class);
+                SharedData.getInstance().addLike(like);
+            }
+        }
+    }
+
+    public void updateLikeCount(Like like) {
+        for (Post post : SharedData.getInstance().getPosts()) {
+            if (post.getPostID() == like.getPostId()) {
+                post.setLikeCount(post.getLikeCount() + 1);
+                break;
             }
         }
     }

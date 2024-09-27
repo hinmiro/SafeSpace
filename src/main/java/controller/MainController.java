@@ -12,11 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Post;
-import model.PostListCell;
-import model.ScreenUtil;
-import model.SharedData;
+import model.*;
 import view.View;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
@@ -189,25 +187,34 @@ public class MainController {
     }
 
     private synchronized void startQueueProcessing() {
-
         stopQueueProcessingFlag = false;
         loadingBox.setVisible(true);
         if (queueThread == null || !queueThread.isAlive()) {
             queueThread = new Thread(() -> {
                 while (!stopQueueProcessingFlag) {
                     try {
+                        boolean processed = false;
 
-                        Post post = SharedData.getInstance().takeEvent();
-                        if (post != null) {
-                            loadingBox.setVisible(true);
-                            loadingBox.setManaged(true);
+                        // Process all available posts
+                        Post post;
+                        while ((post = SharedData.getInstance().getEventQueue().poll()) != null) {
+                            processed = true;
+                            Post finalPost = post;
                             Platform.runLater(() -> {
-                                feedListView.getItems().add(post);
+                                feedListView.getItems().add(finalPost);
                                 feedListView.scrollTo(feedListView.getItems().size() - 1);
-                                loadingBox.setVisible(false);
-                                loadingBox.setManaged(false);
                             });
-                        } else {
+                        }
+
+                        // Process all available likes
+                        Like like;
+                        while ((like = SharedData.getInstance().getLikeQueue().poll()) != null) {
+                            processed = true;
+                            Like finalLike = like;
+                            Platform.runLater(() -> handleLikeAdded(finalLike));
+                        }
+
+                        if (!processed) {
                             Thread.sleep(100);
                         }
                     } catch (InterruptedException e) {
@@ -216,10 +223,7 @@ public class MainController {
                 }
             });
             queueThread.start();
-
-
         }
-
     }
 
     public synchronized void stopQueueProcessing() {
@@ -233,6 +237,19 @@ public class MainController {
         feedListView.getItems().setAll(SharedData.getInstance().getPosts());
         feedListView.scrollTo(feedListView.getItems().size() - 1);
 
+    }
+
+    public void handleLikeAdded(Like like) {
+        Platform.runLater(() -> {
+            for (Post post : feedListView.getItems()) {
+                if (post.getPostID() == like.getPostId()) {
+                    System.out.println("post likecount " + post.getLikeCount());
+                    post.setLikeCount(post.getLikeCount() + 1);
+                    feedListView.refresh();
+                    break;
+                }
+            }
+        });
     }
 
     public void setMainView(View view) {
