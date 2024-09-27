@@ -12,6 +12,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -236,16 +237,24 @@ public class PostListCell extends ListCell<Post> {
         commentSection.setSpacing(10);
         commentSection.setPadding(new Insets(10));
         commentSection.getStyleClass().add("comment-section");
+        TextField commentInput = new TextField();
+        commentInput.setPromptText("Comment here...");
+        Button commentButton = new Button("Add comment");
+        commentButton.setOnAction(event -> handleComment(commentInput.getText(), item.getPostID()));
 
         VBox.setMargin(commentSection, new Insets(20, 0, 0, 0));
 
-        // todo comment input
         ArrayList<Comment> comments = ControllerForView.getInstance().getPostCommentsById(String.valueOf(item.getPostID()));
         if (comments != null) {
             comments.forEach(comment -> {
-                Text commentText = new Text(comment.getCommentContent());
-                commentText.getStyleClass().add("comment-text");
-                commentSection.getChildren().add(commentText);
+                Text commentContent = new Text(comment.getCommentContent());
+                Text commentAuthor = new Text("from: " + comment.getUsername());
+                commentAuthor.getStyleClass().add("comment-author");
+
+                TextFlow commentTextFlow = new TextFlow(commentContent, commentAuthor);
+                commentTextFlow.getStyleClass().add("comment-text");
+
+                commentSection.getChildren().add(commentTextFlow);
             });
         } else {
             Text commentText = new Text("No comments");
@@ -254,6 +263,8 @@ public class PostListCell extends ListCell<Post> {
         }
 
         contentBox.getChildren().add(commentSection);
+        contentBox.getChildren().add(commentInput);
+        contentBox.getChildren().add(commentButton);
     }
 
     private void addPostImage(VBox contentBox, Post item) {
@@ -263,6 +274,10 @@ public class PostListCell extends ListCell<Post> {
         imageSection.getChildren().add(imageView);
         contentBox.getChildren().add(imageSection);
 
+    }
+
+    private void handleComment(String text, int postId) {
+        ControllerForView.getInstance().addComment(text,postId);
     }
 
 

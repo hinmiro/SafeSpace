@@ -332,9 +332,21 @@ public class ApiClient {
     public static HttpResponse<String> getCommentsByPostId(String id) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url + "/post/" + id + "/comment"))
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
                 .header("Content-Type", "application/json")
-                .header("Authorization", SessionManager.getInstance().getLoggedUser().getJwt())
                 .GET()
+                .build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        return res;
+    }
+
+    public static HttpResponse<String> postComment(String json, String postId) throws IOException, InterruptedException {
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/post/" + postId + "/comment"))
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
