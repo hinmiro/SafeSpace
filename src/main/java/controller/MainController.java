@@ -197,22 +197,27 @@ public class MainController {
 
                         // Process all available posts
                         Post post;
-                        while ((post = SharedData.getInstance().getEventQueue().poll()) != null) {
+                        while ((post = SharedData.getInstance().takeEvent()) != null) {
+                            loadingBox.setVisible(true);
                             processed = true;
                             Post finalPost = post;
                             Platform.runLater(() -> {
+                                System.out.println("posts in process");
+                                loadingBox.setVisible(false);
                                 feedListView.getItems().add(finalPost);
                                 feedListView.scrollTo(feedListView.getItems().size() - 1);
                             });
                         }
-
                         // Process all available likes
                         Like like;
-                        while ((like = SharedData.getInstance().getLikeQueue().poll()) != null) {
+                        while ((like = SharedData.getInstance().takeLike()) != null) {
                             processed = true;
+                            System.out.println("do i get here");
                             Like finalLike = like;
                             Platform.runLater(() -> handleLikeAdded(finalLike));
                         }
+
+                        // process all available removed likes todo
 
                         if (!processed) {
                             Thread.sleep(100);
@@ -240,16 +245,15 @@ public class MainController {
     }
 
     public void handleLikeAdded(Like like) {
-        Platform.runLater(() -> {
-            for (Post post : feedListView.getItems()) {
-                if (post.getPostID() == like.getPostId()) {
-                    System.out.println("post likecount " + post.getLikeCount());
-                    post.setLikeCount(post.getLikeCount() + 1);
-                    feedListView.refresh();
-                    break;
-                }
+
+        for (Post post : feedListView.getItems()) {
+            if (post.getPostID() == like.getPostId()) {
+                System.out.println("post likecount " + post.getLikeCount());
+                post.setLikeCount(post.getLikeCount() + 1);
+                feedListView.refresh();
+                break;
             }
-        });
+        }
     }
 
     public void setMainView(View view) {

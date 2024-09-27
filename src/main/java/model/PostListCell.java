@@ -194,7 +194,7 @@ public class PostListCell extends ListCell<Post> {
                     if (liked) {
                         SessionManager.getInstance().getLoggedUser().addLikedPost(item.getPostID());
                         //item.setLikeCount(item.getLikeCount() + 1);
-                        likes.setText(String.valueOf(item.getLikeCount()));
+                        likes.setText(String.valueOf(item.getLikeCount() + 1));
                         item.setLikedByUser(true);
                     } else {
                         System.out.println("Tykkäys epäonnistui.");
