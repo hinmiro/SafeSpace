@@ -13,8 +13,11 @@ public class Post {
     private int likeCount;
     private List<Integer> likers;
     private boolean likedByUser;
+    private int commentCount;
 
-    public Post(int postID, int postCreatorID,String postCreatorName, String postContent, String postPictureID, String postDate, int likeCount) {
+
+
+    public Post(int postID, int postCreatorID, String postCreatorName, String postContent, String postPictureID, String postDate, int likeCount, int commentCount) {
         this.postID = postID;
         this.postCreatorID = postCreatorID;
         this.postCreatorName = postCreatorName;
@@ -22,6 +25,7 @@ public class Post {
         this.postPictureID = postPictureID == null ? "" : postPictureID;
         this.postDate = postDate;
         this.likeCount = likeCount;
+        this.commentCount = commentCount;
     }
 
     public int getPostID() {
@@ -81,5 +85,9 @@ public class Post {
 
     public void setLikedByUser(boolean likedByUser) {
         this.likedByUser = likedByUser;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
     }
 }
