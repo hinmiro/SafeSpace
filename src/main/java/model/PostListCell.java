@@ -224,7 +224,7 @@ public class PostListCell extends ListCell<Post> {
         commentButton.getStyleClass().add("comment-button");
         commentButton.setDisable(true);
 
-        Text comments = new Text(String.valueOf(0));
+        Text comments = new Text(String.valueOf(item.getCommentCount()));
         comments.getStyleClass().add("comment-text");
 
         commentBox.getChildren().addAll(commentButton, comments);
