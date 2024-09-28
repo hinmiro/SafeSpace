@@ -21,8 +21,9 @@ public class ApiClient {
     private static HttpResponse<String> res;
     private static final String url = "http://10.120.32.76:8080/api/v1";
     private static final String authUrl = "http://10.120.32.76:8080/auth";
-    private static final String pictureUrl = "http://localhost:8081/api/v1/storage";    // TEMPORARY testing
-    private static final String pictureGet = "http://localhost:8081";   // TEMPORARY testing
+    private static final String pictureUrl = "http://10.120.32.76:8080/api/v1/storage";
+    private static final String profilePictureGet = "http://10.120.32.76/pictures/profile/";
+    private static final String postPictureGet = "http://10.120.32.76/pictures/post/";
 
     public ApiClient(HttpClient client) {
         ApiClient.client = client;
@@ -305,7 +306,7 @@ public class ApiClient {
         HttpResponse<byte[]> response = null;
 
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(pictureGet + "/" + SessionManager.getInstance().getLoggedUser().getProfilePictureUrl()))
+                .uri(URI.create(profilePictureGet + SessionManager.getInstance().getLoggedUser().getProfilePictureUrl()))
                 .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
                 .GET()
                 .build();
@@ -318,7 +319,7 @@ public class ApiClient {
         HttpResponse<byte[]> res = null;
 
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(pictureGet + "/post/" + id))
+                .uri(URI.create(postPictureGet + id))
                 .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
                 .GET()
                 .build();
