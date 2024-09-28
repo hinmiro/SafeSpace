@@ -12,6 +12,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -72,8 +73,13 @@ public class Feed implements Runnable {
             }
 
             if (eventType.equals("like_added")) {
+                System.out.println("like in feed");
                 Like like = gson.fromJson(eventDataLine, Like.class);
                 SharedData.getInstance().addLike(like);
+            }
+
+            if (eventType.equals("remove_like")) {
+                System.out.println("remove like: " + eventDataLine);
             }
         }
     }
