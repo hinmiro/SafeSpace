@@ -61,7 +61,6 @@ public class ProfileController {
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
         bioLabel.setText(SessionManager.getInstance().getLoggedUser().getBio() == null ? "..." : SessionManager.getInstance().getLoggedUser().getBio());
 
-
         profileImageView.setImage(createPlaceholderImage(150, 150));
         makeCircle(profileImageView);
 
