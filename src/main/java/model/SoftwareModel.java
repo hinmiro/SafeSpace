@@ -139,6 +139,7 @@ public class SoftwareModel {
 
     public Image getProfileImage() throws IOException, InterruptedException {
         HttpResponse<byte[]> res = ApiClient.getProfileImg();
+        System.out.println("kuva " + res.statusCode());
         if (res.statusCode() == 200) {
             byte[] imageBytes = res.body();
             return new Image(new ByteArrayInputStream(imageBytes));
