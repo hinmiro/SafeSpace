@@ -42,11 +42,10 @@
 
     <center>
         <VBox fx:id="contentBox" alignment="CENTER" minHeight="300" spacing="20.0" BorderPane.alignment="CENTER">
-            <ListView fx:id="feedListView" layoutX="20" layoutY="100" prefHeight="561.0" prefWidth="300.0">
+            <ListView fx:id="feedListView" layoutX="20" layoutY="100" prefHeight="700.0" prefWidth="300.0">
                 <Label fx:id="noPostsLabel" styleClass="noPostsLabel" text="Nothing on main feed..." />
             </ListView>
         </VBox>
-        <!-- <Pane fx:id="newWindow" visible="false"/>  -->
     </center>
 
     <bottom>

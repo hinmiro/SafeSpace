@@ -88,7 +88,7 @@ public class MainController {
 
         feedListView.setCellFactory(param -> new PostListCell());
         loadEvents();
-        //checkIfNoPosts();
+
         if (stopQueueProcessingFlag) {
             startQueueProcessing();
             stopQueueProcessingFlag = false;
@@ -181,12 +181,6 @@ public class MainController {
         }
     }
 
-    public void checkIfNoPosts() {
-        if (SharedData.getInstance().getEventQueue().isEmpty()) {
-            noPostsLabel.setVisible(true);
-        } else noPostsLabel.setVisible(false);
-    }
-
     private synchronized void startQueueProcessing() {
 
         stopQueueProcessingFlag = false;
@@ -216,10 +210,7 @@ public class MainController {
                 }
             });
             queueThread.start();
-
-
         }
-
     }
 
     public synchronized void stopQueueProcessing() {

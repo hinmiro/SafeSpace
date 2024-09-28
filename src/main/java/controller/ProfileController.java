@@ -17,10 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 import javafx.scene.shape.Circle;
-import model.CoggerSpinner;
-import model.Post;
-import model.PostListCell;
-import model.SessionManager;
+import model.*;
 import view.View;
 
 public class ProfileController {
@@ -78,8 +75,6 @@ public class ProfileController {
 
         homeButton.setOnAction(event -> navigateTo("/main.fxml"));
         profileButton.setOnAction(event -> navigateTo("/profile.fxml"));
-
-
 
         // menu
         settingsContextMenu = new ContextMenu();
@@ -151,15 +146,15 @@ public class ProfileController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/updateInfo.fxml"));
             Parent root = fxmlLoader.load();
+
             UpdateInfoController updateInfoController = fxmlLoader.getController();
             updateInfoController.setProfileController(this);
             updateInfoController.setMainView(mainView);
             updateInfoController.setMainController(mainController);
 
             Stage stage = (Stage) profileButton.getScene().getWindow();
-//            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Update Info");
-            stage.setScene(new Scene(root, 360, 800));
+            stage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -170,14 +165,15 @@ public class ProfileController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/editProfile.fxml"));
             Parent root = fxmlLoader.load();
+
             EditProfileController editProfileController = fxmlLoader.getController();
             editProfileController.setProfileController(this);
             editProfileController.setMainView(mainView);
             editProfileController.setMainController(mainController);
+
             Stage stage = (Stage) profileButton.getScene().getWindow();
-            //stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Edit Profile");
-            stage.setScene(new Scene(root, 360, 800));
+            stage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -210,12 +206,11 @@ public class ProfileController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = fxmlLoader.load();
 
-            Scene scene = new Scene(root, 360, 800);
+            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Main Page");
             MainController mainController = fxmlLoader.getController();
-            //mainController.loadEvents();
             mainController.setMainView(mainView);
 
         } catch (IOException e) {
@@ -226,7 +221,6 @@ public class ProfileController {
     public void setControllerForView(ControllerForView controller) {
         controllerForView = controller;
     }
-
 
     public void setMainView(View view) {
         this.mainView = view;

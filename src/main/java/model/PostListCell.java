@@ -7,12 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -86,7 +82,6 @@ public class PostListCell extends ListCell<Post> {
 
         contentBox.getChildren().add(buttonBox);
 
-        //String username = softwareModel.getUsernameByPostCreatorID(item.getPostCreatorID());
         VBox usernameBox = new VBox();
         usernameBox.setPadding(new Insets(5));
         usernameBox.getStyleClass().add("username-box");
@@ -107,8 +102,7 @@ public class PostListCell extends ListCell<Post> {
         contentBox.getChildren().add(postContent);
 
         addBottomSection(contentBox, item);
-
-        addCommentSection(contentBox, item);
+        getComments(contentBox, item);
 
         ScrollPane scrollPane = new ScrollPane(contentBox);
         scrollPane.setFitToWidth(true);
@@ -118,9 +112,7 @@ public class PostListCell extends ListCell<Post> {
         modalStage.showAndWait();
     }
 
-
     private void addUserInfo(VBox contentBox, Post item) {
-        //String username = softwareModel.getUsernameByPostCreatorID(item.getPostCreatorID());
         VBox usernameBox = new VBox();
         usernameBox.setPadding(new Insets(5));
         usernameBox.getStyleClass().add("username-box");
@@ -151,7 +143,7 @@ public class PostListCell extends ListCell<Post> {
 
         HBox likeBox = createLikeButton(item);
 
-        HBox commentBox = createCommentButton(item);
+        VBox commentBox = createCommentButton(item);
 
         bottomBox.getChildren().addAll(likeBox, commentBox);
         contentBox.getChildren().add(bottomBox);
@@ -179,8 +171,6 @@ public class PostListCell extends ListCell<Post> {
 
         likeButton.setOnAction(event -> {
             try {
-                UserModel currentUser = SessionManager.getInstance().getLoggedUser();
-
                 if (SessionManager.getInstance().getLoggedUser().getLikedPosts().contains(item.getPostID())) {
                     boolean likeRemoved = softwareModel.removeLike(String.valueOf(item.getPostID()));
                     if (likeRemoved) {
@@ -211,8 +201,8 @@ public class PostListCell extends ListCell<Post> {
         return likeBox;
     }
 
-    private HBox createCommentButton(Post item) {
-        HBox commentBox = new HBox();
+    private VBox createCommentButton(Post item) {
+        VBox commentBox = new VBox();
         commentBox.setAlignment(Pos.CENTER_LEFT);
         commentBox.setSpacing(5);
 
@@ -228,33 +218,79 @@ public class PostListCell extends ListCell<Post> {
         Text comments = new Text(String.valueOf(0));
         comments.getStyleClass().add("comment-text");
 
-        commentBox.getChildren().addAll(commentButton, comments);
+        VBox commentInputBox = new VBox();
+        commentInputBox.setSpacing(10);
+        commentInputBox.setVisible(false);
+
+        TextField commentInput = new TextField();
+        commentInput.setPromptText("Comment here...");
+
+        Button addCommentButton = new Button("Add comment");
+        addCommentButton.getStyleClass().add("comment-button2");
+
+        addCommentButton.setOnAction(event -> {
+            handleComment(commentInput.getText(), item.getPostID());
+            commentInput.clear();
+        });
+
+        commentInputBox.getChildren().addAll(commentInput, addCommentButton);
+
+        commentButton.setOnAction(event -> {
+            commentInputBox.setVisible(!commentInputBox.isVisible());
+        });
+
+        commentBox.getChildren().addAll(commentButton, comments, commentInputBox);
+
         return commentBox;
     }
 
-    private void addCommentSection(VBox contentBox, Post item) {
+
+    private void addCommentSection(HBox contentBox, Post item) {
+        TextField commentInput = new TextField();
+        commentInput.setPromptText("Comment here...");
+
+        Button commentButton = new Button("Add comment");
+        commentButton.getStyleClass().add("comment-button2");
+
+        VBox.setMargin(commentButton, new Insets(0, 0, 0, 50));
+
+        commentButton.setOnAction(event -> {
+                handleComment(commentInput.getText(), item.getPostID());
+        commentInput.clear();
+        });
+
+        contentBox.getChildren().add(commentInput);
+        contentBox.getChildren().add(commentButton);
+    }
+
+    private void getComments(VBox contenbox, Post item) {
         VBox commentSection = new VBox();
         commentSection.setSpacing(10);
         commentSection.setPadding(new Insets(10));
         commentSection.getStyleClass().add("comment-section");
-        TextField commentInput = new TextField();
-        commentInput.setPromptText("Comment here...");
-        Button commentButton = new Button("Add comment");
-        commentButton.setOnAction(event -> handleComment(commentInput.getText(), item.getPostID()));
-
-        VBox.setMargin(commentSection, new Insets(20, 0, 0, 0));
 
         ArrayList<Comment> comments = ControllerForView.getInstance().getPostCommentsById(String.valueOf(item.getPostID()));
-        if (comments != null) {
+        if (comments != null && !comments.isEmpty()) {
             comments.forEach(comment -> {
                 Text commentContent = new Text(comment.getCommentContent());
+                commentContent.getStyleClass().add("comment-text");
+
+                VBox usernameBox = new VBox();
+                usernameBox.setPadding(new Insets(5));
+                usernameBox.getStyleClass().add("username-box");
+
                 Text commentAuthor = new Text("from: " + comment.getUsername());
                 commentAuthor.getStyleClass().add("comment-author");
+                usernameBox.getChildren().add(commentAuthor);
 
-                TextFlow commentTextFlow = new TextFlow(commentContent, commentAuthor);
-                commentTextFlow.getStyleClass().add("comment-text");
+                VBox commentBox = new VBox();
+                commentBox.getChildren().addAll(commentContent, usernameBox);
+                commentBox.setPadding(new Insets(5));
+                commentBox.getStyleClass().add("comment-box");
 
-                commentSection.getChildren().add(commentTextFlow);
+                VBox.setMargin(usernameBox, new Insets(10, 0, 0, 0));
+
+                commentSection.getChildren().add(commentBox);
             });
         } else {
             Text commentText = new Text("No comments");
@@ -262,9 +298,7 @@ public class PostListCell extends ListCell<Post> {
             commentSection.getChildren().add(commentText);
         }
 
-        contentBox.getChildren().add(commentSection);
-        contentBox.getChildren().add(commentInput);
-        contentBox.getChildren().add(commentButton);
+        contenbox.getChildren().add(commentSection);
     }
 
     private void addPostImage(VBox contentBox, Post item) {
