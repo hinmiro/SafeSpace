@@ -1,24 +1,17 @@
 package services;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import model.Like;
 import model.Post;
 import model.SessionManager;
 import model.SharedData;
-
-import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.sql.SQLOutput;
-import java.util.HashMap;
+
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class Feed implements Runnable {
 

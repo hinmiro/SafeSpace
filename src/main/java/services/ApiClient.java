@@ -193,16 +193,6 @@ public class ApiClient {
         return res;
     }
 
-//    public static HttpResponse<String> getUsernameByUserID(int userID) throws IOException, InterruptedException {
-//        HttpRequest req = HttpRequest.newBuilder()
-//                .uri(URI.create(url + "/users/" + userID))
-//                .header("Content-Type", "application/json")
-//                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
-//                .GET().build();
-//
-//        res = client.send(req, HttpResponse.BodyHandlers.ofString());
-//        return res;
-//    }
 
     public static HttpResponse<String> getUserById(int userId) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()

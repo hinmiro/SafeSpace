@@ -219,7 +219,6 @@ public class PostListCell extends ListCell<Post> {
                     boolean likeRemoved = softwareModel.removeLike(String.valueOf(item.getPostID()));
                     if (likeRemoved) {
                         SessionManager.getInstance().getLoggedUser().removeLikedPost(item.getPostID());
-                        //item.setLikeCount(item.getLikeCount() - 1);
                         likes.setText(String.valueOf(item.getLikeCount()));
                         likeButton.setStyle("-fx-background-color: linear-gradient(to bottom, #85e4a4, #57b657);");
                     } else {
@@ -229,7 +228,6 @@ public class PostListCell extends ListCell<Post> {
                     boolean liked = softwareModel.likePost(String.valueOf(item.getPostID()));
                     if (liked) {
                         SessionManager.getInstance().getLoggedUser().addLikedPost(item.getPostID());
-                        //item.setLikeCount(item.getLikeCount() + 1);
                         likes.setText(String.valueOf(item.getLikeCount() + 1));
                         item.setLikedByUser(true);
                     } else {
