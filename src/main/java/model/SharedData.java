@@ -18,6 +18,7 @@ public class SharedData {
 
     private BlockingQueue<Post> postQueue;
     private BlockingQueue<Like> likeQueue;
+    private BlockingQueue<Like> removedLikeQueue;
 
     private ArrayList<Post> posts;
     private ArrayList<Like> likes;
@@ -26,6 +27,7 @@ public class SharedData {
     private SharedData() {
         postQueue = new LinkedBlockingQueue<>();
         likeQueue = new LinkedBlockingQueue<>();
+        removedLikeQueue = new LinkedBlockingQueue<>();
         posts = new ArrayList<>();
         likes = new ArrayList<>();
     }
@@ -38,6 +40,7 @@ public class SharedData {
     public void addEvent(Post event) {
         try {
             postQueue.put(event);
+            posts.add(event);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             e.printStackTrace();
@@ -46,19 +49,16 @@ public class SharedData {
 
     public void addLike(Like like) {
         likeQueue.add(like);
-    }
-
-    public Post takeEvent() throws InterruptedException {
-        Post post = postQueue.take();
-        posts.add(post);
-        return post;
-    }
-
-    public Like takeLike() throws InterruptedException {
-        Like like = likeQueue.take();
-        System.out.println("taking like " + like.getUserId());
         likes.add(like);
-        return like;
+    }
+
+
+    public BlockingQueue<Like> getRemovedLikeQueue() {
+        return removedLikeQueue;
+    }
+
+    public void addRemoveLike(Like like) {
+        removedLikeQueue.add(like);
     }
 
     public BlockingQueue<Post> getEventQueue() {

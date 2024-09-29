@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 
 public class Feed implements Runnable {
 
-    private static String url = "http://10.120.32.76:8080/api/v1/events";
+    private static String url = "http://localhost:8081/api/v1/events";
     private BlockingQueue<Post> queue;
     private Gson gson;
 
@@ -73,13 +73,13 @@ public class Feed implements Runnable {
             }
 
             if (eventType.equals("like_added")) {
-                System.out.println("like in feed");
                 Like like = gson.fromJson(eventDataLine, Like.class);
                 SharedData.getInstance().addLike(like);
             }
 
-            if (eventType.equals("remove_like")) {
-                System.out.println("remove like: " + eventDataLine);
+            if (eventType.equals("like_removed")) {
+                Like like = gson.fromJson(eventDataLine, Like.class);
+                SharedData.getInstance().addRemoveLike(like);
             }
         }
     }
