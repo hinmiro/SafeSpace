@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import javafx.scene.image.Image;
 import services.ApiClient;
 import services.Feed;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class SoftwareModel {
     Gson gson = new Gson();
@@ -183,5 +181,24 @@ public class SoftwareModel {
             System.out.println(e.getMessage());
         }
     }
+
+    public boolean sendMessage(String content, int senderId, int receiverId) throws IOException, InterruptedException {
+        Message message = new Message(0, content, senderId, receiverId, String.valueOf(System.currentTimeMillis()));
+        String jsonData = gson.toJson(message);
+        System.out.println("JSON Payload: " + jsonData);
+
+        HttpResponse<String> res = ApiClient.sendMessage(receiverId, content);
+
+        if (res.statusCode() == 200) {
+            if ("Message sent successfully!".equals(res.body())) {
+                return true;
+            } else {
+                throw new IOException("Viestin lähetys epäonnistui: " + res.body());
+            }
+        } else {
+            throw new IOException("Viestin lähetys epäonnistui: " + res.statusCode());
+        }
+    }
+
 }
 

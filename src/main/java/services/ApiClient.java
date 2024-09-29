@@ -1,16 +1,15 @@
-
 package services;
-
 
 import model.SessionManager;
 import model.UserModel;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -344,5 +343,22 @@ public class ApiClient {
         return res;
     }
 
+    // messages
+
+    public static HttpResponse<String> sendMessage(int toUserId, String messageContent) throws IOException, InterruptedException {
+        UserModel user = SessionManager.getInstance().getLoggedUser();
+
+        String formData = "toUserId=" + toUserId + "&messageContent=" + URLEncoder.encode(messageContent, StandardCharsets.UTF_8);
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/message/send"))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .header("Authorization", "Bearer " + user.getJwt())
+                .POST(HttpRequest.BodyPublishers.ofString(formData))
+                .build();
+
+        HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        return res;
+    }
 
 }

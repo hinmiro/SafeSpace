@@ -65,9 +65,10 @@
             </Label>
 
             <HBox alignment="CENTER" spacing="8" styleClass="editorToolbar">
-                <Button onAction="#boldText" styleClass="boldButton" text="B" />
-                <Button onAction="#italicText" styleClass="italicButton" text="I" />
-                <Button onAction="#addList" styleClass="listButton" text="List" />
+                <Button text="😊" onAction="#insertEmojiSmile" styleClass="emojiButton"/>
+                <Button text="👍" onAction="#insertEmojiThumbsUp" styleClass="emojiButton"/>
+                <Button text="😂" onAction="#insertEmojiLaugh" styleClass="emojiButton"/>
+                <Button text="🌟" onAction="#insertEmojiStar" styleClass="emojiButton"/>
             </HBox>
 
             <TextArea fx:id="textPostArea" prefHeight="271.0" prefRowCount="6" prefWidth="330.0" promptText="Enter text here" styleClass="textPostArea" wrapText="true">
