@@ -20,8 +20,8 @@ public class ApiClient {
 
     private static HttpClient client = HttpClient.newHttpClient();
     private static HttpResponse<String> res;
-    private static final String url = "http://localhost:8081/api/v1";
-    private static final String authUrl = "http://localhost:8081/auth";
+    private static final String url = "http://10.120.32.76:8080/api/v1";
+    private static final String authUrl = "http://10.120.32.76:8080/auth";
     private static final String pictureUrl = "http://10.120.32.76:8080/api/v1/storage";
     private static final String profilePictureGet = "http://10.120.32.76/pictures/profile/";
     private static final String postPictureGet = "http://10.120.32.76/pictures/post/";
