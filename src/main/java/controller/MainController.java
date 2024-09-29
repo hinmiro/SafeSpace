@@ -27,6 +27,8 @@ public class MainController {
     private Thread queueThread;
     private View mainView;
     private ArrayList<Post> posts;
+    private ImageView coggerImageView;
+    private Stage coggerStage;
 
     @FXML
     private Button homeButton;
@@ -88,7 +90,7 @@ public class MainController {
 
         feedListView.setCellFactory(param -> new PostListCell());
         loadEvents();
-        //checkIfNoPosts();
+
         if (stopQueueProcessingFlag) {
             startQueueProcessing();
             stopQueueProcessingFlag = false;
@@ -181,15 +183,10 @@ public class MainController {
         }
     }
 
-    public void checkIfNoPosts() {
-        if (SharedData.getInstance().getEventQueue().isEmpty()) {
-            noPostsLabel.setVisible(true);
-        } else noPostsLabel.setVisible(false);
-    }
-
     private synchronized void startQueueProcessing() {
         stopQueueProcessingFlag = false;
         loadingBox.setVisible(true);
+
         if (queueThread == null || !queueThread.isAlive()) {
             queueThread = new Thread(() -> {
                 while (!stopQueueProcessingFlag) {

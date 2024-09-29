@@ -33,7 +33,6 @@ public class UpdateInfoController {
     @FXML
     private void initialize() {
         closeButton.setOnAction(event -> handleClose());
-        //mainButton.setOnAction(event -> updatePassword());
 
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
             updatePasswordStrength(newValue);
@@ -96,6 +95,12 @@ public class UpdateInfoController {
     private void updatePassword() {
         String password = passwordField.getText().trim();
         String confirmPassword = confirmPasswordField.getText().trim();
+
+        int strength = calculatePasswordStrength(password);
+        if (strength < 3) {
+            showAlert(Alert.AlertType.ERROR, "Weak Password", "Please choose a stronger password.");
+            return;
+        }
 
         if (password.isEmpty() || confirmPassword.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Error", "Password fields cannot be empty.");

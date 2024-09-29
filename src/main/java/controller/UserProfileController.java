@@ -100,6 +100,13 @@ public class UserProfileController {
             usernameLabel.setText(user.getUsername());
             bioLabel.setText(user.getBio());
             registeredLabel.setText(user.getDateOfCreation());
+
+            // todo fetch profile picture
+            if (user.getProfilePictureUrl().equals("default")) {
+                profileImageView.setImage(createPlaceholderImage(150, 150));
+            } else {
+                profileImageView.setImage(controllerForView.getProfilePicture());
+                }
         }
     }
 

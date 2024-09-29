@@ -521,7 +521,7 @@ StackPane, BorderPane {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 0);
 }
 
-/* uusi teksti postaus */
+/* uusi postaus */
 
 .post-cell {
     -fx-background-color: #ffffff;
@@ -558,6 +558,7 @@ StackPane, BorderPane {
 
 .post-content {
     -fx-font-size: 14px;
+    -fx-line-spacing: 1.2em;
     -fx-text-fill: #34495e;
     line-height: 1.5;
     -fx-font-family: Arial, sans-serif;
@@ -617,21 +618,31 @@ StackPane, BorderPane {
     -fx-text-fill: #8e8e8e;
 }
 
-/* uusi teksti postaus modaali */
+/* uusi postaus modaali */
 
 .comment-section {
     -fx-background-color: #f0f0f0;
-    -fx-padding: 15;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-    -fx-spacing: 10;
 }
 
 .comment-text {
-    -fx-font-size: 14px;
-    -fx-text-fill: #555;
-    -fx-padding: 5 0;
+    -fx-background-color: #e0e0e0;
+    -fx-padding: 10;
+    -fx-background-radius: 5;
+    -fx-margin: 5;
+}
+
+.comment-author {
+    -fx-font-weight: bold;
+    -fx-fill: #2980b9;
+    -fx-font-size: 12px;
+    -fx-margin-left: 5px;
+}
+
+.comment-input {
+    -fx-background-color: #ecf0f1;
+    -fx-border-color: #dcdcdc;
+    -fx-padding: 8px;
+    -fx-font-size: 13px;
 }
 
 .close-button {
@@ -648,8 +659,32 @@ StackPane, BorderPane {
     -fx-scale-y: 1.3;
 }
 
-/* uusi kuva postaus */
+.comment-button2 {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-text-fill: white;
+    -fx-padding: 6px 12px;
+    -fx-font-size: 12px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
 
+.comment-button2:hover {
+    -fx-background-color: #0056b3;
+}
+
+.comment-button2:pressed {
+    -fx-background-color: #0056b3;
+}
+
+.comment-box {
+    -fx-background-color: rgb(250, 250, 250);
+    -fx-padding: 15;
+    -fx-border-color: rgba(55, 51, 51, 0.1);
+    -fx-border-width: 1;
+    -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
 
 /* user profiili sivu */
 
@@ -665,6 +700,23 @@ StackPane, BorderPane {
 .follow-button:hover, .message-button:hover {
     -fx-background-color: #0056b3;
 }
+
+/* ScrollPane tausta */
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #a0a0a0;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #a0a0a0;
+}
+
+
+
 
 
 

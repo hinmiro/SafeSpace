@@ -42,16 +42,17 @@
 
     <center>
         <VBox fx:id="contentBox" alignment="CENTER" minHeight="300" spacing="20.0" BorderPane.alignment="CENTER">
-            <ListView fx:id="feedListView" layoutX="20" layoutY="100" prefHeight="561.0" prefWidth="300.0">
+            <ListView fx:id="feedListView" layoutX="20" layoutY="100" prefHeight="700.0" prefWidth="300.0">
                 <Label fx:id="noPostsLabel" styleClass="noPostsLabel" text="Nothing on main feed..." />
             </ListView>
         </VBox>
-        <!-- <Pane fx:id="newWindow" visible="false"/>  -->
     </center>
 
     <bottom>
         <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
-            <Label fx:id="loadingBox" text="LOADING POSTS..." visible="false" managed="false"/>
+            <Label fx:id="loadingBox" text="LOADING POSTS..." />
+            <ImageView fx:id="loadingBox2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" >
+            </ImageView>
             <HBox fx:id="postMenu" alignment="CENTER" spacing="10.0" visible="false">
                 <Button fx:id="createPicPostButton" styleClass="createPost" text="Share an image" />
                 <Button fx:id="createTextPostButton" styleClass="createPost" text="Share your thoughts" />

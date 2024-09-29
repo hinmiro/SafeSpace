@@ -94,24 +94,26 @@ public class EditProfileController {
 
     public void handleSaveChanges(ActionEvent actionEvent) {
         String newName = usernameField.getText().trim();
+        newName = newName.isEmpty() ? SessionManager.getInstance().getLoggedUser().getUsername() : newName;
         String newBio = bioField.getText().trim();
-        //String newProfilePictureID = profileImageView.getImage().getUrl();
+        newBio = newBio.isEmpty() ? SessionManager.getInstance().getLoggedUser().getBio() : newBio;
 
         try {
             boolean updateSuccess = controllerForView.updateProfile(newName, null, newBio, selectedFile);
 
             if (updateSuccess) {
+                if (newImage != null) {
+                    profileImageView.setImage(newImage);
+                } else {
+                    profileImageView.setImage(createPlaceholderImage(150, 150));
+                }
                 showAlert("Changes saved successfully.", Alert.AlertType.INFORMATION);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             showAlert("An error occurred while saving changes.", Alert.AlertType.ERROR);
         }
-
     }
-
-
-
 
     private void showAlert(String message, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);
@@ -120,7 +122,6 @@ public class EditProfileController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 
     private void makeCircle(ImageView imageView) {
         Circle clip = new Circle(
@@ -170,7 +171,6 @@ public class EditProfileController {
         });
     }
 
-
     public void setProfileController(ProfileController controller) {
         profileController = controller;
     }
@@ -181,5 +181,8 @@ public class EditProfileController {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+    }
+
+    public void handleDelete(ActionEvent actionEvent) {
     }
 }
