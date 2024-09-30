@@ -185,6 +185,7 @@ public class MainController {
     private synchronized void startQueueProcessing() {
         stopQueueProcessingFlag = false;
         loadingBox.setVisible(true);
+        loadingBox.setManaged(true);
 
         if (queueThread == null || !queueThread.isAlive()) {
             queueThread = new Thread(() -> {
@@ -200,6 +201,7 @@ public class MainController {
                             Post finalPost = post;
                             Platform.runLater(() -> {
                                 loadingBox.setVisible(false);
+                                loadingBox.setManaged(false);
                                 feedListView.getItems().add(finalPost);
                                 feedListView.scrollTo(feedListView.getItems().size() - 1);
                             });
@@ -229,6 +231,8 @@ public class MainController {
                 }
             });
             queueThread.start();
+            loadingBox.setVisible(false);
+            loadingBox.setManaged(false);
         }
     }
 
