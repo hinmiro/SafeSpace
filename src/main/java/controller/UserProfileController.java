@@ -24,6 +24,7 @@ import java.util.List;
 public class UserProfileController {
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private View mainView;
+    private int userId;
 
     @FXML private Label usernameLabel;
     @FXML private Label bioLabel;
@@ -42,6 +43,7 @@ public class UserProfileController {
     private Button leaveMessageButton;
 
     public void initialize(int userId) {
+        this.userId = userId;
         fetchUserData(userId);
 
         homeButton.setOnAction(event -> {
@@ -138,12 +140,27 @@ public class UserProfileController {
         }
     }
 
-
     public void handleFollowButton(ActionEvent actionEvent) {
 
     }
 
-    public void handleMessageButton(ActionEvent actionEvent) {
+    @FXML
+    private void handleMessageButton() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/userMessages.fxml"));
+            Parent root = loader.load();
+
+            UserMessagesController userMessagesController = loader.getController();
+            userMessagesController.setUserId(userId);
+
+            Stage stage = (Stage) messageButton.getScene().getWindow();
+            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+            stage.setTitle("Messages");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void makeCircle(ImageView imageView) {

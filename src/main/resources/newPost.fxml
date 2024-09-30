@@ -62,7 +62,7 @@
                         <Insets left="10" right="10" top="5" />
                     </VBox.margin>
                 </Label>
-                <TextArea fx:id="captionTextArea" prefRowCount="2" promptText="Write a caption..." styleClass="captionArea">
+                <TextArea fx:id="captionTextArea" prefRowCount="2" promptText="Write a caption..." styleClass="captionArea" wrapText="true">
                 <VBox.margin>
                     <Insets left="10" right="10" />
                 </VBox.margin>

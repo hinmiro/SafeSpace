@@ -9,15 +9,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.ScreenUtil;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -49,15 +46,22 @@ public class NewPostController {
     @FXML
     private void handleNewPost() {
         String text = captionTextArea.getText();
+
+        if (selectedFile == null) {
+            showAlert("Please add an image to your post.");
+        }
+
         try {
             boolean response = controllerForView.sendPostWithImage(text, selectedFile);
             if (response) {
+                showAlert("New post sent successfully!");
                 handleClose();
+            } else {
+                showAlert("An error occurred while sending the post.");
             }
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     private void handleClose() {
@@ -116,4 +120,11 @@ public class NewPostController {
         this.mainController = mainController;
     }
 
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }

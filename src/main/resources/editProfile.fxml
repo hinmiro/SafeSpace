@@ -55,7 +55,7 @@
 
             <HBox alignment="CENTER" spacing="40.0">
                 <VBox alignment="CENTER_LEFT" spacing="10.0">
-                    <Label id="usernameLabel" fx:id="usernameLabel" styleClass="usernameLabel" text="Username" />
+                    <Label id="usernameLabel" fx:id="usernameLabelMessages" styleClass="usernameLabel" text="Username" />
                     <Label id="createdDateLabel" fx:id="registeredLabel" styleClass="registeredLabel" text="Registered: 01.01.2024" />
                 </VBox>
             </HBox>

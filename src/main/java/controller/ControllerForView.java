@@ -1,16 +1,11 @@
 package controller;
 
 import javafx.scene.image.Image;
-import model.Comment;
-import model.Post;
-import model.SessionManager;
-import model.UserModel;
+import model.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -163,4 +158,8 @@ public class ControllerForView extends Controller {
         app.postComment(comment, String.valueOf(postId));
     }
 
+    public boolean sendMessage(String content, int receiverId) throws IOException, InterruptedException {
+        int senderId = SessionManager.getInstance().getLoggedUser().getUserId();
+        return app.sendMessage(content, senderId, receiverId);
+    }
 }
