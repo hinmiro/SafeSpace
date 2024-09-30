@@ -157,7 +157,7 @@ public class MainController {
 
             Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
-            Scene scene = new Scene(newPostPane);
+            Scene scene = new Scene(newPostPane, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -175,7 +175,7 @@ public class MainController {
 
             Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
-            Scene scene = new Scene(newPostPane2);
+            Scene scene = new Scene(newPostPane2, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

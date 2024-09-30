@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.ScreenUtil;
-
 import java.io.IOException;
 
 public class NewTextController {
@@ -33,8 +32,15 @@ public class NewTextController {
 
     @FXML
     private void handlePost() {
+        String postText = textPostArea.getText().trim();
+
+        if (postText.isEmpty()) {
+            showAlert("Please enter some text before posting.");
+            return;
+        }
+
         try {
-            boolean res = controllerForView.sendPost(textPostArea.getText());
+            boolean res = controllerForView.sendPost(postText);
             if (res) {
                 showAlert("New post sent!");
                 handleClose();
@@ -79,37 +85,37 @@ public class NewTextController {
     }
 
     @FXML
-    private void boldText() {
-        //applyStyleToText("-fx-font-weight", "bold");
+    private void insertEmojiSmile() {
+        insertEmoji("😊");
     }
 
     @FXML
-    private void italicText() {
-        //applyStyleToText("-fx-font-style", "italic");
+    private void insertEmojiThumbsUp() {
+        insertEmoji("👍");
     }
 
     @FXML
-    private void addList() {
-        String currentText = textPostArea.getText();
-        textPostArea.setText(currentText + "\n• ");
+    private void insertEmojiLaugh() {
+        insertEmoji("😂");
     }
 
-    /*private void applyStyleToText(String styleProperty, String styleValue) {
-        String selectedText = textPostArea.getSelectedText();
-        if (!selectedText.isEmpty()) {
-            String replacement = String.format("[style=%s:%s]%s[/style]", styleProperty, styleValue, selectedText);
-            textPostArea.replaceSelection(replacement);
-        }
-    }*/
+    @FXML
+    private void insertEmojiStar() {
+        insertEmoji("🌟");
+    }
+
+    private void insertEmoji(String emoji) {
+        int caretPosition = textPostArea.getCaretPosition();
+        textPostArea.insertText(caretPosition, emoji);
+    }
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
-
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("info");
+        alert.setTitle("Information");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

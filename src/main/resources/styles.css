@@ -360,7 +360,7 @@ StackPane, BorderPane {
     -fx-padding: 5px 0;
 }
 
-.boldButton, .italicButton, .listButton {
+.emojiButton {
     -fx-background-color: #f0f0f0;
     -fx-text-fill: #333;
     -fx-font-size: 14px;
@@ -372,7 +372,7 @@ StackPane, BorderPane {
     -fx-border-width: 1px;
 }
 
-.boldButton:hover, .italicButton:hover, .listButton:hover {
+.emojiButton:hover {
     -fx-background-color: #e0e0e0;
 }
 
@@ -714,6 +714,72 @@ StackPane, BorderPane {
 .scroll-bar:vertical .thumb {
     -fx-background-color: #a0a0a0;
 }
+
+/* user message */
+
+.message-textfield {
+    -fx-prompt-text-fill: #888888;
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #333333;
+    -fx-border-color: #dedede;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 15;
+}
+
+.message-input-hbox {
+    -fx-padding: 10;
+    -fx-alignment: center;
+}
+
+.send-button {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+
+.send-button:hover {
+    -fx-background-color: #0056b3;
+}
+
+.usernameBackgroundPane {
+    -fx-background-color: #f0f0f0;
+    -fx-padding: 10;
+    -fx-background-radius: 5;
+    -fx-margin: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+}
+
+.usernameLabelMessage {
+    -fx-font-size: 18px;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+.message-label {
+    -fx-background-color: #fafafa;
+    -fx-border-color: #dedede;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px;
+    -fx-margin: 5px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-wrap-text: true;
+    -fx-max-width: 300px;
+}
+
+.message-label:hover {
+    -fx-background-color: #e8e8e8;
+}
+
+
+
 
 
 
