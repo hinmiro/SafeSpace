@@ -98,6 +98,7 @@ public class MainController {
 
     private void togglePostMenu() {
         postMenu.setVisible(!postMenu.isVisible());
+        postMenu.setManaged(!postMenu.isManaged());
     }
 
     private void openPicPostForm() {
@@ -185,6 +186,7 @@ public class MainController {
     private synchronized void startQueueProcessing() {
         stopQueueProcessingFlag = false;
         loadingBox.setVisible(true);
+        loadingBox.setManaged(true);
 
         if (queueThread == null || !queueThread.isAlive()) {
             queueThread = new Thread(() -> {
@@ -195,11 +197,11 @@ public class MainController {
                         // Process all available posts
                         Post post;
                         while ((post = SharedData.getInstance().getEventQueue().poll(100, TimeUnit.MICROSECONDS)) != null) {
-                            loadingBox.setVisible(true);
                             processed = true;
                             Post finalPost = post;
                             Platform.runLater(() -> {
                                 loadingBox.setVisible(false);
+                                loadingBox.setManaged(false);
                                 feedListView.getItems().add(finalPost);
                                 feedListView.scrollTo(feedListView.getItems().size() - 1);
                             });
@@ -223,6 +225,9 @@ public class MainController {
                         if (!processed) {
                             Thread.sleep(100);
                         }
+                        loadingBox.setVisible(false);
+                        loadingBox.setManaged(false);
+
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
