@@ -37,7 +37,6 @@ public class MessageController {
 
     @FXML
     private void initialize() {
-
         checkIfNoMessages();
 
         leaveMessageButton.setText("x");
@@ -70,10 +69,19 @@ public class MessageController {
         loadMessages();
 
         conversationListView.setOnMouseClicked(event -> {
-                Message selectedMessage = conversationListView.getSelectionModel().getSelectedItem();
-                if (selectedMessage != null) {
-                    openUserMessages(selectedMessage.getReceiverId());
+            Message selectedMessage = conversationListView.getSelectionModel().getSelectedItem();
+            if (selectedMessage != null) {
+                UserModel loggedInUser = SessionManager.getInstance().getLoggedUser();
+                int conversationPartnerId;
+
+                if (selectedMessage.getSenderId() == loggedInUser.getUserId()) {
+                    conversationPartnerId = selectedMessage.getReceiverId();
+                } else {
+                    conversationPartnerId = selectedMessage.getSenderId();
                 }
+
+                openUserMessages(conversationPartnerId);
+            }
         });
     }
 
@@ -89,7 +97,7 @@ public class MessageController {
             UserModel receiver = controllerForView.getUserById(message.getReceiverId());
 
             if (sender != null && receiver != null) {
-                if (messageInvolvesLoggedUser(loggedInUser, sender, receiver)) {
+                if (whoIsMessaging(loggedInUser, sender, receiver)) {
                     String conversationPartner = (loggedInUser.getUserId() == sender.getUserId())
                             ? receiver.getUsername()
                             : sender.getUsername();
@@ -102,9 +110,10 @@ public class MessageController {
         }
 
         conversationListView.setCellFactory(param -> new MessageListCell());
+        checkIfNoMessages();
     }
 
-    private boolean messageInvolvesLoggedUser(UserModel loggedInUser, UserModel sender, UserModel receiver) {
+    private boolean whoIsMessaging(UserModel loggedInUser, UserModel sender, UserModel receiver) {
         return sender.getUserId() == loggedInUser.getUserId() || receiver.getUserId() == loggedInUser.getUserId();
     }
 
@@ -147,10 +156,12 @@ public class MessageController {
     }
 
     public void checkIfNoMessages() {
-        if (contentBox.getChildren().isEmpty() || (contentBox.getChildren().size() == 1 && contentBox.getChildren().contains(noMessagesLabel))) {
+        if (conversationListView.getItems().isEmpty()) {
             noMessagesLabel.setVisible(true);
+            conversationListView.setVisible(false);
         } else {
             noMessagesLabel.setVisible(false);
+            conversationListView.setVisible(true);
         }
     }
 
@@ -161,5 +172,4 @@ public class MessageController {
     public void setMainView(View view) {
         this.mainView = view;
     }
-
 }

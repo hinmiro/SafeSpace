@@ -183,10 +183,6 @@ public class SoftwareModel {
     }
 
     public boolean sendMessage(String content, int senderId, int receiverId) throws IOException, InterruptedException {
-        Message message = new Message(0, content, senderId, receiverId, String.valueOf(System.currentTimeMillis()));
-        String jsonData = gson.toJson(message);
-        System.out.println("JSON Payload: " + jsonData);
-
         HttpResponse<String> res = ApiClient.sendMessage(receiverId, content);
 
         if (res.statusCode() == 200) {

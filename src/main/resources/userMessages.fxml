@@ -49,8 +49,8 @@
                 <Label fx:id="usernameLabelMessage" styleClass="usernameLabelMessage"/>
             </HBox>
             </HBox>
-            <ScrollPane fitToWidth="true" fitToHeight="true" prefHeight="700" styleClass="message-scrollpane">
-                <VBox fx:id="messageListVBox" spacing="10.0" />
+            <ScrollPane fitToWidth="true" fitToHeight="true" prefHeight="700">
+                <VBox fx:id="messageListVBox" spacing="10.0" styleClass="messageListBox"/>
             </ScrollPane>
 
             <HBox spacing="10.0" styleClass="message-input-hbox">

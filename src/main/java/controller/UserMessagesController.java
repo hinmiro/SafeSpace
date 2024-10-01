@@ -8,6 +8,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Message;
@@ -63,6 +65,13 @@ public class UserMessagesController {
 
         closeButton.setOnAction(event -> handleClose());
         sendMessageButton.setOnAction(event -> handleSendMessage());
+        messageTextField.setOnKeyPressed(this::handleEnterKey);
+    }
+
+    private void handleEnterKey(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            handleSendMessage();
+        }
     }
 
     private void fetchUser(int userId) {
@@ -76,7 +85,6 @@ public class UserMessagesController {
         int currentUserId = SessionManager.getInstance().getLoggedUser().getUserId();
 
         List<Message> messages = controllerForView.getMessages();
-        System.out.println("Messages: " + messages);
         messageListVBox.getChildren().clear();
 
         for (Message message : messages) {
@@ -90,10 +98,16 @@ public class UserMessagesController {
     private void displayMessage(Message message) {
         UserModel sender = controllerForView.getUserById(message.getSenderId());
         String username = sender.getUsername();
+
         Label messageLabel = new Label(username + ": " + message.getMessageContent());
-        System.out.println("Message: " + message.getMessageContent());
-        System.out.println("messagelabel: " + messageLabel);
-        messageLabel.getStyleClass().add("message-label");
+
+        int currentUserId = SessionManager.getInstance().getLoggedUser().getUserId();
+        if (message.getSenderId() == currentUserId) {
+            messageLabel.getStyleClass().add("message-label1");
+        } else {
+            messageLabel.getStyleClass().add("message-label2");
+        }
+
         messageListVBox.getChildren().add(messageLabel);
     }
 

@@ -372,7 +372,6 @@ public class ApiClient {
                 .build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        System.out.println("Messages: " + res.body());
         return res;
     }
 }
