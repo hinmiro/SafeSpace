@@ -1,6 +1,7 @@
 # SafeSpace G2
 
-Frontend client for SafeSpace G2.
+### Frontend client for SafeSpace G2.
+
 
 Programming languages:
   - Java
@@ -13,7 +14,7 @@ Technologies used:
 
 Tools user:
   - IntelliJ
-  - Scenebuilder
+  - Scene builder
   - Postman
 
 Requirements:
