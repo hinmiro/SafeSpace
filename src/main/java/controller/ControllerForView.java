@@ -42,6 +42,7 @@ public class ControllerForView extends Controller {
             UserModel user = app.postRegister(username, password);
             if (user != null) {
                 SessionManager.getInstance().setLoggedUser(user);
+                app.getUserArrays();
                 app.startMainFeedThread();
                 return user;
             }
