@@ -141,6 +141,10 @@ public class EditProfileController {
                 .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif",
                         "*.webp", "*.svg"));
         selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
+        if (selectedFile.getTotalSpace()> 5000000) {
+            showAlert("File size is too large. Please upload a file less than 5MB.", Alert.AlertType.ERROR);
+            return null;
+        }
 
         if (selectedFile != null) {
             try {
