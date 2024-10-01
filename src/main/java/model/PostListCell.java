@@ -270,6 +270,10 @@ public class PostListCell extends ListCell<Post> {
         commentSection.setSpacing(10);
         commentSection.setPadding(new Insets(10));
         commentSection.getStyleClass().add("comment-section");
+        TextField commentInput = new TextField();
+        commentInput.setPromptText("Type comment here...");
+        Button submitComment = new Button("Add comment");
+
 
         ArrayList<Comment> comments = ControllerForView.getInstance().getPostCommentsById(String.valueOf(item.getPostID()));
         if (comments != null && !comments.isEmpty()) {
@@ -300,7 +304,17 @@ public class PostListCell extends ListCell<Post> {
             commentSection.getChildren().add(commentText);
         }
 
+        submitComment.setOnAction(event -> {
+            String comment = commentInput.getText().trim();
+            if (!comment.isEmpty()) {
+                handleComment(comment, item.getPostID());
+                commentInput.clear();
+            }
+        });
+
         contenbox.getChildren().add(commentSection);
+        contenbox.getChildren().add(commentInput);
+        contenbox.getChildren().add(submitComment);
     }
 
     private void handleComment(String text, int postId) {
