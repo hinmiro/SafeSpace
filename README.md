@@ -3,17 +3,17 @@
 Frontend client of SafeSpace G2.
 
 Technologies used:
-  -- Java
-  -- JavaFx
-  -- Maven
+  - Java
+  - JavaFx
+  - Maven
 
 Tools user:
-  -- IntelliJ
-  -- Scenebuilder
-  -- Postman
+  - IntelliJ
+  - Scenebuilder
+  - Postman
 
-  Requirements:
-    -- Java JDK21
+Requirements:
+  - Java JDK21
 
 
 Just clone this repo and move to this if you havent installed backend server yet --> [Link](https://github.com/JoelPalu/SafeSpace_Backend/).
