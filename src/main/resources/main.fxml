@@ -52,7 +52,6 @@
         <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
             <Label fx:id="loadingBox" text="LOADING POSTS..." />
             <HBox fx:id="postMenu" alignment="CENTER" spacing="10.0" visible="false" managed="false">
-            <HBox fx:id="postMenu" alignment="CENTER" spacing="10.0" visible="false">
                 <Button fx:id="createPicPostButton" styleClass="createPost" text="Share an image" />
                 <Button fx:id="createTextPostButton" styleClass="createPost" text="Share your thoughts" />
             </HBox>

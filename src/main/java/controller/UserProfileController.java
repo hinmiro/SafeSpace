@@ -152,6 +152,7 @@ public class UserProfileController {
 
             UserMessagesController userMessagesController = loader.getController();
             userMessagesController.setUserId(userId);
+            userMessagesController.initialize(userId);
 
             Stage stage = (Stage) messageButton.getScene().getWindow();
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());

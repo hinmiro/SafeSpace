@@ -6,12 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.ScreenUtil;
+import model.*;
 import view.View;
-
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class MessageController {
 
@@ -25,6 +28,8 @@ public class MessageController {
     private Label noMessagesLabel;
     @FXML
     private VBox contentBox;
+    @FXML
+    private ListView<Message> conversationListView;
 
     private View mainView;
     private MainController mainController;
@@ -61,6 +66,57 @@ public class MessageController {
                 e.printStackTrace();
             }
         });
+
+        loadMessages();
+
+        conversationListView.setOnMouseClicked(event -> {
+                Message selectedMessage = conversationListView.getSelectionModel().getSelectedItem();
+                if (selectedMessage != null) {
+                    openUserMessages(selectedMessage.getReceiverId());
+                }
+        });
+    }
+
+    private void loadMessages() {
+        List<Message> messages = controllerForView.getMessages();
+        conversationListView.getItems().clear();
+
+        Set<String> uniqueReceivers = new HashSet<>();
+
+        String loggedInUsername = SessionManager.getInstance().getLoggedUser().getUsername();
+
+        for (Message message : messages) {
+            UserModel receiver = controllerForView.getUserById(message.getReceiverId());
+
+            if (receiver != null) {
+                String username = receiver.getUsername();
+
+                if (!username.equals(loggedInUsername) && uniqueReceivers.add(username)) {
+                    conversationListView.getItems().add(message);
+                }
+            }
+        }
+
+        conversationListView.setCellFactory(param -> new MessageListCell());
+    }
+
+
+    private void openUserMessages(int userId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/userMessages.fxml"));
+            Parent root = loader.load();
+
+            UserMessagesController userMessagesController = loader.getController();
+            userMessagesController.setUserId(userId);
+            userMessagesController.initialize(userId);
+
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+            stage.setScene(scene);
+            stage.setTitle("Messages");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void switchScene(String fxmlFile, String title) throws IOException {
@@ -75,7 +131,6 @@ public class MessageController {
         if (fxmlFile.equals("/profile.fxml")) {
             ProfileController profileController = fxmlLoader.getController();
             profileController.setMainView(mainView);
-
         }
 
         if (fxmlFile.equals("/main.fxml")) {

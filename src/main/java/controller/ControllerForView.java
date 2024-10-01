@@ -162,4 +162,13 @@ public class ControllerForView extends Controller {
         int senderId = SessionManager.getInstance().getLoggedUser().getUserId();
         return app.sendMessage(content, senderId, receiverId);
     }
+
+    public List<Message> getMessages() {
+        try {
+            return app.getMessages();
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error fetching messages: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
 }

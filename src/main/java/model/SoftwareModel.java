@@ -200,5 +200,25 @@ public class SoftwareModel {
         }
     }
 
+    public ArrayList<Message> getMessages() throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.getMessages();
+
+        if (res.statusCode() == 200) {
+            Message messageResponse = gson.fromJson(res.body(), Message.class);
+
+            ArrayList<Message> allMessages = new ArrayList<>();
+
+            if (messageResponse.getSentMessages() != null) {
+                allMessages.addAll(messageResponse.getSentMessages());
+            }
+            if (messageResponse.getReceivedMessages() != null) {
+                allMessages.addAll(messageResponse.getReceivedMessages());
+            }
+
+            return allMessages;
+        } else {
+            throw new IOException("Failed to fetch messages: " + res.statusCode());
+        }
+    }
 }
 

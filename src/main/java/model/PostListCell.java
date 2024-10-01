@@ -256,7 +256,7 @@ public class PostListCell extends ListCell<Post> {
         Button commentButton = new Button();
         commentButton.setGraphic(commentIcon);
         commentButton.getStyleClass().add("comment-button");
-        commentButton.setDisable(true);
+        //commentButton.setDisable(true);
 
         Text comments = new Text(String.valueOf(item.getCommentCount()));
         comments.getStyleClass().add("comment-text");

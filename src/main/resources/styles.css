@@ -778,9 +778,27 @@ StackPane, BorderPane {
     -fx-background-color: #e8e8e8;
 }
 
+/* message sivu */
 
+.message-list-cell {
+    -fx-padding: 10px;
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+}
 
+.message-list-cell:hover {
+    -fx-background-color: #e0e0e0;
+}
 
+.username-labelmsg {
+    -fx-font-weight: bold;
+    -fx-text-fill: #007bff;
+}
 
 
 

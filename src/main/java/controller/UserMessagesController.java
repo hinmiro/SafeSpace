@@ -10,11 +10,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.Message;
 import model.ScreenUtil;
 import model.SessionManager;
 import model.UserModel;
 import view.View;
 import java.io.IOException;
+import java.util.List;
 
 public class UserMessagesController {
 
@@ -38,8 +40,11 @@ public class UserMessagesController {
     @FXML
     private Button closeButton;
 
-    @FXML
-    private void initialize() {
+    public void initialize(int userId) {
+        this.userId = userId;
+        fetchUser(userId);
+        loadConversation();
+
         homeButton.setOnAction(event -> {
             try {
                 switchScene("/main.fxml", "Main Page");
@@ -56,24 +61,58 @@ public class UserMessagesController {
             }
         });
 
-        // väärä viel
-        String username = SessionManager.getInstance().getLoggedUser().getUsername();
-        usernameLabelMessage.setText(username);
+        closeButton.setOnAction(event -> handleClose());
         sendMessageButton.setOnAction(event -> handleSendMessage());
+    }
+
+    private void fetchUser(int userId) {
+        UserModel user = controllerForView.getUserById(userId);
+        if (user != null) {
+            usernameLabelMessage.setText(user.getUsername());
+        }
+    }
+
+    private void loadConversation() {
+        int currentUserId = SessionManager.getInstance().getLoggedUser().getUserId();
+
+        List<Message> messages = controllerForView.getMessages();
+        System.out.println("Messages: " + messages);
+        messageListVBox.getChildren().clear();
+
+        for (Message message : messages) {
+            if ((message.getSenderId() == currentUserId && message.getReceiverId() == userId) ||
+                    (message.getSenderId() == userId && message.getReceiverId() == currentUserId)) {
+                displayMessage(message);
+            }
+        }
+    }
+
+    private void displayMessage(Message message) {
+        UserModel sender = controllerForView.getUserById(message.getSenderId());
+        String username = sender.getUsername();
+        Label messageLabel = new Label(username + ": " + message.getMessageContent());
+        System.out.println("Message: " + message.getMessageContent());
+        System.out.println("messagelabel: " + messageLabel);
+        messageLabel.getStyleClass().add("message-label");
+        messageListVBox.getChildren().add(messageLabel);
     }
 
     @FXML
     private void handleSendMessage() {
-        String message = messageTextField.getText();
+        String messageContent = messageTextField.getText();
         UserModel receiver = controllerForView.getUserById(userId);
 
         if (receiver != null) {
             int receiverId = receiver.getUserId();
+            int senderId = SessionManager.getInstance().getLoggedUser().getUserId();
+            String dateOfMessage = "2024-01-01"; //placeholderina
 
-            if (!message.isEmpty()) {
+            if (!messageContent.isEmpty()) {
                 try {
-                    boolean success = controllerForView.sendMessage(message, receiverId);
+                    boolean success = controllerForView.sendMessage(messageContent, receiverId);
+
                     if (success) {
+                        Message message = new Message(0, messageContent, senderId, receiverId, dateOfMessage);
                         displayMessage(message);
                         messageTextField.clear();
                     } else {
@@ -86,14 +125,7 @@ public class UserMessagesController {
             }
         } else {
             System.err.println("Error: Receiver not found.");
-        }
-    }
-
-    private void displayMessage(String message) {
-        Label messageLabel = new Label(message);
-        messageLabel.getStyleClass().add("message-label");
-        messageListVBox.getChildren().add(messageLabel);
-    }
+        }}
 
     @FXML
     private void handleClose() {
@@ -123,6 +155,7 @@ public class UserMessagesController {
         if (fxmlFile.equals("/profile.fxml")) {
             ProfileController profileController = fxmlLoader.getController();
             profileController.setMainView(mainView);
+
         }
 
         if (fxmlFile.equals("/main.fxml")) {

@@ -1,5 +1,6 @@
 package model;
 
+import controller.ProfileController;
 import controller.UserProfileController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -87,16 +88,30 @@ public class SharedData {
 
     public static void openUserProfile(Stage primaryStage, int userId) {
         try {
-            FXMLLoader loader = new FXMLLoader(SharedData.class.getResource("/userProfile.fxml"));
+            int loggedInUserId = SessionManager.getInstance().getLoggedUser().getUserId();
+
+            FXMLLoader loader;
+            if (userId == loggedInUserId) {
+                loader = new FXMLLoader(SharedData.class.getResource("/profile.fxml"));
+            } else {
+                loader = new FXMLLoader(SharedData.class.getResource("/userProfile.fxml"));
+            }
+
             Parent root = loader.load();
 
-            UserProfileController controller = loader.getController();
-            controller.initialize(userId);
+            if (userId == loggedInUserId) {
+                ProfileController profileController = loader.getController();
+            } else {
+                UserProfileController userProfileController = loader.getController();
+                userProfileController.initialize(userId);
+            }
 
             primaryStage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
-            primaryStage.setTitle("User Profile");
+            primaryStage.setTitle(userId == loggedInUserId ? "Profile Page" : "User Profile Page");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 }

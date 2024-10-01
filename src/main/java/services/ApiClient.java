@@ -361,4 +361,18 @@ public class ApiClient {
         return res;
     }
 
+    public static HttpResponse<String> getMessages() throws IOException, InterruptedException {
+        UserModel user = SessionManager.getInstance().getLoggedUser();
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "/message"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + user.getJwt())
+                .GET()
+                .build();
+
+        res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println("Messages: " + res.body());
+        return res;
+    }
 }
