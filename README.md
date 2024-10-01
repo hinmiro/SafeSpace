@@ -2,8 +2,11 @@
 
 Frontend client for SafeSpace G2.
 
-Technologies used:
+Programming languages:
   - Java
+  - Css
+
+Technologies used:
   - JavaFx
   - Maven
   - Spring
@@ -14,6 +17,7 @@ Tools user:
   - Postman
 
 Requirements:
+  - Working computer (windows, linux, mac)
   - Java JDK21
 
 
