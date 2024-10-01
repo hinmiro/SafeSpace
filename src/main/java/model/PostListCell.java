@@ -270,6 +270,8 @@ public class PostListCell extends ListCell<Post> {
         commentSection.setSpacing(10);
         commentSection.setPadding(new Insets(10));
         commentSection.getStyleClass().add("comment-section");
+        commentSection.setPrefWidth(200);
+
         TextField commentInput = new TextField();
         commentInput.setPromptText("Type comment here...");
         Button submitComment = new Button("Add comment");
@@ -280,6 +282,7 @@ public class PostListCell extends ListCell<Post> {
             comments.forEach(comment -> {
                 Text commentContent = new Text(comment.getCommentContent());
                 commentContent.getStyleClass().add("comment-text");
+                commentContent.setWrappingWidth(200);
 
                 VBox usernameBox = new VBox();
                 usernameBox.setPadding(new Insets(5));
