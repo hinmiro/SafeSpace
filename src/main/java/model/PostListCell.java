@@ -155,9 +155,9 @@ public class PostListCell extends ListCell<Post> {
 
         VBox commentInputBox = new VBox();
         commentInputBox.setSpacing(10);
-        commentInputBox.setVisible(false);
-        commentInputBox.setPrefHeight(0);
-        commentInputBox.setMinHeight(0);
+        commentInputBox.setVisible(true);
+        commentInputBox.setPrefHeight(Region.USE_COMPUTED_SIZE);
+        commentInputBox.setMinHeight(Region.USE_COMPUTED_SIZE);
 
         TextField commentInput = new TextField();
         commentInput.setPromptText("Comment here...");
@@ -256,7 +256,6 @@ public class PostListCell extends ListCell<Post> {
         Button commentButton = new Button();
         commentButton.setGraphic(commentIcon);
         commentButton.getStyleClass().add("comment-button");
-        //commentButton.setDisable(true);
 
         Text comments = new Text(String.valueOf(item.getCommentCount()));
         comments.getStyleClass().add("comment-text");
