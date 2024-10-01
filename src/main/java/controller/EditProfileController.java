@@ -26,6 +26,8 @@ import view.View;
 public class EditProfileController {
 
     private final ControllerForView controllerForView = ControllerForView.getInstance();
+    public Label nameLabel;
+    public Button deleteImageButton;
     private MainController mainController;
     private ProfileController profileController;
     private Image newImage;

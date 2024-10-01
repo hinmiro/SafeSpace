@@ -28,7 +28,7 @@
 
         <TextField fx:id="usernameField" promptText="Username" maxWidth="400.0" styleClass="text-field">
             <VBox.margin>
-                <Insets bottom="10" left="20" right="20" />
+                <Insets top="5" bottom="10" left="20" right="20" />
             </VBox.margin>
         </TextField>
 
@@ -36,7 +36,7 @@
 
         <PasswordField fx:id="passwordField" promptText="Password" maxWidth="400.0" styleClass="text-field">
             <VBox.margin>
-                <Insets bottom="10" left="20" right="20" />
+                <Insets top="5" bottom="10" left="20" right="20" />
             </VBox.margin>
         </PasswordField>
 
@@ -44,7 +44,7 @@
 
         <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" maxWidth="400.0" styleClass="text-field">
             <VBox.margin>
-                <Insets bottom="5" left="20" right="20" />
+                <Insets top="5" bottom="5" left="20" right="20" />
             </VBox.margin>
         </PasswordField>
 

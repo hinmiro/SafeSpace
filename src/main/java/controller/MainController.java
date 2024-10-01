@@ -98,6 +98,7 @@ public class MainController {
 
     private void togglePostMenu() {
         postMenu.setVisible(!postMenu.isVisible());
+        postMenu.setManaged(!postMenu.isManaged());
     }
 
     private void openPicPostForm() {
@@ -156,7 +157,7 @@ public class MainController {
 
             Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
-            Scene scene = new Scene(newPostPane);
+            Scene scene = new Scene(newPostPane, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -174,7 +175,7 @@ public class MainController {
 
             Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
-            Scene scene = new Scene(newPostPane2);
+            Scene scene = new Scene(newPostPane2, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -196,7 +197,6 @@ public class MainController {
                         // Process all available posts
                         Post post;
                         while ((post = SharedData.getInstance().getEventQueue().poll(100, TimeUnit.MICROSECONDS)) != null) {
-                            loadingBox.setVisible(true);
                             processed = true;
                             Post finalPost = post;
                             Platform.runLater(() -> {
@@ -225,6 +225,9 @@ public class MainController {
                         if (!processed) {
                             Thread.sleep(100);
                         }
+                        loadingBox.setVisible(false);
+                        loadingBox.setManaged(false);
+
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
