@@ -81,18 +81,22 @@ public class MessageController {
         List<Message> messages = controllerForView.getMessages();
         conversationListView.getItems().clear();
 
-        Set<String> uniqueReceivers = new HashSet<>();
-
-        String loggedInUsername = SessionManager.getInstance().getLoggedUser().getUsername();
+        Set<String> uniqueConversationPartners = new HashSet<>();
+        UserModel loggedInUser = SessionManager.getInstance().getLoggedUser();
 
         for (Message message : messages) {
+            UserModel sender = controllerForView.getUserById(message.getSenderId());
             UserModel receiver = controllerForView.getUserById(message.getReceiverId());
 
-            if (receiver != null) {
-                String username = receiver.getUsername();
+            if (sender != null && receiver != null) {
+                if (messageInvolvesLoggedUser(loggedInUser, sender, receiver)) {
+                    String conversationPartner = (loggedInUser.getUserId() == sender.getUserId())
+                            ? receiver.getUsername()
+                            : sender.getUsername();
 
-                if (!username.equals(loggedInUsername) && uniqueReceivers.add(username)) {
-                    conversationListView.getItems().add(message);
+                    if (!conversationPartner.equals(loggedInUser.getUsername()) && uniqueConversationPartners.add(conversationPartner)) {
+                        conversationListView.getItems().add(message);
+                    }
                 }
             }
         }
@@ -100,6 +104,9 @@ public class MessageController {
         conversationListView.setCellFactory(param -> new MessageListCell());
     }
 
+    private boolean messageInvolvesLoggedUser(UserModel loggedInUser, UserModel sender, UserModel receiver) {
+        return sender.getUserId() == loggedInUser.getUserId() || receiver.getUserId() == loggedInUser.getUserId();
+    }
 
     private void openUserMessages(int userId) {
         try {
