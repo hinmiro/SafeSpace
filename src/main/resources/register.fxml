@@ -34,11 +34,18 @@
 
         <Label text="Password" styleClass="labelField"/>
 
-        <PasswordField fx:id="passwordField" promptText="Password" maxWidth="400.0" styleClass="text-field">
+        <VBox>
+        <PasswordField fx:id="passwordField" promptText="Password" maxWidth="400.0" styleClass="text-field2">
             <VBox.margin>
                 <Insets top="5" bottom="10" left="20" right="20" />
             </VBox.margin>
         </PasswordField>
+        <Label fx:id="passwordStrengthLabel" text="Password Strength: Weak" styleClass="password-strength-label">
+            <VBox.margin>
+                <Insets left="23" right="15" />
+            </VBox.margin>
+        </Label>
+        </VBox>
 
         <Label text="Confirm Password" styleClass="labelField"/>
 

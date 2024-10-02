@@ -2,16 +2,13 @@ package controller;
 
 import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
 import model.ScreenUtil;
 import model.UserModel;
 import java.io.IOException;
@@ -28,6 +25,8 @@ public class RegisterController {
     private Button registerButton;
     @FXML
     private Button backButton;
+    @FXML
+    private Label passwordStrengthLabel;
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
 
@@ -38,12 +37,45 @@ public class RegisterController {
         usernameField.setOnKeyPressed(event -> handleEnterKey(event));
         passwordField.setOnKeyPressed(event -> handleEnterKey(event));
         confirmPasswordField.setOnKeyPressed(event -> handleEnterKey(event));
+        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            updatePasswordStrength(newValue);
+        });
     }
 
     private void handleEnterKey(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             handleRegister();
         }
+    }
+
+    private void updatePasswordStrength(String password) {
+        int strength = calculatePasswordStrength(password);
+        String strengthText;
+        String strengthClass;
+
+        if (strength < 2) {
+            strengthText = "Weak";
+            strengthClass = "weak";
+        } else if (strength < 3) {
+            strengthText = "Medium";
+            strengthClass = "medium";
+        } else {
+            strengthText = "Strong";
+            strengthClass = "strong";
+        }
+
+        passwordStrengthLabel.setText("Password Strength: " + strengthText);
+        passwordField.getStyleClass().removeAll("weak", "medium", "strong");
+        passwordField.getStyleClass().add(strengthClass);
+    }
+
+    private int calculatePasswordStrength(String password) {
+        int strength = 0;
+        if (password.length() >= 6) strength++;
+        if (password.chars().anyMatch(Character::isUpperCase)) strength++;
+        if (password.chars().anyMatch(Character::isLowerCase)) strength++;
+        if (password.chars().anyMatch(Character::isDigit)) strength++;
+        return strength;
     }
 
     private void handleRegister() {
@@ -53,8 +85,18 @@ public class RegisterController {
 
         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Registration Failed", "Fill all the fields.");
-        } else if (!password.equals(confirmPassword)) {
+            return;
+        }
+
+        int strength = calculatePasswordStrength(password);
+        if (strength < 3) {
+            showAlert(Alert.AlertType.ERROR, "Weak Password", "Please choose a stronger password.");
+            return;
+        }
+
+        if (!password.equals(confirmPassword)) {
             showAlert(Alert.AlertType.ERROR, "Registration Failed", "Passwords do not match.");
+            return;
         }
 
         UserModel user = controllerForView.register(username, password);

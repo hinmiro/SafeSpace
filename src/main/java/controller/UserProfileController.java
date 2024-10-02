@@ -103,12 +103,15 @@ public class UserProfileController {
             bioLabel.setText(user.getBio());
             registeredLabel.setText(user.getDateOfCreation());
 
-            // todo fetch profile picture
-            if (user.getProfilePictureUrl().equals("default")) {
-                profileImageView.setImage(createPlaceholderImage(150, 150));
-            } else {
-                profileImageView.setImage(controllerForView.getProfilePicture());
+           String profilePictureUrl = user.getProfilePictureUrl();
+           System.out.println(profilePictureUrl);
+            if (!profilePictureUrl.equals("default")) {
+                try {
+                    profileImageView.setImage(controllerForView.getProfilePicture());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
+            }
         }
     }
 
@@ -183,6 +186,14 @@ public class UserProfileController {
 
         gc.getCanvas().snapshot(null, image);
         return image;
+    }
+
+    public void setControllerForView(ControllerForView controller) {
+        controllerForView = controller;
+    }
+
+    public void setMainView(View view) {
+        this.mainView = view;
     }
 
 }

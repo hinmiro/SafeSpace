@@ -44,7 +44,7 @@
     <center>
         <VBox alignment="TOP_LEFT" spacing="20.0" BorderPane.alignment="CENTER">
             <HBox alignment="TOP_LEFT" spacing="20.0">
-                <ImageView fx:id="profileImageView" fitHeight="100" fitWidth="100" >
+                <ImageView fx:id="profileImageView" fitHeight="100" fitWidth="100" preserveRatio="true">
                     <HBox.margin>
                         <Insets left="7" top="7" />
                     </HBox.margin>

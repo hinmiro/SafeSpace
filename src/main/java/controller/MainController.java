@@ -8,13 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.*;
 import view.View;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -26,8 +24,6 @@ public class MainController {
     private Thread queueThread;
     private View mainView;
     private ArrayList<Post> posts;
-    private ImageView coggerImageView;
-    private Stage coggerStage;
 
     @FXML
     private Button homeButton;
