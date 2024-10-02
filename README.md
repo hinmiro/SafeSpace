@@ -12,7 +12,7 @@ Technologies used:
   - Maven
   - Spring
 
-Tools user:
+Tools used:
   - IntelliJ
   - Scene builder
   - Postman
