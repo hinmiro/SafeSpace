@@ -141,6 +141,7 @@ public class ApiClient {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url + "/users/search?name=" + name))
                 .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
                 .GET().build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());

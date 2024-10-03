@@ -1,27 +1,18 @@
 package controller;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.event.*;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.canvas.*;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
+import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import java.io.File;
-import java.io.IOException;
-import javafx.scene.shape.Circle;
-import model.ScreenUtil;
-import model.SessionManager;
+import javafx.stage.*;
+import model.*;
 import view.View;
+import java.io.*;
+import javafx.scene.shape.Circle;
 
 public class EditProfileController {
 
@@ -48,8 +39,6 @@ public class EditProfileController {
     private TextField usernameField;
     @FXML
     private TextArea bioField;
-    @FXML
-    private Button uploadImageButton;
     @FXML
     private Button saveChangesButton;
 

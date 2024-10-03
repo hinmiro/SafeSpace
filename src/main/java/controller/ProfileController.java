@@ -1,25 +1,20 @@
 package controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Side;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.collections.*;
+import javafx.fxml.*;
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.canvas.*;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.*;
+import javafx.scene.input.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import model.*;
+import view.*;
 import java.io.IOException;
 import java.util.List;
-import javafx.scene.shape.Circle;
-import model.*;
-import view.View;
 
 public class ProfileController {
 

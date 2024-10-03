@@ -87,7 +87,6 @@ public class ControllerForView extends Controller {
         return img;
     }
 
-
     public Image getPostPicture(String id) {
         Image img = null;
         try {
@@ -120,6 +119,14 @@ public class ControllerForView extends Controller {
             return app.getUserById(userId);
         } catch (IOException | InterruptedException e) {
             System.out.println("Error fetching user: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public UserModel getUserByName(String username) {
+        try {
+            return app.getUserByName(username);
+        } catch (IOException | InterruptedException e) {
             return null;
         }
     }

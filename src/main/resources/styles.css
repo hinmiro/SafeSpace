@@ -61,6 +61,53 @@ StackPane, BorderPane {
     -fx-opacity: 0.7;
 }
 
+#usernameSearchField {
+    -fx-background-color: #f0f0f0;
+    -fx-padding: 10px;
+    -fx-border-width: 1px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.search-button {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-font-size: 15px;
+    -fx-padding: 5 10;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-text-fill: #ffff;
+}
+
+.search-button:hover {
+    -fx-background-color: #0056b3;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#searchResultsBox {
+    -fx-padding: 5px;
+}
+
+.usernameSearchLabel {
+    -fx-padding: 3px 150px 3px 150px;
+    -fx-border-color: linear-gradient(to bottom, #d6a6e7, #a65ea1);
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #ffffff;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
+}
+
+.noResultsLabel {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(119, 119, 119, 0.89);
+    -fx-font-weight: bold;
+    -fx-padding: 3px 0px 3px 125px;
+}
 
 /* profiili */
 
@@ -769,7 +816,8 @@ StackPane, BorderPane {
 
 .send-button:hover {
     -fx-background-color: #0056b3;
-    -fx-transform: scale(1.05);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
 }
 
 .usernameBackgroundPane {

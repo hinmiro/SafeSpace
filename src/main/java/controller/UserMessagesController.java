@@ -1,22 +1,13 @@
 package controller;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import model.Message;
-import model.ScreenUtil;
-import model.SessionManager;
-import model.UserModel;
-import view.View;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.input.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
+import model.*;
+import view.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,7 +16,6 @@ public class UserMessagesController {
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private View mainView;
     private int userId;
-    private MainController mainController;
 
     @FXML
     private Label usernameLabelMessage;

@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
 
 <BorderPane maxHeight="800.0" minHeight="0.0" styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
 
@@ -37,15 +38,30 @@
                 </right>
             </BorderPane>
             <Region prefHeight="1.5" styleClass="line" />
+            <VBox>
+                <HBox alignment="CENTER">
+                    <TextField fx:id="usernameSearchField" promptText="Search user...">
+                        <HBox.margin>
+                            <Insets top="15" right="10"/>
+                        </HBox.margin>
+                    </TextField>
+                    <Button fx:id="searchButton" text="⌕" onAction="#handleSearch" styleClass="search-button">
+                        <HBox.margin>
+                            <Insets top="15"/>
+                        </HBox.margin>
+                    </Button>
+                </HBox>
+
+                <VBox fx:id="searchResultsBox">
+                </VBox>
+                <Region prefHeight="1.5" styleClass="line" />
+            </VBox>
         </VBox>
     </top>
 
     <center>
-        <VBox fx:id="contentBox" alignment="CENTER" minHeight="300" spacing="20.0" BorderPane.alignment="CENTER">
             <ListView fx:id="feedListView" layoutX="20" layoutY="100" prefHeight="700.0" prefWidth="300.0">
-                <Label fx:id="noPostsLabel" styleClass="noPostsLabel" text="Nothing on main feed..." />
             </ListView>
-        </VBox>
     </center>
 
     <bottom>
@@ -58,7 +74,7 @@
 
             <Button fx:id="newPostButton" styleClass="newButton" text="+">
                 <VBox.margin>
-                    <Insets bottom="10" />
+                    <Insets top="10" bottom="10" />
                 </VBox.margin>
             </Button>
 

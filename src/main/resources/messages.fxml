@@ -42,10 +42,8 @@
     </top>
 
     <center>
-        <VBox fx:id="contentBox" alignment="CENTER" BorderPane.alignment="CENTER" >
             <Label fx:id="noMessagesLabel" text="No messages yet..." styleClass="noPostsLabel" />
             <ListView fx:id="conversationListView" BorderPane.alignment="CENTER" prefHeight="1000" styleClass="conversationList"/>
-        </VBox>
     </center>
 
     <bottom>

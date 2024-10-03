@@ -34,6 +34,7 @@ public class MessageListCell extends ListCell<Message> {
                 usernameLabel.getStyleClass().add("username-labelmsg");
 
                 messageLabel.setText(message.getMessageContent());
+                messageLabel.setWrapText(true);
                 messageLabel.getStyleClass().add("message-labelmsg");
             } else {
                 usernameLabel.setText("Unknown User");

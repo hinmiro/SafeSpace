@@ -67,6 +67,14 @@ public class SoftwareModel {
         return true;
     }
 
+    public UserModel getUserByName(String name) throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.getUserByName(name);
+        if (res.statusCode() == 200) {
+            return gson.fromJson(res.body(), UserModel.class);
+        }
+        return null;
+    }
+
     public boolean createNewPost(String text) throws IOException, InterruptedException {
         Map<String, String> data = new HashMap<>();
         data.put("post_content", text);
@@ -218,5 +226,6 @@ public class SoftwareModel {
             throw new IOException("Failed to fetch messages: " + res.statusCode());
         }
     }
+
 }
 
