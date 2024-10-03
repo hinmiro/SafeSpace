@@ -1,5 +1,6 @@
 package services;
 
+import controller.ControllerForView;
 import model.SessionManager;
 import model.UserModel;
 import java.io.File;
@@ -291,12 +292,14 @@ public class ApiClient {
 
     // Images
 
-    public static HttpResponse<byte[]> getProfileImg() throws IOException, InterruptedException {
+    public static HttpResponse<byte[]> getProfileImg(int userId) throws IOException, InterruptedException {
         HttpResponse<byte[]> response = null;
 
+        UserModel user = ControllerForView.getInstance().getUserById(userId);
+
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(profilePictureGet + SessionManager.getInstance().getLoggedUser().getProfilePictureUrl()))
-                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
+                .uri(URI.create(profilePictureGet + user.getProfilePictureUrl()))
+                .header("Authorization", "Bearer " + user.getJwt())
                 .GET()
                 .build();
 

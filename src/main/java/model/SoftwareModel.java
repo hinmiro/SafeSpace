@@ -118,16 +118,18 @@ public class SoftwareModel {
         return null;
     }
 
-    public Image getProfileImage() throws IOException, InterruptedException {
-        HttpResponse<byte[]> res = ApiClient.getProfileImg();
+    public Image getProfileImage(int userId) throws IOException, InterruptedException {
+        HttpResponse<byte[]> res = ApiClient.getProfileImg(userId);
         System.out.println("kuva " + res.statusCode());
+
         if (res.statusCode() == 200) {
             byte[] imageBytes = res.body();
             return new Image(new ByteArrayInputStream(imageBytes));
-        }else {
+        } else {
             throw new IOException();
         }
     }
+
 
     public Image getPostImage(String id) throws IOException, InterruptedException {
         HttpResponse<byte[]> res = ApiClient.getPostImage(id);

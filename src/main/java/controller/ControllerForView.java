@@ -77,15 +77,16 @@ public class ControllerForView extends Controller {
         return feedQueue;
     }
 
-    public Image getProfilePicture() {
+    public Image getProfilePicture(int userId) {
         Image img = null;
         try {
-            img = app.getProfileImage();
+            img = app.getProfileImage(userId);
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
         }
         return img;
     }
+
 
     public Image getPostPicture(String id) {
         Image img = null;
@@ -168,7 +169,6 @@ public class ControllerForView extends Controller {
         try {
             return app.getMessages();
         } catch (IOException | InterruptedException e) {
-            System.out.println("Error fetching messages: " + e.getMessage());
             return new ArrayList<>();
         }
     }

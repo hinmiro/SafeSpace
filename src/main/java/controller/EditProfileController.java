@@ -60,7 +60,7 @@ public class EditProfileController {
         if (SessionManager.getInstance().getLoggedUser().getProfilePictureUrl().equals("default")) {
             profileImageView.setImage(createPlaceholderImage(150, 150));
         } else {
-            profileImageView.setImage(controllerForView.getProfilePicture());
+            profileImageView.setImage(controllerForView.getProfilePicture(SessionManager.getInstance().getLoggedUser().getUserId()));
         }
         makeCircle(profileImageView);
 

@@ -65,7 +65,7 @@ public class ProfileController {
 
         if (!SessionManager.getInstance().getLoggedUser().getProfilePictureUrl().equals("default")) {
             try {
-                profileImageView.setImage(controllerForView.getProfilePicture());
+                profileImageView.setImage(controllerForView.getProfilePicture(SessionManager.getInstance().getLoggedUser().getUserId()));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

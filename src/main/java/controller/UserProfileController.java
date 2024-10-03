@@ -44,9 +44,6 @@ public class UserProfileController {
     private ListView<Post> feedListView;
 
     public void initialize(int userId) {
-        this.userId = userId;
-        fetchUserData(userId);
-
         homeButton.setOnAction(event -> {
             try {
                 switchScene("/main.fxml", "Main Page");
@@ -73,6 +70,10 @@ public class UserProfileController {
 
         profileImageView.setImage(createPlaceholderImage(150, 150));
         makeCircle(profileImageView);
+
+        this.userId = userId;
+        fetchUserData(userId);
+
         displayUserPosts(feedListView, noPostsLabel, userId);
     }
 
@@ -104,13 +105,13 @@ public class UserProfileController {
             bioLabel.setText(user.getBio());
             registeredLabel.setText(user.getDateOfCreation());
 
-           String profilePictureUrl = user.getProfilePictureUrl();
-           System.out.println(profilePictureUrl);
+            String profilePictureUrl = user.getProfilePictureUrl();
+
             if (!profilePictureUrl.equals("default")) {
                 try {
-                    profileImageView.setImage(controllerForView.getProfilePicture());
+                    profileImageView.setImage(controllerForView.getProfilePicture(userId));
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }
