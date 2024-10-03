@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +11,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -32,8 +33,6 @@ public class UserProfileController {
     @FXML private ImageView profileImageView;
     @FXML private Button followButton;
     @FXML private Button messageButton;
-    @FXML private VBox userPostsVBox;
-    @FXML private ScrollPane scrollPane;
     @FXML private Label noPostsLabel;
     @FXML
     private Button homeButton;
@@ -41,6 +40,8 @@ public class UserProfileController {
     private Button profileButton;
     @FXML
     private Button leaveMessageButton;
+    @FXML
+    private ListView<Post> feedListView;
 
     public void initialize(int userId) {
         this.userId = userId;
@@ -72,7 +73,7 @@ public class UserProfileController {
 
         profileImageView.setImage(createPlaceholderImage(150, 150));
         makeCircle(profileImageView);
-        displayUserPosts(scrollPane, userPostsVBox, noPostsLabel, userId);
+        displayUserPosts(feedListView, noPostsLabel, userId);
     }
 
     private void switchScene(String fxmlFile, String title) throws IOException {
@@ -115,7 +116,7 @@ public class UserProfileController {
         }
     }
 
-    public void displayUserPosts(ScrollPane scrollPane, VBox userPostsVBox, Label noPostsLabel, int userId) {
+    public void displayUserPosts(ListView<Post> feedListView, Label noPostsLabel, int userId) {
         List<Post> posts;
         try {
             posts = controllerForView.getUserPostsUserProfile(userId);
@@ -126,22 +127,18 @@ public class UserProfileController {
 
         if (posts.isEmpty()) {
             noPostsLabel.setVisible(true);
-            scrollPane.setVisible(false);
+            feedListView.setVisible(false);
         } else {
             noPostsLabel.setVisible(false);
-            scrollPane.setVisible(true);
-            userPostsVBox.getChildren().clear();
+            feedListView.setVisible(true);
 
-            for (Post post : posts) {
-                PostListCell postCell = new PostListCell();
-                postCell.updateItem(post, false);
-                userPostsVBox.getChildren().add(postCell);
-            }
+            ObservableList<Post> observablePosts = FXCollections.observableArrayList(posts);
+            feedListView.setItems(observablePosts);
 
-            scrollPane.setContent(userPostsVBox);
-            scrollPane.setFitToWidth(true);
+            feedListView.setCellFactory(listView -> new PostListCell());
         }
     }
+
 
     public void handleFollowButton(ActionEvent actionEvent) {
 
