@@ -20,6 +20,7 @@ public class LogOutController {
     private Stage dialogStage;
     private View mainView;
     private MainController mainController;
+    private Stage primaryStage;
 
     @FXML
     private void initialize() {
@@ -51,9 +52,8 @@ public class LogOutController {
         Scene loginScene = new Scene(loginRoot);
 
         // Get the current stage and set the new scene
-        Stage stage = mainView.getPrimaryStage();
-        stage.setScene(loginScene);
-        stage.setTitle("Login");
+        primaryStage.setScene(loginScene);
+        primaryStage.setTitle("Login");
 
         if (dialogStage != null) {
             dialogStage.close();
@@ -71,5 +71,8 @@ public class LogOutController {
         this.mainController = mainController;
     }
 
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
 
 }

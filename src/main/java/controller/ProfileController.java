@@ -128,10 +128,10 @@ public class ProfileController {
 
             LogOutController logOutController = loader.getController();
             logOutController.setDialogStage(dialogStage);
-            logOutController.setMainView(mainView);
-            System.out.println("main controller " + mainController.getClass());
+//            logOutController.setMainView(mainView);
             logOutController.setMainController(mainController);
-
+            Stage primaryStage = (Stage) profileButton.getScene().getWindow();
+            logOutController.setPrimaryStage(primaryStage);
             Scene logoutScene = new Scene(logoutRoot);
             Stage dialogStage = new Stage();
             dialogStage.setScene(logoutScene);
@@ -151,7 +151,6 @@ public class ProfileController {
             UpdateInfoController updateInfoController = fxmlLoader.getController();
             updateInfoController.setProfileController(this);
             updateInfoController.setMainView(mainView);
-            System.out.println("main controller " + mainController.getClass());
 
             updateInfoController.setMainController(mainController);
 
@@ -173,7 +172,6 @@ public class ProfileController {
             editProfileController.setProfileController(this);
             editProfileController.setMainController(mainController);
             editProfileController.setMainView(mainView);
-            System.out.println("main controller " + mainController.getClass());
 
 
             Stage stage = (Stage) profileButton.getScene().getWindow();
