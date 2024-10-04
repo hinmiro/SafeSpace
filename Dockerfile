@@ -1,6 +1,6 @@
 FROM openjdk:17-slim
 
-RUN apt-get update && apt-get install -y openjfx
+RUN apt-get update && apt-get install -y openjfx maven
 
 ENV JAVAFX_HOME=/usr/share/javafx-sdk-17.0.2
 
