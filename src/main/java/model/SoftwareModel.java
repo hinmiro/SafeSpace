@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import javafx.scene.image.Image;
 import services.ApiClient;
 import services.Feed;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -42,16 +43,31 @@ public class SoftwareModel {
     }
 
     public String postPicture(File file, String endpoint) throws IOException, InterruptedException {
-        HttpResponse<String> res = ApiClient.postPicture(file, endpoint);
+        String trimmedFileName = file.getName().replace(" ", "");
+        File trimmedFile = new File(file.getParent(), trimmedFileName);
+
+        if (!file.renameTo(trimmedFile)) {
+            throw new IOException("Failed to rename file");
+        }
+
+        HttpResponse<String> res = ApiClient.postPicture(trimmedFile, endpoint);
         return res.body();
     }
 
     public boolean updateUser(String username, String password, String bio, String profilePictureId) throws IOException, InterruptedException {
         Map<String, String> dataMap = new HashMap<>();
-        if (username != null) { dataMap.put("username", username); }
-        if (password != null) { dataMap.put("password", password); }
-        if (bio != null) { dataMap.put("bio", bio); }
-        if (profilePictureId != null) { dataMap.put("profilePictureID", profilePictureId); }
+        if (username != null) {
+            dataMap.put("username", username);
+        }
+        if (password != null) {
+            dataMap.put("password", password);
+        }
+        if (bio != null) {
+            dataMap.put("bio", bio);
+        }
+        if (profilePictureId != null) {
+            dataMap.put("profilePictureID", profilePictureId);
+        }
 
         String jsonData = gson.toJson(dataMap);
 
@@ -187,7 +203,7 @@ public class SoftwareModel {
             HttpResponse<String> res = ApiClient.postComment(jsonData, postId);
             System.out.println("comments body " + res.body());
 
-        }catch (InterruptedException | IOException e) {
+        } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
         }
     }
