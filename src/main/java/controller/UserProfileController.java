@@ -82,12 +82,13 @@ public class UserProfileController {
 
         if (fxmlFile.equals("/profile.fxml")) {
             ProfileController profileController = fxmlLoader.getController();
-            profileController.setMainView(mainView);
             profileController.setMainController(mainController);
+            profileController.setMainView(mainView);
+
         }
 
         if (fxmlFile.equals("/main.fxml")) {
-            MainController mainController = fxmlLoader.getController();
+            mainController = fxmlLoader.getController();
             mainController.setMainView(mainView);
         }
     }
@@ -178,6 +179,10 @@ public class UserProfileController {
 
         gc.getCanvas().snapshot(null, image);
         return image;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
     public void setControllerForView(ControllerForView controller) {

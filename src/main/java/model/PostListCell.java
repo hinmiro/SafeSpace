@@ -79,7 +79,6 @@ public class PostListCell extends ListCell<Post> {
         VBox usernameBox = new VBox();
         usernameBox.setPadding(new Insets(5));
         usernameBox.getStyleClass().add("username-box");
-
         Label usernameLabel = SharedData.createClickableUsername(item.getPostCreatorName(), item.getPostCreatorID(), primaryStage, modalStage);
 
         usernameBox.getChildren().add(usernameLabel);
