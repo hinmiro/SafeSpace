@@ -1,5 +1,6 @@
 package model;
 
+import controller.MainController;
 import controller.UserProfileController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -92,6 +93,7 @@ public class SharedData {
 
             UserProfileController controller = loader.getController();
             controller.initialize(userId);
+            controller.setMainController(new MainController());
 
             primaryStage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
             primaryStage.setTitle("User Profile");
