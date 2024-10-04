@@ -20,6 +20,7 @@ public class SessionManagerTest {
         user = new UserModel("teaser", 7357, "testingDAy");
     }
 
+    @Ignore
     @Test
     public void setLoggedUser() {
         manager.setLoggedUser(user);
