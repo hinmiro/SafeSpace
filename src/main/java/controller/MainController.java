@@ -1,23 +1,17 @@
 package controller;
 
 import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.*;
 import view.View;
-
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import static model.SharedData.createClickableUsername;
 
 public class MainController {
 
@@ -26,8 +20,6 @@ public class MainController {
     private Thread queueThread;
     private View mainView;
     private ArrayList<Post> posts;
-    private ImageView coggerImageView;
-    private Stage coggerStage;
 
     @FXML
     private Button homeButton;
@@ -44,13 +36,15 @@ public class MainController {
     @FXML
     private Button createTextPostButton;
     @FXML
-    private Label noPostsLabel;
-    @FXML
     private ListView<Post> feedListView;
     @FXML
-    private VBox contentBox;
-    @FXML
     private Label loadingBox;
+    @FXML
+    private TextField usernameSearchField;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private VBox searchResultsBox;
 
     public MainController() {
         this.posts = new ArrayList<>();
@@ -94,6 +88,8 @@ public class MainController {
             startQueueProcessing();
             stopQueueProcessingFlag = false;
         }
+
+        searchButton.setOnAction(event -> handleSearch());
     }
 
     private void togglePostMenu() {
@@ -139,12 +135,29 @@ public class MainController {
             MessageController messageController = fxmlLoader.getController();
             messageController.setMainView(mainView);
             messageController.setMainController(this);
-
         }
 
         Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
         stage.setScene(scene);
         stage.setTitle(title);
+    }
+
+    @FXML
+    private void handleSearch() {
+        String username = usernameSearchField.getText().trim();
+        UserModel user = controllerForView.getUserByName(username);
+
+        searchResultsBox.getChildren().clear();
+
+        if (user != null) {
+            Label usernameSearch = createClickableUsername(user.getUsername(), user.getUserId(), (Stage) feedListView.getScene().getWindow(), new Stage());
+            usernameSearch.getStyleClass().add("usernameSearchLabel");
+            searchResultsBox.getChildren().add(usernameSearch);
+        } else {
+            Label noResults = new Label("No results found");
+            noResults.getStyleClass().add("noResultsLabel");
+            searchResultsBox.getChildren().add(noResults);
+        }
     }
 
     private void showNewPostWindow() {
@@ -249,7 +262,6 @@ public class MainController {
     public void loadEvents() {
         feedListView.getItems().setAll(SharedData.getInstance().getPosts());
         feedListView.scrollTo(feedListView.getItems().size() - 1);
-
     }
 
     public void handleLikeAdded(Like like) {

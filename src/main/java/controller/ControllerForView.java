@@ -77,10 +77,10 @@ public class ControllerForView extends Controller {
         return feedQueue;
     }
 
-    public Image getProfilePicture() {
+    public Image getProfilePicture(int userId) {
         Image img = null;
         try {
-            img = app.getProfileImage();
+            img = app.getProfileImage(userId);
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
         }
@@ -119,6 +119,14 @@ public class ControllerForView extends Controller {
             return app.getUserById(userId);
         } catch (IOException | InterruptedException e) {
             System.out.println("Error fetching user: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public UserModel getUserByName(String username) {
+        try {
+            return app.getUserByName(username);
+        } catch (IOException | InterruptedException e) {
             return null;
         }
     }
@@ -162,5 +170,13 @@ public class ControllerForView extends Controller {
     public boolean sendMessage(String content, int receiverId) throws IOException, InterruptedException {
         int senderId = SessionManager.getInstance().getLoggedUser().getUserId();
         return app.sendMessage(content, senderId, receiverId);
+    }
+
+    public List<Message> getMessages() {
+        try {
+            return app.getMessages();
+        } catch (IOException | InterruptedException e) {
+            return new ArrayList<>();
+        }
     }
 }

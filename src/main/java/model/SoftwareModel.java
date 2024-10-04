@@ -83,6 +83,14 @@ public class SoftwareModel {
         return true;
     }
 
+    public UserModel getUserByName(String name) throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.getUserByName(name);
+        if (res.statusCode() == 200) {
+            return gson.fromJson(res.body(), UserModel.class);
+        }
+        return null;
+    }
+
     public boolean createNewPost(String text) throws IOException, InterruptedException {
         Map<String, String> data = new HashMap<>();
         data.put("post_content", text);
@@ -134,9 +142,10 @@ public class SoftwareModel {
         return null;
     }
 
-    public Image getProfileImage() throws IOException, InterruptedException {
-        HttpResponse<byte[]> res = ApiClient.getProfileImg();
+    public Image getProfileImage(int userId) throws IOException, InterruptedException {
+        HttpResponse<byte[]> res = ApiClient.getProfileImg(userId);
         System.out.println("kuva " + res.statusCode());
+
         if (res.statusCode() == 200) {
             byte[] imageBytes = res.body();
             return new Image(new ByteArrayInputStream(imageBytes));
@@ -144,6 +153,7 @@ public class SoftwareModel {
             throw new IOException();
         }
     }
+
 
     public Image getPostImage(String id) throws IOException, InterruptedException {
         HttpResponse<byte[]> res = ApiClient.getPostImage(id);
@@ -199,10 +209,6 @@ public class SoftwareModel {
     }
 
     public boolean sendMessage(String content, int senderId, int receiverId) throws IOException, InterruptedException {
-        Message message = new Message(0, content, senderId, receiverId, String.valueOf(System.currentTimeMillis()));
-        String jsonData = gson.toJson(message);
-        System.out.println("JSON Payload: " + jsonData);
-
         HttpResponse<String> res = ApiClient.sendMessage(receiverId, content);
 
         if (res.statusCode() == 200) {
@@ -213,6 +219,27 @@ public class SoftwareModel {
             }
         } else {
             throw new IOException("Viestin lähetys epäonnistui: " + res.statusCode());
+        }
+    }
+
+    public ArrayList<Message> getMessages() throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.getMessages();
+
+        if (res.statusCode() == 200) {
+            Message messageResponse = gson.fromJson(res.body(), Message.class);
+
+            ArrayList<Message> allMessages = new ArrayList<>();
+
+            if (messageResponse.getSentMessages() != null) {
+                allMessages.addAll(messageResponse.getSentMessages());
+            }
+            if (messageResponse.getReceivedMessages() != null) {
+                allMessages.addAll(messageResponse.getReceivedMessages());
+            }
+
+            return allMessages;
+        } else {
+            throw new IOException("Failed to fetch messages: " + res.statusCode());
         }
     }
 

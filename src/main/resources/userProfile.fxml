@@ -13,6 +13,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 
+<?import javafx.scene.control.ListView?>
 <BorderPane styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserProfileController">
     <top>
         <VBox>
@@ -44,7 +45,7 @@
     <center>
         <VBox alignment="TOP_LEFT" spacing="20.0" BorderPane.alignment="CENTER">
             <HBox alignment="TOP_LEFT" spacing="20.0">
-                <ImageView fx:id="profileImageView" fitHeight="100" fitWidth="100" >
+                <ImageView fx:id="profileImageView" fitHeight="100" fitWidth="100" preserveRatio="true">
                     <HBox.margin>
                         <Insets left="7" top="7" />
                     </HBox.margin>
@@ -84,15 +85,12 @@
             <Separator prefHeight="1.5" orientation="HORIZONTAL" />
 
             <StackPane fx:id="postArea" alignment="CENTER">
+                <ListView fx:id="feedListView" layoutX="20" layoutY="100" prefHeight="700.0" prefWidth="300.0"/>
                 <Label fx:id="noPostsLabel" styleClass="noPostsLabel" text="No posts yet...">
                     <StackPane.margin>
                         <Insets top="30" />
                     </StackPane.margin>
                 </Label>
-
-                <ScrollPane fx:id="scrollPane" fitToWidth="true">
-                    <VBox fx:id="userPostsVBox" spacing="10.0" />
-                </ScrollPane>
             </StackPane>
         </VBox>
     </center>

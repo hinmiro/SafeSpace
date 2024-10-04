@@ -71,7 +71,7 @@
 
             <Button fx:id="postButton" prefHeight="40" prefWidth="150" styleClass="postButton" text="Post">
             <VBox.margin>
-                <Insets bottom="50" />
+                <Insets top="15" />
             </VBox.margin>
             </Button>
         </VBox>

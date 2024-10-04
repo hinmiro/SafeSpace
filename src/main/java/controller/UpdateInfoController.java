@@ -27,8 +27,6 @@ public class UpdateInfoController {
     private Label passwordStrengthLabel;
     @FXML
     private View mainView;
-    @FXML
-    private Button mainButton;
 
     @FXML
     private void initialize() {

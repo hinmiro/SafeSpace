@@ -1,23 +1,17 @@
 package controller;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.layout.VBox;
+import javafx.collections.*;
+import javafx.event.*;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.canvas.*;
+import javafx.scene.control.*;
+import javafx.scene.image.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.*;
-import view.View;
+import view.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -33,8 +27,6 @@ public class UserProfileController {
     @FXML private ImageView profileImageView;
     @FXML private Button followButton;
     @FXML private Button messageButton;
-    @FXML private VBox userPostsVBox;
-    @FXML private ScrollPane scrollPane;
     @FXML private Label noPostsLabel;
     @FXML
     private Button homeButton;
@@ -42,11 +34,10 @@ public class UserProfileController {
     private Button profileButton;
     @FXML
     private Button leaveMessageButton;
+    @FXML
+    private ListView<Post> feedListView;
 
     public void initialize(int userId) {
-        this.userId = userId;
-        fetchUserData(userId);
-
         homeButton.setOnAction(event -> {
             try {
                 switchScene("/main.fxml", "Main Page");
@@ -73,7 +64,11 @@ public class UserProfileController {
 
         profileImageView.setImage(createPlaceholderImage(150, 150));
         makeCircle(profileImageView);
-        displayUserPosts(scrollPane, userPostsVBox, noPostsLabel, userId);
+
+        this.userId = userId;
+        fetchUserData(userId);
+
+        displayUserPosts(feedListView, noPostsLabel, userId);
     }
 
     private void switchScene(String fxmlFile, String title) throws IOException {
@@ -89,7 +84,7 @@ public class UserProfileController {
             ProfileController profileController = fxmlLoader.getController();
             profileController.setMainController(mainController);
             profileController.setMainView(mainView);
-
+            profileController.setMainController(mainController);
         }
 
         if (fxmlFile.equals("/main.fxml")) {
@@ -105,16 +100,19 @@ public class UserProfileController {
             bioLabel.setText(user.getBio());
             registeredLabel.setText(user.getDateOfCreation());
 
-            // todo fetch profile picture
-            if (user.getProfilePictureUrl().equals("default")) {
-                profileImageView.setImage(createPlaceholderImage(150, 150));
-            } else {
-                profileImageView.setImage(controllerForView.getProfilePicture());
+            String profilePictureUrl = user.getProfilePictureUrl();
+
+            if (!profilePictureUrl.equals("default")) {
+                try {
+                    profileImageView.setImage(controllerForView.getProfilePicture(userId));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+            }
         }
     }
 
-    public void displayUserPosts(ScrollPane scrollPane, VBox userPostsVBox, Label noPostsLabel, int userId) {
+    public void displayUserPosts(ListView<Post> feedListView, Label noPostsLabel, int userId) {
         List<Post> posts;
         try {
             posts = controllerForView.getUserPostsUserProfile(userId);
@@ -125,22 +123,18 @@ public class UserProfileController {
 
         if (posts.isEmpty()) {
             noPostsLabel.setVisible(true);
-            scrollPane.setVisible(false);
+            feedListView.setVisible(false);
         } else {
             noPostsLabel.setVisible(false);
-            scrollPane.setVisible(true);
-            userPostsVBox.getChildren().clear();
+            feedListView.setVisible(true);
 
-            for (Post post : posts) {
-                PostListCell postCell = new PostListCell();
-                postCell.updateItem(post, false);
-                userPostsVBox.getChildren().add(postCell);
-            }
+            ObservableList<Post> observablePosts = FXCollections.observableArrayList(posts);
+            feedListView.setItems(observablePosts);
 
-            scrollPane.setContent(userPostsVBox);
-            scrollPane.setFitToWidth(true);
+            feedListView.setCellFactory(listView -> new PostListCell());
         }
     }
+
 
     public void handleFollowButton(ActionEvent actionEvent) {
 
@@ -154,6 +148,7 @@ public class UserProfileController {
 
             UserMessagesController userMessagesController = loader.getController();
             userMessagesController.setUserId(userId);
+            userMessagesController.initialize(userId);
 
             Stage stage = (Stage) messageButton.getScene().getWindow();
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
@@ -186,8 +181,15 @@ public class UserProfileController {
         return image;
     }
 
+    public void setControllerForView(ControllerForView controller) {
+        controllerForView = controller;
+    }
+
+    public void setMainView(View view) {
+        this.mainView = view;
+    }
+
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
-
 }

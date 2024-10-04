@@ -50,7 +50,7 @@
                 </Label>
                 <Label fx:id="inspirationText" styleClass="inspirationText" text="Write something that made you smile today!">
                     <VBox.margin>
-                        <Insets left="10" right="10" />
+                        <Insets bottom="30" left="10" right="10" />
                     </VBox.margin>
                 </Label>
             </VBox>

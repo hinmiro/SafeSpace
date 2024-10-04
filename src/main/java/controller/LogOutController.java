@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import model.ScreenUtil;
 import model.SessionManager;
 import view.View;
 
@@ -49,7 +50,7 @@ public class LogOutController {
         // Load the logout scene
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
         Parent loginRoot = loader.load();
-        Scene loginScene = new Scene(loginRoot);
+        Scene loginScene = new Scene(loginRoot, 360, ScreenUtil.getScaledHeight());
 
         // Get the current stage and set the new scene
         primaryStage.setScene(loginScene);
@@ -57,7 +58,6 @@ public class LogOutController {
 
         if (dialogStage != null) {
             dialogStage.close();
-
         }
     }
 
