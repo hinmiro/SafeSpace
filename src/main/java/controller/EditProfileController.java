@@ -78,6 +78,8 @@ public class EditProfileController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/profile.fxml"));
             Parent root = loader.load();
+            profileController = loader.getController();
+            profileController.setMainController(mainController);
 
             Stage stage = new Stage();
             stage.setTitle("Profile Page");

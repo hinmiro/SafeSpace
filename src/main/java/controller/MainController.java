@@ -115,10 +115,6 @@ public class MainController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = fxmlLoader.load();
 
-        Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-        stage.setScene(scene);
-        stage.setTitle(title);
-
 
         if (fxmlFile.equals("/profile.fxml")) {
             stopQueueProcessing();
@@ -145,6 +141,10 @@ public class MainController {
             messageController.setMainController(this);
 
         }
+
+        Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+        stage.setScene(scene);
+        stage.setTitle(title);
     }
 
     private void showNewPostWindow() {

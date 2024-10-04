@@ -125,9 +125,11 @@ public class ProfileController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/logOut.fxml"));
             Parent logoutRoot = loader.load();
+
             LogOutController logOutController = loader.getController();
             logOutController.setDialogStage(dialogStage);
             logOutController.setMainView(mainView);
+            System.out.println("main controller " + mainController.getClass());
             logOutController.setMainController(mainController);
 
             Scene logoutScene = new Scene(logoutRoot);
@@ -149,6 +151,8 @@ public class ProfileController {
             UpdateInfoController updateInfoController = fxmlLoader.getController();
             updateInfoController.setProfileController(this);
             updateInfoController.setMainView(mainView);
+            System.out.println("main controller " + mainController.getClass());
+
             updateInfoController.setMainController(mainController);
 
             Stage stage = (Stage) profileButton.getScene().getWindow();
@@ -167,8 +171,10 @@ public class ProfileController {
 
             EditProfileController editProfileController = fxmlLoader.getController();
             editProfileController.setProfileController(this);
-            editProfileController.setMainView(mainView);
             editProfileController.setMainController(mainController);
+            editProfileController.setMainView(mainView);
+            System.out.println("main controller " + mainController.getClass());
+
 
             Stage stage = (Stage) profileButton.getScene().getWindow();
             stage.setTitle("Edit Profile");
