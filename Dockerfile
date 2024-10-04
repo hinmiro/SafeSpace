@@ -1,6 +1,8 @@
-FROM maven:latest
+FROM openjdk:17-slim
 
 RUN apt-get update && apt-get install -y openjfx
+
+ENV JAVAFX_HOME=/usr/share/javafx-sdk-17.0.2
 
 WORKDIR /app
 
@@ -14,4 +16,4 @@ RUN apt-get update && apt-get install -y openjfx
 
 
 # Run the main class from the built JAR
-CMD ["java", "--module-path", "/usr/share/openjfx/lib", "--add-modules", "javafx.controls,javafx.fxml", "-jar", "target/SafeSpace.jar"]
+ENTRYPOINT ["java", "--module-path", "/usr/share/javafx-sdk-17.0.2/lib", "--add-modules", "javafx.controls,javafx.fxml", "-jar", "target/SafeSpace.jar"]
