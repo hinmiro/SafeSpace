@@ -144,6 +144,7 @@ public class MessageController {
         if (fxmlFile.equals("/profile.fxml")) {
             ProfileController profileController = fxmlLoader.getController();
             profileController.setMainView(mainView);
+            profileController.setMainController(mainController);
         }
 
         if (fxmlFile.equals("/main.fxml")) {

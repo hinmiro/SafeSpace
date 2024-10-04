@@ -16,6 +16,7 @@ public class UserMessagesController {
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private View mainView;
     private int userId;
+    private MainController mainController;
 
     @FXML
     private Label usernameLabelMessage;
@@ -26,32 +27,12 @@ public class UserMessagesController {
     @FXML
     private Button sendMessageButton;
     @FXML
-    private Button homeButton;
-    @FXML
-    private Button profileButton;
-    @FXML
     private Button closeButton;
 
     public void initialize(int userId) {
         this.userId = userId;
         fetchUser(userId);
         loadConversation();
-
-        homeButton.setOnAction(event -> {
-            try {
-                switchScene("/main.fxml", "Main Page");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        profileButton.setOnAction(event -> {
-            try {
-                switchScene("/profile.fxml", "Profile Page");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
 
         closeButton.setOnAction(event -> handleClose());
         sendMessageButton.setOnAction(event -> handleSendMessage());
@@ -133,9 +114,15 @@ public class UserMessagesController {
 
     @FXML
     private void handleClose() {
+        closeButton.getScene().getWindow().hide();
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/messages.fxml"));
             Parent root = loader.load();
+
+            MessageController messageController = loader.getController();
+            messageController.setMainView(mainView);
+            messageController.setMainController(mainController);
 
             Stage stage = new Stage();
             stage.setTitle("Messages");
@@ -144,27 +131,6 @@ public class UserMessagesController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void switchScene(String fxmlFile, String title) throws IOException {
-        Stage stage = (Stage) homeButton.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
-        Parent root = fxmlLoader.load();
-
-        Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-        stage.setScene(scene);
-        stage.setTitle(title);
-
-        if (fxmlFile.equals("/profile.fxml")) {
-            ProfileController profileController = fxmlLoader.getController();
-            profileController.setMainView(mainView);
-
-        }
-
-        if (fxmlFile.equals("/main.fxml")) {
-            MainController mainController = fxmlLoader.getController();
-            mainController.setMainView(mainView);
         }
     }
 

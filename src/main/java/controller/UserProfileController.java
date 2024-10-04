@@ -19,6 +19,7 @@ public class UserProfileController {
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private View mainView;
     private int userId;
+    private MainController mainController;
 
     @FXML private Label usernameLabel;
     @FXML private Label bioLabel;
@@ -82,7 +83,7 @@ public class UserProfileController {
         if (fxmlFile.equals("/profile.fxml")) {
             ProfileController profileController = fxmlLoader.getController();
             profileController.setMainView(mainView);
-
+            profileController.setMainController(mainController);
         }
 
         if (fxmlFile.equals("/main.fxml")) {
@@ -181,5 +182,13 @@ public class UserProfileController {
 
     public void setControllerForView(ControllerForView controller) {
         controllerForView = controller;
+    }
+
+    public void setMainView(View view) {
+        this.mainView = view;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 }

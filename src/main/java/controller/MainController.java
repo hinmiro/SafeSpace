@@ -136,6 +136,10 @@ public class MainController {
             messageController.setMainView(mainView);
             messageController.setMainController(this);
         }
+
+        Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+        stage.setScene(scene);
+        stage.setTitle(title);
     }
 
     @FXML
@@ -154,10 +158,6 @@ public class MainController {
             noResults.getStyleClass().add("noResultsLabel");
             searchResultsBox.getChildren().add(noResults);
         }
-
-        Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-        stage.setScene(scene);
-        stage.setTitle(title);
     }
 
     private void showNewPostWindow() {
