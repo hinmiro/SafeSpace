@@ -54,6 +54,10 @@ public class UserModel {
         this.friends = friends;
     }
 
+    public int getFollowingCount() {
+        return friends.size();
+    }
+
     public ArrayList<Integer> getLikedPosts() {
         return likedPosts;
     }

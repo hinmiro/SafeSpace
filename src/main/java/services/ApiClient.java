@@ -159,7 +159,7 @@ public class ApiClient {
         return res;
     }
 
-    public static int removeFriend(String id) throws IOException, InterruptedException {
+    public static HttpResponse<String>  removeFriend(int id) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url + "/users/friends/" + id))
                 .header("Content-Type", "application/json")
@@ -167,11 +167,10 @@ public class ApiClient {
                 .DELETE().build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        return res.statusCode();
+        return res;
     }
 
-    public static int addFriend(String id) throws IOException, InterruptedException {
-
+    public static HttpResponse<String> addFriend(int id) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url + "/users/friends/" + id))
                 .header("Content-Type", "application/json")
@@ -179,8 +178,7 @@ public class ApiClient {
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
 
-        res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        return res.statusCode();
+        return client.send(req, HttpResponse.BodyHandlers.ofString());
     }
 
     public static HttpResponse<String> getAllFriends() throws IOException, InterruptedException {
@@ -191,9 +189,9 @@ public class ApiClient {
                 .GET().build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println("res body api" + res.body());
         return res;
     }
-
 
     public static HttpResponse<String> getUserById(int userId) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()

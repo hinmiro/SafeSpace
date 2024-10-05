@@ -179,4 +179,33 @@ public class ControllerForView extends Controller {
             return new ArrayList<>();
         }
     }
+
+    public boolean addFriend(int userId, int friendId) {
+        try {
+            return app.addFriend(userId, friendId);
+        } catch (IOException | InterruptedException e) {
+            return false;
+        }
+    }
+
+    public int getFollowersCount(int userId) throws IOException, InterruptedException {
+        return app.getFollowersCount(userId);
+    }
+
+    public boolean removeFriend(int userId) {
+        try {
+            return app.removeFriend(userId);
+        } catch (IOException | InterruptedException e) {
+            return false;
+        }
+    }
+
+    public boolean isFriend(int userId, int friendId) {
+        try {
+            return app.isFriend(userId, friendId);
+        } catch (IOException | InterruptedException e) {
+            return false;
+        }
+    }
+
 }

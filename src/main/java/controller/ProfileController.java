@@ -50,7 +50,7 @@ public class ProfileController {
     private ListView<Post> feedListView;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException, InterruptedException {
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
         bioLabel.setText(SessionManager.getInstance().getLoggedUser().getBio() == null ? "..." : SessionManager.getInstance().getLoggedUser().getBio());
@@ -65,6 +65,10 @@ public class ProfileController {
                 throw new RuntimeException(e);
             }
         }
+
+        int followingCount = SessionManager.getInstance().getLoggedUser().getFollowingCount();
+        System.out.println("Following count: " + followingCount);
+        followingCountLabel.setText(String.valueOf(followingCount));
 
         homeButton.setOnAction(event -> navigateTo("/main.fxml"));
         profileButton.setOnAction(event -> navigateTo("/profile.fxml"));
