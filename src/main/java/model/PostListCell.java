@@ -98,7 +98,7 @@ public class PostListCell extends ListCell<Post> {
         VBox.setMargin(postContent, new Insets(10, 0, 20, 0));
         contentBox.getChildren().add(postContent);
 
-        addBottomSection(contentBox, item);
+        addBottomSectionModal(contentBox, item);
         getComments(contentBox, item);
 
         ScrollPane scrollPane = new ScrollPane(contentBox);
@@ -138,6 +138,16 @@ public class PostListCell extends ListCell<Post> {
     }
 
     private void addBottomSection(VBox contentBox, Post item) {
+        VBox bottomBox = createBottomSection(contentBox, item, true);
+        contentBox.getChildren().add(bottomBox);
+    }
+
+    private void addBottomSectionModal(VBox contentBox, Post item) {
+        VBox bottomBox = createBottomSection(contentBox, item, false);
+        contentBox.getChildren().add(bottomBox);
+    }
+
+    private VBox createBottomSection(VBox contentBox, Post item, boolean isModal) {
         VBox bottomBox = new VBox();
         bottomBox.setAlignment(Pos.CENTER_LEFT);
         bottomBox.setSpacing(10);
@@ -154,9 +164,9 @@ public class PostListCell extends ListCell<Post> {
 
         VBox commentInputBox = new VBox();
         commentInputBox.setSpacing(10);
-        commentInputBox.setVisible(false);
-        commentInputBox.setPrefHeight(0);
-        commentInputBox.setMinHeight(0);
+        commentInputBox.setVisible(!isModal);
+        commentInputBox.setPrefHeight(isModal ? 0 : Region.USE_COMPUTED_SIZE);
+        commentInputBox.setMinHeight(isModal ? 0 : Region.USE_COMPUTED_SIZE);
 
         TextField commentInput = new TextField();
         commentInput.setPromptText("Comment here...");
@@ -178,8 +188,10 @@ public class PostListCell extends ListCell<Post> {
         });
 
         commentInputBox.getChildren().addAll(commentInput, addCommentButton);
-
         bottomBox.getChildren().add(commentInputBox);
+
+        Separator separator = new Separator();
+        bottomBox.getChildren().add(separator);
 
         ((Button) commentBox.getChildren().get(0)).setOnAction(event -> {
             boolean isVisible = !commentInputBox.isVisible();
@@ -189,10 +201,7 @@ public class PostListCell extends ListCell<Post> {
             bottomBox.requestLayout();
         });
 
-        contentBox.getChildren().add(bottomBox);
-
-        Separator separator = new Separator();
-        contentBox.getChildren().add(separator);
+        return bottomBox;
     }
 
     private HBox createLikeButton(Post item) {
@@ -255,7 +264,6 @@ public class PostListCell extends ListCell<Post> {
         Button commentButton = new Button();
         commentButton.setGraphic(commentIcon);
         commentButton.getStyleClass().add("comment-button");
-        commentButton.setDisable(true);
 
         Text comments = new Text(String.valueOf(item.getCommentCount()));
         comments.getStyleClass().add("comment-text");
@@ -269,16 +277,18 @@ public class PostListCell extends ListCell<Post> {
         commentSection.setSpacing(10);
         commentSection.setPadding(new Insets(10));
         commentSection.getStyleClass().add("comment-section");
-        TextField commentInput = new TextField();
-        commentInput.setPromptText("Type comment here...");
-        Button submitComment = new Button("Add comment");
+        commentSection.setPrefWidth(200);
 
+//        TextField commentInput = new TextField();
+//        commentInput.setPromptText("Type comment here...");
+//        Button submitComment = new Button("Add comment");
 
         ArrayList<Comment> comments = ControllerForView.getInstance().getPostCommentsById(String.valueOf(item.getPostID()));
         if (comments != null && !comments.isEmpty()) {
             comments.forEach(comment -> {
                 Text commentContent = new Text(comment.getCommentContent());
                 commentContent.getStyleClass().add("comment-text");
+                commentContent.setWrappingWidth(200);
 
                 VBox usernameBox = new VBox();
                 usernameBox.setPadding(new Insets(5));
@@ -303,17 +313,17 @@ public class PostListCell extends ListCell<Post> {
             commentSection.getChildren().add(commentText);
         }
 
-        submitComment.setOnAction(event -> {
-            String comment = commentInput.getText().trim();
-            if (!comment.isEmpty()) {
-                handleComment(comment, item.getPostID());
-                commentInput.clear();
-            }
-        });
+//        submitComment.setOnAction(event -> {
+//            String comment = commentInput.getText().trim();
+//            if (!comment.isEmpty()) {
+//                handleComment(comment, item.getPostID());
+//                commentInput.clear();
+//            }
+//        });
 
         contenbox.getChildren().add(commentSection);
-        contenbox.getChildren().add(commentInput);
-        contenbox.getChildren().add(submitComment);
+//        contenbox.getChildren().add(commentInput);
+//        contenbox.getChildren().add(submitComment);
     }
 
     private void handleComment(String text, int postId) {

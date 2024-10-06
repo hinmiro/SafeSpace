@@ -1,24 +1,20 @@
 package controller;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Side;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.collections.*;
+import javafx.fxml.*;
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.canvas.*;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.*;
+import javafx.scene.input.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import model.*;
+import view.*;
 import java.io.IOException;
 import java.util.List;
-import javafx.scene.shape.Circle;
-import model.*;
-import view.View;
 
 public class ProfileController {
 
@@ -51,12 +47,10 @@ public class ProfileController {
     @FXML
     public Label bioLabel;
     @FXML
-    private VBox userPostsVBox;
-    @FXML
-    private ScrollPane scrollPane;
+    private ListView<Post> feedListView;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException, InterruptedException {
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
         bioLabel.setText(SessionManager.getInstance().getLoggedUser().getBio() == null ? "..." : SessionManager.getInstance().getLoggedUser().getBio());
@@ -66,11 +60,15 @@ public class ProfileController {
 
         if (!SessionManager.getInstance().getLoggedUser().getProfilePictureUrl().equals("default")) {
             try {
-                profileImageView.setImage(controllerForView.getProfilePicture());
+                profileImageView.setImage(controllerForView.getProfilePicture(SessionManager.getInstance().getLoggedUser().getUserId()));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
+
+        int followingCount = SessionManager.getInstance().getLoggedUser().getFollowingCount();
+        System.out.println("Following count: " + followingCount);
+        followingCountLabel.setText(String.valueOf(followingCount));
 
         homeButton.setOnAction(event -> navigateTo("/main.fxml"));
         profileButton.setOnAction(event -> navigateTo("/profile.fxml"));
@@ -86,13 +84,13 @@ public class ProfileController {
 
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, logOutItem);
         settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
-        displayUserPosts(scrollPane, userPostsVBox, noPostsLabel);
+        displayUserPosts();
     }
 
-    public void displayUserPosts(ScrollPane scrollPane, VBox userPostsVBox, Label noPostsLabel) {
+    public void displayUserPosts() {
         List<Post> posts;
         try {
-            posts = controllerForView.getUserPostsUserProfile();
+            posts = controllerForView.getUserPostsOwnProfile();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return;
@@ -100,20 +98,17 @@ public class ProfileController {
 
         if (posts.isEmpty()) {
             noPostsLabel.setVisible(true);
-            scrollPane.setVisible(false);
+            feedListView.setVisible(false);
         } else {
             noPostsLabel.setVisible(false);
-            scrollPane.setVisible(true);
-            userPostsVBox.getChildren().clear();
+            feedListView.setVisible(true);
 
-            for (Post post : posts) {
-                PostListCell postCell = new PostListCell();
-                postCell.updateItem(post, false);
-                userPostsVBox.getChildren().add(postCell);
-            }
+            posts.sort((post1, post2) -> post2.getPostDate().compareTo(post1.getPostDate()));
 
-            scrollPane.setContent(userPostsVBox);
-            scrollPane.setFitToWidth(true);
+            ObservableList<Post> observablePosts = FXCollections.observableArrayList(posts);
+            feedListView.setItems(observablePosts);
+
+            feedListView.setCellFactory(listView -> new PostListCell());
         }
     }
 

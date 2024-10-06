@@ -1,57 +1,70 @@
 package model;
 
-public class Message {
-    private int messageId;
-    private String messageContent;
-    private int senderId;
-    private int receiverId;
-    private String dateOfMessage;
+import java.util.List;
 
-    public Message(int messageId, String messageContent, int senderId, int receiverId, String dateOfMessage) {
-        this.messageId = messageId;
-        this.messageContent = messageContent;
-        this.senderId = senderId;
-        this.receiverId = receiverId;
-        this.dateOfMessage = dateOfMessage;
+public class Message {
+    private int messageID;
+    private String message;
+    private int sender;
+    private int receiver;
+    private String date;
+    private List<Message> sentMessages;
+    private List<Message> receivedMessages;
+
+    public Message(int messageID, String message, int sender, int receiver, String dateOfMessage) {
+        this.messageID = messageID;
+        this.message = message;
+        this.sender = sender;
+        this.receiver = receiver;
+        this.date = dateOfMessage;
     }
 
     public int getMessageId() {
-        return messageId;
+        return messageID;
     }
 
     public void setMessageId(int messageId) {
-        this.messageId = messageId;
+        this.messageID = messageId;
     }
 
     public String getMessageContent() {
-        return messageContent;
+        return message;
     }
 
     public void setMessageContent(String messageContent) {
-        this.messageContent = messageContent;
+        this.message = messageContent;
     }
 
     public int getSenderId() {
-        return senderId;
+        return sender;
     }
 
     public void setSenderId(int senderId) {
-        this.senderId = senderId;
+        this.sender = senderId;
     }
 
     public int getReceiverId() {
-        return receiverId;
+        return receiver;
     }
 
     public void setReceiverId(int receiverId) {
-        this.receiverId = receiverId;
+        this.receiver = receiverId;
     }
 
     public String getDateOfMessage() {
-        return dateOfMessage;
+        return date;
     }
 
     public void setDateOfMessage(String dateOfMessage) {
-        this.dateOfMessage = dateOfMessage;
+        this.date = dateOfMessage;
     }
+
+    public List<Message> getSentMessages() {
+        return sentMessages;
+    }
+
+    public List<Message> getReceivedMessages() {
+        return receivedMessages;
+    }
+
 }

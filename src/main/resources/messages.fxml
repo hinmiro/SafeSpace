@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.geometry.Insets?>
 
+<?import javafx.scene.control.ListView?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.MessageController" stylesheets="@styles.css" styleClass="borderWide">
 
@@ -41,9 +42,8 @@
     </top>
 
     <center>
-        <VBox fx:id="contentBox" alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER" minHeight="300">
             <Label fx:id="noMessagesLabel" text="No messages yet..." styleClass="noPostsLabel" />
-        </VBox>
+            <ListView fx:id="conversationListView" BorderPane.alignment="CENTER" prefHeight="1000" styleClass="conversationList"/>
     </center>
 
     <bottom>

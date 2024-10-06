@@ -61,6 +61,53 @@ StackPane, BorderPane {
     -fx-opacity: 0.7;
 }
 
+#usernameSearchField {
+    -fx-background-color: #f0f0f0;
+    -fx-padding: 10px;
+    -fx-border-width: 1px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.search-button {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-font-size: 15px;
+    -fx-padding: 5 10;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-text-fill: #ffff;
+}
+
+.search-button:hover {
+    -fx-background-color: #0056b3;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#searchResultsBox {
+    -fx-padding: 5px;
+}
+
+.usernameSearchLabel {
+    -fx-padding: 3px 150px 3px 150px;
+    -fx-border-color: linear-gradient(to bottom, #d6a6e7, #a65ea1);
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #ffffff;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
+}
+
+.noResultsLabel {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(119, 119, 119, 0.89);
+    -fx-font-weight: bold;
+    -fx-padding: 3px 0px 3px 125px;
+}
 
 /* profiili */
 
@@ -192,6 +239,15 @@ StackPane, BorderPane {
 /* login ja register */
 
 .text-field {
+    -fx-pref-width: 300px;
+    -fx-padding: 15;
+    -fx-border-color: #E1E5F2;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #E1E5F2;
+}
+
+.text-field2 {
     -fx-pref-width: 300px;
     -fx-padding: 15;
     -fx-border-color: #E1E5F2;
@@ -465,7 +521,7 @@ StackPane, BorderPane {
     -fx-font-weight: bold;
 }
 
-.password-field2 {
+.password-field2, .text-field2 {
     -fx-pref-width: 300px;
 }
 
@@ -474,15 +530,15 @@ StackPane, BorderPane {
     -fx-text-fill: #888;
 }
 
-.password-field2.weak {
+.password-field2.weak, .text-field2.weak {
     -fx-background-color: #ffdddd;
 }
 
-.password-field2.medium {
+.password-field2.medium, .text-field2.medium {
     -fx-background-color: #ffffcc;
 }
 
-.password-field2.strong {
+.password-field2.strong, .text-field2.strong {
     -fx-background-color: #ccffcc;
 }
 
@@ -724,10 +780,26 @@ StackPane, BorderPane {
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 2);
+    -fx-transition: background-color 0.3s ease;
+}
+
+.message-textfield:focused {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #007bff;
+}
+
+.messageListBox {
+    -fx-background-color: linear-gradient(to bottom, #e9ddf1, #dfc6db);
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
 }
 
 .message-input-hbox {
     -fx-padding: 10;
+    -fx-spacing: 10;
     -fx-alignment: center;
 }
 
@@ -738,46 +810,102 @@ StackPane, BorderPane {
     -fx-border-radius: 5;
     -fx-font-size: 12px;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 2);
+    -fx-transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .send-button:hover {
     -fx-background-color: #0056b3;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
 }
 
 .usernameBackgroundPane {
-    -fx-background-color: #f0f0f0;
-    -fx-padding: 10;
+    -fx-background-color: #E1E5F2;
+    -fx-padding: 12;
     -fx-background-radius: 5;
     -fx-margin: 10;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
 }
 
 .usernameLabelMessage {
-    -fx-font-size: 18px;
-    -fx-text-fill: #333333;
+    -fx-font-size: 20px;
+    -fx-text-fill: linear-gradient(to bottom, #007bff, #0056b3);
     -fx-font-weight: bold;
     -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 0, 1);
 }
 
-.message-label {
-    -fx-background-color: #fafafa;
+.message-label1 {
+    -fx-background-color: #cce5ff;
+    -fx-border-color: #b8daff;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 12px;
+    -fx-text-fill: #333333;
+    -fx-wrap-text: true;
+    -fx-max-width: 330px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0, 0, 2);
+}
+
+.message-label2 {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dedede;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 12px;
+    -fx-text-fill: #333333;
+    -fx-wrap-text: true;
+    -fx-max-width: 330px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0, 0, 2);
+}
+
+.date-label {
+    font-size: 8px;
+    text-fill: #888;
+}
+
+/* message sivu */
+
+.conversationList {
+    -fx-padding: 10;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+}
+
+.message-list-cell {
+    -fx-padding: 20px;
+    -fx-background-color: #E1E5F2;
     -fx-border-color: #dedede;
     -fx-border-width: 1px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
-    -fx-padding: 10px;
-    -fx-margin: 5px;
     -fx-font-size: 14px;
     -fx-text-fill: #333333;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-cursor: hand;
+}
+
+.message-list-cell:hover {
+    -fx-background-color: #f8f8f8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 6, 0, 0, 2);
+}
+
+.username-labelmsg {
+    -fx-font-weight: bold;
+    -fx-text-fill: #007bff;
+    -fx-font-size: 14px;
+    -fx-padding: 5 5 5 0;
+}
+
+.message-labelmsg {
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
     -fx-wrap-text: true;
-    -fx-max-width: 300px;
+    -fx-padding: 5 5 5 0;
 }
-
-.message-label:hover {
-    -fx-background-color: #e8e8e8;
-}
-
-
 
 
 
