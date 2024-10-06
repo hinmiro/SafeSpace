@@ -137,7 +137,7 @@ public class UserProfileController {
     public void displayUserPosts(ListView<Post> feedListView, Label noPostsLabel, int userId) {
         List<Post> posts;
         try {
-            posts = controllerForView.getUserPostsUserProfile(userId);
+            posts = controllerForView.getUserPostsOwnProfile(userId);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return;

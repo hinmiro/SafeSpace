@@ -7,7 +7,7 @@ public class Message {
     private String message;
     private int sender;
     private int receiver;
-    private String dateOfMessage;
+    private String date;
     private List<Message> sentMessages;
     private List<Message> receivedMessages;
 
@@ -16,7 +16,7 @@ public class Message {
         this.message = message;
         this.sender = sender;
         this.receiver = receiver;
-        this.dateOfMessage = dateOfMessage;
+        this.date = dateOfMessage;
     }
 
     public int getMessageId() {
@@ -52,11 +52,11 @@ public class Message {
     }
 
     public String getDateOfMessage() {
-        return dateOfMessage;
+        return date;
     }
 
     public void setDateOfMessage(String dateOfMessage) {
-        this.dateOfMessage = dateOfMessage;
+        this.date = dateOfMessage;
     }
 
     public List<Message> getSentMessages() {

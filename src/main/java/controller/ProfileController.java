@@ -90,7 +90,7 @@ public class ProfileController {
     public void displayUserPosts() {
         List<Post> posts;
         try {
-            posts = controllerForView.getUserPostsUserProfile();
+            posts = controllerForView.getUserPostsOwnProfile();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return;
@@ -102,6 +102,8 @@ public class ProfileController {
         } else {
             noPostsLabel.setVisible(false);
             feedListView.setVisible(true);
+
+            posts.sort((post1, post2) -> post2.getPostDate().compareTo(post1.getPostDate()));
 
             ObservableList<Post> observablePosts = FXCollections.observableArrayList(posts);
             feedListView.setItems(observablePosts);

@@ -97,7 +97,7 @@ public class ControllerForView extends Controller {
         return img;
     }
 
-    public List<Post> getUserPostsUserProfile() throws IOException, InterruptedException {
+    public List<Post> getUserPostsOwnProfile() throws IOException, InterruptedException {
         UserModel user = SessionManager.getInstance().getLoggedUser();
         UserModel updatedUser = app.getUserById(user.getUserId());
         if (updatedUser != null) {
@@ -131,7 +131,7 @@ public class ControllerForView extends Controller {
         }
     }
 
-    public List<Post> getUserPostsUserProfile(int userId) throws IOException, InterruptedException {
+    public List<Post> getUserPostsOwnProfile(int userId) throws IOException, InterruptedException {
         UserModel user = app.getUserById(userId);
         if (user != null) {
             List<Post> posts = new ArrayList<>();
