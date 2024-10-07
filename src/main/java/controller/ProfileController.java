@@ -66,14 +66,12 @@ public class ProfileController {
             }
         }
 
-        int followingCount = SessionManager.getInstance().getLoggedUser().getFollowingCount();
-        System.out.println("Following count: " + followingCount);
-        followingCountLabel.setText(String.valueOf(followingCount));
+        fetchUserFollowers(SessionManager.getInstance().getLoggedUser().getUserId());
 
         homeButton.setOnAction(event -> navigateTo("/main.fxml"));
         profileButton.setOnAction(event -> navigateTo("/profile.fxml"));
 
-        // menu
+        // menu profiilissa
         settingsContextMenu = new ContextMenu();
         MenuItem editProfileItem = new MenuItem("Edit Profile");
         editProfileItem.setOnAction(event -> openEditProfilePage());
@@ -85,6 +83,17 @@ public class ProfileController {
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, logOutItem);
         settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
         displayUserPosts();
+    }
+
+    private void fetchUserFollowers(int userId) {
+        UserModel user = controllerForView.getUserById(userId);
+
+        int friendsCount = user.getUserData().getFriendsCount();
+        int followersCount = user.getUserData().getFollowersCount() + friendsCount;
+        int followingCount = user.getUserData().getFollowingCount() + friendsCount;
+
+        followersCountLabel.setText(String.valueOf(followersCount));
+        followingCountLabel.setText(String.valueOf(followingCount));
     }
 
     public void displayUserPosts() {
@@ -123,7 +132,6 @@ public class ProfileController {
 
             LogOutController logOutController = loader.getController();
             logOutController.setDialogStage(dialogStage);
-//            logOutController.setMainView(mainView);
             logOutController.setMainController(mainController);
             Stage primaryStage = (Stage) profileButton.getScene().getWindow();
             logOutController.setPrimaryStage(primaryStage);

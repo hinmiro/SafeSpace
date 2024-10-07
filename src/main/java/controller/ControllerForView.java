@@ -27,7 +27,7 @@ public class ControllerForView extends Controller {
             if (user != null) {
                 SessionManager.getInstance().setLoggedUser(user);
                 app.getUserArrays();
-
+                //app.getUserById(user.getUserId());
                 app.startMainFeedThread();
                 return user;
             }
@@ -181,15 +181,7 @@ public class ControllerForView extends Controller {
     }
 
     public boolean addFriend(int userId, int friendId) {
-        try {
-            return app.addFriend(userId, friendId);
-        } catch (IOException | InterruptedException e) {
-            return false;
-        }
-    }
-
-    public int getFollowersCount(int userId) throws IOException, InterruptedException {
-        return app.getFollowersCount(userId);
+        return app.addFriend(userId, friendId);
     }
 
     public boolean removeFriend(int userId) {
@@ -207,5 +199,4 @@ public class ControllerForView extends Controller {
             return false;
         }
     }
-
 }
