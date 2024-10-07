@@ -132,6 +132,7 @@ public class PostListCell extends ListCell<Post> {
 
         Text postContent = new Text(item.getPostContent());
         postContent.setWrappingWidth(300);
+
         postContent.getStyleClass().add("post-content");
         VBox.setMargin(postContent, new Insets(10, 0, 20, 0));
         contentBox.getChildren().add(postContent);
@@ -336,6 +337,8 @@ public class PostListCell extends ListCell<Post> {
 
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(200);
+        imageView.setFitHeight(300);
+        imageView.setPreserveRatio(true);
 
         imageSection.getStyleClass().add("image-section");
 
