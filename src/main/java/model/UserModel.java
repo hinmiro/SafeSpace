@@ -8,10 +8,11 @@ public class UserModel {
     private String bio;
     private String profilePictureID;
     private int id;
+    private UserData userData;
     private String dateOfCreation;
-    private ArrayList<Integer> friends;
     private ArrayList<Integer> likedPosts;
     private ArrayList<Integer> posts;
+    private ArrayList<Conversation> conversations;
 
     public UserModel(String username, int id, String dateOfCreation) {
         this.username = username;
@@ -19,9 +20,10 @@ public class UserModel {
         this.profilePictureID = "";
         this.id = id;
         this.dateOfCreation = dateOfCreation;
-        friends = new ArrayList<>();
+        this.userData = new UserData();
         posts = new ArrayList<>();
         likedPosts = new ArrayList<>();
+        conversations = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -45,18 +47,6 @@ public class UserModel {
     public int getUserId() { return id; }
 
     public String getDateOfCreation() { return dateOfCreation; }
-
-    public ArrayList<Integer> getFriends() {
-        return friends;
-    }
-
-    public void setFriends(ArrayList<Integer> friends) {
-        this.friends = friends;
-    }
-
-    public int getFollowingCount() {
-        return friends.size();
-    }
 
     public ArrayList<Integer> getLikedPosts() {
         return likedPosts;
@@ -82,11 +72,33 @@ public class UserModel {
         likedPosts.remove((Integer) postId);
     }
 
-    public void setArrays(ArrayList<Integer> likedPosts, ArrayList<Integer> posts, ArrayList<Integer> friends) {
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userData) {
+        this.userData = userData;
+    }
+
+    public ArrayList<Conversation> getConversations() {
+        return conversations;
+    }
+
+    public void addConversation(Conversation conversation) {
+        this.conversations.add(conversation);
+    }
+
+    public void removeConversation(Conversation conversation) {
+        this.conversations.remove(conversation);
+    }
+
+    public void setConversations(ArrayList<Conversation> conversations) {
+        this.conversations = conversations;
+    }
+
+    public void setArrays(ArrayList<Integer> likedPosts, ArrayList<Integer> posts) {
         this.likedPosts = likedPosts;
         this.posts = posts;
-        this.friends = friends;
-
     }
 
 }
