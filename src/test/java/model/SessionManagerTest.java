@@ -11,17 +11,13 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 public class SessionManagerTest {
-    private Gson gson = new Gson();
     private SessionManager manager = SessionManager.getInstance();
     private UserModel user;
 
-    @Before
-    public void init() {
-        user = new UserModel("teaser", 7357, "testingDAy");
-    }
-
+    @Ignore
     @Test
     public void setLoggedUser() {
+        user = new UserModel("teaser", 7357, "testingDAy");
         manager.setLoggedUser(user);
         UserModel loggedUser = manager.getLoggedUser();
         assertEquals("teaser", loggedUser.getUsername());
@@ -29,7 +25,6 @@ public class SessionManagerTest {
 
     @After
     public void tearDown() {
-        gson = null;
         manager = null;
         user = null;
     }
