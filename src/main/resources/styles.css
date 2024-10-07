@@ -860,6 +860,11 @@ StackPane, BorderPane {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0, 0, 2);
 }
 
+.date-label {
+    font-size: 8px;
+    text-fill: #888;
+}
+
 /* message sivu */
 
 .conversationList {

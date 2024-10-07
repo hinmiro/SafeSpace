@@ -97,7 +97,7 @@ public class ControllerForView extends Controller {
         return img;
     }
 
-    public List<Post> getUserPostsUserProfile() throws IOException, InterruptedException {
+    public List<Post> getUserPostsOwnProfile() throws IOException, InterruptedException {
         UserModel user = SessionManager.getInstance().getLoggedUser();
         UserModel updatedUser = app.getUserById(user.getUserId());
         if (updatedUser != null) {
@@ -131,7 +131,7 @@ public class ControllerForView extends Controller {
         }
     }
 
-    public List<Post> getUserPostsUserProfile(int userId) throws IOException, InterruptedException {
+    public List<Post> getUserPostsOwnProfile(int userId) throws IOException, InterruptedException {
         UserModel user = app.getUserById(userId);
         if (user != null) {
             List<Post> posts = new ArrayList<>();
@@ -179,4 +179,33 @@ public class ControllerForView extends Controller {
             return new ArrayList<>();
         }
     }
+
+    public boolean addFriend(int userId, int friendId) {
+        try {
+            return app.addFriend(userId, friendId);
+        } catch (IOException | InterruptedException e) {
+            return false;
+        }
+    }
+
+    public int getFollowersCount(int userId) throws IOException, InterruptedException {
+        return app.getFollowersCount(userId);
+    }
+
+    public boolean removeFriend(int userId) {
+        try {
+            return app.removeFriend(userId);
+        } catch (IOException | InterruptedException e) {
+            return false;
+        }
+    }
+
+    public boolean isFriend(int userId, int friendId) {
+        try {
+            return app.isFriend(userId, friendId);
+        } catch (IOException | InterruptedException e) {
+            return false;
+        }
+    }
+
 }

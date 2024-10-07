@@ -11,9 +11,11 @@ import javafx.stage.Stage;
 import model.*;
 import view.View;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MessageController {
 
@@ -86,10 +88,15 @@ public class MessageController {
         List<Message> messages = controllerForView.getMessages();
         conversationListView.getItems().clear();
 
-        Set<String> uniqueConversationPartners = new HashSet<>();
         UserModel loggedInUser = SessionManager.getInstance().getLoggedUser();
 
-        for (Message message : messages) {
+        List<Message> sortedMessages = messages.stream()
+                .sorted(Comparator.comparing(Message::getDateOfMessage).reversed())
+                .collect(Collectors.toList());
+
+        Set<String> uniqueConversationPartners = new HashSet<>();
+
+        for (Message message : sortedMessages) {
             UserModel sender = controllerForView.getUserById(message.getSenderId());
             UserModel receiver = controllerForView.getUserById(message.getReceiverId());
 

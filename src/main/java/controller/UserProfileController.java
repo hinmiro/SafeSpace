@@ -36,8 +36,12 @@ public class UserProfileController {
     private Button leaveMessageButton;
     @FXML
     private ListView<Post> feedListView;
+    @FXML
+    private Label followersCountLabel;
+    @FXML
+    private Label followingCountLabel;
 
-    public void initialize(int userId) {
+    public void initialize(int userId) throws IOException, InterruptedException {
         homeButton.setOnAction(event -> {
             try {
                 switchScene("/main.fxml", "Main Page");
@@ -93,8 +97,9 @@ public class UserProfileController {
         }
     }
 
-    private void fetchUserData(int userId) {
+    private void fetchUserData(int userId) throws IOException, InterruptedException {
         UserModel user = controllerForView.getUserById(userId);
+        System.out.println("User ID: " + userId);
         if (user != null) {
             usernameLabel.setText(user.getUsername());
             bioLabel.setText(user.getBio());
@@ -109,13 +114,30 @@ public class UserProfileController {
                     e.printStackTrace();
                 }
             }
+
+            int followersCount = controllerForView.getFollowersCount(userId);
+            followersCountLabel.setText(String.valueOf(followersCount));
+            System.out.println("Followers count: " + followersCount);
+
+            int followingCount = user.getFollowingCount();
+            followingCountLabel.setText(String.valueOf(followingCount));
+
+            if (SessionManager.getInstance().getLoggedUser().getFriends().contains(userId)) {
+                followButton.setText("Following");
+                followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
+            } else {
+                followButton.setText("Follow");
+                followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #007bff, #0056b3)");
+            }
+        } else {
+            System.out.println("User not found.");
         }
     }
 
     public void displayUserPosts(ListView<Post> feedListView, Label noPostsLabel, int userId) {
         List<Post> posts;
         try {
-            posts = controllerForView.getUserPostsUserProfile(userId);
+            posts = controllerForView.getUserPostsOwnProfile(userId);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return;
@@ -135,9 +157,32 @@ public class UserProfileController {
         }
     }
 
-
     public void handleFollowButton(ActionEvent actionEvent) {
+        UserModel userToFollow = controllerForView.getUserById(userId);
+        int friendId = userToFollow.getUserId();
+        int currentUserId = SessionManager.getInstance().getLoggedUser().getUserId();
 
+        if (controllerForView.isFriend(currentUserId, friendId)) {
+            boolean success = controllerForView.removeFriend(friendId);
+
+            if (success) {
+                followButton.setText("Follow");
+                followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #007bff, #0056b3)");
+
+                int currentFollowers = Integer.parseInt(followersCountLabel.getText());
+                followersCountLabel.setText(String.valueOf(currentFollowers - 1));
+            }
+        } else {
+            boolean success = controllerForView.addFriend(currentUserId, friendId);
+
+            if (success) {
+                followButton.setText("Following");
+                followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
+
+                int currentFollowers = Integer.parseInt(followersCountLabel.getText());
+                followersCountLabel.setText(String.valueOf(currentFollowers + 1));
+            }
+        }
     }
 
     @FXML
@@ -192,4 +237,5 @@ public class UserProfileController {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
+
 }

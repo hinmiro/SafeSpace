@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -100,22 +99,22 @@ public class SharedData {
 
             Parent root = loader.load();
 
-            UserProfileController controller = loader.getController();
-            controller.initialize(userId);
-            controller.setMainController(new MainController());
             if (userId == loggedInUserId) {
                 ProfileController profileController = loader.getController();
+                profileController.initialize();
+                profileController.setMainController(new MainController());
             } else {
                 UserProfileController userProfileController = loader.getController();
                 userProfileController.initialize(userId);
+                userProfileController.setMainController(new MainController());
             }
 
             primaryStage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
             primaryStage.setTitle(userId == loggedInUserId ? "Profile Page" : "User Profile Page");
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
-
-
 }
