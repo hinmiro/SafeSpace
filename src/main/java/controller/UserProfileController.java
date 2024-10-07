@@ -88,7 +88,7 @@ public class UserProfileController {
             ProfileController profileController = fxmlLoader.getController();
             profileController.setMainController(mainController);
             profileController.setMainView(mainView);
-
+            profileController.setMainController(mainController);
         }
 
         if (fxmlFile.equals("/main.fxml")) {
@@ -226,11 +226,16 @@ public class UserProfileController {
         return image;
     }
 
+    public void setControllerForView(ControllerForView controller) {
+        controllerForView = controller;
+    }
+
+    public void setMainView(View view) {
+        this.mainView = view;
+    }
+
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
-    public void setControllerForView(ControllerForView controller) {
-        controllerForView = controller;
-    }
 }
