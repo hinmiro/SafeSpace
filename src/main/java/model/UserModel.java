@@ -12,7 +12,6 @@ public class UserModel {
     private String dateOfCreation;
     private ArrayList<Integer> likedPosts;
     private ArrayList<Integer> posts;
-    private ArrayList<Conversation> conversations;
 
     public UserModel(String username, int id, String dateOfCreation) {
         this.username = username;
@@ -23,7 +22,6 @@ public class UserModel {
         this.userData = new UserData();
         posts = new ArrayList<>();
         likedPosts = new ArrayList<>();
-        conversations = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -78,22 +76,6 @@ public class UserModel {
 
     public void setUserData(UserData userData) {
         this.userData = userData;
-    }
-
-    public ArrayList<Conversation> getConversations() {
-        return conversations;
-    }
-
-    public void addConversation(Conversation conversation) {
-        this.conversations.add(conversation);
-    }
-
-    public void removeConversation(Conversation conversation) {
-        this.conversations.remove(conversation);
-    }
-
-    public void setConversations(ArrayList<Conversation> conversations) {
-        this.conversations = conversations;
     }
 
     public void setArrays(ArrayList<Integer> likedPosts, ArrayList<Integer> posts) {
