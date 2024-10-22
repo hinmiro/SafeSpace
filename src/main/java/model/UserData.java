@@ -73,9 +73,4 @@ public class UserData {
         followers.add(followerUser);
         followersCount = followers.size();
     }
-
-    public void addFriends(UserModel friend) {
-        friends.add(friend);
-        friendsCount = friends.size();
-    }
 }
