@@ -7,13 +7,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
+import model.Language;
 import model.ScreenUtil;
+import model.SessionManager;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class View extends Application {
 
     private Stage primaryStage;
+    private Locale locale;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -23,6 +28,9 @@ public class View extends Application {
 
     public void showLogin() throws Exception {
         try {
+            SessionManager.getInstance().setLanguage(Language.FI);
+            locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+            ResourceBundle titles = ResourceBundle.getBundle("PageTitles", locale);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login.fxml"));
             Parent root = fxmlLoader.load();
 
@@ -31,7 +39,7 @@ public class View extends Application {
 
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Login Page");
+            primaryStage.setTitle(titles.getString("login"));
             primaryStage.setResizable(false);
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
             primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/kuvat/safespacelogo.png")));

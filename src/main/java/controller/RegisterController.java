@@ -9,11 +9,20 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import model.ScreenUtil;
+import model.SessionManager;
 import model.UserModel;
+
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class RegisterController {
 
+    public Label usernameLabel;
+    public Label passwordLabel;
+    public Label confirmPasswordLabel;
+    public Label alreadyLabel;
+    public Label registerHero;
     @FXML
     private TextField usernameField;
     @FXML
@@ -27,10 +36,18 @@ public class RegisterController {
     @FXML
     private Label passwordStrengthLabel;
 
+    private Locale locale;
+    private ResourceBundle labels;
+    private ResourceBundle buttons;
+    private ResourceBundle alerts;
     private ControllerForView controllerForView = ControllerForView.getInstance();
 
     @FXML
     public void initialize() {
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        labels = ResourceBundle.getBundle("Labels", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        alerts = ResourceBundle.getBundle("Alerts", locale);
         registerButton.setOnAction(event -> handleRegister());
         backButton.setOnAction(event -> backLogin());
         usernameField.setOnKeyPressed(event -> handleEnterKey(event));
@@ -39,6 +56,17 @@ public class RegisterController {
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
             updatePasswordStrength(newValue);
         });
+
+        registerHero.setText(labels.getString("registerHero"));
+        usernameLabel.setText(labels.getString("username"));
+        passwordLabel.setText(labels.getString("password"));
+        confirmPasswordLabel.setText(labels.getString("passwordConfirm"));
+        passwordStrengthLabel.setText(labels.getString("passwordStrengthLabel"));
+        usernameField.setPromptText(labels.getString("username"));
+        passwordField.setPromptText(labels.getString("password"));
+        alreadyLabel.setText(labels.getString("alreadyAccount"));
+        registerButton.setText(buttons.getString("registerButton"));
+        backButton.setText(buttons.getString("backToLogin"));
     }
 
     private void handleEnterKey(KeyEvent event) {
@@ -53,17 +81,17 @@ public class RegisterController {
         String strengthClass;
 
         if (strength < 2) {
-            strengthText = "Weak";
+            strengthText = labels.getString("weak");
             strengthClass = "weak";
         } else if (strength < 3) {
-            strengthText = "Medium";
+            strengthText = labels.getString("medium");
             strengthClass = "medium";
         } else {
-            strengthText = "Strong";
+            strengthText = labels.getString("strong");
             strengthClass = "strong";
         }
 
-        passwordStrengthLabel.setText("Password Strength: " + strengthText);
+        passwordStrengthLabel.setText(labels.getString("passwordStrDiffer") + " " + strengthText);
         passwordField.getStyleClass().removeAll("weak", "medium", "strong");
         passwordField.getStyleClass().add(strengthClass);
     }
@@ -83,29 +111,29 @@ public class RegisterController {
         String confirmPassword = confirmPasswordField.getText();
 
         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Registration Failed", "Fill all the fields.");
+            showAlert(Alert.AlertType.ERROR, alerts.getString("registrationFailed"), alerts.getString("registerFill"));
             return;
         }
 
         int strength = calculatePasswordStrength(password);
         if (strength < 3) {
-            showAlert(Alert.AlertType.ERROR, "Weak Password", "Please choose a stronger password.");
+            showAlert(Alert.AlertType.ERROR, alerts.getString("weakErr"), alerts.getString("registerBetterPassword"));
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            showAlert(Alert.AlertType.ERROR, "Registration Failed", "Passwords do not match.");
+            showAlert(Alert.AlertType.ERROR, "Registration Failed", alerts.getString("passwordsDontMatch"));
             return;
         }
 
         UserModel user = controllerForView.register(username, password);
         if (user == null) {
-            showAlert(Alert.AlertType.INFORMATION, "Register failed", "Username is already taken.");
+            showAlert(Alert.AlertType.INFORMATION, alerts.getString("registrationFailed"), alerts.getString("usernameTaken"));
             return;
         }
 
         if (user.getJwt() != null) {
-            showAlert(Alert.AlertType.INFORMATION, "Registration Successful", "User created successfully.");
+            showAlert(Alert.AlertType.INFORMATION, alerts.getString("registrationSuccess"), alerts.getString("userCreated"));
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
                 Parent root = loader.load();
@@ -117,7 +145,7 @@ public class RegisterController {
                 e.printStackTrace();
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Registration Failed", "Server error");
+            showAlert(Alert.AlertType.ERROR, alerts.getString("registrationFailed"), alerts.getString("serverErr"));
         }
     }
 

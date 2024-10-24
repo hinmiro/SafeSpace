@@ -10,16 +10,20 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import model.ScreenUtil;
+import model.SessionManager;
 import model.UserModel;
 import services.ApiClient;
 import view.View;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class LoginController {
 
     @FXML
     public Label serverError;
+    public Label usernameLabel;
     @FXML
     private TextField usernameField;
     @FXML
@@ -28,18 +32,41 @@ public class LoginController {
     private Button loginButton;
     @FXML
     private Button registerButton;
+    @FXML
+    private Label passwordLabel;
+    @FXML
+    private Label dontHaveLabel;
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private View mainView;
+    private Locale locale;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
-        serverError.setVisible(!ApiClient.isServerAvailable());
-
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
         loginButton.setOnMouseClicked(event -> handleLogin());
         registerButton.setOnMouseClicked(event -> handleRegisterLink(event));
         usernameField.setOnKeyPressed(event -> handleEnterKey(event));
         passwordField.setOnKeyPressed(event -> handleEnterKey(event));
+
+        loginButton.setText(buttons.getString("login"));
+        registerButton.setText(buttons.getString("register"));
+
+        serverError.setText(labels.getString("serverErr"));
+        usernameLabel.setText(labels.getString("username"));
+        passwordLabel.setText(labels.getString("password"));
+        usernameField.setPromptText(labels.getString("username"));
+        passwordField.setPromptText(labels.getString("password"));
+        dontHaveLabel.setText(labels.getString("dontHave"));
+
+        serverError.setVisible(!ApiClient.isServerAvailable());
 
     }
 
@@ -54,13 +81,13 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Username or password is missing.");
+            showAlert(Alert.AlertType.ERROR, alerts.getString("failedTitle"), alerts.getString("failedMessage"));
             return;
         }
 
         UserModel user = controllerForView.login(username, password);
         if (user == null) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect username or password.");
+            showAlert(Alert.AlertType.ERROR, alerts.getString("failedTitle"), alerts.getString("incorrectCredentials"));
             return;
         }
 
@@ -83,7 +110,7 @@ public class LoginController {
                 e.printStackTrace();
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Login Failed", "Incorrect username or password.");
+            showAlert(Alert.AlertType.ERROR, alerts.getString("failedTitle"), alerts.getString("incorrectCredentials"));
         }
     }
 
