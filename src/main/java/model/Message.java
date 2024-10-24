@@ -1,22 +1,17 @@
 package model;
 
-import java.util.List;
-
 public class Message {
     private int messageID;
     private String message;
     private int sender;
     private int receiver;
     private String date;
-    private List<Message> sentMessages;
-    private List<Message> receivedMessages;
+    private String type;
 
-    public Message(int messageID, String message, int sender, int receiver, String dateOfMessage) {
-        this.messageID = messageID;
+    public Message(String type, String message, String dateOfMessage) {
         this.message = message;
-        this.sender = sender;
-        this.receiver = receiver;
         this.date = dateOfMessage;
+        this.type = type;
     }
 
     public int getMessageId() {
@@ -59,12 +54,7 @@ public class Message {
         this.date = dateOfMessage;
     }
 
-    public List<Message> getSentMessages() {
-        return sentMessages;
+    public String getType() {
+        return type;
     }
-
-    public List<Message> getReceivedMessages() {
-        return receivedMessages;
-    }
-
 }

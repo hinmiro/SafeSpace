@@ -1,6 +1,6 @@
 package model;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import javafx.scene.image.Image;
 import services.ApiClient;
 import services.Feed;
@@ -173,9 +173,25 @@ public class SoftwareModel {
     public void getUserArrays() throws IOException, InterruptedException {
         UserModel user = SessionManager.getInstance().getLoggedUser();
         HttpResponse<String> res = ApiClient.getUserById(user.getUserId());
+
         if (res.statusCode() == 200) {
             UserModel userFromId = gson.fromJson(res.body(), UserModel.class);
-            user.setArrays(userFromId.getLikedPosts(), userFromId.getPosts(), userFromId.getFriends());
+
+            if (userFromId.getUserData() == null) {
+                userFromId.setUserData(new UserData());
+            }
+
+            if (user.getUserData() == null) {
+                user.setUserData(new UserData());
+            }
+
+            user.getUserData().setFollowing(userFromId.getUserData().getFollowing());
+            user.getUserData().setFollowers(userFromId.getUserData().getFollowers());
+            user.getUserData().setFriends(userFromId.getUserData().getFriends());
+
+            user.setArrays(userFromId.getLikedPosts(), userFromId.getPosts());
+        } else {
+            System.out.println("Error: Unable to fetch user data. Status code: " + res.statusCode());
         }
     }
 
@@ -204,54 +220,86 @@ public class SoftwareModel {
         }
     }
 
-    public boolean sendMessage(String content, int senderId, int receiverId) throws IOException, InterruptedException {
-        HttpResponse<String> res = ApiClient.sendMessage(receiverId, content);
+    public boolean sendMessage(Message message) throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.sendMessage(message.getReceiverId(), message.getMessageContent());
 
         if (res.statusCode() == 200) {
-            if ("Message sent successfully!".equals(res.body())) {
-                return true;
-            } else {
-                throw new IOException("Viestin lähetys epäonnistui: " + res.body());
-            }
+            return "Message sent successfully!".equals(res.body());
         } else {
-            throw new IOException("Viestin lähetys epäonnistui: " + res.statusCode());
+            throw new IOException("Sending message failed: " + res.statusCode());
         }
     }
 
-    public ArrayList<Message> getMessages() throws IOException, InterruptedException {
+    public List<Conversation> getMessages() throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getMessages();
 
-        if (res.statusCode() == 200) {
-            Message messageResponse = gson.fromJson(res.body(), Message.class);
+        JsonObject jsonObject = gson.fromJson(res.body(), JsonObject.class);
 
-            ArrayList<Message> allMessages = new ArrayList<>();
+        JsonArray sentMessagesArray = jsonObject.getAsJsonArray("sentMessages");
+        JsonArray receivedMessagesArray = jsonObject.getAsJsonArray("receivedMessages");
 
-            if (messageResponse.getSentMessages() != null) {
-                allMessages.addAll(messageResponse.getSentMessages());
-            }
-            if (messageResponse.getReceivedMessages() != null) {
-                allMessages.addAll(messageResponse.getReceivedMessages());
-            }
+        Map<Integer, Conversation> conversationsMap = new HashMap<>();
 
-            return allMessages;
-        } else {
-            throw new IOException("Failed to fetch messages: " + res.statusCode());
+        for (JsonElement element : sentMessagesArray) {
+            Message message = gson.fromJson(element, Message.class);
+            int receiverId = message.getReceiverId();
+
+            UserModel receiverUser = getUserById(receiverId);
+
+            conversationsMap.putIfAbsent(receiverId, new Conversation(receiverUser));
+            conversationsMap.get(receiverId).addMessage(message);
         }
+
+        for (JsonElement element : receivedMessagesArray) {
+            Message message = gson.fromJson(element, Message.class);
+            int senderId = message.getSenderId();
+
+            UserModel senderUser = getUserById(senderId);
+
+            conversationsMap.putIfAbsent(senderId, new Conversation(senderUser));
+            conversationsMap.get(senderId).addMessage(message);
+        }
+
+        return new ArrayList<>(conversationsMap.values());
     }
 
-    public boolean addFriend(int userId, int friendId) throws IOException, InterruptedException {
-        HttpResponse<String> res = ApiClient.addFriend(friendId);
+    public List<Conversation> getAllConversations() throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.getConversations();
 
-        if (res.statusCode() == 200) {
-            UserModel friend = getUserById(friendId);
-            System.out.println("Friend being followed: " + friendId);
+        Conversation[] conversationsArray = gson.fromJson(res.body(), Conversation[].class);
+        return Arrays.asList(conversationsArray);
+    }
 
-            if (friend != null) {
-                friend.getFriends().add(friendId);
-                System.out.println("friend.getFriends() " + friend.getFriends());
-                System.out.println("follower added to user " + friendId + " by user " + userId);
-                return true;
+    public boolean addFriend(int userId, int friendId) {
+        try {
+            UserModel user = SessionManager.getInstance().getLoggedUser();
+
+            HttpResponse<String> res = ApiClient.addFriend(friendId);
+
+            if (res.statusCode() == 200) {
+                UserModel friend = getUserById(friendId);
+
+                if (friend != null) {
+                    if (friend.getUserData() == null) {
+                        friend.setUserData(new UserData());
+                    }
+                    if (user.getUserData() == null) {
+                        user.setUserData(new UserData());
+                    }
+
+                    user.getUserData().addFollowing(friend);
+                    friend.getUserData().addFollowers(user);
+
+                    user.getUserData().setFriendsCount(user.getUserData().getFriendsCount() + 1);
+                    friend.getUserData().setFriendsCount(friend.getUserData().getFriendsCount() + 1);
+
+                    user.getUserData().setFollowersCount(user.getUserData().getFollowersCount());
+                    friend.getUserData().setFollowingCount(friend.getUserData().getFollowingCount());
+                    return true;
+                }
             }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
         return false;
     }
@@ -259,35 +307,6 @@ public class SoftwareModel {
     public boolean removeFriend(int id) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.removeFriend(id);
         return res.statusCode() == 200;
-    }
-
-    public int getFollowersCount(int friendId) throws IOException, InterruptedException {
-        List<Integer> friendsList = new ArrayList<>();
-        HttpResponse<String> res = ApiClient.getAllFriends();
-
-        if (res.statusCode() == 200) {
-            String responseBody = res.body();
-            System.out.println("API Response: " + responseBody);
-
-            Integer[] friendsArray = gson.fromJson(responseBody, Integer[].class);
-            System.out.println("Friends array: " + Arrays.toString(friendsArray));
-            friendsList.addAll(Arrays.asList(friendsArray));
-            System.out.println("Friends list: " + friendsList);
-
-            int followersCount = 0;
-            for (Integer followerId : friendsList) {
-                if (followerId.equals(friendId)) {
-                    followersCount++;
-                }
-            }
-
-            return followersCount;
-        } else if (res.statusCode() == 404) {
-            System.out.println("404 - No followers found.");
-            return 0;
-        } else {
-            return 0;
-        }
     }
 
     public boolean isFriend(int userId, int friendId) throws IOException, InterruptedException {
@@ -299,6 +318,14 @@ public class SoftwareModel {
             return friendsList.contains(friendId);
         }
         return false;
+    }
+
+    public UserModel getMe() throws IOException, InterruptedException {
+        HttpResponse<String> res = ApiClient.getMe();
+        if (res.statusCode() == 200) {
+            return gson.fromJson(res.body(), UserModel.class);
+        }
+        return null;
     }
 }
 

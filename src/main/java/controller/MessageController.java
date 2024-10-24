@@ -10,12 +10,8 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import model.*;
 import view.View;
-import java.io.IOException;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.io.*;
+import java.util.*;
 
 public class MessageController {
 
@@ -33,6 +29,7 @@ public class MessageController {
     private View mainView;
     private MainController mainController;
     private ControllerForView controllerForView = ControllerForView.getInstance();
+
 
     @FXML
     private void initialize() {
@@ -85,40 +82,36 @@ public class MessageController {
     }
 
     private void loadMessages() {
-        List<Message> messages = controllerForView.getMessages();
         conversationListView.getItems().clear();
 
         UserModel loggedInUser = SessionManager.getInstance().getLoggedUser();
 
-        List<Message> sortedMessages = messages.stream()
-                .sorted(Comparator.comparing(Message::getDateOfMessage).reversed())
-                .collect(Collectors.toList());
+        List<Conversation> userConversations = controllerForView.getMessages();
 
         Set<String> uniqueConversationPartners = new HashSet<>();
 
-        for (Message message : sortedMessages) {
-            UserModel sender = controllerForView.getUserById(message.getSenderId());
-            UserModel receiver = controllerForView.getUserById(message.getReceiverId());
+        for (Conversation conversation : userConversations) {
+            UserModel withUser = conversation.getWithUser();
 
-            if (sender != null && receiver != null) {
-                if (whoIsMessaging(loggedInUser, sender, receiver)) {
-                    String conversationPartner = (loggedInUser.getUserId() == sender.getUserId())
-                            ? receiver.getUsername()
-                            : sender.getUsername();
+            String conversationPartner = withUser.getUsername();
 
-                    if (!conversationPartner.equals(loggedInUser.getUsername()) && uniqueConversationPartners.add(conversationPartner)) {
-                        conversationListView.getItems().add(message);
-                    }
+            if (!conversationPartner.equals(loggedInUser.getUsername()) && uniqueConversationPartners.add(conversationPartner)) {
+                List<Message> messages = conversation.getMessages();
+
+                Message latestMessage = messages.stream()
+                        .max(Comparator.comparing(Message::getDateOfMessage))
+                        .orElse(null);
+
+                if (latestMessage != null) {
+                    conversationListView.getItems().add(latestMessage);
                 }
             }
         }
 
+        conversationListView.getItems().sort(Comparator.comparing(Message::getDateOfMessage).reversed());
+
         conversationListView.setCellFactory(param -> new MessageListCell());
         checkIfNoMessages();
-    }
-
-    private boolean whoIsMessaging(UserModel loggedInUser, UserModel sender, UserModel receiver) {
-        return sender.getUserId() == loggedInUser.getUserId() || receiver.getUserId() == loggedInUser.getUserId();
     }
 
     private void openUserMessages(int userId) {

@@ -27,7 +27,7 @@ public class ControllerForView extends Controller {
             if (user != null) {
                 SessionManager.getInstance().setLoggedUser(user);
                 app.getUserArrays();
-
+                //app.getMe();
                 app.startMainFeedThread();
                 return user;
             }
@@ -167,12 +167,11 @@ public class ControllerForView extends Controller {
         app.postComment(comment, String.valueOf(postId));
     }
 
-    public boolean sendMessage(String content, int receiverId) throws IOException, InterruptedException {
-        int senderId = SessionManager.getInstance().getLoggedUser().getUserId();
-        return app.sendMessage(content, senderId, receiverId);
+    public boolean sendMessage(Message message) throws IOException, InterruptedException {
+        return app.sendMessage(message);
     }
 
-    public List<Message> getMessages() {
+    public List<Conversation> getMessages() {
         try {
             return app.getMessages();
         } catch (IOException | InterruptedException e) {
@@ -180,16 +179,23 @@ public class ControllerForView extends Controller {
         }
     }
 
-    public boolean addFriend(int userId, int friendId) {
+    public Conversation getCurrentConversation(int userId) {
         try {
-            return app.addFriend(userId, friendId);
+            List<Conversation> conversations = app.getAllConversations();
+
+            for (Conversation conversation : conversations) {
+                if (conversation.getWithUser().getUserId() == userId) {
+                    return conversation;
+                }
+            }
+            return null;
         } catch (IOException | InterruptedException e) {
-            return false;
+            return null;
         }
     }
 
-    public int getFollowersCount(int userId) throws IOException, InterruptedException {
-        return app.getFollowersCount(userId);
+    public boolean addFriend(int userId, int friendId) {
+        return app.addFriend(userId, friendId);
     }
 
     public boolean removeFriend(int userId) {
@@ -207,5 +213,4 @@ public class ControllerForView extends Controller {
             return false;
         }
     }
-
 }

@@ -132,6 +132,7 @@ public class PostListCell extends ListCell<Post> {
 
         Text postContent = new Text(item.getPostContent());
         postContent.setWrappingWidth(300);
+
         postContent.getStyleClass().add("post-content");
         VBox.setMargin(postContent, new Insets(10, 0, 20, 0));
         contentBox.getChildren().add(postContent);
@@ -279,10 +280,6 @@ public class PostListCell extends ListCell<Post> {
         commentSection.getStyleClass().add("comment-section");
         commentSection.setPrefWidth(200);
 
-//        TextField commentInput = new TextField();
-//        commentInput.setPromptText("Type comment here...");
-//        Button submitComment = new Button("Add comment");
-
         ArrayList<Comment> comments = ControllerForView.getInstance().getPostCommentsById(String.valueOf(item.getPostID()));
         if (comments != null && !comments.isEmpty()) {
             comments.forEach(comment -> {
@@ -313,17 +310,7 @@ public class PostListCell extends ListCell<Post> {
             commentSection.getChildren().add(commentText);
         }
 
-//        submitComment.setOnAction(event -> {
-//            String comment = commentInput.getText().trim();
-//            if (!comment.isEmpty()) {
-//                handleComment(comment, item.getPostID());
-//                commentInput.clear();
-//            }
-//        });
-
         contenbox.getChildren().add(commentSection);
-//        contenbox.getChildren().add(commentInput);
-//        contenbox.getChildren().add(submitComment);
     }
 
     private void handleComment(String text, int postId) {
@@ -336,6 +323,8 @@ public class PostListCell extends ListCell<Post> {
 
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(200);
+        imageView.setFitHeight(300);
+        imageView.setPreserveRatio(true);
 
         imageSection.getStyleClass().add("image-section");
 
