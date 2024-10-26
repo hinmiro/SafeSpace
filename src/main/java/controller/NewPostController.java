@@ -8,9 +8,9 @@ import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
+import model.Language;
 import model.ScreenUtil;
-import model.SharedData;
-
+import model.SessionManager;
 import java.io.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -18,9 +18,11 @@ import java.util.ResourceBundle;
 public class NewPostController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
-    private SharedData language = SharedData.getInstance();
-    private ResourceBundle bundle;
-    private Locale currentLocale;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
     private MainController mainController;
     private File selectedFile;
 
@@ -36,26 +38,58 @@ public class NewPostController {
     private TextArea captionTextArea;
     @FXML
     private ComboBox<String> languageBox;
+    @FXML
+    private Label headerLabel;
+    @FXML
+    private Label captionLabel;
 
     @FXML
     private void initialize() {
+        languageBox.getItems().setAll(
+                Language.EN.getDisplayName(),
+                Language.FI.getDisplayName()
+        );
+
+        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
+        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
+
+        languageBox.setOnAction(event -> changeLanguage());
+        updateLanguage();
+
         closeButton.setOnAction(event -> handleClose());
         postButton.setOnAction(event -> handleNewPost());
         imageView.setImage(createPlaceholderImage(200, 225));
         clickChooseButton(chooseImageButton);
     }
 
+    private void updateTexts() {
+        postButton.setText(buttons.getString("post"));
+        captionTextArea.setPromptText(fields.getString("caption"));
+        chooseImageButton.setText(buttons.getString("chooseImage"));
+        headerLabel.setText(labels.getString("picPost"));
+        captionLabel.setText(labels.getString("captionLabel"));
+    }
+
     @FXML
     private void changeLanguage() {
-        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
-            currentLocale = Locale.forLanguageTag("fi");
+        String selectedLanguage = languageBox.getValue();
+
+        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
+            SessionManager.getInstance().setLanguage(Language.FI);
         } else {
-            currentLocale = Locale.forLanguageTag("en");
+            SessionManager.getInstance().setLanguage(Language.EN);
         }
 
-        SharedData.getInstance().setCurrentLocale(currentLocale);
-        bundle = ResourceBundle.getBundle("Messages", currentLocale);
-        //updateTexts();
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        updateLanguage();
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
     }
 
     @FXML
@@ -63,16 +97,17 @@ public class NewPostController {
         String text = captionTextArea.getText();
 
         if (selectedFile == null) {
-            showAlert("Please add an image to your post.");
+            showAlert(alerts.getString("image.required"));
+            return;
         }
 
         try {
             boolean response = controllerForView.sendPostWithImage(text, selectedFile);
             if (response) {
-                showAlert("New post sent successfully!");
+                showAlert(alerts.getString("post.success"));
                 handleClose();
             } else {
-                showAlert("An error occurred while sending the post.");
+                showAlert(alerts.getString("post.error"));
             }
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
@@ -87,7 +122,8 @@ public class NewPostController {
             MainController mainController = loader.getController();
 
             Stage stage = (Stage) closeButton.getScene().getWindow();
-            stage.setTitle("Main Page");
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("main"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
@@ -137,13 +173,9 @@ public class NewPostController {
 
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
+        alerts.getString("post.information");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    public void setBundle(ResourceBundle bundle) {
-        this.bundle = bundle;
     }
 }

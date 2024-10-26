@@ -10,11 +10,10 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
-
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ComboBox?>
+
 <BorderPane styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserProfileController">
     <top>
         <VBox>
@@ -27,7 +26,7 @@
                     </ImageView>
                 </left>
                 <center>
-                    <Label styleClass="headerMain" text="User Profile" />
+                    <Label styleClass="headerMain" text="SafeSpace" />
                 </center>
                 <right>
                     <VBox alignment="CENTER">
@@ -74,11 +73,11 @@
 
             <HBox alignment="CENTER" spacing="20.0">
                 <VBox alignment="CENTER" spacing="10.0">
-                    <Label styleClass="followersLabel" text="Followers:" />
+                    <Label fx:id="followers" styleClass="followersLabel" text="Followers:" />
                     <Label fx:id="followersCountLabel" styleClass="followingLabel" text="0" />
                 </VBox>
                 <VBox alignment="CENTER" spacing="10.0">
-                    <Label styleClass="followersLabel" text="Following:" />
+                    <Label fx:id="following" styleClass="followersLabel" text="Following:" />
                     <Label fx:id="followingCountLabel" styleClass="followingLabel" text="0" />
                 </VBox>
             </HBox>

@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import model.Language;
 import model.ScreenUtil;
 import model.SessionManager;
 import model.UserModel;
@@ -17,10 +18,15 @@ import java.util.ResourceBundle;
 
 public class RegisterController {
 
+    @FXML
     public Label usernameLabel;
+    @FXML
     public Label passwordLabel;
+    @FXML
     public Label confirmPasswordLabel;
+    @FXML
     public Label alreadyLabel;
+    @FXML
     public Label registerHero;
     @FXML
     private TextField usernameField;
@@ -35,39 +41,25 @@ public class RegisterController {
     @FXML
     private Label passwordStrengthLabel;
     @FXML
-    private Label confirmPasswordLabel;
-    @FXML
-    private Label usernameLabel;
-    @FXML
-    private Label passwordLabel;
-    @FXML
-    private Label infoLabel;
-    @FXML
-    private Label createAccount;
-    @FXML
     private ComboBox<String> languageBox;
 
-    private Locale locale;
     private ResourceBundle labels;
     private ResourceBundle buttons;
     private ResourceBundle alerts;
     private ControllerForView controllerForView = ControllerForView.getInstance();
-    private SharedData language = SharedData.getInstance();
-    private ResourceBundle bundle;
-    private Locale currentLocale;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
     @FXML
     public void initialize() {
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-        labels = ResourceBundle.getBundle("Labels", locale);
-        buttons = ResourceBundle.getBundle("Buttons", locale);
-        alerts = ResourceBundle.getBundle("Alerts", locale);
-        currentLocale = SharedData.getInstance().getCurrentLocale();
-        bundle = SharedData.getInstance().getBundle();
-        updateTexts();
+        languageBox.getItems().setAll(
+                Language.EN.getDisplayName(),
+                Language.FI.getDisplayName()
+        );
 
-        languageBox.getItems().setAll(bundle.getString("language.fi"), bundle.getString("language.en"));
-        languageBox.setValue(currentLocale.getLanguage().equals("fi") ? bundle.getString("language.fi") : bundle.getString("language.en"));
+        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
+        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
+
+        languageBox.setOnAction(event -> changeLanguage());
 
         registerButton.setOnAction(event -> handleRegister());
         backButton.setOnAction(event -> backLogin());
@@ -77,17 +69,42 @@ public class RegisterController {
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
             updatePasswordStrength(newValue);
         });
+        updateLanguage();
+    }
 
+    private void updateTexts() {
         registerHero.setText(labels.getString("registerHero"));
         usernameLabel.setText(labels.getString("username"));
         passwordLabel.setText(labels.getString("password"));
         confirmPasswordLabel.setText(labels.getString("passwordConfirm"));
+        confirmPasswordField.setPromptText(labels.getString("passwordConfirm"));
         passwordStrengthLabel.setText(labels.getString("passwordStrengthLabel"));
         usernameField.setPromptText(labels.getString("username"));
         passwordField.setPromptText(labels.getString("password"));
         alreadyLabel.setText(labels.getString("alreadyAccount"));
         registerButton.setText(buttons.getString("registerButton"));
         backButton.setText(buttons.getString("backToLogin"));
+    }
+
+    @FXML
+    private void changeLanguage() {
+        String selectedLanguage = languageBox.getValue();
+
+        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
+            SessionManager.getInstance().setLanguage(Language.FI);
+        } else {
+            SessionManager.getInstance().setLanguage(Language.EN);
+        }
+
+        updateLanguage();
+    }
+
+    private void updateLanguage() {
+        Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        labels = ResourceBundle.getBundle("Labels", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        updateTexts();
     }
 
     private void handleEnterKey(KeyEvent event) {
@@ -112,7 +129,7 @@ public class RegisterController {
             strengthClass = "strong";
         }
 
-        passwordStrengthLabel.setText(bundle.getString("passwordStrength") + strengthText);
+        passwordStrengthLabel.setText(labels.getString("passwordStrength") + strengthText);
         passwordStrengthLabel.setText(labels.getString("passwordStrDiffer") + " " + strengthText);
         passwordField.getStyleClass().removeAll("weak", "medium", "strong");
         passwordField.getStyleClass().add(strengthClass);
@@ -161,12 +178,12 @@ public class RegisterController {
                 Parent root = loader.load();
 
                 MainController mainController = loader.getController();
-                mainController.setBundle(bundle);
 
                 Stage stage = (Stage) registerButton.getScene().getWindow();
                 Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
                 stage.setScene(scene);
-                stage.setTitle(bundle.getString("mainPageTitle"));
+                ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+                stage.setTitle(pageTitle.getString("main"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -178,17 +195,16 @@ public class RegisterController {
     private void backLogin() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
-            loader.setResources(bundle);
             Parent root = loader.load();
 
             LoginController loginController = loader.getController();
-            loginController.setBundle(bundle);
 
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(scene);
-            stage.setTitle(bundle.getString("loginPageTitle"));
-            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("login"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -200,10 +216,6 @@ public class RegisterController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    public void setBundle(ResourceBundle bundle) {
-        this.bundle = bundle;
     }
 }
 

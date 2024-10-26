@@ -21,11 +21,13 @@ import java.util.ResourceBundle;
 public class ProfileController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
-    private SharedData language = SharedData.getInstance();
     private ContextMenu settingsContextMenu;
     private MainController mainController;
-    private ResourceBundle bundle;
-    private Locale currentLocale;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
     @FXML
     public Label followersCountLabel;
@@ -55,9 +57,24 @@ public class ProfileController {
     private ListView<Post> feedListView;
     @FXML
     private ComboBox<String> languageBox;
+    @FXML
+    private Label followersLabel;
+    @FXML
+    private Label followingLabel;
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
+        languageBox.getItems().setAll(
+                Language.EN.getDisplayName(),
+                Language.FI.getDisplayName()
+        );
+
+        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
+        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
+
+        languageBox.setOnAction(event -> changeLanguage());
+        updateLanguage();
+
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
         bioLabel.setText(SessionManager.getInstance().getLoggedUser().getBio() == null ? "..." : SessionManager.getInstance().getLoggedUser().getBio());
@@ -82,27 +99,49 @@ public class ProfileController {
         settingsContextMenu = new ContextMenu();
         MenuItem editProfileItem = new MenuItem("Edit Profile");
         editProfileItem.setOnAction(event -> openEditProfilePage());
+        //editProfileItem.setText(buttons.getString("editProfile"));
+
         MenuItem editInfoItem = new MenuItem("Edit Password");
         editInfoItem.setOnAction(event -> openUpdateInfoPage());
+        //editInfoItem.setText(buttons.getString("editInfo"));
+
         MenuItem logOutItem = new MenuItem("Log Out");
         logOutItem.setOnAction(event -> showLogOut());
+        //logOutItem.setText(buttons.getString("logOut"));
 
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, logOutItem);
         settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
         displayUserPosts();
     }
 
+    private void updateTexts() {
+        homeButton.setText(buttons.getString("home"));
+        profileButton.setText(buttons.getString("profile"));
+        noPostsLabel.setText(labels.getString("noPosts"));
+        followersLabel.setText(labels.getString("followers"));
+        followingLabel.setText(labels.getString("following"));
+    }
+
     @FXML
     private void changeLanguage() {
-        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
-            currentLocale = Locale.forLanguageTag("fi");
+        String selectedLanguage = languageBox.getValue();
+
+        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
+            SessionManager.getInstance().setLanguage(Language.FI);
         } else {
-            currentLocale = Locale.forLanguageTag("en");
+            SessionManager.getInstance().setLanguage(Language.EN);
         }
 
-        SharedData.getInstance().setCurrentLocale(currentLocale);
-        bundle = ResourceBundle.getBundle("Messages", currentLocale);
-        //updateTexts();
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        updateLanguage();
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
     }
 
     private void fetchUserFollowers(int userId) {
@@ -178,7 +217,8 @@ public class ProfileController {
             updateInfoController.setMainController(mainController);
 
             Stage stage = (Stage) profileButton.getScene().getWindow();
-            stage.setTitle("Update Info");
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("updateinfo"));
             stage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
             stage.show();
         } catch (IOException e) {
@@ -196,9 +236,9 @@ public class ProfileController {
             editProfileController.setMainController(mainController);
             editProfileController.setMainView(mainView);
 
-
             Stage stage = (Stage) profileButton.getScene().getWindow();
-            stage.setTitle("Edit Profile");
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("editprofile"));
             stage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
             stage.show();
         } catch (IOException e) {
@@ -235,7 +275,9 @@ public class ProfileController {
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
-            stage.setTitle("Main Page");
+
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("main"));
             MainController mainController = fxmlLoader.getController();
             mainController.setMainView(mainView);
 
@@ -258,10 +300,6 @@ public class ProfileController {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
-    }
-
-    public void setBundle(ResourceBundle bundle) {
-        this.bundle = bundle;
     }
 
 }

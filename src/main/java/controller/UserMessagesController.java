@@ -16,9 +16,11 @@ import java.util.ResourceBundle;
 public class UserMessagesController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
-    private SharedData language = SharedData.getInstance();
-    private ResourceBundle bundle;
-    private Locale currentLocale;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
     private View mainView;
     private int userId;
     private MainController mainController;
@@ -38,6 +40,17 @@ public class UserMessagesController {
     private ComboBox<String> languageBox;
 
     public void initialize(int userId) {
+        languageBox.getItems().setAll(
+                Language.EN.getDisplayName(),
+                Language.FI.getDisplayName()
+        );
+
+        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
+        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
+
+        languageBox.setOnAction(event -> changeLanguage());
+        updateLanguage();
+
         this.userId = userId;
         fetchUser(userId);
         loadConversation();
@@ -47,17 +60,30 @@ public class UserMessagesController {
         messageTextField.setOnKeyPressed(this::handleEnterKey);
     }
 
+    private void updateTexts() {
+        messageTextField.setPromptText(fields.getString("sendMessage"));
+    }
+
     @FXML
     private void changeLanguage() {
-        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
-            currentLocale = Locale.forLanguageTag("fi");
+        String selectedLanguage = languageBox.getValue();
+
+        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
+            SessionManager.getInstance().setLanguage(Language.FI);
         } else {
-            currentLocale = Locale.forLanguageTag("en");
+            SessionManager.getInstance().setLanguage(Language.EN);
         }
 
-        SharedData.getInstance().setCurrentLocale(currentLocale);
-        bundle = ResourceBundle.getBundle("Messages", currentLocale);
-        //updateTexts();
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        updateLanguage();
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
     }
 
     private void handleEnterKey(KeyEvent event) {
@@ -124,7 +150,7 @@ public class UserMessagesController {
                 }
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
-                showError("An error occurred while sending the message.");
+                showError(alerts.getString("error.message"));
             }
         }
     }
@@ -142,7 +168,8 @@ public class UserMessagesController {
             messageController.setMainController(mainController);
 
             Stage stage = new Stage();
-            stage.setTitle("Messages");
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("messages"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
@@ -157,7 +184,7 @@ public class UserMessagesController {
 
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
+        alert.setTitle(alerts.getString("error.title"));
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

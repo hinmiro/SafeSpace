@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import model.Language;
 import model.ScreenUtil;
 import model.SessionManager;
 import model.UserModel;
@@ -37,46 +38,65 @@ public class LoginController {
     private Label dontHaveLabel;
     @FXML
     private ComboBox<String> languageBox;
-    @FXML
-    private Label usernameLabel;
-    @FXML
-    private Label passwordLabel;
-    @FXML
-    private Label infoLabel;
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private View mainView;
-    private Locale locale;
     private ResourceBundle alerts;
     private ResourceBundle buttons;
     private ResourceBundle labels;
-
-    private ResourceBundle bundle;
-    private Locale currentLocale;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-        alerts = ResourceBundle.getBundle("Alerts", locale);
-        buttons = ResourceBundle.getBundle("Buttons", locale);
-        labels = ResourceBundle.getBundle("Labels", locale);
+        languageBox.getItems().setAll(
+                Language.EN.getDisplayName(),
+                Language.FI.getDisplayName()
+        );
+
+        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
+        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
+
+        languageBox.setOnAction(event -> changeLanguage());
+
         loginButton.setOnMouseClicked(event -> handleLogin());
         registerButton.setOnMouseClicked(event -> handleRegisterLink(event));
         usernameField.setOnKeyPressed(event -> handleEnterKey(event));
         passwordField.setOnKeyPressed(event -> handleEnterKey(event));
 
+        serverError.setVisible(!ApiClient.isServerAvailable());
+        updateLanguage();
+    }
+
+    private void updateTexts() {
         loginButton.setText(buttons.getString("login"));
         registerButton.setText(buttons.getString("register"));
-
         serverError.setText(labels.getString("serverErr"));
         usernameLabel.setText(labels.getString("username"));
         passwordLabel.setText(labels.getString("password"));
         usernameField.setPromptText(labels.getString("username"));
         passwordField.setPromptText(labels.getString("password"));
         dontHaveLabel.setText(labels.getString("dontHave"));
+    }
 
-        serverError.setVisible(!ApiClient.isServerAvailable());
+    @FXML
+    private void changeLanguage() {
+        String selectedLanguage = languageBox.getValue();
 
+        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
+            SessionManager.getInstance().setLanguage(Language.FI);
+        } else {
+            SessionManager.getInstance().setLanguage(Language.EN);
+        }
+
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        updateLanguage();
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        updateTexts();
     }
 
     private void handleEnterKey(KeyEvent event) {
@@ -103,18 +123,18 @@ public class LoginController {
         if (user.getJwt() != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
-                loader.setResources(bundle);
                 Parent root = loader.load();
 
                 MainController mainController = loader.getController();
                 mainController.setMainView(mainView);
-                mainController.setBundle(bundle);
 
                 Stage stage = (Stage) loginButton.getScene().getWindow();
 
                 Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
                 stage.setScene(scene);
-                stage.setTitle(bundle.getString("mainPageTitle"));
+
+                ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+                stage.setTitle(pageTitle.getString("main"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -126,17 +146,16 @@ public class LoginController {
     private void handleRegisterLink(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/register.fxml"));
-            loader.setResources(bundle);
             Parent root = loader.load();
 
             RegisterController registerController = loader.getController();
-            registerController.setBundle(bundle);
 
             Stage stage = (Stage) registerButton.getScene().getWindow();
 
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
-            stage.setTitle(bundle.getString("registerPageTitle"));
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("register"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -152,10 +171,6 @@ public class LoginController {
 
     public void setMainView(View view) {
         mainView = view;
-    }
-
-    public void setBundle(ResourceBundle bundle) {
-        this.bundle = bundle;
     }
 
 }

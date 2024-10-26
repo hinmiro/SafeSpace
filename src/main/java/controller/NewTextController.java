@@ -4,9 +4,9 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Language;
 import model.ScreenUtil;
-import model.SharedData;
-
+import model.SessionManager;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -14,9 +14,11 @@ import java.util.ResourceBundle;
 public class NewTextController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
-    private SharedData language = SharedData.getInstance();
-    private ResourceBundle bundle;
-    private Locale currentLocale;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
     private MainController mainController;
 
     @FXML
@@ -29,25 +31,55 @@ public class NewTextController {
     private Label inspirationText;
     @FXML
     private ComboBox<String> languageBox;
+    @FXML
+    private Label needInspo;
+    @FXML
+    private Label whatOnMind;
 
     @FXML
     private void initialize() {
+        languageBox.getItems().setAll(
+                Language.EN.getDisplayName(),
+                Language.FI.getDisplayName()
+        );
+
+        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
+        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
+
+        languageBox.setOnAction(event -> changeLanguage());
+        updateLanguage();
+
         closeButton.setOnAction(event -> handleClose());
         postButton.setOnAction(event -> handlePost());
         setRandomQuote();
     }
 
+    private void updateTexts() {
+        postButton.setText(buttons.getString("post"));
+        needInspo.setText(labels.getString("needInspo"));
+        whatOnMind.setText(labels.getString("whatOnMind"));
+    }
+
     @FXML
     private void changeLanguage() {
-        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
-            currentLocale = Locale.forLanguageTag("fi");
+        String selectedLanguage = languageBox.getValue();
+
+        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
+            SessionManager.getInstance().setLanguage(Language.FI);
         } else {
-            currentLocale = Locale.forLanguageTag("en");
+            SessionManager.getInstance().setLanguage(Language.EN);
         }
 
-        SharedData.getInstance().setCurrentLocale(currentLocale);
-        bundle = ResourceBundle.getBundle("Messages", currentLocale);
-        //updateTexts();
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        updateLanguage();
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
     }
 
     @FXML
@@ -55,17 +87,17 @@ public class NewTextController {
         String postText = textPostArea.getText().trim();
 
         if (postText.isEmpty()) {
-            showAlert("Please enter some text before posting.");
+            showAlert(alerts.getString("post.empty"));
             return;
         }
 
         try {
             boolean res = controllerForView.sendPost(postText);
             if (res) {
-                showAlert("New post sent!");
+                showAlert(alerts.getString("post.success"));
                 handleClose();
             } else {
-                showAlert("Spectacular error has occurred...");
+                showAlert(alerts.getString("post.error"));
             }
         } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
@@ -74,8 +106,6 @@ public class NewTextController {
 
     @FXML
     private void handleClose() {
-        //closeButton.getScene().getWindow().hide();
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
             Parent root = loader.load();
@@ -83,7 +113,8 @@ public class NewTextController {
             MainController mainController = loader.getController();
 
             Stage stage = (Stage) closeButton.getScene().getWindow();
-            stage.setTitle("Main Page");
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("main"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
@@ -94,15 +125,18 @@ public class NewTextController {
 
     @FXML
     private void setRandomQuote() {
-        String[] inspirations = {
-                "Share an insightful question that you’d like others to answer.",
-                "Recommend something that has helped you feel inspired.",
-                "Describe something you're grateful for today.",
-                "Share a moment when you felt accomplished."
+
+        String[] inspirationsArray = new String[] {
+                labels.getString("inspiration1"),
+                labels.getString("inspiration2"),
+                labels.getString("inspiration3"),
+                labels.getString("inspiration4")
         };
-        int randomIndex = (int) (Math.random() * inspirations.length);
-        inspirationText.setText(inspirations[randomIndex]);
+
+        int randomIndex = (int) (Math.random() * inspirationsArray.length);
+        inspirationText.setText(inspirationsArray[randomIndex]);
     }
+
 
     @FXML
     private void insertEmojiSmile() {
@@ -135,13 +169,9 @@ public class NewTextController {
 
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
+        alerts.getString("post.information");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    public void setBundle(ResourceBundle bundle) {
-        this.bundle = bundle;
     }
 }

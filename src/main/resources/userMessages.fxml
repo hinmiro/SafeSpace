@@ -27,7 +27,7 @@
                     </ImageView>
                 </left>
                 <center>
-                    <Label styleClass="headerMain" text="User Profile" />
+                    <Label  styleClass="headerMain" text="SafeSpace" />
                 </center>
                 <right>
                     <VBox alignment="CENTER">
@@ -58,10 +58,9 @@
                 <TextField fx:id="messageTextField" promptText="Write a message..." styleClass="message-textfield" />
                 <Button fx:id="sendMessageButton" text="→" styleClass="send-button" />
             </HBox>
+            <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
+            </ComboBox>
         </VBox>
-
-        <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
-        </ComboBox>
     </center>
 
 </BorderPane>

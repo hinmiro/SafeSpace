@@ -1,3 +1,4 @@
+
 package controller;
 
 import javafx.event.*;
@@ -12,17 +13,11 @@ import javafx.stage.*;
 import model.*;
 import view.View;
 import java.io.*;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import javafx.scene.shape.Circle;
 
 public class EditProfileController {
 
     private final ControllerForView controllerForView = ControllerForView.getInstance();
-    private SharedData language = SharedData.getInstance();
-    private ResourceBundle bundle;
-    private Locale currentLocale;
     public Label nameLabel;
     private MainController mainController;
     private ProfileController profileController;
@@ -47,8 +42,6 @@ public class EditProfileController {
     private TextArea bioField;
     @FXML
     private Button saveChangesButton;
-    @FXML
-    private ComboBox<String> languageBox;
 
     @FXML
     public void initialize() {
@@ -65,19 +58,6 @@ public class EditProfileController {
         profileImageView.setCursor(Cursor.HAND);
         closeButton.setOnAction(event -> handleClose());
         saveChangesButton.setOnAction(this::handleSaveChanges);
-    }
-
-    @FXML
-    private void changeLanguage() {
-        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
-            currentLocale = Locale.forLanguageTag("fi");
-        } else {
-            currentLocale = Locale.forLanguageTag("en");
-        }
-
-        SharedData.getInstance().setCurrentLocale(currentLocale);
-        bundle = ResourceBundle.getBundle("Messages", currentLocale);
-        //updateTexts();
     }
 
     @FXML

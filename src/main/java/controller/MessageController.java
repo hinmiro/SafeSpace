@@ -32,21 +32,34 @@ public class MessageController {
     private View mainView;
     private MainController mainController;
     private ControllerForView controllerForView = ControllerForView.getInstance();
-    private SharedData language = SharedData.getInstance();
-    private ResourceBundle bundle;
-    private Locale currentLocale;
-
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
     @FXML
     private void initialize() {
+        languageBox.getItems().setAll(
+                Language.EN.getDisplayName(),
+                Language.FI.getDisplayName()
+        );
+
+        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
+        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
+
+        languageBox.setOnAction(event -> changeLanguage());
+        updateLanguage();
+
         checkIfNoMessages();
 
         leaveMessageButton.setText("x");
         leaveMessageButton.setStyle("-fx-font-size: 16px;");
 
+        ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
         leaveMessageButton.setOnAction(event -> {
             try {
-                switchScene("/main.fxml", "Main Page");
+                switchScene("/main.fxml", pageTitle.getString("main"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -54,7 +67,7 @@ public class MessageController {
 
         homeButton.setOnAction(event -> {
             try {
-                switchScene("/main.fxml", "Main Page");
+                switchScene("/main.fxml", pageTitle.getString("main"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -62,7 +75,7 @@ public class MessageController {
 
         profileButton.setOnAction(event -> {
             try {
-                switchScene("/profile.fxml", "Profile Page");
+                switchScene("/profile.fxml", pageTitle.getString("profile"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -87,17 +100,32 @@ public class MessageController {
         });
     }
 
+    private void updateTexts() {
+        homeButton.setText(buttons.getString("home"));
+        profileButton.setText(buttons.getString("profile"));
+        noMessagesLabel.setText(labels.getString("noMessages"));
+    }
+
     @FXML
     private void changeLanguage() {
-        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
-            currentLocale = Locale.forLanguageTag("fi");
+        String selectedLanguage = languageBox.getValue();
+
+        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
+            SessionManager.getInstance().setLanguage(Language.FI);
         } else {
-            currentLocale = Locale.forLanguageTag("en");
+            SessionManager.getInstance().setLanguage(Language.EN);
         }
 
-        SharedData.getInstance().setCurrentLocale(currentLocale);
-        bundle = ResourceBundle.getBundle("Messages", currentLocale);
-        //updateTexts();
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        updateLanguage();
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
     }
 
     private void loadMessages() {
@@ -145,7 +173,9 @@ public class MessageController {
             Stage stage = (Stage) homeButton.getScene().getWindow();
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
-            stage.setTitle("Messages");
+
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("messages"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -190,7 +220,4 @@ public class MessageController {
         this.mainView = view;
     }
 
-    public void setBundle(ResourceBundle bundle) {
-        this.bundle = bundle;
-    }
 }

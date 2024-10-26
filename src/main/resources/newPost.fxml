@@ -49,7 +49,7 @@
             <ImageView fitHeight="120" fitWidth="120" preserveRatio="true">
                 <Image url="@/kuvat/newPost.png" />
             </ImageView>
-            <Label styleClass="headerLabelPost" text="Capture &amp; Share" />
+            <Label fx:id="headerLabel" styleClass="headerLabelPost" text="Capture &amp; Share" />
             <Button fx:id="chooseImageButton" styleClass="chooseImageButton" text="Choose Image">
             <VBox.margin>
                 <Insets bottom="10" />
@@ -58,7 +58,7 @@
             <ImageView fx:id="imageView" preserveRatio="true" styleClass="imagePreview" />
 
             <VBox spacing="10">
-                <Label styleClass="captionLabel" text="Add a Caption (optional):">
+                <Label fx:id="captionLabel" styleClass="captionLabel" text="Add a Caption (optional):">
                     <VBox.margin>
                         <Insets left="10" right="10" top="5" />
                     </VBox.margin>

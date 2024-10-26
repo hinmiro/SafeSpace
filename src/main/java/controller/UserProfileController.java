@@ -19,9 +19,11 @@ import java.util.ResourceBundle;
 
 public class UserProfileController {
     private ControllerForView controllerForView = ControllerForView.getInstance();
-    private SharedData language = SharedData.getInstance();
-    private ResourceBundle bundle;
-    private Locale currentLocale;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
     private View mainView;
     private int userId;
     private MainController mainController;
@@ -47,11 +49,27 @@ public class UserProfileController {
     private Label followingCountLabel;
     @FXML
     private ComboBox<String> languageBox;
+    @FXML
+    private Label followers;
+    @FXML
+    private Label following;
 
     public void initialize(int userId) throws IOException, InterruptedException {
+        languageBox.getItems().setAll(
+                Language.EN.getDisplayName(),
+                Language.FI.getDisplayName()
+        );
+
+        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
+        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
+
+        languageBox.setOnAction(event -> changeLanguage());
+        updateLanguage();
+
+        ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
         homeButton.setOnAction(event -> {
             try {
-                switchScene("/main.fxml", "Main Page");
+                switchScene("/main.fxml", pageTitle.getString("main"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -59,7 +77,7 @@ public class UserProfileController {
 
         profileButton.setOnAction(event -> {
             try {
-                switchScene("/profile.fxml", "Profile Page");
+                switchScene("/profile.fxml", pageTitle.getString("profile"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -67,7 +85,7 @@ public class UserProfileController {
 
         leaveMessageButton.setOnAction(event -> {
             try {
-                switchScene("/messages.fxml", "Messages");
+                switchScene("/messages.fxml", pageTitle.getString("messages"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -82,17 +100,32 @@ public class UserProfileController {
         displayUserPosts(feedListView, noPostsLabel, userId);
     }
 
+    private void updateTexts() {
+        followers.setText(labels.getString("following"));
+        following.setText(labels.getString("followers"));
+        messageButton.setText(buttons.getString("message"));
+    }
+
     @FXML
     private void changeLanguage() {
-        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
-            currentLocale = Locale.forLanguageTag("fi");
+        String selectedLanguage = languageBox.getValue();
+
+        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
+            SessionManager.getInstance().setLanguage(Language.FI);
         } else {
-            currentLocale = Locale.forLanguageTag("en");
+            SessionManager.getInstance().setLanguage(Language.EN);
         }
 
-        SharedData.getInstance().setCurrentLocale(currentLocale);
-        bundle = ResourceBundle.getBundle("Messages", currentLocale);
-        //updateTexts();
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        updateLanguage();
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
     }
 
     private void switchScene(String fxmlFile, String title) throws IOException {
@@ -117,7 +150,7 @@ public class UserProfileController {
         }
     }
 
-    private void fetchUserData(int userId) throws IOException, InterruptedException {
+    private void fetchUserData(int userId) {
         UserModel user = controllerForView.getUserById(userId);
         if (user != null) {
             usernameLabel.setText(user.getUsername());
@@ -155,9 +188,11 @@ public class UserProfileController {
 
             if (isFriend) {
                 followButton.setText("Following");
+                followButton.setText(labels.getString("followingUser"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
             } else {
                 followButton.setText("Follow");
+                followButton.setText(labels.getString("follow"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);");
             }
 

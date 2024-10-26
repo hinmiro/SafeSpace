@@ -28,7 +28,11 @@ public class View extends Application {
 
     public void showLogin() throws Exception {
         try {
-            SessionManager.getInstance().setLanguage(Language.FI);
+            if (SessionManager.getInstance().getSelectedLanguage() == null) {
+                SessionManager.getInstance().setLanguage(Language.EN);
+            }
+            locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+
             locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
             ResourceBundle titles = ResourceBundle.getBundle("PageTitles", locale);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login.fxml"));

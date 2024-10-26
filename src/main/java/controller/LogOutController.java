@@ -1,3 +1,4 @@
+
 package controller;
 
 import javafx.fxml.FXML;
@@ -5,16 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.ScreenUtil;
 import model.SessionManager;
-import model.SharedData;
 import view.View;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class LogOutController {
 
@@ -22,12 +18,7 @@ public class LogOutController {
     private Button logOutButton;
     @FXML
     private Button cancelButton;
-    @FXML
-    private ComboBox<String> languageBox;
 
-    private SharedData language = SharedData.getInstance();
-    private ResourceBundle bundle;
-    private Locale currentLocale;
     private Stage dialogStage;
     private View mainView;
     private MainController mainController;
@@ -43,19 +34,6 @@ public class LogOutController {
             }
         });
         cancelButton.setOnAction(event -> handleCancel());
-    }
-
-    @FXML
-    private void changeLanguage() {
-        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
-            currentLocale = Locale.forLanguageTag("fi");
-        } else {
-            currentLocale = Locale.forLanguageTag("en");
-        }
-
-        SharedData.getInstance().setCurrentLocale(currentLocale);
-        bundle = ResourceBundle.getBundle("Messages", currentLocale);
-        //updateTexts();
     }
 
     public void setDialogStage(Stage dialogStage) {
