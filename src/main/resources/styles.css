@@ -50,6 +50,34 @@ StackPane, BorderPane {
     -fx-border-radius: 5px;
 }
 
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 4px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+}
+
+.combo-box .list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #ccc;
+}
+
+.combo-box .list-view .list-cell {
+    -fx-text-fill: #333;
+    -fx-padding: 10px;
+}
+
+.combo-box .list-view .list-cell:hover {
+    -fx-background-color: #e9ecef;
+    -fx-cursor: hand;
+}
+
+.combo-box .list-view .list-cell:selected {
+    -fx-background-color: #2B2D42;
+    -fx-text-fill: #ffffff;
+}
+
 /* main */
 
 .noPostsLabel {

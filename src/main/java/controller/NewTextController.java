@@ -5,11 +5,18 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.ScreenUtil;
+import model.SharedData;
+
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class NewTextController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
+    private SharedData language = SharedData.getInstance();
+    private ResourceBundle bundle;
+    private Locale currentLocale;
     private MainController mainController;
 
     @FXML
@@ -20,12 +27,27 @@ public class NewTextController {
     private TextArea textPostArea;
     @FXML
     private Label inspirationText;
+    @FXML
+    private ComboBox<String> languageBox;
 
     @FXML
     private void initialize() {
         closeButton.setOnAction(event -> handleClose());
         postButton.setOnAction(event -> handlePost());
         setRandomQuote();
+    }
+
+    @FXML
+    private void changeLanguage() {
+        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
+            currentLocale = Locale.forLanguageTag("fi");
+        } else {
+            currentLocale = Locale.forLanguageTag("en");
+        }
+
+        SharedData.getInstance().setCurrentLocale(currentLocale);
+        bundle = ResourceBundle.getBundle("Messages", currentLocale);
+        //updateTexts();
     }
 
     @FXML
@@ -117,5 +139,9 @@ public class NewTextController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void setBundle(ResourceBundle bundle) {
+        this.bundle = bundle;
     }
 }

@@ -14,9 +14,14 @@ import model.*;
 import view.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class UserProfileController {
     private ControllerForView controllerForView = ControllerForView.getInstance();
+    private SharedData language = SharedData.getInstance();
+    private ResourceBundle bundle;
+    private Locale currentLocale;
     private View mainView;
     private int userId;
     private MainController mainController;
@@ -40,6 +45,8 @@ public class UserProfileController {
     private Label followersCountLabel;
     @FXML
     private Label followingCountLabel;
+    @FXML
+    private ComboBox<String> languageBox;
 
     public void initialize(int userId) throws IOException, InterruptedException {
         homeButton.setOnAction(event -> {
@@ -73,6 +80,19 @@ public class UserProfileController {
         fetchUserData(userId);
 
         displayUserPosts(feedListView, noPostsLabel, userId);
+    }
+
+    @FXML
+    private void changeLanguage() {
+        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
+            currentLocale = Locale.forLanguageTag("fi");
+        } else {
+            currentLocale = Locale.forLanguageTag("en");
+        }
+
+        SharedData.getInstance().setCurrentLocale(currentLocale);
+        bundle = ResourceBundle.getBundle("Messages", currentLocale);
+        //updateTexts();
     }
 
     private void switchScene(String fxmlFile, String title) throws IOException {

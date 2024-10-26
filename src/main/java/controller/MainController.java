@@ -16,10 +16,13 @@ import static model.SharedData.createClickableUsername;
 public class MainController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
+    private SharedData language = SharedData.getInstance();
     private volatile boolean stopQueueProcessingFlag = true;
     private Thread queueThread;
     private View mainView;
     private ArrayList<Post> posts;
+    private ResourceBundle bundle;
+    private Locale currentLocale;
 
     @FXML
     private Button homeButton;
@@ -45,6 +48,8 @@ public class MainController {
     private Button searchButton;
     @FXML
     private VBox searchResultsBox;
+    @FXML
+    private ComboBox<String> languageBox;
 
     public MainController() {
         this.posts = new ArrayList<>();
@@ -52,9 +57,16 @@ public class MainController {
 
     @FXML
     private void initialize() {
+        currentLocale = SharedData.getInstance().getCurrentLocale();
+        bundle = SharedData.getInstance().getBundle();
+        updateTexts();
+
+        languageBox.setValue(currentLocale.getLanguage().equals("fi") ? "Finnish" : "English");
+        languageBox.setOnAction(event -> changeLanguage());
+
         homeButton.setOnAction(event -> {
             try {
-                switchScene("/main.fxml", "Main Page");
+                switchScene("/main.fxml", bundle.getString("mainPageTitle"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -62,7 +74,7 @@ public class MainController {
 
         profileButton.setOnAction(event -> {
             try {
-                switchScene("/profile.fxml", "Profile Page");
+                switchScene("/profile.fxml", bundle.getString("profilePageTitle"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -70,7 +82,7 @@ public class MainController {
 
         leaveMessageButton.setOnAction(event -> {
             try {
-                switchScene("/messages.fxml", "Messages");
+                switchScene("/messages.fxml", bundle.getString("messagesPageTitle"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -90,6 +102,26 @@ public class MainController {
         }
 
         searchButton.setOnAction(event -> handleSearch());
+    }
+
+    private void updateTexts() {
+        homeButton.setText(bundle.getString("home"));
+        profileButton.setText(bundle.getString("profile"));
+        createPicPostButton.setText(bundle.getString("createPicPost"));
+        createTextPostButton.setText(bundle.getString("createTextPost"));
+        usernameSearchField.setText(bundle.getString("searchUsername"));
+    }
+
+    @FXML
+    private void changeLanguage() {
+        if (currentLocale.getLanguage().equals("en")) {
+            currentLocale = Locale.forLanguageTag("fi");
+        } else {
+            currentLocale = Locale.forLanguageTag("en");
+        }
+        language.setCurrentLocale(currentLocale);
+        bundle = ResourceBundle.getBundle("Messages", currentLocale);
+        updateTexts();
     }
 
     private void togglePostMenu() {
@@ -119,6 +151,7 @@ public class MainController {
             profileController.setMainController(this);
             profileController.setMainView(mainView);
             profileController.setDialogStage(stage);
+            profileController.setBundle(bundle);
 
         }
 
@@ -127,6 +160,7 @@ public class MainController {
             mainController.loadEvents();
             mainController.stopQueueProcessingFlag = false;
             mainController.startQueueProcessing();
+            mainController.setBundle(bundle);
         }
 
         if (fxmlFile.equals("/messages.fxml")) {
@@ -135,6 +169,7 @@ public class MainController {
             MessageController messageController = fxmlLoader.getController();
             messageController.setMainView(mainView);
             messageController.setMainController(this);
+            messageController.setBundle(bundle);
         }
 
         Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
@@ -167,6 +202,7 @@ public class MainController {
 
             NewPostController newPostController = loader.getController();
             newPostController.setMainController(this);
+            newPostController.setBundle(bundle);
 
             Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
@@ -185,6 +221,7 @@ public class MainController {
 
             NewTextController newTextController = loader.getController();
             newTextController.setMainController(this);
+            newTextController.setBundle(bundle);
 
             Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
@@ -292,5 +329,9 @@ public class MainController {
 
     public void setMainView(View view) {
         mainView = view;
+    }
+
+    public void setBundle(ResourceBundle bundle) {
+        this.bundle = bundle;
     }
 }

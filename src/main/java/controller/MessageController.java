@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
@@ -25,10 +26,15 @@ public class MessageController {
     private Label noMessagesLabel;
     @FXML
     private ListView<Message> conversationListView;
+    @FXML
+    private ComboBox<String> languageBox;
 
     private View mainView;
     private MainController mainController;
     private ControllerForView controllerForView = ControllerForView.getInstance();
+    private SharedData language = SharedData.getInstance();
+    private ResourceBundle bundle;
+    private Locale currentLocale;
 
 
     @FXML
@@ -79,6 +85,19 @@ public class MessageController {
                 openUserMessages(conversationPartnerId);
             }
         });
+    }
+
+    @FXML
+    private void changeLanguage() {
+        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
+            currentLocale = Locale.forLanguageTag("fi");
+        } else {
+            currentLocale = Locale.forLanguageTag("en");
+        }
+
+        SharedData.getInstance().setCurrentLocale(currentLocale);
+        bundle = ResourceBundle.getBundle("Messages", currentLocale);
+        //updateTexts();
     }
 
     private void loadMessages() {
@@ -169,5 +188,9 @@ public class MessageController {
 
     public void setMainView(View view) {
         this.mainView = view;
+    }
+
+    public void setBundle(ResourceBundle bundle) {
+        this.bundle = bundle;
     }
 }

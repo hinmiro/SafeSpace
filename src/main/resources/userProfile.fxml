@@ -14,6 +14,7 @@
 <?import javafx.scene.control.Separator?>
 
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ComboBox?>
 <BorderPane styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserProfileController">
     <top>
         <VBox>
@@ -100,5 +101,8 @@
             <Button fx:id="homeButton" styleClass="mainbutton" text="Home" />
             <Button fx:id="profileButton" styleClass="mainbutton" text="Profile" />
         </HBox>
+
+        <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
+        </ComboBox>
     </bottom>
 </BorderPane>

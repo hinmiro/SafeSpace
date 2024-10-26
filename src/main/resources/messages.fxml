@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ComboBox?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.MessageController" stylesheets="@styles.css" styleClass="borderWide">
 
@@ -57,6 +58,9 @@
             </HBox>
         </VBox>
     </bottom>
+
+    <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
+    </ComboBox>
 
 </BorderPane>
 

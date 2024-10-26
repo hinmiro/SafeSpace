@@ -15,12 +15,17 @@ import model.*;
 import view.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class ProfileController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
+    private SharedData language = SharedData.getInstance();
     private ContextMenu settingsContextMenu;
     private MainController mainController;
+    private ResourceBundle bundle;
+    private Locale currentLocale;
 
     @FXML
     public Label followersCountLabel;
@@ -48,6 +53,8 @@ public class ProfileController {
     public Label bioLabel;
     @FXML
     private ListView<Post> feedListView;
+    @FXML
+    private ComboBox<String> languageBox;
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
@@ -83,6 +90,19 @@ public class ProfileController {
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, logOutItem);
         settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
         displayUserPosts();
+    }
+
+    @FXML
+    private void changeLanguage() {
+        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
+            currentLocale = Locale.forLanguageTag("fi");
+        } else {
+            currentLocale = Locale.forLanguageTag("en");
+        }
+
+        SharedData.getInstance().setCurrentLocale(currentLocale);
+        bundle = ResourceBundle.getBundle("Messages", currentLocale);
+        //updateTexts();
     }
 
     private void fetchUserFollowers(int userId) {
@@ -238,6 +258,10 @@ public class ProfileController {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+    }
+
+    public void setBundle(ResourceBundle bundle) {
+        this.bundle = bundle;
     }
 
 }

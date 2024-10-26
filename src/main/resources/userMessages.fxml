@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.ScrollPane?>
 
+<?import javafx.scene.control.ComboBox?>
 <BorderPane styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.UserMessagesController">
@@ -58,6 +59,9 @@
                 <Button fx:id="sendMessageButton" text="→" styleClass="send-button" />
             </HBox>
         </VBox>
+
+        <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
+        </ComboBox>
     </center>
 
 </BorderPane>

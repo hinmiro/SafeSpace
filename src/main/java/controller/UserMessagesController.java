@@ -10,10 +10,15 @@ import model.*;
 import view.*;
 import java.io.IOException;
 import java.time.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class UserMessagesController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
+    private SharedData language = SharedData.getInstance();
+    private ResourceBundle bundle;
+    private Locale currentLocale;
     private View mainView;
     private int userId;
     private MainController mainController;
@@ -29,6 +34,8 @@ public class UserMessagesController {
     private Button sendMessageButton;
     @FXML
     private Button closeButton;
+    @FXML
+    private ComboBox<String> languageBox;
 
     public void initialize(int userId) {
         this.userId = userId;
@@ -38,6 +45,19 @@ public class UserMessagesController {
         closeButton.setOnAction(event -> handleClose());
         sendMessageButton.setOnAction(event -> handleSendMessage());
         messageTextField.setOnKeyPressed(this::handleEnterKey);
+    }
+
+    @FXML
+    private void changeLanguage() {
+        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
+            currentLocale = Locale.forLanguageTag("fi");
+        } else {
+            currentLocale = Locale.forLanguageTag("en");
+        }
+
+        SharedData.getInstance().setCurrentLocale(currentLocale);
+        bundle = ResourceBundle.getBundle("Messages", currentLocale);
+        //updateTexts();
     }
 
     private void handleEnterKey(KeyEvent event) {

@@ -9,11 +9,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
 import model.ScreenUtil;
+import model.SharedData;
+
 import java.io.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class NewPostController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
+    private SharedData language = SharedData.getInstance();
+    private ResourceBundle bundle;
+    private Locale currentLocale;
     private MainController mainController;
     private File selectedFile;
 
@@ -27,6 +34,8 @@ public class NewPostController {
     private Button closeButton;
     @FXML
     private TextArea captionTextArea;
+    @FXML
+    private ComboBox<String> languageBox;
 
     @FXML
     private void initialize() {
@@ -34,6 +43,19 @@ public class NewPostController {
         postButton.setOnAction(event -> handleNewPost());
         imageView.setImage(createPlaceholderImage(200, 225));
         clickChooseButton(chooseImageButton);
+    }
+
+    @FXML
+    private void changeLanguage() {
+        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
+            currentLocale = Locale.forLanguageTag("fi");
+        } else {
+            currentLocale = Locale.forLanguageTag("en");
+        }
+
+        SharedData.getInstance().setCurrentLocale(currentLocale);
+        bundle = ResourceBundle.getBundle("Messages", currentLocale);
+        //updateTexts();
     }
 
     @FXML
@@ -119,5 +141,9 @@ public class NewPostController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void setBundle(ResourceBundle bundle) {
+        this.bundle = bundle;
     }
 }

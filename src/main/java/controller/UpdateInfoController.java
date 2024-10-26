@@ -7,13 +7,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.ScreenUtil;
+import model.SharedData;
 import view.View;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class UpdateInfoController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
+    private SharedData language = SharedData.getInstance();
+    private ResourceBundle bundle;
+    private Locale currentLocale;
     private ProfileController profileController;
     private MainController mainController;
 
@@ -27,6 +33,8 @@ public class UpdateInfoController {
     private Label passwordStrengthLabel;
     @FXML
     private View mainView;
+    @FXML
+    private ComboBox<String> languageBox;
 
     @FXML
     private void initialize() {
@@ -35,6 +43,19 @@ public class UpdateInfoController {
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
             updatePasswordStrength(newValue);
         });
+    }
+
+    @FXML
+    private void changeLanguage() {
+        if (languageBox.getValue().equals(bundle.getString("language.fi"))) {
+            currentLocale = Locale.forLanguageTag("fi");
+        } else {
+            currentLocale = Locale.forLanguageTag("en");
+        }
+
+        SharedData.getInstance().setCurrentLocale(currentLocale);
+        bundle = ResourceBundle.getBundle("Messages", currentLocale);
+        //updateTexts();
     }
 
     @FXML
