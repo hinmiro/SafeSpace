@@ -4,7 +4,8 @@ import java.util.Locale;
 
 public enum Language {
     FI("Finnish", new Locale("fi", "FI")),
-    EN("English", new Locale("en", "US"));
+    EN("English", new Locale("en", "US")),
+    JP("Japanese", new Locale("ja", "JP"));
 
     private final String displayName;
     private final Locale locale;

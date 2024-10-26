@@ -37,6 +37,7 @@ public class RegisterController {
     private Label passwordStrengthLabel;
 
     private Locale locale;
+    private ResourceBundle titles;
     private ResourceBundle labels;
     private ResourceBundle buttons;
     private ResourceBundle alerts;
@@ -48,6 +49,7 @@ public class RegisterController {
         labels = ResourceBundle.getBundle("Labels", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
         alerts = ResourceBundle.getBundle("Alerts", locale);
+        titles = ResourceBundle.getBundle("PageTitles", locale);
         registerButton.setOnAction(event -> handleRegister());
         backButton.setOnAction(event -> backLogin());
         usernameField.setOnKeyPressed(event -> handleEnterKey(event));
@@ -140,7 +142,7 @@ public class RegisterController {
                 Stage stage = (Stage) registerButton.getScene().getWindow();
                 Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
                 stage.setScene(scene);
-                stage.setTitle("Main Page");
+                stage.setTitle(titles.getString("mainPage"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -157,7 +159,7 @@ public class RegisterController {
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(scene);
-            stage.setTitle("Login Page");
+            stage.setTitle(titles.getString("login"));
             scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         } catch (IOException e) {
             e.printStackTrace();
