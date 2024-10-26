@@ -42,7 +42,7 @@
         <Region prefHeight="15" />
         <Region prefHeight="1.5" styleClass="line"/>
         <Region prefHeight="2" />
-        <Label fx:id="infoLabel" styleClass="info-label" text="Don't have an account?" />
+        <Label fx:id="dontHaveLabel" styleClass="info-label" text="Don't have an account?" />
         <Button fx:id="registerButton" styleClass="registerButton" text="Register here" />
         <Label fx:id="serverError" text="Connection to server failed..." textFill="#df0a0a"/>
 

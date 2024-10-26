@@ -22,7 +22,7 @@
                 <Image url="@/kuvat/safespacelogo.png"/>
             </image>
         </ImageView>
-        <Label fx:id="createAccount" text="Create Your SafeSpace Account" styleClass="header"/>
+        <Label fx:id="registerHero" text="Create Your SafeSpace Account" styleClass="header"/>
         <Region prefHeight="1" />
 
         <Label fx:id="usernameLabel" text="Username" styleClass="labelField"/>
@@ -48,7 +48,7 @@
         </Label>
         </VBox>
 
-        <Label fx:id="confirmPasswordLabel" text="Confirm Password" styleClass="labelField"/>
+        <Label  fx:id="confirmPasswordLabel" text="Confirm Password" styleClass="labelField"/>
 
         <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" maxWidth="400.0" styleClass="text-field">
             <VBox.margin>
@@ -59,7 +59,7 @@
         <Button fx:id="registerButton" text="Register" styleClass="loginButton"/>
         <Region prefHeight="2" />
         <Region prefHeight="1.5" styleClass="line"/>
-        <Label fx:id="infoLabel" text="Already have an account?" styleClass="info-label"/>
+        <Label fx:id="alreadyLabel" text="Already have an account?" styleClass="info-label"/>
         <Button fx:id="backButton" text="Back to Login" styleClass="registerButton"/>
 
         <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">

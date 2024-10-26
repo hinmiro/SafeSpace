@@ -4,6 +4,7 @@ public class SessionManager {
 
     private static SessionManager INSTANCE;
     private static UserModel loggedUser;
+    private static Language selectedLanguage;
 
     private SessionManager() {
     }
@@ -24,5 +25,13 @@ public class SessionManager {
     public void closeSession() {
         loggedUser = null;
         INSTANCE = null;
+    }
+
+    public void setLanguage(Language language) {
+        selectedLanguage = language;
+    }
+
+    public Language getSelectedLanguage() {
+        return selectedLanguage;
     }
 }

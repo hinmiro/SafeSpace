@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import model.ScreenUtil;
-import model.SharedData;
+import model.SessionManager;
 import model.UserModel;
 import services.ApiClient;
 import view.View;
@@ -22,6 +22,7 @@ public class LoginController {
 
     @FXML
     public Label serverError;
+    public Label usernameLabel;
     @FXML
     private TextField usernameField;
     @FXML
@@ -30,6 +31,10 @@ public class LoginController {
     private Button loginButton;
     @FXML
     private Button registerButton;
+    @FXML
+    private Label passwordLabel;
+    @FXML
+    private Label dontHaveLabel;
     @FXML
     private ComboBox<String> languageBox;
     @FXML
@@ -40,49 +45,38 @@ public class LoginController {
     private Label infoLabel;
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
-    private SharedData language = SharedData.getInstance();
     private View mainView;
+    private Locale locale;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+
     private ResourceBundle bundle;
     private Locale currentLocale;
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
-        currentLocale = SharedData.getInstance().getCurrentLocale();
-        bundle = SharedData.getInstance().getBundle();
-        updateTexts();
-
-        languageBox.getItems().setAll(bundle.getString("language.fi"), bundle.getString("language.en"));
-        languageBox.setValue(currentLocale.getLanguage().equals("fi") ? bundle.getString("language.fi") : bundle.getString("language.en"));
-
-        serverError.setVisible(!ApiClient.isServerAvailable());
-
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
         loginButton.setOnMouseClicked(event -> handleLogin());
         registerButton.setOnMouseClicked(event -> handleRegisterLink(event));
         usernameField.setOnKeyPressed(event -> handleEnterKey(event));
         passwordField.setOnKeyPressed(event -> handleEnterKey(event));
-    }
 
-    private void updateTexts() {
-        usernameLabel.setText(bundle.getString("username"));
-        passwordLabel.setText(bundle.getString("password"));
-        infoLabel.setText(bundle.getString("loginInfo"));
-        usernameField.setPromptText(bundle.getString("username"));
-        passwordField.setPromptText(bundle.getString("password"));
-        loginButton.setText(bundle.getString("login"));
-        registerButton.setText(bundle.getString("registerHere"));
-        serverError.setText(bundle.getString("serverError"));
-        }
+        loginButton.setText(buttons.getString("login"));
+        registerButton.setText(buttons.getString("register"));
 
-    @FXML
-    private void changeLanguage() {
-        if (currentLocale.getLanguage().equals("en")) {
-            currentLocale = Locale.forLanguageTag("fi");
-        } else {
-            currentLocale = Locale.forLanguageTag("en");
-        }
-        language.setCurrentLocale(currentLocale);
-        bundle = ResourceBundle.getBundle("Messages", currentLocale);
-        updateTexts();
+        serverError.setText(labels.getString("serverErr"));
+        usernameLabel.setText(labels.getString("username"));
+        passwordLabel.setText(labels.getString("password"));
+        usernameField.setPromptText(labels.getString("username"));
+        passwordField.setPromptText(labels.getString("password"));
+        dontHaveLabel.setText(labels.getString("dontHave"));
+
+        serverError.setVisible(!ApiClient.isServerAvailable());
+
     }
 
     private void handleEnterKey(KeyEvent event) {
@@ -96,13 +90,13 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, bundle.getString("loginFailed"), bundle.getString("usernameOrPasswordMissing"));
+            showAlert(Alert.AlertType.ERROR, alerts.getString("failedTitle"), alerts.getString("failedMessage"));
             return;
         }
 
         UserModel user = controllerForView.login(username, password);
         if (user == null) {
-            showAlert(Alert.AlertType.ERROR, bundle.getString("loginFailed"), bundle.getString("incorrectUsernameOrPassword"));
+            showAlert(Alert.AlertType.ERROR, alerts.getString("failedTitle"), alerts.getString("incorrectCredentials"));
             return;
         }
 
@@ -125,7 +119,7 @@ public class LoginController {
                 e.printStackTrace();
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, bundle.getString("loginFailed"), bundle.getString("incorrectUsernameOrPassword"));
+            showAlert(Alert.AlertType.ERROR, alerts.getString("failedTitle"), alerts.getString("incorrectCredentials"));
         }
     }
 
