@@ -9,13 +9,22 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
 import model.ScreenUtil;
+import model.SessionManager;
+
 import java.io.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class NewPostController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private MainController mainController;
     private File selectedFile;
+    private Locale locale;
+    private ResourceBundle titles;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle alerts;
 
     @FXML
     private Button chooseImageButton;
@@ -30,6 +39,13 @@ public class NewPostController {
 
     @FXML
     private void initialize() {
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        titles = ResourceBundle.getBundle("PageTitles", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+
+
         closeButton.setOnAction(event -> handleClose());
         postButton.setOnAction(event -> handleNewPost());
         imageView.setImage(createPlaceholderImage(200, 225));
@@ -41,16 +57,16 @@ public class NewPostController {
         String text = captionTextArea.getText();
 
         if (selectedFile == null) {
-            showAlert("Please add an image to your post.");
+            showAlert(alerts.getString("addImageToPost"));
         }
 
         try {
             boolean response = controllerForView.sendPostWithImage(text, selectedFile);
             if (response) {
-                showAlert("New post sent successfully!");
+                showAlert(alerts.getString("newPostSuccess"));
                 handleClose();
             } else {
-                showAlert("An error occurred while sending the post.");
+                showAlert(alerts.getString("sendPostErr"));
             }
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
@@ -65,7 +81,7 @@ public class NewPostController {
             MainController mainController = loader.getController();
 
             Stage stage = (Stage) closeButton.getScene().getWindow();
-            stage.setTitle("Main Page");
+            stage.setTitle(titles.getString("mainPage"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
@@ -115,7 +131,7 @@ public class NewPostController {
 
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
+        alert.setTitle(alerts.getString("info"));
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

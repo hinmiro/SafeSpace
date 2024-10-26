@@ -10,6 +10,8 @@ import model.*;
 import view.*;
 import java.io.IOException;
 import java.time.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class UserMessagesController {
 
@@ -18,6 +20,10 @@ public class UserMessagesController {
     private int userId;
     private MainController mainController;
     private Conversation currentConversation;
+    private Locale locale;
+    private ResourceBundle titles;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
 
     @FXML
     private Label usernameLabelMessage;
@@ -31,6 +37,11 @@ public class UserMessagesController {
     private Button closeButton;
 
     public void initialize(int userId) {
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        titles = ResourceBundle.getBundle("PageTitles", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+
         this.userId = userId;
         fetchUser(userId);
         loadConversation();
@@ -38,6 +49,8 @@ public class UserMessagesController {
         closeButton.setOnAction(event -> handleClose());
         sendMessageButton.setOnAction(event -> handleSendMessage());
         messageTextField.setOnKeyPressed(this::handleEnterKey);
+
+        messageTextField.setPromptText(labels.getString("writeMessage"));
     }
 
     private void handleEnterKey(KeyEvent event) {

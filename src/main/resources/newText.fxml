@@ -43,7 +43,7 @@
     <center>
         <VBox alignment="CENTER" spacing="10">
             <VBox alignment="TOP_RIGHT">
-                <Label styleClass="inspirationLabel" text="Need inspiration?">
+                <Label fx:id="inspirationLabel" styleClass="inspirationLabel" text="Need inspiration?">
                     <VBox.margin>
                         <Insets bottom="10" left="10" right="10" />
                     </VBox.margin>
@@ -58,7 +58,7 @@
             <ImageView fitHeight="94.0" fitWidth="130" preserveRatio="true">
                 <Image url="@/kuvat/newText.png" />
             </ImageView>
-            <Label styleClass="textPostLabel" text="What's on your mind? ">
+            <Label fx:id="textPostLabel" styleClass="textPostLabel" text="What's on your mind? ">
                 <VBox.margin>
                     <Insets left="10" right="10" />
                 </VBox.margin>

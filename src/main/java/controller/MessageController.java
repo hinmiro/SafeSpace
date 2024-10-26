@@ -10,6 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import model.*;
 import view.View;
+
 import java.io.*;
 import java.util.*;
 
@@ -29,10 +30,19 @@ public class MessageController {
     private View mainView;
     private MainController mainController;
     private ControllerForView controllerForView = ControllerForView.getInstance();
+    private Locale locale;
+    private ResourceBundle titles;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
 
 
     @FXML
     private void initialize() {
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        titles = ResourceBundle.getBundle("PageTitles", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+
         checkIfNoMessages();
 
         leaveMessageButton.setText("x");
@@ -79,6 +89,11 @@ public class MessageController {
                 openUserMessages(conversationPartnerId);
             }
         });
+
+        noMessagesLabel.setText(labels.getString("noMessages"));
+        homeButton.setText(buttons.getString("homeButton"));
+        profileButton.setText(buttons.getString("profileButton"));
+
     }
 
     private void loadMessages() {

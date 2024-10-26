@@ -5,12 +5,21 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.ScreenUtil;
+import model.SessionManager;
+
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class NewTextController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private MainController mainController;
+    private Locale locale;
+    private ResourceBundle titles;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle alerts;
 
     @FXML
     private Button postButton;
@@ -20,12 +29,29 @@ public class NewTextController {
     private TextArea textPostArea;
     @FXML
     private Label inspirationText;
+    @FXML
+    private Label inspirationLabel;
+    @FXML
+    public Label textPostLabel;
+
 
     @FXML
     private void initialize() {
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        titles = ResourceBundle.getBundle("PageTitles", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+
         closeButton.setOnAction(event -> handleClose());
         postButton.setOnAction(event -> handlePost());
         setRandomQuote();
+
+        inspirationText.setText(labels.getString("inspText"));
+        inspirationLabel.setText(labels.getString("inspQuestion"));
+        textPostLabel.setText(labels.getString("textPost"));
+        postButton.setText(buttons.getString("postButton"));
+        textPostArea.setPromptText(labels.getString("writeHere"));
     }
 
     @FXML
@@ -33,17 +59,17 @@ public class NewTextController {
         String postText = textPostArea.getText().trim();
 
         if (postText.isEmpty()) {
-            showAlert("Please enter some text before posting.");
+            showAlert(alerts.getString("noTextPost"));
             return;
         }
 
         try {
             boolean res = controllerForView.sendPost(postText);
             if (res) {
-                showAlert("New post sent!");
+                showAlert(alerts.getString("newPostSuccess"));
                 handleClose();
             } else {
-                showAlert("Spectacular error has occurred...");
+                showAlert(alerts.getString("sendPostErr"));
             }
         } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
@@ -61,7 +87,7 @@ public class NewTextController {
             MainController mainController = loader.getController();
 
             Stage stage = (Stage) closeButton.getScene().getWindow();
-            stage.setTitle("Main Page");
+            stage.setTitle(titles.getString("mainPage"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
@@ -73,10 +99,10 @@ public class NewTextController {
     @FXML
     private void setRandomQuote() {
         String[] inspirations = {
-                "Share an insightful question that you’d like others to answer.",
-                "Recommend something that has helped you feel inspired.",
-                "Describe something you're grateful for today.",
-                "Share a moment when you felt accomplished."
+                labels.getString("randomQuote1"),
+                labels.getString("randomQuote2"),
+                labels.getString("randomQuote3"),
+                labels.getString("randomQuote4")
         };
         int randomIndex = (int) (Math.random() * inspirations.length);
         inspirationText.setText(inspirations[randomIndex]);
@@ -113,7 +139,7 @@ public class NewTextController {
 
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
+        alert.setTitle(alerts.getString("info"));
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

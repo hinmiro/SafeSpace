@@ -20,6 +20,11 @@ public class MainController {
     private Thread queueThread;
     private View mainView;
     private ArrayList<Post> posts;
+    private ResourceBundle labels;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle titles;
+    private Locale locale;
 
     @FXML
     private Button homeButton;
@@ -52,9 +57,14 @@ public class MainController {
 
     @FXML
     private void initialize() {
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        labels = ResourceBundle.getBundle("Labels", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        titles = ResourceBundle.getBundle("PageTitles", locale);
+
         homeButton.setOnAction(event -> {
             try {
-                switchScene("/main.fxml", "Main Page");
+                switchScene("/main.fxml", titles.getString("mainPage"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -62,7 +72,7 @@ public class MainController {
 
         profileButton.setOnAction(event -> {
             try {
-                switchScene("/profile.fxml", "Profile Page");
+                switchScene("/profile.fxml", titles.getString("profilePage"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -70,7 +80,7 @@ public class MainController {
 
         leaveMessageButton.setOnAction(event -> {
             try {
-                switchScene("/messages.fxml", "Messages");
+                switchScene("/messages.fxml", titles.getString("messagesPage"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -90,6 +100,13 @@ public class MainController {
         }
 
         searchButton.setOnAction(event -> handleSearch());
+
+        usernameSearchField.setPromptText(labels.getString("searchUser"));
+        loadingBox.setText(labels.getString("loadingContent"));
+        createPicPostButton.setText(buttons.getString("shareImage"));
+        createTextPostButton.setText(buttons.getString("shareThoughts"));
+        homeButton.setText(buttons.getString("homeButton"));
+        profileButton.setText(buttons.getString("profileButton"));
     }
 
     private void togglePostMenu() {
@@ -154,7 +171,7 @@ public class MainController {
             usernameSearch.getStyleClass().add("usernameSearchLabel");
             searchResultsBox.getChildren().add(usernameSearch);
         } else {
-            Label noResults = new Label("No results found");
+            Label noResults = new Label(labels.getString("noResults"));
             noResults.getStyleClass().add("noResultsLabel");
             searchResultsBox.getChildren().add(noResults);
         }

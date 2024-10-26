@@ -43,6 +43,7 @@ public class LoginController {
     private ResourceBundle alerts;
     private ResourceBundle buttons;
     private ResourceBundle labels;
+    private ResourceBundle titles;
 
 
     @FXML
@@ -51,6 +52,7 @@ public class LoginController {
         alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
+        titles = ResourceBundle.getBundle("PageTitles", locale);
         loginButton.setOnMouseClicked(event -> handleLogin());
         registerButton.setOnMouseClicked(event -> handleRegisterLink(event));
         usernameField.setOnKeyPressed(event -> handleEnterKey(event));
@@ -105,7 +107,7 @@ public class LoginController {
 
                 Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
                 stage.setScene(scene);
-                stage.setTitle("Main Page");
+                stage.setTitle(titles.getString("mainPage"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -125,7 +127,7 @@ public class LoginController {
 
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
-            stage.setTitle("Register Page");
+            stage.setTitle(titles.getString("register"));
         } catch (IOException e) {
             e.printStackTrace();
         }
