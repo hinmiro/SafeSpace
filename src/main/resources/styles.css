@@ -52,7 +52,6 @@ StackPane, BorderPane {
 
 .combo-box {
     -fx-background-color: #ffffff;
-    -fx-border-color: #ccc;
     -fx-border-radius: 4px;
     -fx-padding: 5px;
     -fx-font-size: 14px;
@@ -79,6 +78,19 @@ StackPane, BorderPane {
 }
 
 /* main */
+
+.languageBoxProfile {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-font-size: 8px;
+    -fx-pref-width: 70px;
+    -fx-pref-height: 38px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-text-fill: #ffffff;
+    -fx-cursor: hand;
+}
 
 .noPostsLabel {
     -fx-font-family: "Arial";

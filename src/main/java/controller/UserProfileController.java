@@ -48,22 +48,11 @@ public class UserProfileController {
     @FXML
     private Label followingCountLabel;
     @FXML
-    private ComboBox<String> languageBox;
-    @FXML
     private Label followers;
     @FXML
     private Label following;
 
     public void initialize(int userId) throws IOException, InterruptedException {
-        languageBox.getItems().setAll(
-                Language.EN.getDisplayName(),
-                Language.FI.getDisplayName()
-        );
-
-        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
-        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
-
-        languageBox.setOnAction(event -> changeLanguage());
         updateLanguage();
 
         ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
@@ -104,20 +93,6 @@ public class UserProfileController {
         followers.setText(labels.getString("following"));
         following.setText(labels.getString("followers"));
         messageButton.setText(buttons.getString("message"));
-    }
-
-    @FXML
-    private void changeLanguage() {
-        String selectedLanguage = languageBox.getValue();
-
-        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
-            SessionManager.getInstance().setLanguage(Language.FI);
-        } else {
-            SessionManager.getInstance().setLanguage(Language.EN);
-        }
-
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-        updateLanguage();
     }
 
     private void updateLanguage() {
@@ -237,6 +212,7 @@ public class UserProfileController {
 
             if (success) {
                 followButton.setText("Follow");
+                followButton.setText(labels.getString("follow"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #007bff, #0056b3)");
 
                 int currentFollowers = Integer.parseInt(followersCountLabel.getText());
@@ -247,6 +223,7 @@ public class UserProfileController {
 
             if (success) {
                 followButton.setText("Following");
+                followButton.setText(labels.getString("followingUser"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
 
                 int currentFollowers = Integer.parseInt(followersCountLabel.getText());

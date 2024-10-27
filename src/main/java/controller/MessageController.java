@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
@@ -26,8 +25,6 @@ public class MessageController {
     private Label noMessagesLabel;
     @FXML
     private ListView<Message> conversationListView;
-    @FXML
-    private ComboBox<String> languageBox;
 
     private View mainView;
     private MainController mainController;
@@ -40,15 +37,6 @@ public class MessageController {
 
     @FXML
     private void initialize() {
-        languageBox.getItems().setAll(
-                Language.EN.getDisplayName(),
-                Language.FI.getDisplayName()
-        );
-
-        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
-        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
-
-        languageBox.setOnAction(event -> changeLanguage());
         updateLanguage();
 
         checkIfNoMessages();
@@ -104,20 +92,6 @@ public class MessageController {
         homeButton.setText(buttons.getString("home"));
         profileButton.setText(buttons.getString("profile"));
         noMessagesLabel.setText(labels.getString("noMessages"));
-    }
-
-    @FXML
-    private void changeLanguage() {
-        String selectedLanguage = languageBox.getValue();
-
-        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
-            SessionManager.getInstance().setLanguage(Language.FI);
-        } else {
-            SessionManager.getInstance().setLanguage(Language.EN);
-        }
-
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-        updateLanguage();
     }
 
     private void updateLanguage() {

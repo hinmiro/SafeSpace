@@ -63,6 +63,9 @@
         <Button fx:id="backButton" text="Back to Login" styleClass="registerButton"/>
 
         <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
+            <VBox.margin>
+                <Insets top="25" />
+            </VBox.margin>
         </ComboBox>
     </VBox>
 </StackPane>

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.ComboBox?>
+
 <BorderPane prefHeight="800" prefWidth="360" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewTextController">
 
     <top>
@@ -83,8 +83,6 @@
                     <Insets bottom="30" />
                 </VBox.margin>
             </Button>
-            <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
-            </ComboBox>
         </VBox>
     </center>
 </BorderPane>

@@ -50,8 +50,6 @@ public class MainController {
     private Button searchButton;
     @FXML
     private VBox searchResultsBox;
-    @FXML
-    private ComboBox<String> languageBox;
 
     public MainController() {
         this.posts = new ArrayList<>();
@@ -59,15 +57,6 @@ public class MainController {
 
     @FXML
     private void initialize() {
-        languageBox.getItems().setAll(
-                Language.EN.getDisplayName(),
-                Language.FI.getDisplayName()
-        );
-
-        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
-        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
-
-        languageBox.setOnAction(event -> changeLanguage());
         updateLanguage();
 
         ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
@@ -117,20 +106,6 @@ public class MainController {
         createPicPostButton.setText(buttons.getString("createPicPost"));
         createTextPostButton.setText(buttons.getString("createTextPost"));
         usernameSearchField.setPromptText(fields.getString("searchUsername"));
-    }
-
-    @FXML
-    private void changeLanguage() {
-        String selectedLanguage = languageBox.getValue();
-
-        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
-            SessionManager.getInstance().setLanguage(Language.FI);
-        } else {
-            SessionManager.getInstance().setLanguage(Language.EN);
-        }
-
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-        updateLanguage();
     }
 
     private void updateLanguage() {

@@ -136,9 +136,6 @@
                 </image>
             </ImageView>
         </StackPane>
-
-        <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
-        </ComboBox>
     </center>
 
 </BorderPane>

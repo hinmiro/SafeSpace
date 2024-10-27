@@ -92,8 +92,7 @@
                 </VBox.margin>
             </Button>
         </VBox>
-        <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
-        </ComboBox>
+
     </center>
 
 </BorderPane>

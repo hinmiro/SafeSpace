@@ -13,6 +13,7 @@ import javafx.stage.*;
 import model.*;
 import view.View;
 import java.io.*;
+
 import javafx.scene.shape.Circle;
 
 public class EditProfileController {

@@ -8,7 +8,6 @@ import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
-import model.Language;
 import model.ScreenUtil;
 import model.SessionManager;
 import java.io.*;
@@ -37,23 +36,12 @@ public class NewPostController {
     @FXML
     private TextArea captionTextArea;
     @FXML
-    private ComboBox<String> languageBox;
-    @FXML
     private Label headerLabel;
     @FXML
     private Label captionLabel;
 
     @FXML
     private void initialize() {
-        languageBox.getItems().setAll(
-                Language.EN.getDisplayName(),
-                Language.FI.getDisplayName()
-        );
-
-        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
-        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
-
-        languageBox.setOnAction(event -> changeLanguage());
         updateLanguage();
 
         closeButton.setOnAction(event -> handleClose());
@@ -68,20 +56,6 @@ public class NewPostController {
         chooseImageButton.setText(buttons.getString("chooseImage"));
         headerLabel.setText(labels.getString("picPost"));
         captionLabel.setText(labels.getString("captionLabel"));
-    }
-
-    @FXML
-    private void changeLanguage() {
-        String selectedLanguage = languageBox.getValue();
-
-        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
-            SessionManager.getInstance().setLanguage(Language.FI);
-        } else {
-            SessionManager.getInstance().setLanguage(Language.EN);
-        }
-
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-        updateLanguage();
     }
 
     private void updateLanguage() {

@@ -36,19 +36,8 @@ public class UserMessagesController {
     private Button sendMessageButton;
     @FXML
     private Button closeButton;
-    @FXML
-    private ComboBox<String> languageBox;
 
     public void initialize(int userId) {
-        languageBox.getItems().setAll(
-                Language.EN.getDisplayName(),
-                Language.FI.getDisplayName()
-        );
-
-        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
-        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
-
-        languageBox.setOnAction(event -> changeLanguage());
         updateLanguage();
 
         this.userId = userId;
@@ -62,20 +51,6 @@ public class UserMessagesController {
 
     private void updateTexts() {
         messageTextField.setPromptText(fields.getString("sendMessage"));
-    }
-
-    @FXML
-    private void changeLanguage() {
-        String selectedLanguage = languageBox.getValue();
-
-        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
-            SessionManager.getInstance().setLanguage(Language.FI);
-        } else {
-            SessionManager.getInstance().setLanguage(Language.EN);
-        }
-
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-        updateLanguage();
     }
 
     private void updateLanguage() {

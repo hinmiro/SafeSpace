@@ -56,11 +56,11 @@ public class ProfileController {
     @FXML
     private ListView<Post> feedListView;
     @FXML
-    private ComboBox<String> languageBox;
-    @FXML
     private Label followersLabel;
     @FXML
     private Label followingLabel;
+    @FXML
+    private ComboBox<String> languageBox;
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
@@ -99,15 +99,15 @@ public class ProfileController {
         settingsContextMenu = new ContextMenu();
         MenuItem editProfileItem = new MenuItem("Edit Profile");
         editProfileItem.setOnAction(event -> openEditProfilePage());
-        //editProfileItem.setText(buttons.getString("editProfile"));
+        editProfileItem.setText(buttons.getString("editProfile"));
 
         MenuItem editInfoItem = new MenuItem("Edit Password");
         editInfoItem.setOnAction(event -> openUpdateInfoPage());
-        //editInfoItem.setText(buttons.getString("editInfo"));
+        editInfoItem.setText(buttons.getString("editInfo"));
 
         MenuItem logOutItem = new MenuItem("Log Out");
         logOutItem.setOnAction(event -> showLogOut());
-        //logOutItem.setText(buttons.getString("logOut"));
+        logOutItem.setText(buttons.getString("logOut"));
 
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, logOutItem);
         settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));

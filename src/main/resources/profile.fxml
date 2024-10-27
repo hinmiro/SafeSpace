@@ -30,13 +30,15 @@
                     <Label styleClass="headerMain" text="SafeSpace" />
                 </center>
                 <right>
-                    <VBox alignment="CENTER">
+                    <HBox alignment="CENTER" spacing="5">
+                        <ComboBox fx:id="languageBox" styleClass="languageBoxProfile" onAction="#changeLanguage">
+                        </ComboBox>
                         <Button fx:id="settingsProfileID" styleClass="settingsProfile" text="≡">
-                            <VBox.margin>
-                                <Insets left="10" right="20" />
-                            </VBox.margin>
+                            <HBox.margin>
+                                <Insets right="10" />
+                            </HBox.margin>
                         </Button>
-                    </VBox>
+                    </HBox>
                 </right>
             </BorderPane>
             <Region prefHeight="1.5" styleClass="line" />
@@ -97,9 +99,6 @@
             <Button fx:id="homeButton" styleClass="mainbutton" text="Home" />
             <Button fx:id="profileButton" styleClass="mainbutton" text="Profile" />
         </HBox>
-
-        <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
-        </ComboBox>
     </bottom>
 
 </BorderPane>

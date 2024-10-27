@@ -4,7 +4,6 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Language;
 import model.ScreenUtil;
 import model.SessionManager;
 import java.io.IOException;
@@ -30,23 +29,12 @@ public class NewTextController {
     @FXML
     private Label inspirationText;
     @FXML
-    private ComboBox<String> languageBox;
-    @FXML
     private Label needInspo;
     @FXML
     private Label whatOnMind;
 
     @FXML
     private void initialize() {
-        languageBox.getItems().setAll(
-                Language.EN.getDisplayName(),
-                Language.FI.getDisplayName()
-        );
-
-        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
-        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
-
-        languageBox.setOnAction(event -> changeLanguage());
         updateLanguage();
 
         closeButton.setOnAction(event -> handleClose());
@@ -58,20 +46,6 @@ public class NewTextController {
         postButton.setText(buttons.getString("post"));
         needInspo.setText(labels.getString("needInspo"));
         whatOnMind.setText(labels.getString("whatOnMind"));
-    }
-
-    @FXML
-    private void changeLanguage() {
-        String selectedLanguage = languageBox.getValue();
-
-        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
-            SessionManager.getInstance().setLanguage(Language.FI);
-        } else {
-            SessionManager.getInstance().setLanguage(Language.EN);
-        }
-
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-        updateLanguage();
     }
 
     private void updateLanguage() {
