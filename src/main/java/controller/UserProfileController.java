@@ -244,7 +244,8 @@ public class UserProfileController {
 
             Stage stage = (Stage) messageButton.getScene().getWindow();
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-            stage.setTitle("Messages");
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("messages"));
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -275,10 +276,6 @@ public class UserProfileController {
 
     public void setControllerForView(ControllerForView controller) {
         controllerForView = controller;
-    }
-
-    public void setMainView(View view) {
-        this.mainView = view;
     }
 
     public void setMainController(MainController mainController) {

@@ -13,6 +13,8 @@ import javafx.stage.*;
 import model.*;
 import view.View;
 import java.io.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javafx.scene.shape.Circle;
 
@@ -24,6 +26,11 @@ public class EditProfileController {
     private ProfileController profileController;
     private Image newImage;
     private File selectedFile;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
     @FXML
     private ImageView profileImageView;
@@ -43,9 +50,13 @@ public class EditProfileController {
     private TextArea bioField;
     @FXML
     private Button saveChangesButton;
+    @FXML
+    private Button uploadImageButton;
 
     @FXML
     public void initialize() {
+        updateLanguage();
+
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
         if (SessionManager.getInstance().getLoggedUser().getProfilePictureUrl().equals("default")) {
@@ -59,6 +70,23 @@ public class EditProfileController {
         profileImageView.setCursor(Cursor.HAND);
         closeButton.setOnAction(event -> handleClose());
         saveChangesButton.setOnAction(this::handleSaveChanges);
+    }
+
+    private void updateTexts() {
+        uploadImageButton.setText(buttons.getString("uploadImage"));
+        nameLabel.setText(labels.getString("username"));
+        usernameField.setPromptText(fields.getString("usernameNew"));
+        bioLabel.setText(labels.getString("bio"));
+        bioField.setPromptText(fields.getString("bioNew"));
+        saveChangesButton.setText(buttons.getString("saveChanges"));
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
     }
 
     @FXML

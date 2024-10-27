@@ -6,10 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.ScreenUtil;
 import model.SessionManager;
-import view.View;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class LogOutController {
 
@@ -17,14 +19,22 @@ public class LogOutController {
     private Button logOutButton;
     @FXML
     private Button cancelButton;
+    @FXML
+    private Label logOut;
 
     private Stage dialogStage;
-    private View mainView;
     private MainController mainController;
     private Stage primaryStage;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
     @FXML
     private void initialize() {
+        updateLanguage();
+
         logOutButton.setOnAction(event -> {
             try {
                 handleLogOut();
@@ -35,12 +45,22 @@ public class LogOutController {
         cancelButton.setOnAction(event -> handleCancel());
     }
 
-    public void setDialogStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
+    private void updateTexts() {
+        logOutButton.setText(buttons.getString("logOut"));
+        cancelButton.setText(buttons.getString("cancel"));
+        logOut.setText(labels.getString("logOutLabel"));
     }
 
-    public void setMainView(View mainView) {
-        this.mainView = mainView;
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
+    }
+
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
     }
 
     private void handleLogOut() throws Exception {

@@ -42,7 +42,7 @@
     <center>
         <StackPane>
             <VBox alignment="CENTER" spacing="20.0">
-                <Label text="Change Your Password" styleClass="headerLabel">
+                <Label fx:id="changePasswordLabel" text="Change Your Password" styleClass="headerLabel">
                     <VBox.margin>
                         <Insets bottom="20" />
                     </VBox.margin>
@@ -56,7 +56,7 @@
                                 <Image url="@/kuvat/thumb.png" />
                             </image>
                         </ImageView>
-                        <Label text="At least 8 characters long" styleClass="password-requirements" />
+                        <Label fx:id="requirement1" text="At least 8 characters long" styleClass="password-requirements" />
                     </HBox>
                     <HBox spacing="10" alignment="CENTER">
                         <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
@@ -64,7 +64,7 @@
                                 <Image url="@/kuvat/thumb.png" />
                             </image>
                         </ImageView>
-                        <Label text="Contains an uppercase letter" styleClass="password-requirements" />
+                        <Label fx:id="requirement2" text="Contains an uppercase letter" styleClass="password-requirements" />
                     </HBox>
                     <HBox spacing="10" alignment="CENTER">
                         <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
@@ -72,7 +72,7 @@
                                 <Image url="@/kuvat/thumb.png" />
                             </image>
                         </ImageView>
-                        <Label text="Contains a lowercase letter" styleClass="password-requirements" />
+                        <Label fx:id="requirement3" text="Contains a lowercase letter" styleClass="password-requirements" />
                     </HBox>
                     <HBox spacing="10" alignment="CENTER">
                         <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
@@ -80,12 +80,12 @@
                                 <Image url="@/kuvat/thumb.png" />
                             </image>
                         </ImageView>
-                        <Label text="Contains a number" styleClass="password-requirements" />
+                        <Label fx:id="requirement4" text="Contains a number" styleClass="password-requirements" />
                     </HBox>
                 </VBox>
 
                 <VBox spacing="10" alignment="CENTER">
-                    <Label text="New Password:" styleClass="otherLabel">
+                    <Label fx:id="newPassword" text="New Password:" styleClass="otherLabel">
                         <VBox.margin>
                             <Insets top="10" />
                         </VBox.margin>
@@ -103,7 +103,7 @@
                         </Label>
                     </VBox>
 
-                    <Label text="Confirm Password: *" styleClass="otherLabel">
+                    <Label fx:id="confirmPasswordLabel" text="Confirm Password: *" styleClass="otherLabel">
                         <VBox.margin>
                             <Insets top="15" />
                         </VBox.margin>
@@ -116,7 +116,7 @@
                 </VBox>
 
                 <HBox alignment="CENTER" spacing="10.0">
-                    <Button text="Update Password" onAction="#updatePassword" styleClass="mainbutton">
+                    <Button fx:id="mainButton" text="Update Password" onAction="#updatePassword" styleClass="mainbutton">
                         <HBox.margin>
                             <Insets bottom="30" />
                         </HBox.margin>

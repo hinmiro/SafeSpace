@@ -53,6 +53,7 @@ StackPane, BorderPane {
 .combo-box {
     -fx-background-color: #ffffff;
     -fx-border-radius: 4px;
+    -fx-border-color: #ccc;
     -fx-padding: 5px;
     -fx-font-size: 14px;
 }
