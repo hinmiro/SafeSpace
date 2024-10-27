@@ -13,9 +13,24 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class PostListCell extends ListCell<Post> {
     private SoftwareModel softwareModel = new SoftwareModel();
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale;
+
+    public PostListCell() {
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        alerts = ResourceBundle.getBundle("alerts", locale);
+        buttons = ResourceBundle.getBundle("buttons", locale);
+        labels = ResourceBundle.getBundle("labels", locale);
+        fields = ResourceBundle.getBundle("fields", locale);
+    }
 
     @Override
     public void updateItem(Post item, boolean empty) {
@@ -59,7 +74,6 @@ public class PostListCell extends ListCell<Post> {
     private void openPostDetailModal(Post item, Stage primaryStage) {
         Stage modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
-        modalStage.setTitle("Post");
 
         VBox contentBox = new VBox();
         contentBox.setSpacing(5);
@@ -106,6 +120,7 @@ public class PostListCell extends ListCell<Post> {
         Scene scene = new Scene(scrollPane, 300, 550);
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         modalStage.setScene(scene);
+        modalStage.setTitle(labels.getString("postDetailTitle"));
         modalStage.showAndWait();
     }
 
@@ -170,9 +185,9 @@ public class PostListCell extends ListCell<Post> {
         commentInputBox.setMinHeight(isModal ? 0 : Region.USE_COMPUTED_SIZE);
 
         TextField commentInput = new TextField();
-        commentInput.setPromptText("Comment here...");
+        commentInput.setPromptText(fields.getString("commentHere"));
 
-        Button addCommentButton = new Button("Add comment");
+        Button addCommentButton = new Button(buttons.getString("addComment"));
         addCommentButton.getStyleClass().add("comment-button2");
 
         addCommentButton.setOnAction(event -> {
@@ -230,8 +245,6 @@ public class PostListCell extends ListCell<Post> {
                         SessionManager.getInstance().getLoggedUser().removeLikedPost(item.getPostID());
                         likes.setText(String.valueOf(item.getLikeCount()));
                         likeButton.setStyle("-fx-background-color: linear-gradient(to bottom, #85e4a4, #57b657);");
-                    } else {
-                        System.out.println("Tykkäyksen poistaminen epäonnistui.");
                     }
                 } else {
                     boolean liked = softwareModel.likePost(String.valueOf(item.getPostID()));
@@ -239,8 +252,6 @@ public class PostListCell extends ListCell<Post> {
                         SessionManager.getInstance().getLoggedUser().addLikedPost(item.getPostID());
                         likes.setText(String.valueOf(item.getLikeCount() + 1));
                         item.setLikedByUser(true);
-                    } else {
-                        System.out.println("Tykkäys epäonnistui.");
                     }
                 }
             } catch (IOException | InterruptedException e) {
@@ -305,7 +316,7 @@ public class PostListCell extends ListCell<Post> {
                 commentSection.getChildren().add(commentBox);
             });
         } else {
-            Text commentText = new Text("No comments");
+            Text commentText = new Text(labels.getString("noComments"));
             commentText.getStyleClass().add("comment-text");
             commentSection.getChildren().add(commentText);
         }

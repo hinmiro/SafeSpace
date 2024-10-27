@@ -162,17 +162,12 @@ public class UserProfileController {
             }
 
             if (isFriend) {
-                followButton.setText("Following");
                 followButton.setText(labels.getString("followingUser"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
             } else {
-                followButton.setText("Follow");
                 followButton.setText(labels.getString("follow"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);");
             }
-
-        } else {
-            System.out.println("Käyttäjää ei löytynyt.");
         }
     }
 
@@ -202,7 +197,7 @@ public class UserProfileController {
         }
     }
 
-    public void handleFollowButton(ActionEvent actionEvent) throws IOException, InterruptedException {
+    public void handleFollowButton(ActionEvent actionEvent) {
         UserModel userToFollow = controllerForView.getUserById(userId);
         int friendId = userToFollow.getUserId();
         int currentUserId = SessionManager.getInstance().getLoggedUser().getUserId();
@@ -211,7 +206,6 @@ public class UserProfileController {
             boolean success = controllerForView.removeFriend(friendId);
 
             if (success) {
-                followButton.setText("Follow");
                 followButton.setText(labels.getString("follow"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #007bff, #0056b3)");
 
@@ -222,7 +216,6 @@ public class UserProfileController {
             boolean success = controllerForView.addFriend(currentUserId, friendId);
 
             if (success) {
-                followButton.setText("Following");
                 followButton.setText(labels.getString("followingUser"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
 

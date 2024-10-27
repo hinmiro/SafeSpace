@@ -46,6 +46,7 @@ public class NewTextController {
         postButton.setText(buttons.getString("post"));
         needInspo.setText(labels.getString("needInspo"));
         whatOnMind.setText(labels.getString("whatOnMind"));
+        textPostArea.setPromptText(fields.getString("enterText"));
     }
 
     private void updateLanguage() {

@@ -72,9 +72,9 @@ public class LogOutController {
         Parent loginRoot = loader.load();
         Scene loginScene = new Scene(loginRoot, 360, ScreenUtil.getScaledHeight());
 
-
         primaryStage.setScene(loginScene);
-        primaryStage.setTitle("Login");
+        ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+        primaryStage.setTitle(pageTitle.getString("login"));
 
         if (dialogStage != null) {
             dialogStage.close();

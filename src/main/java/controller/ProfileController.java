@@ -66,13 +66,21 @@ public class ProfileController {
     public void initialize() throws IOException, InterruptedException {
         languageBox.getItems().setAll(
                 Language.EN.getDisplayName(),
-                Language.FI.getDisplayName()
+                Language.FI.getDisplayName(),
+                Language.JP.getDisplayName()
         );
 
         Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
-        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
+        languageBox.setValue(currentLanguage.getDisplayName());
 
-        languageBox.setOnAction(event -> changeLanguage());
+        languageBox.setOnAction(event -> {
+            try {
+                changeLanguage();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         updateLanguage();
 
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
@@ -123,17 +131,21 @@ public class ProfileController {
     }
 
     @FXML
-    private void changeLanguage() {
+    private void changeLanguage() throws Exception {
         String selectedLanguage = languageBox.getValue();
+
 
         if (selectedLanguage.equals(Language.FI.getDisplayName())) {
             SessionManager.getInstance().setLanguage(Language.FI);
+        } else if (selectedLanguage.equals(Language.JP.getDisplayName())) {
+                SessionManager.getInstance().setLanguage(Language.JP);
         } else {
             SessionManager.getInstance().setLanguage(Language.EN);
         }
 
         locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
         updateLanguage();
+        mainView.showProfile();
     }
 
     private void updateLanguage() {

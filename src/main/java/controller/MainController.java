@@ -177,7 +177,7 @@ public class MainController {
             usernameSearch.getStyleClass().add("usernameSearchLabel");
             searchResultsBox.getChildren().add(usernameSearch);
         } else {
-            Label noResults = new Label("No results found");
+            Label noResults = new Label(labels.getString("noResults"));
             noResults.getStyleClass().add("noResultsLabel");
             searchResultsBox.getChildren().add(noResults);
         }

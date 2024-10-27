@@ -3,22 +3,21 @@ package model;
 import java.util.Locale;
 
 public enum Language {
-    FI("Finnish", new Locale("fi", "FI")),
-    EN("English", new Locale("en", "US"));
+    FI(new Locale("fi", "FI")),
+    EN(new Locale("en", "US")),
+    JP(new Locale("ja", "JP"));
 
-    private final String displayName;
     private final Locale locale;
 
-    Language(String displayName, Locale locale) {
-        this.displayName = displayName;
+    Language(Locale locale) {
         this.locale = locale;
-    }
-
-    public String getDisplayName() {
-        return displayName;
     }
 
     public Locale getLocale() {
         return locale;
+    }
+
+    public String getDisplayName() {
+        return locale.getDisplayLanguage(locale);
     }
 }

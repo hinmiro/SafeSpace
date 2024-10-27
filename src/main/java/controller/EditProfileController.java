@@ -15,7 +15,6 @@ import view.View;
 import java.io.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 import javafx.scene.shape.Circle;
 
 public class EditProfileController {
@@ -100,7 +99,8 @@ public class EditProfileController {
             profileController.setMainController(mainController);
 
             Stage stage = new Stage();
-            stage.setTitle("Profile Page");
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("profile"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
@@ -129,17 +129,17 @@ public class EditProfileController {
                 } else {
                     profileImageView.setImage(createPlaceholderImage(150, 150));
                 }
-                showAlert("Changes saved successfully.", Alert.AlertType.INFORMATION);
+                showAlert(alerts.getString("changesSaved"), Alert.AlertType.INFORMATION);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            showAlert("An error occurred while saving changes.", Alert.AlertType.ERROR);
+            showAlert(alerts.getString("failedSave"), Alert.AlertType.ERROR);
         }
     }
 
     private void showAlert(String message, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);
-        alert.setTitle("Updates");
+        alert.setTitle(alerts.getString("update.title"));
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
@@ -163,7 +163,7 @@ public class EditProfileController {
         selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
         System.out.println(selectedFile.length() / 1000000 + " kuvan koko mb");
         if (selectedFile.length() > 5000000) {
-            showAlert("File size is too large. Please upload a file less than 5MB.", Alert.AlertType.ERROR);
+            showAlert(alerts.getString("fileSize"), Alert.AlertType.ERROR);
             return null;
         }
 

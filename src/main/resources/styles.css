@@ -50,7 +50,7 @@ StackPane, BorderPane {
     -fx-border-radius: 5px;
 }
 
-.combo-box {
+.languageBox {
     -fx-background-color: #ffffff;
     -fx-border-radius: 4px;
     -fx-border-color: #ccc;
@@ -58,40 +58,27 @@ StackPane, BorderPane {
     -fx-font-size: 14px;
 }
 
-.combo-box .list-view {
+.languageBox .list-view {
     -fx-background-color: #ffffff;
     -fx-border-color: #ccc;
 }
 
-.combo-box .list-view .list-cell {
+.languageBox .list-view .list-cell {
     -fx-text-fill: #333;
     -fx-padding: 10px;
 }
 
-.combo-box .list-view .list-cell:hover {
+.languageBox .list-view .list-cell:hover {
     -fx-background-color: #e9ecef;
     -fx-cursor: hand;
 }
 
-.combo-box .list-view .list-cell:selected {
+.languageBox .list-view .list-cell:selected {
     -fx-background-color: #2B2D42;
     -fx-text-fill: #ffffff;
 }
 
 /* main */
-
-.languageBoxProfile {
-    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
-    -fx-font-size: 8px;
-    -fx-pref-width: 70px;
-    -fx-pref-height: 38px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-border-width: 2px;
-    -fx-alignment: center;
-    -fx-text-fill: #ffffff;
-    -fx-cursor: hand;
-}
 
 .noPostsLabel {
     -fx-font-family: "Arial";
@@ -151,6 +138,41 @@ StackPane, BorderPane {
 }
 
 /* profiili */
+
+.languageBoxProfile {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-font-size: 12px;
+    -fx-pref-width: 80px;
+    -fx-pref-height: 35px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-cursor: hand;
+}
+
+.languageBoxProfile .list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #0056b3;
+}
+
+.languageBoxProfile .list-view .list-cell {
+    -fx-text-fill: #333;
+    -fx-padding: 10px;
+}
+
+.languageBoxProfile .list-view .list-cell:hover {
+    -fx-background-color: #e9ecef;
+    -fx-cursor: hand;
+}
+
+.languageBoxProfile .list-view .list-cell:selected {
+    -fx-background-color: #2B2D42;
+    -fx-text-fill: #ffffff;
+}
+
+.languageBoxProfile .arrow {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+}
 
 .mainlabel {
     -fx-font-size: 18px;

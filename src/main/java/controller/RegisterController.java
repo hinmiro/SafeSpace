@@ -53,11 +53,12 @@ public class RegisterController {
     public void initialize() {
         languageBox.getItems().setAll(
                 Language.EN.getDisplayName(),
-                Language.FI.getDisplayName()
+                Language.FI.getDisplayName(),
+                Language.JP.getDisplayName()
         );
 
         Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
-        languageBox.setValue(currentLanguage == Language.FI ? Language.FI.getDisplayName() : Language.EN.getDisplayName());
+        languageBox.setValue(currentLanguage.getDisplayName());
 
         languageBox.setOnAction(event -> changeLanguage());
 
@@ -92,6 +93,8 @@ public class RegisterController {
 
         if (selectedLanguage.equals(Language.FI.getDisplayName())) {
             SessionManager.getInstance().setLanguage(Language.FI);
+        } else if (selectedLanguage.equals(Language.JP.getDisplayName())) {
+            SessionManager.getInstance().setLanguage(Language.JP);
         } else {
             SessionManager.getInstance().setLanguage(Language.EN);
         }
