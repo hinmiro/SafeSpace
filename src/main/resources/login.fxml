@@ -39,14 +39,11 @@
 
         <Region prefHeight="0.5" />
         <Button fx:id="loginButton" styleClass="loginButton" text="Log In" />
-        <Region prefHeight="15" />
         <Region prefHeight="1.5" styleClass="line"/>
-        <Region prefHeight="2" />
         <Label fx:id="dontHaveLabel" styleClass="info-label" text="Don't have an account?" />
         <Button fx:id="registerButton" styleClass="registerButton" text="Register here" />
-        <Label fx:id="serverError" text="Connection to server failed..." textFill="#df0a0a"/>
-
         <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
         </ComboBox>
+        <Label fx:id="serverError" text="Connection to server failed..." textFill="#df0a0a"/>
     </VBox>
 </StackPane>
