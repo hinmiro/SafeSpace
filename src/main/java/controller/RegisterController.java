@@ -158,7 +158,7 @@ public class RegisterController {
         }
 
         int strength = calculatePasswordStrength(password);
-        if (strength < 3) {
+        if (strength < 2) {
             showAlert(Alert.AlertType.ERROR, alerts.getString("weakErr"), alerts.getString("registerBetterPassword"));
             return;
         }
