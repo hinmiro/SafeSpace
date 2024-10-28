@@ -112,13 +112,13 @@ public class UpdateInfoController {
         String strengthClass;
 
         if (strength < 2) {
-            strengthText = "Weak";
+            strengthText = labels.getString("weak");
             strengthClass = "weak";
         } else if (strength < 3) {
-            strengthText = "Medium";
+            strengthText = labels.getString("medium");
             strengthClass = "medium";
         } else {
-            strengthText = "Strong";
+            strengthText = labels.getString("strong");
             strengthClass = "strong";
         }
 
