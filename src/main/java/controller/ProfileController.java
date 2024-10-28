@@ -67,7 +67,8 @@ public class ProfileController {
         languageBox.getItems().setAll(
                 Language.EN.getDisplayName(),
                 Language.FI.getDisplayName(),
-                Language.JP.getDisplayName()
+                Language.JP.getDisplayName(),
+                Language.RU.getDisplayName()
         );
 
         Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
@@ -134,11 +135,12 @@ public class ProfileController {
     private void changeLanguage() throws Exception {
         String selectedLanguage = languageBox.getValue();
 
-
         if (selectedLanguage.equals(Language.FI.getDisplayName())) {
             SessionManager.getInstance().setLanguage(Language.FI);
         } else if (selectedLanguage.equals(Language.JP.getDisplayName())) {
                 SessionManager.getInstance().setLanguage(Language.JP);
+        } else if (selectedLanguage.equals(Language.RU.getDisplayName())) {
+            SessionManager.getInstance().setLanguage(Language.RU);
         } else {
             SessionManager.getInstance().setLanguage(Language.EN);
         }
