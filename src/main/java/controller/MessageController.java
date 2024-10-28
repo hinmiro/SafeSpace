@@ -10,12 +10,8 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import model.*;
 import view.View;
-import java.io.IOException;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.io.*;
+import java.util.*;
 
 public class MessageController {
 
@@ -33,17 +29,25 @@ public class MessageController {
     private View mainView;
     private MainController mainController;
     private ControllerForView controllerForView = ControllerForView.getInstance();
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
     @FXML
     private void initialize() {
+        updateLanguage();
+
         checkIfNoMessages();
 
         leaveMessageButton.setText("x");
         leaveMessageButton.setStyle("-fx-font-size: 16px;");
 
+        ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
         leaveMessageButton.setOnAction(event -> {
             try {
-                switchScene("/main.fxml", "Main Page");
+                switchScene("/main.fxml", pageTitle.getString("main"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -51,7 +55,7 @@ public class MessageController {
 
         homeButton.setOnAction(event -> {
             try {
-                switchScene("/main.fxml", "Main Page");
+                switchScene("/main.fxml", pageTitle.getString("main"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -59,7 +63,7 @@ public class MessageController {
 
         profileButton.setOnAction(event -> {
             try {
-                switchScene("/profile.fxml", "Profile Page");
+                switchScene("/profile.fxml", pageTitle.getString("profile"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -84,41 +88,51 @@ public class MessageController {
         });
     }
 
+    private void updateTexts() {
+        homeButton.setText(buttons.getString("home"));
+        profileButton.setText(buttons.getString("profile"));
+        noMessagesLabel.setText(labels.getString("noMessages"));
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
+    }
+
     private void loadMessages() {
-        List<Message> messages = controllerForView.getMessages();
         conversationListView.getItems().clear();
 
         UserModel loggedInUser = SessionManager.getInstance().getLoggedUser();
 
-        List<Message> sortedMessages = messages.stream()
-                .sorted(Comparator.comparing(Message::getDateOfMessage).reversed())
-                .collect(Collectors.toList());
+        List<Conversation> userConversations = controllerForView.getMessages();
 
         Set<String> uniqueConversationPartners = new HashSet<>();
 
-        for (Message message : sortedMessages) {
-            UserModel sender = controllerForView.getUserById(message.getSenderId());
-            UserModel receiver = controllerForView.getUserById(message.getReceiverId());
+        for (Conversation conversation : userConversations) {
+            UserModel withUser = conversation.getWithUser();
 
-            if (sender != null && receiver != null) {
-                if (whoIsMessaging(loggedInUser, sender, receiver)) {
-                    String conversationPartner = (loggedInUser.getUserId() == sender.getUserId())
-                            ? receiver.getUsername()
-                            : sender.getUsername();
+            String conversationPartner = withUser.getUsername();
 
-                    if (!conversationPartner.equals(loggedInUser.getUsername()) && uniqueConversationPartners.add(conversationPartner)) {
-                        conversationListView.getItems().add(message);
-                    }
+            if (!conversationPartner.equals(loggedInUser.getUsername()) && uniqueConversationPartners.add(conversationPartner)) {
+                List<Message> messages = conversation.getMessages();
+
+                Message latestMessage = messages.stream()
+                        .max(Comparator.comparing(Message::getDateOfMessage))
+                        .orElse(null);
+
+                if (latestMessage != null) {
+                    conversationListView.getItems().add(latestMessage);
                 }
             }
         }
 
+        conversationListView.getItems().sort(Comparator.comparing(Message::getDateOfMessage).reversed());
+
         conversationListView.setCellFactory(param -> new MessageListCell());
         checkIfNoMessages();
-    }
-
-    private boolean whoIsMessaging(UserModel loggedInUser, UserModel sender, UserModel receiver) {
-        return sender.getUserId() == loggedInUser.getUserId() || receiver.getUserId() == loggedInUser.getUserId();
     }
 
     private void openUserMessages(int userId) {
@@ -133,7 +147,9 @@ public class MessageController {
             Stage stage = (Stage) homeButton.getScene().getWindow();
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
-            stage.setTitle("Messages");
+
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("messages"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -177,4 +193,5 @@ public class MessageController {
     public void setMainView(View view) {
         this.mainView = view;
     }
+
 }

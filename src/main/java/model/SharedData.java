@@ -10,12 +10,14 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class SharedData {
     private static SharedData instance;
-
+    private static Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
     private BlockingQueue<Post> postQueue;
     private BlockingQueue<Like> likeQueue;
@@ -110,7 +112,8 @@ public class SharedData {
             }
 
             primaryStage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
-            primaryStage.setTitle(userId == loggedInUserId ? "Profile Page" : "User Profile Page");
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            primaryStage.setTitle(userId == loggedInUserId ? pageTitle.getString("profile") : pageTitle.getString("userProfile"));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

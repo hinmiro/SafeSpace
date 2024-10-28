@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ComboBox?>
 
 <StackPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
 
@@ -20,7 +21,7 @@
         </ImageView>
         <Label styleClass="header" text="SafeSpace" />
 
-        <Label styleClass="labelField" text="Username" />
+        <Label fx:id="usernameLabel" styleClass="labelField" text="Username" />
 
         <TextField fx:id="usernameField" maxWidth="400.0" promptText="Username" styleClass="text-field">
             <VBox.margin>
@@ -28,7 +29,7 @@
             </VBox.margin>
         </TextField>
 
-        <Label styleClass="labelField" text="Password" />
+        <Label fx:id="passwordLabel" styleClass="labelField" text="Password" />
 
         <PasswordField fx:id="passwordField" maxWidth="400.0" promptText="Password" styleClass="text-field">
             <VBox.margin>
@@ -41,8 +42,11 @@
         <Region prefHeight="15" />
         <Region prefHeight="1.5" styleClass="line"/>
         <Region prefHeight="2" />
-        <Label styleClass="info-label" text="Don't have an account?" />
+        <Label fx:id="dontHaveLabel" styleClass="info-label" text="Don't have an account?" />
         <Button fx:id="registerButton" styleClass="registerButton" text="Register here" />
         <Label fx:id="serverError" text="Connection to server failed..." textFill="#df0a0a"/>
+
+        <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
+        </ComboBox>
     </VBox>
 </StackPane>

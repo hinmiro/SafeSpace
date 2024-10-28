@@ -9,14 +9,22 @@ import javafx.stage.*;
 import model.*;
 import view.*;
 import java.io.IOException;
-import java.util.List;
+import java.time.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class UserMessagesController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
     private View mainView;
     private int userId;
     private MainController mainController;
+    private Conversation currentConversation;
 
     @FXML
     private Label usernameLabelMessage;
@@ -30,6 +38,8 @@ public class UserMessagesController {
     private Button closeButton;
 
     public void initialize(int userId) {
+        updateLanguage();
+
         this.userId = userId;
         fetchUser(userId);
         loadConversation();
@@ -37,6 +47,18 @@ public class UserMessagesController {
         closeButton.setOnAction(event -> handleClose());
         sendMessageButton.setOnAction(event -> handleSendMessage());
         messageTextField.setOnKeyPressed(this::handleEnterKey);
+    }
+
+    private void updateTexts() {
+        messageTextField.setPromptText(fields.getString("sendMessage"));
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
     }
 
     private void handleEnterKey(KeyEvent event) {
@@ -53,27 +75,26 @@ public class UserMessagesController {
     }
 
     private void loadConversation() {
-        int currentUserId = SessionManager.getInstance().getLoggedUser().getUserId();
+        currentConversation = controllerForView.getCurrentConversation(userId);
+        if (currentConversation != null) {
+            usernameLabelMessage.setText(currentConversation.getWithUser().getUsername());
 
-        List<Message> messages = controllerForView.getMessages();
-        messageListVBox.getChildren().clear();
-
-        for (Message message : messages) {
-            if ((message.getSenderId() == currentUserId && message.getReceiverId() == userId) ||
-                    (message.getSenderId() == userId && message.getReceiverId() == currentUserId)) {
+            messageListVBox.getChildren().clear();
+            for (Message message : currentConversation.getMessages()) {
                 displayMessage(message);
             }
         }
     }
 
     private void displayMessage(Message message) {
-        UserModel sender = controllerForView.getUserById(message.getSenderId());
-        String username = sender.getUsername();
+        currentConversation = controllerForView.getCurrentConversation(userId);
+        String username = message.getType().equals("sent") ?
+                SessionManager.getInstance().getLoggedUser().getUsername() : currentConversation.getWithUser().getUsername();
 
         Label messageLabel = new Label(username + ": " + message.getMessageContent());
+        messageLabel.setWrapText(true);
 
-        int currentUserId = SessionManager.getInstance().getLoggedUser().getUserId();
-        if (message.getSenderId() == currentUserId) {
+        if (message.getType().equals("sent")) {
             messageLabel.getStyleClass().add("message-label1");
         } else {
             messageLabel.getStyleClass().add("message-label2");
@@ -82,35 +103,32 @@ public class UserMessagesController {
         messageListVBox.getChildren().add(messageLabel);
     }
 
-    @FXML
     private void handleSendMessage() {
         String messageContent = messageTextField.getText();
-        UserModel receiver = controllerForView.getUserById(userId);
 
-        if (receiver != null) {
-            int receiverId = receiver.getUserId();
-            int senderId = SessionManager.getInstance().getLoggedUser().getUserId();
-            String dateOfMessage = "2024-01-01"; //placeholderina
+        if (currentConversation == null) {
+            UserModel receiver = controllerForView.getUserById(userId);
+            currentConversation = new Conversation(receiver);
+        }
 
-            if (!messageContent.isEmpty()) {
-                try {
-                    boolean success = controllerForView.sendMessage(messageContent, receiverId);
+        if (!messageContent.isEmpty()) {
+            Message message = new Message("sent", messageContent, LocalDateTime.now().toString());
+            message.setSenderId(SessionManager.getInstance().getLoggedUser().getUserId());
+            message.setReceiverId(currentConversation.getWithUser().getUserId());
 
-                    if (success) {
-                        Message message = new Message(0, messageContent, senderId, receiverId, dateOfMessage);
-                        displayMessage(message);
-                        messageTextField.clear();
-                    } else {
-                        showError("Sending the message failed.");
-                    }
-                } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
-                    showError("An error occurred while sending the message.");
+            try {
+                boolean success = controllerForView.sendMessage(message);
+                if (success) {
+                    currentConversation.addMessage(message);
+                    displayMessage(message);
+                    messageTextField.clear();
                 }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                showError(alerts.getString("error.message"));
             }
-        } else {
-            System.err.println("Error: Receiver not found.");
-        }}
+        }
+    }
 
     @FXML
     private void handleClose() {
@@ -125,7 +143,8 @@ public class UserMessagesController {
             messageController.setMainController(mainController);
 
             Stage stage = new Stage();
-            stage.setTitle("Messages");
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("messages"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
@@ -140,7 +159,7 @@ public class UserMessagesController {
 
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
+        alert.setTitle(alerts.getString("error.title"));
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

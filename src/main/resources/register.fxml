@@ -10,6 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.ComboBox?>
 
 <StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="controller.RegisterController" stylesheets="@styles.css" >
@@ -21,10 +22,10 @@
                 <Image url="@/kuvat/safespacelogo.png"/>
             </image>
         </ImageView>
-        <Label text="Create Your SafeSpace Account" styleClass="header"/>
+        <Label fx:id="registerHero" text="Create Your SafeSpace Account" styleClass="header"/>
         <Region prefHeight="1" />
 
-        <Label text="Username" styleClass="labelField"/>
+        <Label fx:id="usernameLabel" text="Username" styleClass="labelField"/>
 
         <TextField fx:id="usernameField" promptText="Username" maxWidth="400.0" styleClass="text-field">
             <VBox.margin>
@@ -32,7 +33,7 @@
             </VBox.margin>
         </TextField>
 
-        <Label text="Password" styleClass="labelField"/>
+        <Label fx:id="passwordLabel" text="Password" styleClass="labelField"/>
 
         <VBox>
         <PasswordField fx:id="passwordField" promptText="Password" maxWidth="400.0" styleClass="text-field2">
@@ -47,7 +48,7 @@
         </Label>
         </VBox>
 
-        <Label text="Confirm Password" styleClass="labelField"/>
+        <Label  fx:id="confirmPasswordLabel" text="Confirm Password" styleClass="labelField"/>
 
         <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" maxWidth="400.0" styleClass="text-field">
             <VBox.margin>
@@ -58,7 +59,13 @@
         <Button fx:id="registerButton" text="Register" styleClass="loginButton"/>
         <Region prefHeight="2" />
         <Region prefHeight="1.5" styleClass="line"/>
-        <Label text="Already have an account?" styleClass="info-label"/>
+        <Label fx:id="alreadyLabel" text="Already have an account?" styleClass="info-label"/>
         <Button fx:id="backButton" text="Back to Login" styleClass="registerButton"/>
+
+        <ComboBox fx:id="languageBox" styleClass="languageBox" onAction="#changeLanguage">
+            <VBox.margin>
+                <Insets top="25" />
+            </VBox.margin>
+        </ComboBox>
     </VBox>
 </StackPane>

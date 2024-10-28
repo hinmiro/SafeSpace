@@ -27,7 +27,7 @@ public class ControllerForView extends Controller {
             if (user != null) {
                 SessionManager.getInstance().setLoggedUser(user);
                 app.getUserArrays();
-                //app.getUserById(user.getUserId());
+                //app.getMe();
                 app.startMainFeedThread();
                 return user;
             }
@@ -167,16 +167,30 @@ public class ControllerForView extends Controller {
         app.postComment(comment, String.valueOf(postId));
     }
 
-    public boolean sendMessage(String content, int receiverId) throws IOException, InterruptedException {
-        int senderId = SessionManager.getInstance().getLoggedUser().getUserId();
-        return app.sendMessage(content, senderId, receiverId);
+    public boolean sendMessage(Message message) throws IOException, InterruptedException {
+        return app.sendMessage(message);
     }
 
-    public List<Message> getMessages() {
+    public List<Conversation> getMessages() {
         try {
             return app.getMessages();
         } catch (IOException | InterruptedException e) {
             return new ArrayList<>();
+        }
+    }
+
+    public Conversation getCurrentConversation(int userId) {
+        try {
+            List<Conversation> conversations = app.getAllConversations();
+
+            for (Conversation conversation : conversations) {
+                if (conversation.getWithUser().getUserId() == userId) {
+                    return conversation;
+                }
+            }
+            return null;
+        } catch (IOException | InterruptedException e) {
+            return null;
         }
     }
 

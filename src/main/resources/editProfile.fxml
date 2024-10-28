@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ComboBox?>
 <BorderPane styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditProfileController">
 
     <top>
@@ -49,13 +50,13 @@
                         <Insets bottom="10" left="10" right="10" />
                     </VBox.margin>
                 </ImageView>
-                <Button onAction="#handleImageUpload" styleClass="mainbutton" text="Upload Image" />
+                <Button fx:id="uploadImageButton" onAction="#handleImageUpload" styleClass="mainbutton" text="Upload Image" />
             </VBox>
 
             <HBox alignment="CENTER" spacing="40.0">
                 <VBox alignment="CENTER_LEFT" spacing="10.0">
-                    <Label id="usernameLabel" fx:id="usernameLabel" styleClass="usernameLabel" text="Username" />
-                    <Label id="createdDateLabel" fx:id="registeredLabel" styleClass="registeredLabel" text="Registered: 01.01.2024" />
+                    <Label fx:id="usernameLabel" styleClass="usernameLabel" text="Username" />
+                    <Label fx:id="registeredLabel" styleClass="registeredLabel" text="Registered: 01.01.2024" />
                 </VBox>
             </HBox>
 
@@ -78,7 +79,7 @@
                         <Insets left="20" right="20" />
                     </VBox.margin>
                 </Label>
-                <TextArea id="bioTextField" fx:id="bioField" maxWidth="400" prefRowCount="4" promptText="Enter your bio" styleClass="bio-field">
+                <TextArea fx:id="bioField" maxWidth="400" prefRowCount="4" promptText="Enter your bio" styleClass="bio-field">
                     <VBox.margin>
                         <Insets left="20" right="20" />
                     </VBox.margin>
@@ -91,6 +92,7 @@
                 </VBox.margin>
             </Button>
         </VBox>
+
     </center>
 
 </BorderPane>

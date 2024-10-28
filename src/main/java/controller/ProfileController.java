@@ -15,12 +15,19 @@ import model.*;
 import view.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class ProfileController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private ContextMenu settingsContextMenu;
     private MainController mainController;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
     @FXML
     public Label followersCountLabel;
@@ -48,9 +55,34 @@ public class ProfileController {
     public Label bioLabel;
     @FXML
     private ListView<Post> feedListView;
+    @FXML
+    private Label followersLabel;
+    @FXML
+    private Label followingLabel;
+    @FXML
+    private ComboBox<String> languageBox;
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
+        languageBox.getItems().setAll(
+                Language.EN.getDisplayName(),
+                Language.FI.getDisplayName(),
+                Language.JP.getDisplayName()
+        );
+
+        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
+        languageBox.setValue(currentLanguage.getDisplayName());
+
+        languageBox.setOnAction(event -> {
+            try {
+                changeLanguage();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        updateLanguage();
+
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
         bioLabel.setText(SessionManager.getInstance().getLoggedUser().getBio() == null ? "..." : SessionManager.getInstance().getLoggedUser().getBio());
@@ -75,14 +107,53 @@ public class ProfileController {
         settingsContextMenu = new ContextMenu();
         MenuItem editProfileItem = new MenuItem("Edit Profile");
         editProfileItem.setOnAction(event -> openEditProfilePage());
+        editProfileItem.setText(buttons.getString("editProfile"));
+
         MenuItem editInfoItem = new MenuItem("Edit Password");
         editInfoItem.setOnAction(event -> openUpdateInfoPage());
+        editInfoItem.setText(buttons.getString("editInfo"));
+
         MenuItem logOutItem = new MenuItem("Log Out");
         logOutItem.setOnAction(event -> showLogOut());
+        logOutItem.setText(buttons.getString("logOut"));
 
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, logOutItem);
         settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
         displayUserPosts();
+    }
+
+    private void updateTexts() {
+        homeButton.setText(buttons.getString("home"));
+        profileButton.setText(buttons.getString("profile"));
+        noPostsLabel.setText(labels.getString("noPosts"));
+        followersLabel.setText(labels.getString("followers"));
+        followingLabel.setText(labels.getString("following"));
+    }
+
+    @FXML
+    private void changeLanguage() throws Exception {
+        String selectedLanguage = languageBox.getValue();
+
+
+        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
+            SessionManager.getInstance().setLanguage(Language.FI);
+        } else if (selectedLanguage.equals(Language.JP.getDisplayName())) {
+                SessionManager.getInstance().setLanguage(Language.JP);
+        } else {
+            SessionManager.getInstance().setLanguage(Language.EN);
+        }
+
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        updateLanguage();
+        mainView.showProfile();
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
     }
 
     private void fetchUserFollowers(int userId) {
@@ -158,7 +229,8 @@ public class ProfileController {
             updateInfoController.setMainController(mainController);
 
             Stage stage = (Stage) profileButton.getScene().getWindow();
-            stage.setTitle("Update Info");
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("updateinfo"));
             stage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
             stage.show();
         } catch (IOException e) {
@@ -176,9 +248,9 @@ public class ProfileController {
             editProfileController.setMainController(mainController);
             editProfileController.setMainView(mainView);
 
-
             Stage stage = (Stage) profileButton.getScene().getWindow();
-            stage.setTitle("Edit Profile");
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("editprofile"));
             stage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
             stage.show();
         } catch (IOException e) {
@@ -215,7 +287,9 @@ public class ProfileController {
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
-            stage.setTitle("Main Page");
+
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("main"));
             MainController mainController = fxmlLoader.getController();
             mainController.setMainView(mainView);
 

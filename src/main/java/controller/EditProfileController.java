@@ -1,3 +1,4 @@
+
 package controller;
 
 import javafx.event.*;
@@ -12,6 +13,8 @@ import javafx.stage.*;
 import model.*;
 import view.View;
 import java.io.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.scene.shape.Circle;
 
 public class EditProfileController {
@@ -22,6 +25,11 @@ public class EditProfileController {
     private ProfileController profileController;
     private Image newImage;
     private File selectedFile;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
     @FXML
     private ImageView profileImageView;
@@ -41,9 +49,13 @@ public class EditProfileController {
     private TextArea bioField;
     @FXML
     private Button saveChangesButton;
+    @FXML
+    private Button uploadImageButton;
 
     @FXML
     public void initialize() {
+        updateLanguage();
+
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
         if (SessionManager.getInstance().getLoggedUser().getProfilePictureUrl().equals("default")) {
@@ -59,6 +71,23 @@ public class EditProfileController {
         saveChangesButton.setOnAction(this::handleSaveChanges);
     }
 
+    private void updateTexts() {
+        uploadImageButton.setText(buttons.getString("uploadImage"));
+        nameLabel.setText(labels.getString("username"));
+        usernameField.setPromptText(fields.getString("usernameNew"));
+        bioLabel.setText(labels.getString("bio"));
+        bioField.setPromptText(fields.getString("bioNew"));
+        saveChangesButton.setText(buttons.getString("saveChanges"));
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
+    }
+
     @FXML
     private void handleClose() {
         closeButton.getScene().getWindow().hide();
@@ -70,7 +99,8 @@ public class EditProfileController {
             profileController.setMainController(mainController);
 
             Stage stage = new Stage();
-            stage.setTitle("Profile Page");
+            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+            stage.setTitle(pageTitle.getString("profile"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             stage.setScene(scene);
             stage.show();
@@ -99,17 +129,17 @@ public class EditProfileController {
                 } else {
                     profileImageView.setImage(createPlaceholderImage(150, 150));
                 }
-                showAlert("Changes saved successfully.", Alert.AlertType.INFORMATION);
+                showAlert(alerts.getString("changesSaved"), Alert.AlertType.INFORMATION);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            showAlert("An error occurred while saving changes.", Alert.AlertType.ERROR);
+            showAlert(alerts.getString("failedSave"), Alert.AlertType.ERROR);
         }
     }
 
     private void showAlert(String message, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);
-        alert.setTitle("Updates");
+        alert.setTitle(alerts.getString("update.title"));
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
@@ -133,7 +163,7 @@ public class EditProfileController {
         selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
         System.out.println(selectedFile.length() / 1000000 + " kuvan koko mb");
         if (selectedFile.length() > 5000000) {
-            showAlert("File size is too large. Please upload a file less than 5MB.", Alert.AlertType.ERROR);
+            showAlert(alerts.getString("fileSize"), Alert.AlertType.ERROR);
             return null;
         }
 

@@ -20,6 +20,11 @@ public class MainController {
     private Thread queueThread;
     private View mainView;
     private ArrayList<Post> posts;
+    private ResourceBundle alerts;
+    private ResourceBundle buttons;
+    private ResourceBundle labels;
+    private ResourceBundle fields;
+    private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
     @FXML
     private Button homeButton;
@@ -52,9 +57,12 @@ public class MainController {
 
     @FXML
     private void initialize() {
+        updateLanguage();
+
+        ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
         homeButton.setOnAction(event -> {
             try {
-                switchScene("/main.fxml", "Main Page");
+                switchScene("/main.fxml", pageTitle.getString("main"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -62,7 +70,7 @@ public class MainController {
 
         profileButton.setOnAction(event -> {
             try {
-                switchScene("/profile.fxml", "Profile Page");
+                switchScene("/profile.fxml", pageTitle.getString("profile"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -70,7 +78,7 @@ public class MainController {
 
         leaveMessageButton.setOnAction(event -> {
             try {
-                switchScene("/messages.fxml", "Messages");
+                switchScene("/messages.fxml", pageTitle.getString("messages"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -90,6 +98,22 @@ public class MainController {
         }
 
         searchButton.setOnAction(event -> handleSearch());
+    }
+
+    private void updateTexts() {
+        homeButton.setText(buttons.getString("home"));
+        profileButton.setText(buttons.getString("profile"));
+        createPicPostButton.setText(buttons.getString("createPicPost"));
+        createTextPostButton.setText(buttons.getString("createTextPost"));
+        usernameSearchField.setPromptText(fields.getString("searchUsername"));
+    }
+
+    private void updateLanguage() {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+        updateTexts();
     }
 
     private void togglePostMenu() {
@@ -119,7 +143,6 @@ public class MainController {
             profileController.setMainController(this);
             profileController.setMainView(mainView);
             profileController.setDialogStage(stage);
-
         }
 
         if (fxmlFile.equals("/main.fxml")) {
@@ -154,7 +177,7 @@ public class MainController {
             usernameSearch.getStyleClass().add("usernameSearchLabel");
             searchResultsBox.getChildren().add(usernameSearch);
         } else {
-            Label noResults = new Label("No results found");
+            Label noResults = new Label(labels.getString("noResults"));
             noResults.getStyleClass().add("noResultsLabel");
             searchResultsBox.getChildren().add(noResults);
         }

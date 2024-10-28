@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+
 <BorderPane prefHeight="800" prefWidth="360" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewTextController">
 
     <top>
@@ -43,12 +44,12 @@
     <center>
         <VBox alignment="CENTER" spacing="10">
             <VBox alignment="TOP_RIGHT">
-                <Label styleClass="inspirationLabel" text="Need inspiration?">
+                <Label fx:id="needInspo" styleClass="inspirationLabel" text="Need inspiration?">
                     <VBox.margin>
                         <Insets bottom="10" left="10" right="10" />
                     </VBox.margin>
                 </Label>
-                <Label fx:id="inspirationText" styleClass="inspirationText" text="Write something that made you smile today!">
+                <Label wrapText="true" fx:id="inspirationText" styleClass="inspirationText" text="Write something that made you smile today!">
                     <VBox.margin>
                         <Insets bottom="30" left="10" right="10" />
                     </VBox.margin>
@@ -58,7 +59,7 @@
             <ImageView fitHeight="94.0" fitWidth="130" preserveRatio="true">
                 <Image url="@/kuvat/newText.png" />
             </ImageView>
-            <Label styleClass="textPostLabel" text="What's on your mind? ">
+            <Label fx:id="whatOnMind" styleClass="textPostLabel" text="What's on your mind? ">
                 <VBox.margin>
                     <Insets left="10" right="10" />
                 </VBox.margin>
@@ -84,5 +85,4 @@
             </Button>
         </VBox>
     </center>
-
 </BorderPane>
