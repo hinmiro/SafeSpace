@@ -13,10 +13,12 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.*;
 import view.*;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ProfileController {
 
@@ -64,6 +66,11 @@ public class ProfileController {
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
+        alerts = ResourceBundle.getBundle("Alerts", locale);
+        buttons = ResourceBundle.getBundle("Buttons", locale);
+        labels = ResourceBundle.getBundle("Labels", locale);
+        fields = ResourceBundle.getBundle("Fields", locale);
+
         languageBox.getItems().setAll(
                 Language.EN.getDisplayName(),
                 Language.FI.getDisplayName(),
@@ -82,7 +89,6 @@ public class ProfileController {
             }
         });
 
-        updateLanguage();
 
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
@@ -104,6 +110,7 @@ public class ProfileController {
         homeButton.setOnAction(event -> navigateTo("/main.fxml"));
         profileButton.setOnAction(event -> navigateTo("/profile.fxml"));
 
+
         // menu profiilissa
         settingsContextMenu = new ContextMenu();
         MenuItem editProfileItem = new MenuItem("Edit Profile");
@@ -121,6 +128,9 @@ public class ProfileController {
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, logOutItem);
         settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
         displayUserPosts();
+
+        updateLanguage();
+
     }
 
     private void updateTexts() {
@@ -129,6 +139,11 @@ public class ProfileController {
         noPostsLabel.setText(labels.getString("noPosts"));
         followersLabel.setText(labels.getString("followers"));
         followingLabel.setText(labels.getString("following"));
+        AtomicInteger i = new AtomicInteger();
+        settingsContextMenu.getItems().forEach((item) -> {
+            item.setText(buttons.getString("menuButton" + i));
+            i.addAndGet(1);
+        });
     }
 
     @FXML
@@ -138,7 +153,7 @@ public class ProfileController {
         if (selectedLanguage.equals(Language.FI.getDisplayName())) {
             SessionManager.getInstance().setLanguage(Language.FI);
         } else if (selectedLanguage.equals(Language.JP.getDisplayName())) {
-                SessionManager.getInstance().setLanguage(Language.JP);
+            SessionManager.getInstance().setLanguage(Language.JP);
         } else if (selectedLanguage.equals(Language.RU.getDisplayName())) {
             SessionManager.getInstance().setLanguage(Language.RU);
         } else {
@@ -147,7 +162,7 @@ public class ProfileController {
 
         locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
         updateLanguage();
-        mainView.showProfile();
+        //mainView.showProfile();
     }
 
     private void updateLanguage() {
