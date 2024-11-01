@@ -152,13 +152,8 @@ public class UserProfileController {
             UserModel loggedUser = SessionManager.getInstance().getLoggedUser();
             boolean isFriend = false;
 
-            if (loggedUser.getUserData() != null && loggedUser.getUserData().getFollowing() != null && loggedUser.getUserData().getFriends() != null) {
-                for (UserModel friend : loggedUser.getUserData().getFollowing()) {
-                    if (friend.getUserId() == userId) {
-                        isFriend = true;
-                        break;
-                    }
-                } for (UserModel friend : loggedUser.getUserData().getFriends()) {
+            if (loggedUser.getUserData() != null && loggedUser.getUserData().getFriends() != null) {
+                for (UserModel friend : loggedUser.getUserData().getFriends()) {
                     if (friend.getUserId() == userId) {
                         isFriend = true;
                         break;
