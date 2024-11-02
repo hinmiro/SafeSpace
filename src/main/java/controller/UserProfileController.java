@@ -151,6 +151,7 @@ public class UserProfileController {
 
             UserModel loggedUser = SessionManager.getInstance().getLoggedUser();
             boolean isFriend = false;
+            boolean isFollowing = false;
 
             if (loggedUser.getUserData() != null && loggedUser.getUserData().getFriends() != null) {
                 for (UserModel friend : loggedUser.getUserData().getFriends()) {
@@ -161,15 +162,27 @@ public class UserProfileController {
                 }
             }
 
+            if (loggedUser.getUserData() != null && loggedUser.getUserData().getFollowing() != null) {
+                for (UserModel following : loggedUser.getUserData().getFollowing()) {
+                    if (following.getUserId() == userId) {
+                        isFollowing = true;
+                        break;
+                    }
+                }
+            }
+
             if (isFriend) {
                 followButton.setText(labels.getString("followingUser"));
+                followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
+            } else if (isFollowing) {
+                followButton.setText(labels.getString("following"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
             } else {
                 followButton.setText(labels.getString("follow"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);");
             }
         }
-    }
+        }
 
     public void displayUserPosts(ListView<Post> feedListView, Label noPostsLabel, int userId) {
         List<Post> posts;
