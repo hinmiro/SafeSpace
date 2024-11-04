@@ -90,6 +90,8 @@ public class UserProfileController {
     }
 
     private void updateTexts() {
+        homeButton.setText(buttons.getString("home"));
+        profileButton.setText(buttons.getString("profile"));
         followers.setText(labels.getString("following"));
         following.setText(labels.getString("followers"));
         messageButton.setText(buttons.getString("message"));
@@ -175,7 +177,7 @@ public class UserProfileController {
                 followButton.setText(labels.getString("followingUser"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
             } else if (isFollowing) {
-                followButton.setText(labels.getString("following"));
+                followButton.setText(labels.getString("followingUser"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
             } else {
                 followButton.setText(labels.getString("follow"));
@@ -213,6 +215,7 @@ public class UserProfileController {
     public void handleFollowButton(ActionEvent actionEvent) {
         UserModel userToFollow = controllerForView.getUserById(userId);
         int friendId = userToFollow.getUserId();
+        UserModel loggedUser = SessionManager.getInstance().getLoggedUser();
         int currentUserId = SessionManager.getInstance().getLoggedUser().getUserId();
 
         if (controllerForView.isFriend(currentUserId, friendId)) {
@@ -224,6 +227,8 @@ public class UserProfileController {
 
                 int currentFollowers = Integer.parseInt(followersCountLabel.getText());
                 followersCountLabel.setText(String.valueOf(currentFollowers - 1));
+                loggedUser.getUserData().getFollowing().removeIf(user -> user.getUserId() == friendId);
+                loggedUser.getUserData().getFriends().removeIf(user -> user.getUserId() == friendId);
             }
         } else {
             boolean success = controllerForView.addFriend(currentUserId, friendId);
@@ -234,6 +239,8 @@ public class UserProfileController {
 
                 int currentFollowers = Integer.parseInt(followersCountLabel.getText());
                 followersCountLabel.setText(String.valueOf(currentFollowers + 1));
+                loggedUser.getUserData().getFollowing().add(userToFollow);
+                loggedUser.getUserData().getFriends().add(userToFollow);
             }
         }
     }
