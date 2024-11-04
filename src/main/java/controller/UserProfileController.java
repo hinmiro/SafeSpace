@@ -90,6 +90,8 @@ public class UserProfileController {
     }
 
     private void updateTexts() {
+        homeButton.setText(buttons.getString("home"));
+        profileButton.setText(buttons.getString("profile"));
         followers.setText(labels.getString("following"));
         following.setText(labels.getString("followers"));
         messageButton.setText(buttons.getString("message"));
@@ -151,6 +153,7 @@ public class UserProfileController {
 
             UserModel loggedUser = SessionManager.getInstance().getLoggedUser();
             boolean isFriend = false;
+            boolean isFollowing = false;
 
             if (loggedUser.getUserData() != null && loggedUser.getUserData().getFriends() != null) {
                 for (UserModel friend : loggedUser.getUserData().getFriends()) {
@@ -161,7 +164,19 @@ public class UserProfileController {
                 }
             }
 
+            if (loggedUser.getUserData() != null && loggedUser.getUserData().getFollowing() != null) {
+                for (UserModel following : loggedUser.getUserData().getFollowing()) {
+                    if (following.getUserId() == userId) {
+                        isFollowing = true;
+                        break;
+                    }
+                }
+            }
+
             if (isFriend) {
+                followButton.setText(labels.getString("followingUser"));
+                followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
+            } else if (isFollowing) {
                 followButton.setText(labels.getString("followingUser"));
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
             } else {
@@ -169,7 +184,7 @@ public class UserProfileController {
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);");
             }
         }
-    }
+        }
 
     public void displayUserPosts(ListView<Post> feedListView, Label noPostsLabel, int userId) {
         List<Post> posts;
@@ -200,6 +215,7 @@ public class UserProfileController {
     public void handleFollowButton(ActionEvent actionEvent) {
         UserModel userToFollow = controllerForView.getUserById(userId);
         int friendId = userToFollow.getUserId();
+        UserModel loggedUser = SessionManager.getInstance().getLoggedUser();
         int currentUserId = SessionManager.getInstance().getLoggedUser().getUserId();
 
         if (controllerForView.isFriend(currentUserId, friendId)) {
@@ -211,6 +227,8 @@ public class UserProfileController {
 
                 int currentFollowers = Integer.parseInt(followersCountLabel.getText());
                 followersCountLabel.setText(String.valueOf(currentFollowers - 1));
+                loggedUser.getUserData().getFollowing().removeIf(user -> user.getUserId() == friendId);
+                loggedUser.getUserData().getFriends().removeIf(user -> user.getUserId() == friendId);
             }
         } else {
             boolean success = controllerForView.addFriend(currentUserId, friendId);
@@ -221,6 +239,8 @@ public class UserProfileController {
 
                 int currentFollowers = Integer.parseInt(followersCountLabel.getText());
                 followersCountLabel.setText(String.valueOf(currentFollowers + 1));
+                loggedUser.getUserData().getFollowing().add(userToFollow);
+                loggedUser.getUserData().getFriends().add(userToFollow);
             }
         }
     }
