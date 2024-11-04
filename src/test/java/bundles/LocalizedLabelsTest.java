@@ -199,24 +199,4 @@ public class LocalizedLabelsTest {
             assertEquals("Value for key '" + label + "' does not match the expected value.", expectedValues[i], labelsRU.getString(label));
         }
     }
-
-    @Test
-    public void testLabelsAllLocales() {
-        Locale[] locales = {localeEN, localeFI, localeJA, localeRU};
-        String[] labels = {
-                "serverErr", "username", "password", "dontHave", "alreadyAccount",
-                "registerHero", "passwordStrengthLabel", "noResults", "noPosts",
-                "followers", "following", "noMessages", "picPost", "captionLabel",
-                "needInspo", "whatOnMind", "logOutLabel", "passwordNew",
-                "passwordConfirmLabel", "changePassword", "passwordReq1", "passwordStrength",
-                "bio", "noComments", "postDetailTitle"
-        };
-
-        for (Locale locale : locales) {
-            ResourceBundle labelsBundle = ResourceBundle.getBundle("Labels", locale);
-            for (String label : labels) {
-                assertTrue("Missing required key in " + locale.getLanguage() + ": " + label, labelsBundle.containsKey(label));
-            }
-        }
-    }
 }
