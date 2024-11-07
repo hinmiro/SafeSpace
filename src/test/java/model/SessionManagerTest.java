@@ -14,7 +14,6 @@ public class SessionManagerTest {
     private SessionManager manager = SessionManager.getInstance();
     private UserModel user;
 
-    @Ignore
     @Test
     public void setLoggedUser() {
         user = new UserModel("teaser", 7357, "testingDAy");
