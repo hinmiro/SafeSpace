@@ -26,7 +26,6 @@ public class SharedData {
     private ArrayList<Post> posts;
     private ArrayList<Like> likes;
 
-
     private SharedData() {
         postQueue = new LinkedBlockingQueue<>();
         likeQueue = new LinkedBlockingQueue<>();
@@ -54,7 +53,6 @@ public class SharedData {
         likeQueue.add(like);
         likes.add(like);
     }
-
 
     public BlockingQueue<Like> getRemovedLikeQueue() {
         return removedLikeQueue;
@@ -119,5 +117,19 @@ public class SharedData {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ArrayList<Post> getFollowedPosts() {
+        ArrayList<Post> followedPosts = new ArrayList<>();
+
+        ArrayList<Integer> followingUserIds = SessionManager.getInstance().getLoggedUser().getUserData().getFollowingUserIds();
+        ArrayList<Integer> friendIds = SessionManager.getInstance().getLoggedUser().getUserData().getFriendsIds();
+
+        for (Post post : posts) {
+            if (followingUserIds.contains(post.getPostCreatorID()) || friendIds.contains(post.getPostCreatorID())) {
+                followedPosts.add(post);
+            }
+        }
+        return followedPosts;
     }
 }

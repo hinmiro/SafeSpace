@@ -50,6 +50,10 @@ public class MainController {
     private Button searchButton;
     @FXML
     private VBox searchResultsBox;
+    @FXML
+    private RadioButton friendsOption;
+    @FXML
+    private RadioButton allOption;
 
     public MainController() {
         this.posts = new ArrayList<>();
@@ -98,6 +102,7 @@ public class MainController {
         }
 
         searchButton.setOnAction(event -> handleSearch());
+        selectOption();
     }
 
     private void updateTexts() {
@@ -106,6 +111,8 @@ public class MainController {
         createPicPostButton.setText(buttons.getString("createPicPost"));
         createTextPostButton.setText(buttons.getString("createTextPost"));
         usernameSearchField.setPromptText(fields.getString("searchUsername"));
+        friendsOption.setText(buttons.getString("friendsPosts"));
+        allOption.setText(buttons.getString("allPosts"));
     }
 
     private void updateLanguage() {
@@ -127,6 +134,40 @@ public class MainController {
 
     private void openTextPostForm() {
         showNewTextWindow();
+    }
+
+    private void selectOption() {
+        ToggleGroup searchGroup = new ToggleGroup();
+        friendsOption.setToggleGroup(searchGroup);
+        allOption.setToggleGroup(searchGroup);
+
+        searchGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == allOption) {
+                handleAllOption();
+            } else if (newValue == friendsOption) {
+                handleFriendsOption();
+            }
+        });
+    }
+
+    private void handleFriendsOption() {
+        stopQueueProcessing();
+
+        Platform.runLater(() -> {
+            feedListView.getItems().clear();
+            feedListView.getItems().addAll(SharedData.getInstance().getFollowedPosts());
+        });
+    }
+
+    private void handleAllOption() {
+        ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
+        allOption.setOnAction(event -> {
+            try {
+                switchScene("/main.fxml", pageTitle.getString("main"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     protected void switchScene(String fxmlFile, String title) throws IOException {
