@@ -137,6 +137,30 @@ StackPane, BorderPane {
     -fx-padding: 3px 0px 3px 125px;
 }
 
+.option1, .option2 {
+    -fx-font-size: 13px;
+    -fx-text-fill: #333;
+    -fx-padding: 4px;
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 10px;
+    -fx-border-width: 2px;
+    -fx-border-color: #cccccc;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-pref-width: 350px;
+}
+
+.option1:selected, .option2:selected {
+    -fx-background-color: #2B2D42;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #2B2D42;
+    -fx-cursor: hand;
+}
+
+.option1:hover, .option2:hover {
+    -fx-cursor: hand;
+}
+
 /* profiili */
 
 .languageBoxProfile {
