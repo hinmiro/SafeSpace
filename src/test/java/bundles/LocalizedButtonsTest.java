@@ -24,7 +24,7 @@ public class LocalizedButtonsTest {
             "home", "profile", "createPicPost", "createTextPost",
             "editProfile", "editInfo", "logOut",
             "saveChanges", "uploadImage", "cancel", "updatePassword", "post",
-            "chooseImage", "follow", "message", "addComment",
+            "chooseImage", "follow", "message", "addComment", "friendsPosts", "allPosts"
     };
 
 
@@ -52,6 +52,8 @@ public class LocalizedButtonsTest {
                 "Follow",
                 "Message",
                 "Add a comment",
+                "Friends Posts",
+                "All Posts"
 
         };
 
@@ -85,6 +87,8 @@ public class LocalizedButtonsTest {
                 "Seuraa",
                 "Lähetä viesti",
                 "Lisää kommentti",
+                "Kaverien julkaisut",
+                "Kaikki julkaisut"
         };
 
         for (int i = 0; i < buttons.length; i++) {
@@ -117,6 +121,8 @@ public class LocalizedButtonsTest {
                 "フォロー",
                 "メッセージ",
                 "コメントを追加",
+                "友達の投稿",
+                "すべての投稿"
         };
 
         for (int i = 0; i < buttons.length; i++) {
@@ -149,6 +155,8 @@ public class LocalizedButtonsTest {
                 "Подписаться",
                 "Сообщение",
                 "Добавить комментарий",
+                "Посты друзей",
+                "Все посты"
         };
 
         for (int i = 0; i < buttons.length; i++) {

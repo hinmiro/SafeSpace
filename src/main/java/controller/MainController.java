@@ -111,6 +111,8 @@ public class MainController {
         createPicPostButton.setText(buttons.getString("createPicPost"));
         createTextPostButton.setText(buttons.getString("createTextPost"));
         usernameSearchField.setPromptText(fields.getString("searchUsername"));
+        friendsOption.setText(buttons.getString("friendsPosts"));
+        allOption.setText(buttons.getString("allPosts"));
     }
 
     private void updateLanguage() {
