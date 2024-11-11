@@ -137,6 +137,7 @@ public class LoginController {
                 Stage stage = (Stage) loginButton.getScene().getWindow();
 
                 Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+                scene.getStylesheets().add(getClass().getResource("/stylesdark.css").toExternalForm());
                 stage.setScene(scene);
 
                 ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
