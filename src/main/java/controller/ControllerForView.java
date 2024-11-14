@@ -21,6 +21,10 @@ public class ControllerForView extends Controller {
         return INSTANCE;
     }
 
+    void setApp(SoftwareModel app) {
+        this.app = app;
+    }
+
     public UserModel login(String username, String password) {
         try {
             UserModel user = app.login(username, password);

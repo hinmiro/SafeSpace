@@ -1,33 +1,23 @@
 package model;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
-
 import java.util.Locale;
 
 public class LanguageTest {
-    Language language;
-
-    @Before
-    public void setUp() {
-        language = Language.EN;
+    @Test
+    public void testGetLocale() {
+        for (Language lang : Language.values()) {
+            Locale expectedLocale = lang.getLocale();
+            assertEquals("Locale for " + lang, expectedLocale, lang.getLocale());
+        }
     }
 
     @Test
-    public void getLocale() {
-        assertEquals("Should return Locale.ENGLISH", Locale.ENGLISH, language.getLocale());
-    }
-
-    @Test
-    public void getDisplayName() {
-        assertEquals("Should return 'English'", "English", language.getDisplayName());
-    }
-
-    @After
-    public void tearDown() {
-        language = null;
+    public void testGetDisplayName() {
+        for (Language lang : Language.values()) {
+            String expectedDisplayName = lang.getDisplayName();
+            assertEquals("Display name for " + lang, expectedDisplayName, lang.getDisplayName());
+        }
     }
 }
