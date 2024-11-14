@@ -683,22 +683,21 @@ StackPane, BorderPane {
     -fx-background-color: #D3D3D3;
 }
 
-.username {
+.detail-username {
     -fx-font-weight: bold;
     -fx-font-size: 16px;
-    -fx-text-fill: #2c3e50;
     -fx-fill: #333;
 }
 
-.username:hover {
+.detail-username:hover {
     -fx-text-fill: linear-gradient(to bottom, #d6a6e7, #a65ea1);
 }
 
-.username:pressed {
+.detail-username:pressed {
     -fx-text-fill: #a65ea1;
 }
 
-.post-content {
+.detail-post-content {
     -fx-font-size: 14px;
     -fx-line-spacing: 1.2em;
     -fx-text-fill: #34495e;
@@ -747,7 +746,7 @@ StackPane, BorderPane {
     -fx-text-fill: #7f8c8d;
 }
 
-.username-box {
+.detail-username-box {
     -fx-padding: 5;
     -fx-background-radius: 5;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
@@ -755,7 +754,7 @@ StackPane, BorderPane {
     -fx-border-radius: 5;
 }
 
-.post-date {
+.detail-post-date {
     -fx-font-size: 10px;
     -fx-text-fill: #8e8e8e;
 }

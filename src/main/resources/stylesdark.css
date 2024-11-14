@@ -50,8 +50,6 @@ StackPane, BorderPane, ScrollPane {
     -fx-border-radius: 5px;
 }
 
-
-
 /* main */
 
 .noPostsLabel {
@@ -146,6 +144,11 @@ StackPane, BorderPane, ScrollPane {
 
 .languageBoxProfile .arrow {
     -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+}
+
+.languageBox .text {
+    -fx-fill: #ffff;
+    -fx-font-size: 14px;
 }
 
 .mainlabel {
@@ -955,31 +958,29 @@ StackPane, BorderPane, ScrollPane {
     -fx-padding: 5 5 5 0;
 }
 
-/* list view */
 .list-view {
-   -fx-background-color: #2B2D42; /* Dark background color */
-   -fx-text-fill: #FFFFFF; /* White text color */
+   -fx-background-color: #2B2D42;
+   -fx-text-fill: #FFFFFF;
 }
 
 .list-view .list-cell {
-    -fx-background-color: #2B2D42; /* Dark background color for list cells */
-    -fx-text-fill: #FFFFFF; /* White text color for list cells */
+    -fx-background-color: #2B2D42;
+    -fx-text-fill: #FFFFFF;
 }
 
 .list-view .list-cell:hover {
-    -fx-text-fill: #FFFFFF; /* White text color on hover */
+    -fx-text-fill: #FFFFFF;
 }
 
 .list-view .list-cell:selected {
-    -fx-background-color: #1A1C30; /* Darker background color when selected */
-    -fx-text-fill: #FFFFFF; /* White text color when selected */
+    -fx-background-color: #1A1C30;
+    -fx-text-fill: #FFFFFF;
 }
-
 
 .languageBox {
     -fx-background-color: #2B2D42;
     -fx-border-radius: 4px;
-    -fx-border-color: #555;
+    -fx-border-color: #ffff;
     -fx-padding: 5px;
     -fx-font-size: 14px;
     -fx-text-fill: #FFFFFF;
@@ -997,7 +998,7 @@ StackPane, BorderPane, ScrollPane {
 
 .languageBox .list-view {
     -fx-background-color: #2B2D42;
-    -fx-border-color: #555;
+    -fx-border-color: #ffff;
     -fx-text-fill: #FFFFFF;
 }
 
@@ -1020,13 +1021,11 @@ StackPane, BorderPane, ScrollPane {
 }
 
 .languageBox .arrow-button .arrow {
-    -fx-background-color: #2B2D42;
-    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #ffff;
 }
 
 /* CSS for PostListCell elements */
 
-/* HBox containing the entire post cell */
 .post-cell {
     -fx-background-color: #2B2D42; /* Dark background color */
     -fx-padding: 10px;
@@ -1036,15 +1035,12 @@ StackPane, BorderPane, ScrollPane {
     -fx-background-radius: 5px;
 }
 
-/* VBox containing the comment section */
 .comment-section {
     -fx-background-color: #3A3D5B; /* Slightly lighter background color */
     -fx-padding: 10px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
 }
-
-/* VBox containing each comment */
 
 .comment-box {
     -fx-background-color: #2B2D42; /* Dark background color */
@@ -1053,14 +1049,14 @@ StackPane, BorderPane, ScrollPane {
     -fx-background-radius: 5px;
 }
 
-/* Ensure the entire VBox has the desired background color */
+
 #detailedPost-contentBox {
     -fx-background-color: #2B2D42; /* Dark background color */
     -fx-border-color: #555;
     -fx-padding: 10px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
 }
-/* VBox containing the username */
+
 .detail-username-box {
     -fx-background-color: #3A3D5B; /* Slightly lighter background color */
     -fx-padding: 5px;
@@ -1068,25 +1064,22 @@ StackPane, BorderPane, ScrollPane {
     -fx-background-radius: 5px;
 }
 
-/* Text for the username */
 .detail-username {
     -fx-fill: #FFFFFF; /* White text color */
     -fx-font-weight: bold;
+    -fx-font-size: 16px;
 }
 
-/* Text for the post date */
 .detail-post-date {
     -fx-fill: #AAAAAA; /* Light grey text color */
-    -fx-font-size: 12px;
+    -fx-font-size: 10px;
 }
 
-/* Text for the post content */
 .detail-post-content {
     -fx-fill: #FFFFFF; /* White text color */
     -fx-font-size: 14px;
 }
 
-/* VBox containing the bottom section (like and comment buttons) */
 .bottom-section {
     -fx-padding: 10px 0;
 }
@@ -1103,7 +1096,6 @@ StackPane, BorderPane, ScrollPane {
     -fx-font-size: 12px;
 }
 
-/* VBox containing the comment section */
 .comment-section {
     -fx-background-color: #3A3D5B; /* Slightly lighter background color */
     -fx-padding: 10px;
@@ -1111,28 +1103,17 @@ StackPane, BorderPane, ScrollPane {
     -fx-background-radius: 5px;
 }
 
-
-/* Text for the comment author */
 .comment-author {
     -fx-fill: #2980b9; /* Blue text color */
     -fx-font-size: 12px;
 }
 
-/* Text for the comment content */
 .comment-text {
     -fx-fill: #FFFFFF; /* White text color */
     -fx-font-size: 12px;
 }
 
-/* StackPane containing the post image */
 .image-section {
     -fx-padding: 10px 0;
-}
-
-#detailedPost-contentBox{
-    -fx-background-color: #2B2D42;
-    -fx-border-color: #555;
-    -fx-padding: 10px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
 }
 

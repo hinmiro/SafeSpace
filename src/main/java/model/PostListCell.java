@@ -49,7 +49,6 @@ public class PostListCell extends ListCell<Post> {
             VBox contentBox = new VBox();
             contentBox.setSpacing(5);
 
-
             addUserInfo(contentBox, item);
 
             addPostDetails(contentBox, item);
@@ -77,13 +76,12 @@ public class PostListCell extends ListCell<Post> {
     private void openPostDetailModal(Post item, Stage primaryStage) {
         Stage modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
-
+        modalStage.getIcons().add(new Image(getClass().getResourceAsStream("/kuvat/safespacelogo.png")));
 
         VBox contentBox = new VBox();
         contentBox.setSpacing(5);
         contentBox.setPadding(new Insets(10));
         contentBox.setId("detailedPost-contentBox");
-
 
         HBox buttonBox = new HBox();
         buttonBox.setAlignment(Pos.TOP_RIGHT);
@@ -101,6 +99,7 @@ public class PostListCell extends ListCell<Post> {
         usernameBox.setPadding(new Insets(5));
         usernameBox.getStyleClass().add("detail-username-box");
         Label usernameLabel = SharedData.createClickableUsername(item.getPostCreatorName(), item.getPostCreatorID(), primaryStage, modalStage);
+        usernameLabel.getStyleClass().add("detail-username");
 
         usernameBox.getChildren().add(usernameLabel);
         contentBox.getChildren().add(usernameBox);
@@ -122,9 +121,9 @@ public class PostListCell extends ListCell<Post> {
         addBottomSectionModal(contentBox, item);
         getComments(contentBox, item);
 
-
         ScrollPane scrollPane = new ScrollPane(contentBox);
         scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
         Scene scene = new Scene(scrollPane, 300, 550);
         scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
         modalStage.setScene(scene);

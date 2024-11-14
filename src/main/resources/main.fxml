@@ -11,9 +11,8 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TextField?>
-
 <?import javafx.scene.control.RadioButton?>
-<BorderPane maxHeight="800.0" minHeight="0.0" styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+
 <BorderPane maxHeight="800.0" minHeight="0.0" styleClass="borderWide" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
 
     <top>
