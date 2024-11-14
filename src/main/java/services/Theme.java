@@ -3,17 +3,17 @@ package services;
 public class Theme {
     private static final String DARK = "/stylesdark.css";
     private static final String LIGHT = "/styles.css";
-    private static String DEFAULT = LIGHT;
+    private static String THEME = DARK;
 
     public static String getTheme() {
-        return DEFAULT;
+        return THEME;
     }
 
     public static void switchTheme() {
-        if (DEFAULT.equals(LIGHT)) {
-            DEFAULT = DARK;
+        if (THEME.equals(LIGHT)) {
+            THEME = DARK;
         } else {
-            DEFAULT = LIGHT;
+            THEME = LIGHT;
         }
     }
 

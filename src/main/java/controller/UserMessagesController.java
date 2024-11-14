@@ -7,6 +7,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import model.*;
+import services.Theme;
 import view.*;
 import java.io.IOException;
 import java.time.*;
@@ -146,6 +147,8 @@ public class UserMessagesController {
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("messages"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
 import model.*;
+import services.Theme;
 import view.View;
 import java.io.*;
 import java.util.Locale;
@@ -102,6 +103,7 @@ public class EditProfileController {
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("profile"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

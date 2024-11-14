@@ -1,7 +1,7 @@
 /* yleiset */
 
-StackPane, BorderPane {
-    -fx-background-color: #2d2d2d;
+StackPane, BorderPane, ScrollPane {
+    -fx-background-color: #2B2D42;
 }
 
 .borderWide {
@@ -11,12 +11,12 @@ StackPane, BorderPane {
 .header {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2B2D42;
+    -fx-text-fill: #FFFFFF;
     -fx-padding: 10;
 }
 
 .header-background {
-    -fx-background-color: #2B2D42;
+    -fx-background-color: #1A1C30;
     -fx-padding: 0px;
 }
 
@@ -45,55 +45,29 @@ StackPane, BorderPane {
 }
 
 .footer-background {
-    -fx-background-color: #E1E5F2;
+    -fx-background-color: #1A1C30;
     -fx-padding: 10px;
     -fx-border-radius: 5px;
 }
 
-.languageBox {
-    -fx-background-color: #ffffff;
-    -fx-border-radius: 4px;
-    -fx-border-color: #ccc;
-    -fx-padding: 5px;
-    -fx-font-size: 14px;
-}
 
-.languageBox .list-view {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #ccc;
-}
-
-.languageBox .list-view .list-cell {
-    -fx-text-fill: #333;
-    -fx-padding: 10px;
-}
-
-.languageBox .list-view .list-cell:hover {
-    -fx-background-color: #e9ecef;
-    -fx-cursor: hand;
-}
-
-.languageBox .list-view .list-cell:selected {
-    -fx-background-color: #2B2D42;
-    -fx-text-fill: #ffffff;
-}
 
 /* main */
 
 .noPostsLabel {
     -fx-font-family: "Arial";
     -fx-font-size: 16px;
-    -fx-text-fill: #777;
+    -fx-text-fill: #AAAAAA;
     -fx-font-weight: bold;
     -fx-alignment: center;
     -fx-opacity: 0.7;
 }
 
 #usernameSearchField {
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: #3A3D5B;
     -fx-padding: 10px;
     -fx-border-width: 1px;
-    -fx-border-color: #e0e0e0;
+    -fx-border-color: #555;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
 }
@@ -106,7 +80,7 @@ StackPane, BorderPane {
     -fx-background-radius: 5px;
     -fx-border-width: 2px;
     -fx-alignment: center;
-    -fx-text-fill: #ffff;
+    -fx-text-fill: #FFFFFF;
 }
 
 .search-button:hover {
@@ -125,14 +99,14 @@ StackPane, BorderPane {
     -fx-border-color: linear-gradient(to bottom, #d6a6e7, #a65ea1);
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
-    -fx-background-color: #ffffff;
+    -fx-background-color: #2B2D42;
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
 }
 
 .noResultsLabel {
     -fx-font-size: 13px;
-    -fx-text-fill: rgba(119, 119, 119, 0.89);
+    -fx-text-fill: rgba(170, 170, 170, 0.89);
     -fx-font-weight: bold;
     -fx-padding: 3px 0px 3px 125px;
 }
@@ -151,23 +125,23 @@ StackPane, BorderPane {
 }
 
 .languageBoxProfile .list-view {
-    -fx-background-color: #2d2d2d;
+    -fx-background-color: #2B2D42;
     -fx-border-color: #0056b3;
 }
 
 .languageBoxProfile .list-view .list-cell {
-    -fx-text-fill: #333;
+    -fx-text-fill: #FFFFFF;
     -fx-padding: 10px;
 }
 
 .languageBoxProfile .list-view .list-cell:hover {
-    -fx-background-color: #e9ecef;
+    -fx-background-color: #3A3D5B;
     -fx-cursor: hand;
 }
 
 .languageBoxProfile .list-view .list-cell:selected {
-    -fx-background-color: #2B2D42;
-    -fx-text-fill: #ffffff;
+    -fx-background-color: #1A1C30;
+    -fx-text-fill: #FFFFFF;
 }
 
 .languageBoxProfile .arrow {
@@ -180,17 +154,17 @@ StackPane, BorderPane {
 }
 
 .profile-image {
-    -fx-background-color: #2d2d2d;
+    -fx-background-color: #2B2D42;
     -fx-padding: 10px;
 }
 
 .profile-info {
     -fx-font-size: 14px;
-    -fx-text-fill: #2B2D42;
+    -fx-text-fill: #FFFFFF;
 }
 
 .newButton {
-    -fx-background-color: #2B2D42;
+    -fx-background-color: #1A1C30;
     -fx-font-size: 16px;
     -fx-pref-width: 50px;
     -fx-pref-height: 30px;
@@ -198,7 +172,7 @@ StackPane, BorderPane {
     -fx-background-radius: 15px;
     -fx-border-width: 2px;
     -fx-alignment: center;
-    -fx-text-fill: #ffff;
+    -fx-text-fill: #FFFFFF;
 }
 
 .newButton:hover, .createPost:hover {
@@ -220,7 +194,7 @@ StackPane, BorderPane {
     -fx-background-radius: 5px;
     -fx-border-width: 2px;
     -fx-alignment: center;
-    -fx-text-fill: #ffff;
+    -fx-text-fill: #FFFFFF;
 }
 
 .settingsProfile {
@@ -232,42 +206,45 @@ StackPane, BorderPane {
     -fx-background-radius: 5px;
     -fx-border-width: 2px;
     -fx-alignment: center;
-    -fx-text-fill: #ffff;
+    -fx-text-fill: #FFFFFF;
 }
 
 .createPost {
-    -fx-background-color: #2B2D42;
+    -fx-background-color: #1A1C30;
     -fx-font-size: 12px;
     -fx-border-radius: 15px;
     -fx-background-radius: 15px;
     -fx-border-width: 2px;
     -fx-alignment: center;
-    -fx-text-fill: #ffff;
+    -fx-text-fill: #FFFFFF;
 }
 
 .usernameLabel {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
 }
 
 .registeredLabel {
     -fx-font-size: 10px;
-    -fx-text-fill: grey;
+    -fx-text-fill: lightgrey;
 }
 
 .nameLabel {
     -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
 }
 
 .bioLabel {
     -fx-font-size: 12px;
     -fx-font-style: italic;
+    -fx-text-fill: #AAAAAA;
 }
 
 .followersLabel {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2B2D42;
+    -fx-text-fill: #FFFFFF;
 }
 
 .followingLabel {
@@ -283,19 +260,22 @@ StackPane, BorderPane {
     -fx-border-width: 1px;
     -fx-border-radius: 10px;
     -fx-padding: 0;
-    -fx-text-fill: #ffff;
+    -fx-color-label-visible: #FFFFFF;
+
 }
 
 .context-menu .menu-item {
     -fx-padding: 6 3;
-    -fx-text-fill: #ffff;
+    -fx-text-fill: #FFFFFF;
     -fx-border-radius: 1px;
     -fx-font-size: 11px;
     -fx-border-color: #007bff;
 }
 
 .context-menu .menu-item:hover {
-    -fx-background-color: rgba(248, 247, 247, 0.79);
+
+    -fx-background-color: #3e9bfc;
+    -fx-text-fill: #FFFFFF;
     -fx-cursor: hand;
 }
 
@@ -304,25 +284,27 @@ StackPane, BorderPane {
 .text-field {
     -fx-pref-width: 300px;
     -fx-padding: 15;
-    -fx-border-color: #E1E5F2;
+    -fx-border-color: #555;
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
-    -fx-background-color: #E1E5F2;
+    -fx-background-color: #3A3D5B;
+    -fx-text-fill: #FFFFFF;
 }
 
 .text-field2 {
     -fx-pref-width: 300px;
     -fx-padding: 15;
-    -fx-border-color: #E1E5F2;
+    -fx-border-color: #555;
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
-    -fx-background-color: #E1E5F2;
+    -fx-background-color: #3A3D5B;
+    -fx-text-fill: #FFFFFF;
 }
 
 .loginButton {
     -fx-pref-width: 300px;
     -fx-padding: 15;
-    -fx-background-color: #2B2D42;
+    -fx-background-color: #1A1C30;
     -fx-text-fill: #FFFFFF;
     -fx-border-radius: 5px;
     -fx-font-size: 14px;
@@ -337,7 +319,7 @@ StackPane, BorderPane {
 
 .registerButton {
     -fx-background-color: transparent;
-    -fx-text-fill: #2B2D42;
+    -fx-text-fill: #FFFFFF;
     -fx-underline: true;
     -fx-cursor: hand;
 }
@@ -354,12 +336,12 @@ StackPane, BorderPane {
 
 .small-label {
     -fx-font-size: 12px;
-    -fx-text-fill: #2B2D42;
+    -fx-text-fill: #FFFFFF;
 }
 
 .labelField {
     -fx-font-size: 12px;
-    -fx-text-fill: #2B2D42;
+    -fx-text-fill: #FFFFFF;
     -fx-padding: 0 0 -15px 0;
     -fx-alignment: center-left;
     -fx-pref-width: 310px;
@@ -374,14 +356,14 @@ StackPane, BorderPane {
 .headerLabelPost {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333;
+    -fx-text-fill: #FFFFFF;
     -fx-padding: 15 0;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
 }
 
 .chooseImageButton {
     -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #FFFFFF;
     -fx-padding: 10 20;
     -fx-border-radius: 5;
     -fx-font-size: 14px;
@@ -397,13 +379,13 @@ StackPane, BorderPane {
     -fx-border-color: #007bff;
     -fx-border-width: 3;
     -fx-border-radius: 10;
-    -fx-background-color: #f9f9f9;
+    -fx-background-color: #2B2D42;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
 }
 
 .captionArea {
-    -fx-background-color: rgba(255, 255, 255, 0.9);
-    -fx-border-color: #ddd;
+    -fx-background-color: rgba(43, 45, 66, 0.9);
+    -fx-border-color: #555;
     -fx-border-width: 1px;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
@@ -415,12 +397,12 @@ StackPane, BorderPane {
 .captionLabel, .textPostLabel {
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333;
+    -fx-text-fill: #FFFFFF;
     -fx-padding: 5 0;
 }
 
 .postButton {
-    -fx-background-color: linear-gradient(to right, #2B2D42, #3a3d5b);
+    -fx-background-color: linear-gradient(to right, #1A1C30, #2A2D45);
     -fx-text-fill: white;
     -fx-padding: 8px 16px;
     -fx-font-size: 16px;
@@ -433,7 +415,7 @@ StackPane, BorderPane {
 .postButton:hover {
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
-    -fx-background-color: linear-gradient(to right, #1a1c30, #2a2d45);
+    -fx-background-color: linear-gradient(to right, #0A0C20, #1A1D35);
     -fx-cursor: hand;
 }
 
@@ -446,7 +428,7 @@ StackPane, BorderPane {
     -fx-background-radius: 5px;
     -fx-border-width: 2px;
     -fx-alignment: center;
-    -fx-text-fill: #ffff;
+    -fx-text-fill: #FFFFFF;
 }
 
 .closeButton:hover {
@@ -460,8 +442,8 @@ StackPane, BorderPane {
 /* text postaukset */
 
 .textPostArea {
-    -fx-background-color: rgba(255, 255, 255, 0.9);
-    -fx-border-color: #ccc;
+    -fx-background-color: rgba(43, 45, 66, 0.9);
+    -fx-border-color: #555;
     -fx-border-width: 1px;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
@@ -473,7 +455,7 @@ StackPane, BorderPane {
 .textPostArea:focused {
     -fx-border-color: #0077cc;
     -fx-border-width: 2px;
-    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-background-color: rgba(43, 45, 66, 0.95);
 }
 
 .editorToolbar {
@@ -481,34 +463,34 @@ StackPane, BorderPane {
 }
 
 .emojiButton {
-    -fx-background-color: #f0f0f0;
-    -fx-text-fill: #333;
+    -fx-background-color: #3A3D5B;
+    -fx-text-fill: #FFFFFF;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-background-radius: 5;
     -fx-cursor: hand;
     -fx-padding: 4px 8px;
-    -fx-border-color: #ddd;
+    -fx-border-color: #555;
     -fx-border-width: 1px;
 }
 
 .emojiButton:hover {
-    -fx-background-color: #e0e0e0;
+    -fx-background-color: #2B2D42;
 }
 
 .inspirationLabel {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: #444;
+    -fx-text-fill: #AAAAAA;
 }
 
 .inspirationText {
     -fx-font-size: 12px;
-    -fx-background-color: rgba(240, 240, 240, 0.8);
+    -fx-background-color: rgba(43, 45, 66, 0.8);
     -fx-padding: 10px;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
-    -fx-text-fill: #777;
+    -fx-text-fill: #AAAAAA;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 0);
 }
 
@@ -518,13 +500,13 @@ StackPane, BorderPane {
     -fx-padding: 20px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
-    -fx-background-color: #2d2d2d;
+    -fx-background-color: #2B2D42;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0, 0, 5);
 }
 
 .dialog-box Label {
     -fx-font-size: 16px;
-    -fx-text-fill: #333;
+    -fx-text-fill: #FFFFFF;
     -fx-font-weight: bold;
     -fx-padding-bottom: 10px;
 }
@@ -575,17 +557,19 @@ StackPane, BorderPane {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-padding: 10 0;
-    -fx-text-fill: #333;
+    -fx-text-fill: #FFFFFF;
 }
 
 .otherLabel {
     -fx-font-size: 14px;
-    -fx-text-fill: #666;
+    -fx-text-fill: #AAAAAA;
     -fx-font-weight: bold;
 }
 
 .password-field2, .text-field2 {
     -fx-pref-width: 300px;
+    -fx-background-color: #3A3D5B;
+    -fx-text-fill: #FFFFFF;
 }
 
 .password-strength-label {
@@ -607,7 +591,7 @@ StackPane, BorderPane {
 
 .password-requirements {
     -fx-font-size: 12px;
-    -fx-text-fill: #555;
+    -fx-text-fill: #AAAAAA;
 }
 
 .password-requirements .check-icon {
@@ -618,7 +602,7 @@ StackPane, BorderPane {
 
 .editProfileButton {
     -fx-padding: 10;
-    -fx-background-color: #2B2D42;
+    -fx-background-color: #1A1C30;
     -fx-text-fill: #FFFFFF;
     -fx-border-radius: 25px;
     -fx-font-size: 13px;
@@ -634,36 +618,36 @@ StackPane, BorderPane {
 .bio-field {
     -fx-pref-width: 300px;
     -fx-padding: 10;
-    -fx-border-color: #E1E5F2;
+    -fx-border-color: #555;
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
-    -fx-background-color: #fff;
+    -fx-background-color: #3A3D5B;
+    -fx-text-fill: #FFFFFF;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 0);
 }
 
-/* uusi postaus */
+/* new post */
 
 .post-cell {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #2B2D42;
     -fx-padding: 8;
     -fx-border-radius: 8;
-    -fx-border-color: #e0e0e0;
+    -fx-border-color: #555;
     -fx-cursor: hand;
 }
 
 .post-cell:hover {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: #3A3D5B;
 }
 
 .post-cell:pressed {
-    -fx-background-color: #D3D3D3;
+    -fx-background-color: #1A1C30;
 }
 
 .username {
     -fx-font-weight: bold;
     -fx-font-size: 16px;
-    -fx-text-fill: #2c3e50;
-    -fx-fill: #333;
+    -fx-text-fill: #FFFFFF;
 }
 
 .username:hover {
@@ -677,7 +661,7 @@ StackPane, BorderPane {
 .post-content {
     -fx-font-size: 14px;
     -fx-line-spacing: 1.2em;
-    -fx-text-fill: #34495e;
+    -fx-text-fill: #AAAAAA;
     line-height: 1.5;
     -fx-font-family: Arial, sans-serif;
 }
@@ -720,30 +704,30 @@ StackPane, BorderPane {
 
 .like-text, .comment-text {
     -fx-font-size: 12px;
-    -fx-text-fill: #7f8c8d;
+    -fx-text-fill: #AAAAAA;
 }
 
 .username-box {
     -fx-padding: 5;
     -fx-background-radius: 5;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: #3A3D5B;
     -fx-border-radius: 5;
 }
 
 .post-date {
     -fx-font-size: 10px;
-    -fx-text-fill: #8e8e8e;
+    -fx-text-fill: #888;
 }
 
 /* uusi postaus modaali */
 
 .comment-section {
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: #3A3D5B;
 }
 
 .comment-text {
-    -fx-background-color: #e0e0e0;
+    -fx-background-color: #2B2D42;
     -fx-padding: 10;
     -fx-background-radius: 5;
     -fx-margin: 5;
@@ -757,15 +741,16 @@ StackPane, BorderPane {
 }
 
 .comment-input {
-    -fx-background-color: #ecf0f1;
-    -fx-border-color: #dcdcdc;
+    -fx-background-color: #3A3D5B;
+    -fx-border-color: #555;
     -fx-padding: 8px;
     -fx-font-size: 13px;
+    -fx-text-fill: #FFFFFF;
 }
 
 .close-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #373333;
+    -fx-text-fill: #FFFFFF;
     -fx-font-size: 18px;
     -fx-alignment: top-right;
     -fx-border-width: 0;
@@ -795,13 +780,13 @@ StackPane, BorderPane {
 }
 
 .comment-box {
-    -fx-background-color: rgb(250, 250, 250);
+    -fx-background-color: #2B2D42;
     -fx-padding: 15;
     -fx-border-color: rgba(55, 51, 51, 0.1);
     -fx-border-width: 1;
     -fx-border-radius: 5px;
     -fx-font-size: 14px;
-    -fx-text-fill: #333333;
+    -fx-text-fill: #FFFFFF;
 }
 
 /* user profiili sivu */
@@ -822,24 +807,24 @@ StackPane, BorderPane {
 /* ScrollPane tausta */
 
 .scroll-pane {
-    -fx-background-color: transparent;
+    -fx-background-color: #2B2D42;
 }
 
 .scroll-bar:horizontal .thumb {
-    -fx-background-color: #a0a0a0;
+    -fx-background-color: #555;
 }
 
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #a0a0a0;
+    -fx-background-color: #555;
 }
 
 /* user message */
 
 .message-textfield {
-    -fx-prompt-text-fill: #888888;
-    -fx-background-color: #f0f0f0;
-    -fx-text-fill: #333333;
-    -fx-border-color: #dedede;
+    -fx-prompt-text-fill: #888;
+    -fx-background-color: #3A3D5B;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #555;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-padding: 15;
@@ -848,12 +833,12 @@ StackPane, BorderPane {
 }
 
 .message-textfield:focused {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #2B2D42;
     -fx-border-color: #007bff;
 }
 
 .messageListBox {
-    -fx-background-color: linear-gradient(to bottom, #e9ddf1, #dfc6db);
+    -fx-background-color: linear-gradient(to bottom, #3A3D5B, #2B2D42);
     -fx-padding: 10;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
@@ -884,7 +869,7 @@ StackPane, BorderPane {
 }
 
 .usernameBackgroundPane {
-    -fx-background-color: #E1E5F2;
+    -fx-background-color: #2B2D42;
     -fx-padding: 12;
     -fx-background-radius: 5;
     -fx-margin: 10;
@@ -900,24 +885,24 @@ StackPane, BorderPane {
 }
 
 .message-label1 {
-    -fx-background-color: #cce5ff;
-    -fx-border-color: #b8daff;
+    -fx-background-color: #3A3D5B;
+    -fx-border-color: #555;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-padding: 12px;
-    -fx-text-fill: #333333;
+    -fx-text-fill: #FFFFFF;
     -fx-wrap-text: true;
     -fx-max-width: 330px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0, 0, 2);
 }
 
 .message-label2 {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #dedede;
+    -fx-background-color: #2B2D42;
+    -fx-border-color: #555;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-padding: 12px;
-    -fx-text-fill: #333333;
+    -fx-text-fill: #FFFFFF;
     -fx-wrap-text: true;
     -fx-max-width: 330px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0, 0, 2);
@@ -932,26 +917,26 @@ StackPane, BorderPane {
 
 .conversationList {
     -fx-padding: 10;
-    -fx-border-radius: 5;
+    -fx-border-radius: 0;
     -fx-background-radius: 5;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
 }
 
 .message-list-cell {
     -fx-padding: 20px;
-    -fx-background-color: #E1E5F2;
-    -fx-border-color: #dedede;
+    -fx-background-color: #3A3D5B;
+    -fx-border-color: #555;
     -fx-border-width: 1px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-font-size: 14px;
-    -fx-text-fill: #333333;
+    -fx-text-fill: #FFFFFF;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
     -fx-cursor: hand;
 }
 
 .message-list-cell:hover {
-    -fx-background-color: #f8f8f8;
+    -fx-background-color: #2B2D42;
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 6, 0, 0, 2);
 }
@@ -965,17 +950,189 @@ StackPane, BorderPane {
 
 .message-labelmsg {
     -fx-font-size: 13px;
-    -fx-text-fill: #333333;
+    -fx-text-fill: #FFFFFF;
     -fx-wrap-text: true;
     -fx-padding: 5 5 5 0;
 }
 
+/* list view */
+.list-view {
+   -fx-background-color: #2B2D42; /* Dark background color */
+   -fx-text-fill: #FFFFFF; /* White text color */
+}
+
+.list-view .list-cell {
+    -fx-background-color: #2B2D42; /* Dark background color for list cells */
+    -fx-text-fill: #FFFFFF; /* White text color for list cells */
+}
+
+.list-view .list-cell:hover {
+    -fx-text-fill: #FFFFFF; /* White text color on hover */
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #1A1C30; /* Darker background color when selected */
+    -fx-text-fill: #FFFFFF; /* White text color when selected */
+}
 
 
+.languageBox {
+    -fx-background-color: #2B2D42;
+    -fx-border-radius: 4px;
+    -fx-border-color: #555;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
+    -fx-cursor: hand;
+}
+
+.languageBox .text-field {
+    -fx-fill: #FFFFFF;
+}
 
 
+.languageBox .combo-box-base{
+    -fx-fill: #FFFFFF;
+}
+
+.languageBox .list-view {
+    -fx-background-color: #2B2D42;
+    -fx-border-color: #555;
+    -fx-text-fill: #FFFFFF;
+}
+
+.languageBox .list-view .list-cell {
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 10px;
+    -fx-background-color: #2B2D42;
+}
+
+.languageBox .list-view .list-cell:hover {
+    -fx-background-color: #3A3D5B;
+    -fx-cursor: hand;
+    -fx-text-fill: #FFFFFF;
+}
+
+.languageBox .list-view .list-cell:selected {
+    -fx-background-color: #1A1C30;
+    -fx-color-label-visible: #FFFFFF;
+    -fx-text-fill: #FFFFFF;
+}
+
+.languageBox .arrow-button .arrow {
+    -fx-background-color: #2B2D42;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* CSS for PostListCell elements */
+
+/* HBox containing the entire post cell */
+.post-cell {
+    -fx-background-color: #2B2D42; /* Dark background color */
+    -fx-padding: 10px;
+    -fx-border-color: #3A3D5B; /* Border color */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* VBox containing the comment section */
+.comment-section {
+    -fx-background-color: #3A3D5B; /* Slightly lighter background color */
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* VBox containing each comment */
+
+.comment-box {
+    -fx-background-color: #2B2D42; /* Dark background color */
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Ensure the entire VBox has the desired background color */
+#detailedPost-contentBox {
+    -fx-background-color: #2B2D42; /* Dark background color */
+    -fx-border-color: #555;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
+}
+/* VBox containing the username */
+.detail-username-box {
+    -fx-background-color: #3A3D5B; /* Slightly lighter background color */
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Text for the username */
+.detail-username {
+    -fx-fill: #FFFFFF; /* White text color */
+    -fx-font-weight: bold;
+}
+
+/* Text for the post date */
+.detail-post-date {
+    -fx-fill: #AAAAAA; /* Light grey text color */
+    -fx-font-size: 12px;
+}
+
+/* Text for the post content */
+.detail-post-content {
+    -fx-fill: #FFFFFF; /* White text color */
+    -fx-font-size: 14px;
+}
+
+/* VBox containing the bottom section (like and comment buttons) */
+.bottom-section {
+    -fx-padding: 10px 0;
+}
+
+/* Text for the like count */
+.like-text {
+    -fx-fill: #FFFFFF; /* White text color */
+    -fx-font-size: 12px;
+}
+
+/* Text for the comment count */
+.comment-text {
+    -fx-fill: #FFFFFF; /* White text color */
+    -fx-font-size: 12px;
+}
+
+/* VBox containing the comment section */
+.comment-section {
+    -fx-background-color: #3A3D5B; /* Slightly lighter background color */
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
 
 
+/* Text for the comment author */
+.comment-author {
+    -fx-fill: #2980b9; /* Blue text color */
+    -fx-font-size: 12px;
+}
 
+/* Text for the comment content */
+.comment-text {
+    -fx-fill: #FFFFFF; /* White text color */
+    -fx-font-size: 12px;
+}
 
+/* StackPane containing the post image */
+.image-section {
+    -fx-padding: 10px 0;
+}
+
+#detailedPost-contentBox{
+    -fx-background-color: #2B2D42;
+    -fx-border-color: #555;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
+}
 

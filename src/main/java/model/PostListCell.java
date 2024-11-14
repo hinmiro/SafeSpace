@@ -11,6 +11,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import services.Theme;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -47,6 +49,7 @@ public class PostListCell extends ListCell<Post> {
             VBox contentBox = new VBox();
             contentBox.setSpacing(5);
 
+
             addUserInfo(contentBox, item);
 
             addPostDetails(contentBox, item);
@@ -75,13 +78,17 @@ public class PostListCell extends ListCell<Post> {
         Stage modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
 
+
         VBox contentBox = new VBox();
         contentBox.setSpacing(5);
         contentBox.setPadding(new Insets(10));
+        contentBox.setId("detailedPost-contentBox");
+
 
         HBox buttonBox = new HBox();
         buttonBox.setAlignment(Pos.TOP_RIGHT);
         buttonBox.setSpacing(10);
+        contentBox.setId("detailedPost-contentBox");
 
         Button closeButton = new Button("―");
         closeButton.setOnAction(e -> modalStage.close());
@@ -92,14 +99,14 @@ public class PostListCell extends ListCell<Post> {
 
         VBox usernameBox = new VBox();
         usernameBox.setPadding(new Insets(5));
-        usernameBox.getStyleClass().add("username-box");
+        usernameBox.getStyleClass().add("detail-username-box");
         Label usernameLabel = SharedData.createClickableUsername(item.getPostCreatorName(), item.getPostCreatorID(), primaryStage, modalStage);
 
         usernameBox.getChildren().add(usernameLabel);
         contentBox.getChildren().add(usernameBox);
 
         Text postDate = new Text(item.getPostDate());
-        postDate.getStyleClass().add("post-date");
+        postDate.getStyleClass().add("detail-post-date");
         contentBox.getChildren().add(postDate);
 
         if (item.getPostPictureID() != null) {
@@ -108,18 +115,20 @@ public class PostListCell extends ListCell<Post> {
 
         Text postContent = new Text(item.getPostContent());
         postContent.setWrappingWidth(200);
-        postContent.getStyleClass().add("post-content");
+        postContent.getStyleClass().add("detail-post-content");
         VBox.setMargin(postContent, new Insets(10, 0, 20, 0));
         contentBox.getChildren().add(postContent);
 
         addBottomSectionModal(contentBox, item);
         getComments(contentBox, item);
 
+
         ScrollPane scrollPane = new ScrollPane(contentBox);
         scrollPane.setFitToWidth(true);
         Scene scene = new Scene(scrollPane, 300, 550);
-        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
         modalStage.setScene(scene);
+
         modalStage.setTitle(labels.getString("postDetailTitle"));
         modalStage.showAndWait();
     }
@@ -127,10 +136,10 @@ public class PostListCell extends ListCell<Post> {
     private void addUserInfo(VBox contentBox, Post item) {
         VBox usernameBox = new VBox();
         usernameBox.setPadding(new Insets(5));
-        usernameBox.getStyleClass().add("username-box");
+        usernameBox.getStyleClass().add("detail-username-box");
 
         Text usernameText = new Text(item.getPostCreatorName());
-        usernameText.getStyleClass().add("username");
+        usernameText.getStyleClass().add("detail-username");
         usernameBox.getChildren().add(usernameText);
 
         contentBox.getChildren().add(usernameBox);
@@ -138,7 +147,7 @@ public class PostListCell extends ListCell<Post> {
 
     private void addPostDetails(VBox contentBox, Post item) {
         Text postDate = new Text(item.getPostDate());
-        postDate.getStyleClass().add("post-date");
+        postDate.getStyleClass().add("detail-post-date");
         contentBox.getChildren().add(postDate);
 
         if (item.getPostPictureID() != null) {
@@ -148,7 +157,7 @@ public class PostListCell extends ListCell<Post> {
         Text postContent = new Text(item.getPostContent());
         postContent.setWrappingWidth(300);
 
-        postContent.getStyleClass().add("post-content");
+        postContent.getStyleClass().add("detail-post-content");
         VBox.setMargin(postContent, new Insets(10, 0, 20, 0));
         contentBox.getChildren().add(postContent);
     }

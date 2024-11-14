@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import model.Language;
 import model.ScreenUtil;
 import model.SessionManager;
+import services.Theme;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -47,7 +48,7 @@ public class View extends Application {
             primaryStage.setTitle(titles.getString("login"));
             primaryStage.setResizable(false);
             //scene.getStylesheets().remove(getClass().getResource("/styles.css").toExternalForm());
-            scene.getStylesheets().add(getClass().getResource("/stylesdark.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
             primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/kuvat/safespacelogo.png")));
             primaryStage.show();
         } catch (IOException e) {

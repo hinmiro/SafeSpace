@@ -12,6 +12,8 @@ import model.Language;
 import model.ScreenUtil;
 import model.SessionManager;
 import model.UserModel;
+import services.Theme;
+
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -158,6 +160,8 @@ public class RegisterController {
 
                 Stage stage = (Stage) registerButton.getScene().getWindow();
                 Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+                scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+
                 stage.setScene(scene);
                 ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
                 stage.setTitle(pageTitle.getString("main"));
@@ -177,6 +181,8 @@ public class RegisterController {
             LoginController loginController = loader.getController();
 
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(scene);
 
