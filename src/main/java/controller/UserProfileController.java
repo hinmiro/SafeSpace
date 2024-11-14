@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.*;
+import services.Theme;
 import view.*;
 import java.io.IOException;
 import java.util.List;
@@ -111,6 +112,8 @@ public class UserProfileController {
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+        scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+
         stage.setScene(scene);
         stage.setTitle(title);
 
@@ -257,6 +260,8 @@ public class UserProfileController {
 
             Stage stage = (Stage) messageButton.getScene().getWindow();
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("messages"));
             stage.setScene(scene);
