@@ -1,0 +1,1138 @@
+/* yleiset */
+
+StackPane, BorderPane, ScrollPane {
+    -fx-background-color: #2B2D42;
+}
+
+.borderWide {
+    -fx-pref-width: 300px;
+}
+
+.header {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 10;
+}
+
+.header-background {
+    -fx-background-color: #1A1C30;
+    -fx-padding: 0px;
+}
+
+.headerMain {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-min-width: 0;
+}
+
+.line {
+    -fx-background-color: #9A7197;
+}
+
+.mainbutton {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-font-size: 13px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.mainbutton:hover {
+    -fx-background-color: #0056b3;
+}
+
+.footer-background {
+    -fx-background-color: #1A1C30;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+
+
+/* main */
+
+.noPostsLabel {
+    -fx-font-family: "Arial";
+    -fx-font-size: 16px;
+    -fx-text-fill: #AAAAAA;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-opacity: 0.7;
+}
+
+#usernameSearchField {
+    -fx-background-color: #3A3D5B;
+    -fx-padding: 10px;
+    -fx-border-width: 1px;
+    -fx-border-color: #555;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.search-button {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-font-size: 15px;
+    -fx-padding: 5 10;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-text-fill: #FFFFFF;
+}
+
+.search-button:hover {
+    -fx-background-color: #0056b3;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#searchResultsBox {
+    -fx-padding: 5px;
+}
+
+.usernameSearchLabel {
+    -fx-padding: 3px 150px 3px 150px;
+    -fx-border-color: linear-gradient(to bottom, #d6a6e7, #a65ea1);
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #2B2D42;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
+}
+
+.noResultsLabel {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(170, 170, 170, 0.89);
+    -fx-font-weight: bold;
+    -fx-padding: 3px 0px 3px 125px;
+}
+
+/* profiili */
+
+.languageBoxProfile {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-font-size: 12px;
+    -fx-pref-width: 80px;
+    -fx-pref-height: 35px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-cursor: hand;
+}
+
+.languageBoxProfile .list-view {
+    -fx-background-color: #2B2D42;
+    -fx-border-color: #0056b3;
+}
+
+.languageBoxProfile .list-view .list-cell {
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 10px;
+}
+
+.languageBoxProfile .list-view .list-cell:hover {
+    -fx-background-color: #3A3D5B;
+    -fx-cursor: hand;
+}
+
+.languageBoxProfile .list-view .list-cell:selected {
+    -fx-background-color: #1A1C30;
+    -fx-text-fill: #FFFFFF;
+}
+
+.languageBoxProfile .arrow {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+}
+
+.mainlabel {
+    -fx-font-size: 18px;
+    -fx-padding: 20px;
+}
+
+.profile-image {
+    -fx-background-color: #2B2D42;
+    -fx-padding: 10px;
+}
+
+.profile-info {
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.newButton {
+    -fx-background-color: #1A1C30;
+    -fx-font-size: 16px;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 30px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-text-fill: #FFFFFF;
+}
+
+.newButton:hover, .createPost:hover {
+    -fx-background-color: #9A7197;
+    -fx-cursor: hand;
+}
+
+.messageButton:hover, .settingsProfile:hover {
+    -fx-background-color: #0056b3;
+    -fx-cursor: hand;
+}
+
+.messageButton {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-font-size: 20px;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 30px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-text-fill: #FFFFFF;
+}
+
+.settingsProfile {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-font-size: 20px;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 30px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-text-fill: #FFFFFF;
+}
+
+.createPost {
+    -fx-background-color: #1A1C30;
+    -fx-font-size: 12px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-text-fill: #FFFFFF;
+}
+
+.usernameLabel {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+}
+
+.registeredLabel {
+    -fx-font-size: 10px;
+    -fx-text-fill: lightgrey;
+}
+
+.nameLabel {
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.bioLabel {
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+    -fx-text-fill: #AAAAAA;
+}
+
+.followersLabel {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+}
+
+.followingLabel {
+    -fx-font-size: 16px;
+    -fx-text-fill: #3b5998;
+}
+
+/* profiilin menu */
+
+.context-menu {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-border-color: #0056b3;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-padding: 0;
+    -fx-color-label-visible: #FFFFFF;
+
+}
+
+.context-menu .menu-item {
+    -fx-padding: 6 3;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 1px;
+    -fx-font-size: 11px;
+    -fx-border-color: #007bff;
+}
+
+.context-menu .menu-item:hover {
+
+    -fx-background-color: #3e9bfc;
+    -fx-text-fill: #FFFFFF;
+    -fx-cursor: hand;
+}
+
+/* login ja register */
+
+.text-field {
+    -fx-pref-width: 300px;
+    -fx-padding: 15;
+    -fx-border-color: #555;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #3A3D5B;
+    -fx-text-fill: #FFFFFF;
+}
+
+.text-field2 {
+    -fx-pref-width: 300px;
+    -fx-padding: 15;
+    -fx-border-color: #555;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #3A3D5B;
+    -fx-text-fill: #FFFFFF;
+}
+
+.loginButton {
+    -fx-pref-width: 300px;
+    -fx-padding: 15;
+    -fx-background-color: #1A1C30;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.loginButton:hover {
+    -fx-background-color: #9A7197;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.registerButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFFFFF;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+.registerButton:hover {
+    -fx-text-fill: #9A7197;
+    -fx-font-weight: bold;
+}
+
+.info-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #9A7197;
+}
+
+.small-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.labelField {
+    -fx-font-size: 12px;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 0 0 -15px 0;
+    -fx-alignment: center-left;
+    -fx-pref-width: 310px;
+}
+
+/* new post */
+
+.postPage {
+    -fx-alignment: center;
+}
+
+.headerLabelPost {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 15 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
+}
+
+.chooseImageButton {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
+}
+
+.chooseImageButton:hover {
+    -fx-background-color: #0056b3;
+    -fx-cursor: hand;
+}
+
+.imagePreview {
+    -fx-border-color: #007bff;
+    -fx-border-width: 3;
+    -fx-border-radius: 10;
+    -fx-background-color: #2B2D42;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
+}
+
+.captionArea {
+    -fx-background-color: rgba(43, 45, 66, 0.9);
+    -fx-border-color: #555;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0, 1);
+}
+
+.captionLabel, .textPostLabel {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 5 0;
+}
+
+.postButton {
+    -fx-background-color: linear-gradient(to right, #1A1C30, #2A2D45);
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-font-size: 16px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.5, 0, 2);
+}
+
+.postButton:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-background-color: linear-gradient(to right, #0A0C20, #1A1D35);
+    -fx-cursor: hand;
+}
+
+.closeButton {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-font-size: 16px;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 30px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+    -fx-text-fill: #FFFFFF;
+}
+
+.closeButton:hover {
+    -fx-background-color: #0056b3;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(gaussian, #373333, 5, 0.5, 0, 2);
+}
+
+/* text postaukset */
+
+.textPostArea {
+    -fx-background-color: rgba(43, 45, 66, 0.9);
+    -fx-border-color: #555;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0, 1);
+}
+
+.textPostArea:focused {
+    -fx-border-color: #0077cc;
+    -fx-border-width: 2px;
+    -fx-background-color: rgba(43, 45, 66, 0.95);
+}
+
+.editorToolbar {
+    -fx-padding: 5px 0;
+}
+
+.emojiButton {
+    -fx-background-color: #3A3D5B;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 4px 8px;
+    -fx-border-color: #555;
+    -fx-border-width: 1px;
+}
+
+.emojiButton:hover {
+    -fx-background-color: #2B2D42;
+}
+
+.inspirationLabel {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #AAAAAA;
+}
+
+.inspirationText {
+    -fx-font-size: 12px;
+    -fx-background-color: rgba(43, 45, 66, 0.8);
+    -fx-padding: 10px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-text-fill: #AAAAAA;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 0);
+}
+
+/* log out dialog */
+
+.dialog-box {
+    -fx-padding: 20px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-background-color: #2B2D42;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0, 0, 5);
+}
+
+.dialog-box Label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-padding-bottom: 10px;
+}
+
+.dialog-box Button {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 25px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+}
+
+.dialog-box Button:hover {
+    -fx-background-color: #0056b3;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.dialog-box Button:pressed {
+    -fx-background-color: #004085;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.dialog-box #logOutButton {
+    -fx-background-color: linear-gradient(to bottom, #b235dc, #7823c8);
+}
+
+.dialog-box #logOutButton:hover {
+    -fx-background-color: #7823c8;
+}
+
+.dialog-box #logOutButton:pressed {
+    -fx-background-color: #7823c8;
+}
+
+.dialog-box HBox {
+    -fx-alignment: center;
+    -fx-spacing: 15px;
+}
+
+/* update info */
+
+.headerLabel {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0;
+    -fx-text-fill: #FFFFFF;
+}
+
+.otherLabel {
+    -fx-font-size: 14px;
+    -fx-text-fill: #AAAAAA;
+    -fx-font-weight: bold;
+}
+
+.password-field2, .text-field2 {
+    -fx-pref-width: 300px;
+    -fx-background-color: #3A3D5B;
+    -fx-text-fill: #FFFFFF;
+}
+
+.password-strength-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #888;
+}
+
+.password-field2.weak, .text-field2.weak {
+    -fx-background-color: #ffdddd;
+}
+
+.password-field2.medium, .text-field2.medium {
+    -fx-background-color: #ffffcc;
+}
+
+.password-field2.strong, .text-field2.strong {
+    -fx-background-color: #ccffcc;
+}
+
+.password-requirements {
+    -fx-font-size: 12px;
+    -fx-text-fill: #AAAAAA;
+}
+
+.password-requirements .check-icon {
+    -fx-fill: green;
+}
+
+/* edit profile */
+
+.editProfileButton {
+    -fx-padding: 10;
+    -fx-background-color: #1A1C30;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 25px;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.editProfileButton:hover {
+    -fx-background-color: #9A7197;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.bio-field {
+    -fx-pref-width: 300px;
+    -fx-padding: 10;
+    -fx-border-color: #555;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: #3A3D5B;
+    -fx-text-fill: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 0);
+}
+
+/* new post */
+
+.post-cell {
+    -fx-background-color: #2B2D42;
+    -fx-padding: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #555;
+    -fx-cursor: hand;
+}
+
+.post-cell:hover {
+    -fx-background-color: #3A3D5B;
+}
+
+.post-cell:pressed {
+    -fx-background-color: #1A1C30;
+}
+
+.username {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.username:hover {
+    -fx-text-fill: linear-gradient(to bottom, #d6a6e7, #a65ea1);
+}
+
+.username:pressed {
+    -fx-text-fill: #a65ea1;
+}
+
+.post-content {
+    -fx-font-size: 14px;
+    -fx-line-spacing: 1.2em;
+    -fx-text-fill: #AAAAAA;
+    line-height: 1.5;
+    -fx-font-family: Arial, sans-serif;
+}
+
+.comment-button {
+    -fx-background-color: linear-gradient(to bottom, #d6a6e7, #a65ea1);
+    -fx-padding: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+    -fx-transition: all 0.2s;
+}
+
+.comment-button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-background-color: linear-gradient(to bottom, #c385d8, #8f3f7e);
+    -fx-cursor: hand;
+}
+
+.comment-button:disabled {
+    -fx-opacity: 1.0;
+}
+
+.like-button {
+    -fx-background-color: linear-gradient(to bottom, #85e4a4, #57b657);
+    -fx-padding: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+    -fx-transition: all 0.2s;
+}
+
+.like-button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-background-color: linear-gradient(to bottom, #6dbd8a, #459f45);
+    -fx-cursor: hand;
+}
+
+.like-text, .comment-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #AAAAAA;
+}
+
+.username-box {
+    -fx-padding: 5;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+    -fx-background-color: #3A3D5B;
+    -fx-border-radius: 5;
+}
+
+.post-date {
+    -fx-font-size: 10px;
+    -fx-text-fill: #888;
+}
+
+/* uusi postaus modaali */
+
+.comment-section {
+    -fx-background-color: #3A3D5B;
+}
+
+.comment-text {
+    -fx-background-color: #2B2D42;
+    -fx-padding: 10;
+    -fx-background-radius: 5;
+    -fx-margin: 5;
+}
+
+.comment-author {
+    -fx-font-weight: bold;
+    -fx-fill: #2980b9;
+    -fx-font-size: 12px;
+    -fx-margin-left: 5px;
+}
+
+.comment-input {
+    -fx-background-color: #3A3D5B;
+    -fx-border-color: #555;
+    -fx-padding: 8px;
+    -fx-font-size: 13px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.close-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 18px;
+    -fx-alignment: top-right;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+}
+
+.close-button:hover {
+    -fx-scale-x: 1.3;
+    -fx-scale-y: 1.3;
+}
+
+.comment-button2 {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-text-fill: white;
+    -fx-padding: 6px 12px;
+    -fx-font-size: 12px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.comment-button2:hover {
+    -fx-background-color: #0056b3;
+}
+
+.comment-button2:pressed {
+    -fx-background-color: #0056b3;
+}
+
+.comment-box {
+    -fx-background-color: #2B2D42;
+    -fx-padding: 15;
+    -fx-border-color: rgba(55, 51, 51, 0.1);
+    -fx-border-width: 1;
+    -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* user profiili sivu */
+
+.follow-button, .message-button {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-font-size: 13px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.follow-button:hover, .message-button:hover {
+    -fx-background-color: #0056b3;
+}
+
+/* ScrollPane tausta */
+
+.scroll-pane {
+    -fx-background-color: #2B2D42;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #555;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #555;
+}
+
+/* user message */
+
+.message-textfield {
+    -fx-prompt-text-fill: #888;
+    -fx-background-color: #3A3D5B;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #555;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 2);
+    -fx-transition: background-color 0.3s ease;
+}
+
+.message-textfield:focused {
+    -fx-background-color: #2B2D42;
+    -fx-border-color: #007bff;
+}
+
+.messageListBox {
+    -fx-background-color: linear-gradient(to bottom, #3A3D5B, #2B2D42);
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+}
+
+.message-input-hbox {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-alignment: center;
+}
+
+.send-button {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 2);
+    -fx-transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.send-button:hover {
+    -fx-background-color: #0056b3;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.usernameBackgroundPane {
+    -fx-background-color: #2B2D42;
+    -fx-padding: 12;
+    -fx-background-radius: 5;
+    -fx-margin: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+}
+
+.usernameLabelMessage {
+    -fx-font-size: 20px;
+    -fx-text-fill: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 0, 1);
+}
+
+.message-label1 {
+    -fx-background-color: #3A3D5B;
+    -fx-border-color: #555;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 12px;
+    -fx-text-fill: #FFFFFF;
+    -fx-wrap-text: true;
+    -fx-max-width: 330px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0, 0, 2);
+}
+
+.message-label2 {
+    -fx-background-color: #2B2D42;
+    -fx-border-color: #555;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 12px;
+    -fx-text-fill: #FFFFFF;
+    -fx-wrap-text: true;
+    -fx-max-width: 330px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0, 0, 2);
+}
+
+.date-label {
+    font-size: 8px;
+    text-fill: #888;
+}
+
+/* message sivu */
+
+.conversationList {
+    -fx-padding: 10;
+    -fx-border-radius: 0;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+}
+
+.message-list-cell {
+    -fx-padding: 20px;
+    -fx-background-color: #3A3D5B;
+    -fx-border-color: #555;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-cursor: hand;
+}
+
+.message-list-cell:hover {
+    -fx-background-color: #2B2D42;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 6, 0, 0, 2);
+}
+
+.username-labelmsg {
+    -fx-font-weight: bold;
+    -fx-text-fill: #007bff;
+    -fx-font-size: 14px;
+    -fx-padding: 5 5 5 0;
+}
+
+.message-labelmsg {
+    -fx-font-size: 13px;
+    -fx-text-fill: #FFFFFF;
+    -fx-wrap-text: true;
+    -fx-padding: 5 5 5 0;
+}
+
+/* list view */
+.list-view {
+   -fx-background-color: #2B2D42; /* Dark background color */
+   -fx-text-fill: #FFFFFF; /* White text color */
+}
+
+.list-view .list-cell {
+    -fx-background-color: #2B2D42; /* Dark background color for list cells */
+    -fx-text-fill: #FFFFFF; /* White text color for list cells */
+}
+
+.list-view .list-cell:hover {
+    -fx-text-fill: #FFFFFF; /* White text color on hover */
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #1A1C30; /* Darker background color when selected */
+    -fx-text-fill: #FFFFFF; /* White text color when selected */
+}
+
+
+.languageBox {
+    -fx-background-color: #2B2D42;
+    -fx-border-radius: 4px;
+    -fx-border-color: #555;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
+    -fx-cursor: hand;
+}
+
+.languageBox .text-field {
+    -fx-fill: #FFFFFF;
+}
+
+
+.languageBox .combo-box-base{
+    -fx-fill: #FFFFFF;
+}
+
+.languageBox .list-view {
+    -fx-background-color: #2B2D42;
+    -fx-border-color: #555;
+    -fx-text-fill: #FFFFFF;
+}
+
+.languageBox .list-view .list-cell {
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 10px;
+    -fx-background-color: #2B2D42;
+}
+
+.languageBox .list-view .list-cell:hover {
+    -fx-background-color: #3A3D5B;
+    -fx-cursor: hand;
+    -fx-text-fill: #FFFFFF;
+}
+
+.languageBox .list-view .list-cell:selected {
+    -fx-background-color: #1A1C30;
+    -fx-color-label-visible: #FFFFFF;
+    -fx-text-fill: #FFFFFF;
+}
+
+.languageBox .arrow-button .arrow {
+    -fx-background-color: #2B2D42;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* CSS for PostListCell elements */
+
+/* HBox containing the entire post cell */
+.post-cell {
+    -fx-background-color: #2B2D42; /* Dark background color */
+    -fx-padding: 10px;
+    -fx-border-color: #3A3D5B; /* Border color */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* VBox containing the comment section */
+.comment-section {
+    -fx-background-color: #3A3D5B; /* Slightly lighter background color */
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* VBox containing each comment */
+
+.comment-box {
+    -fx-background-color: #2B2D42; /* Dark background color */
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Ensure the entire VBox has the desired background color */
+#detailedPost-contentBox {
+    -fx-background-color: #2B2D42; /* Dark background color */
+    -fx-border-color: #555;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
+}
+/* VBox containing the username */
+.detail-username-box {
+    -fx-background-color: #3A3D5B; /* Slightly lighter background color */
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Text for the username */
+.detail-username {
+    -fx-fill: #FFFFFF; /* White text color */
+    -fx-font-weight: bold;
+}
+
+/* Text for the post date */
+.detail-post-date {
+    -fx-fill: #AAAAAA; /* Light grey text color */
+    -fx-font-size: 12px;
+}
+
+/* Text for the post content */
+.detail-post-content {
+    -fx-fill: #FFFFFF; /* White text color */
+    -fx-font-size: 14px;
+}
+
+/* VBox containing the bottom section (like and comment buttons) */
+.bottom-section {
+    -fx-padding: 10px 0;
+}
+
+/* Text for the like count */
+.like-text {
+    -fx-fill: #FFFFFF; /* White text color */
+    -fx-font-size: 12px;
+}
+
+/* Text for the comment count */
+.comment-text {
+    -fx-fill: #FFFFFF; /* White text color */
+    -fx-font-size: 12px;
+}
+
+/* VBox containing the comment section */
+.comment-section {
+    -fx-background-color: #3A3D5B; /* Slightly lighter background color */
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+
+/* Text for the comment author */
+.comment-author {
+    -fx-fill: #2980b9; /* Blue text color */
+    -fx-font-size: 12px;
+}
+
+/* Text for the comment content */
+.comment-text {
+    -fx-fill: #FFFFFF; /* White text color */
+    -fx-font-size: 12px;
+}
+
+/* StackPane containing the post image */
+.image-section {
+    -fx-padding: 10px 0;
+}
+
+#detailedPost-contentBox{
+    -fx-background-color: #2B2D42;
+    -fx-border-color: #555;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 1);
+}
+

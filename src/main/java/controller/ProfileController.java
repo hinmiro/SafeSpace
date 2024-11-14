@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.*;
+import services.Theme;
 import view.*;
 
 import java.io.IOException;
@@ -125,7 +126,24 @@ public class ProfileController {
         logOutItem.setOnAction(event -> showLogOut());
         logOutItem.setText(buttons.getString("logOut"));
 
-        settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, logOutItem);
+        MenuItem changeThemeItem = new MenuItem("Switch Theme");
+        changeThemeItem.setOnAction(event -> {
+            Theme.switchTheme();
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/profile.fxml"));
+                Parent root = fxmlLoader.load();
+                Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+                scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+                stage.setScene(scene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        changeThemeItem.setText(buttons.getString("switchTheme"));
+
+
+        settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, changeThemeItem, logOutItem);
         settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
         displayUserPosts();
 
@@ -224,6 +242,7 @@ public class ProfileController {
             Stage primaryStage = (Stage) profileButton.getScene().getWindow();
             logOutController.setPrimaryStage(primaryStage);
             Scene logoutScene = new Scene(logoutRoot);
+            logoutScene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
             Stage dialogStage = new Stage();
             dialogStage.setScene(logoutScene);
             logOutController.setDialogStage(dialogStage);
@@ -248,7 +267,12 @@ public class ProfileController {
             Stage stage = (Stage) profileButton.getScene().getWindow();
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("updateinfo"));
-            stage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
+            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+            stage.setScene(scene);
+            stage.getScene().getStylesheets().set(0, getClass().getResource(Theme.getTheme()).toExternalForm());
+
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -268,7 +292,9 @@ public class ProfileController {
             Stage stage = (Stage) profileButton.getScene().getWindow();
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("editprofile"));
-            stage.setScene(new Scene(root, 360, ScreenUtil.getScaledHeight()));
+            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -302,6 +328,8 @@ public class ProfileController {
             Parent root = fxmlLoader.load();
 
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
 

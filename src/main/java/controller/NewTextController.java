@@ -6,6 +6,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.ScreenUtil;
 import model.SessionManager;
+import services.Theme;
+
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -91,6 +93,7 @@ public class NewTextController {
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("main"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

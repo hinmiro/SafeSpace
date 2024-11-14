@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.*;
+import services.Theme;
 import view.View;
 import java.io.IOException;
 import java.util.*;
@@ -202,6 +203,7 @@ public class MainController {
         }
 
         Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+        scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
         stage.setScene(scene);
         stage.setTitle(title);
     }
@@ -235,6 +237,7 @@ public class MainController {
             Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
             Scene scene = new Scene(newPostPane, 360, ScreenUtil.getScaledHeight());
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -253,6 +256,7 @@ public class MainController {
             Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
             Scene scene = new Scene(newPostPane2, 360, ScreenUtil.getScaledHeight());
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
