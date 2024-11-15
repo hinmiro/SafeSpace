@@ -70,10 +70,6 @@ public class ControllerForView extends Controller {
         return app.createNewPostWithImage(text, imageId);
     }
 
-    public BlockingQueue<Post> getFeed() {
-        return feedQueue;
-    }
-
     public Image getProfilePicture(int userId) {
         Image img = null;
         try {
@@ -94,11 +90,28 @@ public class ControllerForView extends Controller {
         return img;
     }
 
+    // Profile page
     public List<Post> getUserPostsOwnProfile() throws IOException, InterruptedException {
         UserModel user = SessionManager.getInstance().getLoggedUser();
         UserModel updatedUser = app.getUserById(user.getUserId());
         if (updatedUser != null) {
             user.setPosts(updatedUser.getPosts());
+            List<Post> posts = new ArrayList<>();
+            for (Integer postId : user.getPosts()) {
+                Post post = app.getPostById(String.valueOf(postId));
+                if (post != null) {
+                    posts.add(post);
+                }
+            }
+            return posts;
+        }
+        return new ArrayList<>();
+    }
+
+    // User Profile
+    public List<Post> getUserPostsOwnProfile(int userId) throws IOException, InterruptedException {
+        UserModel user = app.getUserById(userId);
+        if (user != null) {
             List<Post> posts = new ArrayList<>();
             for (Integer postId : user.getPosts()) {
                 Post post = app.getPostById(String.valueOf(postId));
@@ -125,29 +138,6 @@ public class ControllerForView extends Controller {
             return app.getUserByName(username);
         } catch (IOException | InterruptedException e) {
             return null;
-        }
-    }
-
-    public List<Post> getUserPostsOwnProfile(int userId) throws IOException, InterruptedException {
-        UserModel user = app.getUserById(userId);
-        if (user != null) {
-            List<Post> posts = new ArrayList<>();
-            for (Integer postId : user.getPosts()) {
-                Post post = app.getPostById(String.valueOf(postId));
-                if (post != null) {
-                    posts.add(post);
-                }
-            }
-            return posts;
-        }
-        return new ArrayList<>();
-    }
-
-    public void removeLike(int postId) {
-        try {
-            app.removeLike(String.valueOf(postId));
-        } catch (InterruptedException | IOException e) {
-            System.out.println(e.getMessage());
         }
     }
 
