@@ -57,6 +57,7 @@ public class MainController {
 
     @FXML
     private void initialize() {
+        SessionManager.getInstance().setMainController(this);
         updateLanguage();
 
         ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
@@ -108,7 +109,8 @@ public class MainController {
         usernameSearchField.setPromptText(fields.getString("searchUsername"));
     }
 
-    private void updateLanguage() {
+    void updateLanguage() {
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale(); // tämä lisätty
         alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
