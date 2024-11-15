@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.ScreenUtil;
 import model.SessionManager;
+import services.Theme;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -71,6 +73,7 @@ public class LogOutController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
         Parent loginRoot = loader.load();
         Scene loginScene = new Scene(loginRoot, 360, ScreenUtil.getScaledHeight());
+        loginScene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
 
         primaryStage.setScene(loginScene);
         ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);

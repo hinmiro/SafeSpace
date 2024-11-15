@@ -73,4 +73,20 @@ public class UserData {
         followers.add(followerUser);
         followersCount = followers.size();
     }
+
+    public ArrayList<Integer> getFollowingUserIds() {
+        ArrayList<Integer> followingUserIds = new ArrayList<>();
+        for (UserModel user : following) {
+            followingUserIds.add(user.getUserId());
+        }
+        return followingUserIds;
+    }
+
+    public ArrayList<Integer> getFriendsIds() {
+        ArrayList<Integer> friendsIds = new ArrayList<>();
+        for (UserModel user : friends) {
+            friendsIds.add(user.getUserId());
+        }
+        return friendsIds;
+    }
 }

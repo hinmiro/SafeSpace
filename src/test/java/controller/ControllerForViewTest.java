@@ -1,122 +1,56 @@
 package controller;
 
-import model.Language;
-import model.SessionManager;
-import org.junit.After;
+import model.SoftwareModel;
+import model.UserModel;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Locale;
-
+import java.lang.reflect.Field;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class ControllerForViewTest {
-    private Locale locale;
-
+    ControllerForView controller;
+    SoftwareModel mockApp;
 
     @Before
     public void setUp() throws Exception {
-        if (SessionManager.getInstance().getSelectedLanguage() == null) {
-            SessionManager.getInstance().setLanguage(Language.EN);
-        }
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        controller = ControllerForView.getInstance();
+        mockApp = mock(SoftwareModel.class);
 
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        locale = null;
+        Field appField = Controller.class.getDeclaredField("app");
+        appField.setAccessible(true);
+        appField.set(controller, mockApp);
     }
 
     @Test
-    public void getInstance() {
-        ControllerForView inst1 = ControllerForView.getInstance();
-        ControllerForView inst2 = ControllerForView.getInstance();
-        assertTrue("Should be same instance", inst2 == inst1);
+    public void testGetInstanceSingleton() {
+        ControllerForView instance1 = ControllerForView.getInstance();
+        ControllerForView instance2 = ControllerForView.getInstance();
+        assertSame(instance1, instance2);
     }
 
     @Test
-    public void login() {
+    public void testLoginSuccessful() throws Exception {
+        UserModel mockUser = new UserModel("testUser", 1, "testDate");
+        when(mockApp.login("username", "password")).thenReturn(mockUser);
+
+        UserModel result = controller.login("username", "password");
+
+        assertNotNull(result);
+        assertEquals("testUser", result.getUsername());
+        verify(mockApp).login("username", "password");
     }
 
     @Test
-    public void register() {
+    public void testRegisterSuccessful() throws Exception {
+        UserModel mockUser = new UserModel("newUser", 1, "testDate");
+        when(mockApp.postRegister("newUser", "password")).thenReturn(mockUser);
+
+        UserModel result = controller.register("newUser", "password");
+
+        assertNotNull(result);
+        assertEquals("newUser", result.getUsername());
+        verify(mockApp).postRegister("newUser", "password");
     }
 
-    @Test
-    public void updateProfile() {
-    }
-
-    @Test
-    public void sendPost() {
-    }
-
-    @Test
-    public void sendPostWithImage() {
-    }
-
-    @Test
-    public void getFeed() {
-    }
-
-    @Test
-    public void getProfilePicture() {
-    }
-
-    @Test
-    public void getPostPicture() {
-    }
-
-    @Test
-    public void getUserPostsOwnProfile() {
-    }
-
-    @Test
-    public void getUserById() {
-    }
-
-    @Test
-    public void getUserByName() {
-    }
-
-    @Test
-    public void testGetUserPostsOwnProfile() {
-    }
-
-    @Test
-    public void removeLike() {
-    }
-
-    @Test
-    public void getPostCommentsById() {
-    }
-
-    @Test
-    public void addComment() {
-    }
-
-    @Test
-    public void sendMessage() {
-    }
-
-    @Test
-    public void getMessages() {
-    }
-
-    @Test
-    public void getCurrentConversation() {
-    }
-
-    @Test
-    public void addFriend() {
-    }
-
-    @Test
-    public void removeFriend() {
-    }
-
-    @Test
-    public void isFriend() {
-    }
 }

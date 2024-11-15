@@ -13,7 +13,7 @@
 <?import javafx.scene.control.ListView?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.MessageController" stylesheets="@styles.css" styleClass="borderWide">
+            fx:controller="controller.MessageController"  styleClass="borderWide">
 
     <top>
         <VBox>
@@ -43,7 +43,7 @@
     </top>
 
     <center>
-        <StackPane>
+        <StackPane fx:id="messageStack">
             <Label fx:id="noMessagesLabel" text="No messages yet..." styleClass="noPostsLabel" />
             <ListView fx:id="conversationListView" BorderPane.alignment="CENTER" prefHeight="1000" styleClass="conversationList"/>
         </StackPane>

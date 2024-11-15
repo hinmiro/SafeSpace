@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.RadioButton?>
 
-<BorderPane maxHeight="800.0" minHeight="0.0" styleClass="borderWide" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<BorderPane maxHeight="800.0" minHeight="0.0" styleClass="borderWide" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
 
     <top>
         <VBox>
@@ -56,6 +56,11 @@
                 <VBox fx:id="searchResultsBox">
                 </VBox>
                 <Region prefHeight="1.5" styleClass="line" />
+
+                <HBox alignment="CENTER">
+                    <RadioButton fx:id="allOption" text="All" selected="true" styleClass="option1"/>
+                    <RadioButton fx:id="friendsOption" text="Following" styleClass="option2"/>
+                </HBox>
             </VBox>
         </VBox>
     </top>

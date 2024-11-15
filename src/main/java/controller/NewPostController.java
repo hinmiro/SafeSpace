@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.*;
 import model.ScreenUtil;
 import model.SessionManager;
+import services.Theme;
+
 import java.io.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -99,6 +101,7 @@ public class NewPostController {
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("main"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
