@@ -200,4 +200,8 @@ public class ControllerForView extends Controller {
             return false;
         }
     }
+
+    public void setUserArrays() throws IOException, InterruptedException {
+        app.getUserArrays();
+    }
 }
