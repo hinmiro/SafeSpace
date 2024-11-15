@@ -146,6 +146,11 @@ StackPane, BorderPane, ScrollPane {
     -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
 }
 
+.languageBoxProfile .text {
+    -fx-fill: #ffff;
+    -fx-font-size: 12px;
+}
+
 .languageBox .text {
     -fx-fill: #ffff;
     -fx-font-size: 14px;
