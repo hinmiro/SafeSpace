@@ -257,7 +257,7 @@ StackPane, BorderPane, ScrollPane {
 
 .followingLabel {
     -fx-font-size: 16px;
-    -fx-text-fill: #3b5998;
+    -fx-text-fill: #deeaff;
 }
 
 /* profiilin menu */
@@ -1113,6 +1113,7 @@ StackPane, BorderPane, ScrollPane {
     -fx-font-size: 12px;
 }
 
+
 .comment-text {
     -fx-fill: #FFFFFF; /* White text color */
     -fx-font-size: 12px;
@@ -1122,3 +1123,26 @@ StackPane, BorderPane, ScrollPane {
     -fx-padding: 10px 0;
 }
 
+.option1, .option2 {
+    -fx-font-size: 13px;
+    -fx-text-fill: #ffffff; /* White text color */
+    -fx-padding: 4px;
+    -fx-background-color: #333333; /* Dark background color */
+    -fx-background-radius: 10px;
+    -fx-border-width: 2px;
+    -fx-border-color: #555555; /* Darker border color */
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-pref-width: 350px;
+}
+
+.option1:selected, .option2:selected {
+    -fx-background-color: #2B2D42; /* Darker selected background color */
+    -fx-text-fill: #ffffff; /* White text color */
+    -fx-border-color: #2B2D42; /* Darker border color */
+    -fx-cursor: hand;
+}
+
+.option1:hover, .option2:hover {
+    -fx-cursor: hand;
+}
