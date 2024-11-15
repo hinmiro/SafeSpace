@@ -156,6 +156,7 @@ public class UpdateInfoController {
         } else if (password.equals(confirmPassword)) {
             try {
                 boolean success = controllerForView.updateProfile(null, password, null, null);
+                controllerForView.setUserArrays();
                 if (success) {
                     showAlert(Alert.AlertType.INFORMATION, alerts.getString("infoUpdated"), alerts.getString("passWordUpdated"));
                     handleClose();

@@ -124,6 +124,7 @@ public class EditProfileController {
 
         try {
             boolean updateSuccess = controllerForView.updateProfile(newName, null, newBio, selectedFile);
+            controllerForView.setUserArrays();
 
             if (updateSuccess) {
                 if (newImage != null) {

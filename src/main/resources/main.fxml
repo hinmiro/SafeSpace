@@ -58,8 +58,8 @@
                 <Region prefHeight="1.5" styleClass="line" />
 
                 <HBox alignment="CENTER">
-                    <RadioButton fx:id="allOption" text="All Posts" selected="true" styleClass="option1"/>
-                    <RadioButton fx:id="friendsOption" text="Friends posts" styleClass="option2"/>
+                    <RadioButton fx:id="allOption" text="All" selected="true" styleClass="option1"/>
+                    <RadioButton fx:id="friendsOption" text="Following" styleClass="option2"/>
                 </HBox>
             </VBox>
         </VBox>

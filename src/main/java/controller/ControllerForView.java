@@ -21,17 +21,12 @@ public class ControllerForView extends Controller {
         return INSTANCE;
     }
 
-    void setApp(SoftwareModel app) {
-        this.app = app;
-    }
-
     public UserModel login(String username, String password) {
         try {
             UserModel user = app.login(username, password);
             if (user != null) {
                 SessionManager.getInstance().setLoggedUser(user);
                 app.getUserArrays();
-                //app.getMe();
                 app.startMainFeedThread();
                 return user;
             }
@@ -50,14 +45,12 @@ public class ControllerForView extends Controller {
                 app.startMainFeedThread();
                 return user;
             }
-            //return app.postRegister(username, password);
 
         } catch (InterruptedException | IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
         return null;
     }
-
 
     // Returns true if update success, then should render popup in front view example profile updated successfully
     public boolean updateProfile(String username, String password, String bio, File image) throws IOException, InterruptedException {
@@ -75,10 +68,6 @@ public class ControllerForView extends Controller {
     public boolean sendPostWithImage(String text, File image) throws IOException, InterruptedException {
         String imageId = app.postPicture(image, "/post");
         return app.createNewPostWithImage(text, imageId);
-    }
-
-    public BlockingQueue<Post> getFeed() {
-        return feedQueue;
     }
 
     public Image getProfilePicture(int userId) {
@@ -101,11 +90,28 @@ public class ControllerForView extends Controller {
         return img;
     }
 
+    // Profile page
     public List<Post> getUserPostsOwnProfile() throws IOException, InterruptedException {
         UserModel user = SessionManager.getInstance().getLoggedUser();
         UserModel updatedUser = app.getUserById(user.getUserId());
         if (updatedUser != null) {
             user.setPosts(updatedUser.getPosts());
+            List<Post> posts = new ArrayList<>();
+            for (Integer postId : user.getPosts()) {
+                Post post = app.getPostById(String.valueOf(postId));
+                if (post != null) {
+                    posts.add(post);
+                }
+            }
+            return posts;
+        }
+        return new ArrayList<>();
+    }
+
+    // User Profile
+    public List<Post> getUserPostsOwnProfile(int userId) throws IOException, InterruptedException {
+        UserModel user = app.getUserById(userId);
+        if (user != null) {
             List<Post> posts = new ArrayList<>();
             for (Integer postId : user.getPosts()) {
                 Post post = app.getPostById(String.valueOf(postId));
@@ -132,29 +138,6 @@ public class ControllerForView extends Controller {
             return app.getUserByName(username);
         } catch (IOException | InterruptedException e) {
             return null;
-        }
-    }
-
-    public List<Post> getUserPostsOwnProfile(int userId) throws IOException, InterruptedException {
-        UserModel user = app.getUserById(userId);
-        if (user != null) {
-            List<Post> posts = new ArrayList<>();
-            for (Integer postId : user.getPosts()) {
-                Post post = app.getPostById(String.valueOf(postId));
-                if (post != null) {
-                    posts.add(post);
-                }
-            }
-            return posts;
-        }
-        return new ArrayList<>();
-    }
-
-    public void removeLike(int postId) {
-        try {
-            app.removeLike(String.valueOf(postId));
-        } catch (InterruptedException | IOException e) {
-            System.out.println(e.getMessage());
         }
     }
 
@@ -216,5 +199,9 @@ public class ControllerForView extends Controller {
         } catch (IOException | InterruptedException e) {
             return false;
         }
+    }
+
+    public void setUserArrays() throws IOException, InterruptedException {
+        app.getUserArrays();
     }
 }
