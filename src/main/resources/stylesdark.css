@@ -395,6 +395,14 @@ StackPane, BorderPane, ScrollPane {
     -fx-padding: 10px;
     -fx-font-size: 14px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0, 1);
+    -fx-text-fill: #ffff;
+}
+
+.cationArea .content{
+    -fx-background-color: #3A3D5B;
+    -fx-border-color: #3A3D5B;
+    -fx-border-radius: 0;
+    -fx-text-fill: #FFFFFF;
 }
 
 .captionLabel, .textPostLabel {
@@ -453,6 +461,13 @@ StackPane, BorderPane, ScrollPane {
     -fx-padding: 10px;
     -fx-font-size: 14px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0, 1);
+    -fx-text-fill: #ffffff;
+}
+.textPostArea .content{
+    -fx-background-color: #3A3D5B;
+    -fx-border-color: #3A3D5B;
+    -fx-border-radius: 0;
+    -fx-text-fill: #FFFFFF;
 }
 
 .textPostArea:focused {
@@ -621,13 +636,22 @@ StackPane, BorderPane, ScrollPane {
 .bio-field {
     -fx-pref-width: 300px;
     -fx-padding: 10;
-    -fx-border-color: #555;
-    -fx-border-width: 1px;
-    -fx-border-radius: 5px;
+    -fx-border-radius: 0;
+    -fx-border-color: #3A3D5B;
+
     -fx-background-color: #3A3D5B;
     -fx-text-fill: #FFFFFF;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.5, 0, 0);
+
 }
+
+.bio-field .content{
+    -fx-background-color: #3A3D5B;
+    -fx-border-color: #3A3D5B;
+    -fx-border-radius: 0;
+    -fx-text-fill: #FFFFFF;
+}
+
+
 
 /* new post */
 
