@@ -21,17 +21,12 @@ public class ControllerForView extends Controller {
         return INSTANCE;
     }
 
-    void setApp(SoftwareModel app) {
-        this.app = app;
-    }
-
     public UserModel login(String username, String password) {
         try {
             UserModel user = app.login(username, password);
             if (user != null) {
                 SessionManager.getInstance().setLoggedUser(user);
                 app.getUserArrays();
-                //app.getMe();
                 app.startMainFeedThread();
                 return user;
             }
@@ -50,14 +45,12 @@ public class ControllerForView extends Controller {
                 app.startMainFeedThread();
                 return user;
             }
-            //return app.postRegister(username, password);
 
         } catch (InterruptedException | IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
         return null;
     }
-
 
     // Returns true if update success, then should render popup in front view example profile updated successfully
     public boolean updateProfile(String username, String password, String bio, File image) throws IOException, InterruptedException {
