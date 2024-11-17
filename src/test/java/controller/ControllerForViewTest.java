@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -212,20 +214,66 @@ public class ControllerForViewTest {
         verify(mockApp).isFriend(1, 2);
     }
 
-    // todo
     @Test
     public void testGetUserPostsOwnProfile() throws Exception {
+        UserModel mockUser = new UserModel("testUser", 1, "testDate");
+        mockUser.setPosts(new ArrayList<>(List.of(1, 2)));
+        SessionManager.getInstance().setLoggedUser(mockUser);
 
+        UserModel updatedUser = new UserModel("testUser", 1, "testDate");
+        updatedUser.setPosts(new ArrayList<>(List.of(1, 2)));
+        when(mockApp.getUserById(1)).thenReturn(updatedUser);
+
+        Post post1 = new Post(1, 1, "testUser", "Post 1 content", "imageId", "2024-11-17", 0, 0);
+        Post post2 = new Post(2, 1, "testUser", "Post 2 content", "imageId", "2024-11-17", 0, 0);
+        when(mockApp.getPostById("1")).thenReturn(post1);
+        when(mockApp.getPostById("2")).thenReturn(post2);
+
+        List<Post> result = controller.getUserPostsOwnProfile();
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals("Post 1 content", result.get(0).getPostContent());
+        assertEquals("Post 2 content", result.get(1).getPostContent());
+
+        verify(mockApp).getUserById(1);
+        verify(mockApp).getPostById("1");
+        verify(mockApp).getPostById("2");
     }
 
-    // todo
     @Test
     public void testGetMessages() throws Exception {
+        List<Conversation> mockConversations = List.of(
+                new Conversation(new UserModel("user1", 1, "2024-11-17")),
+                new Conversation(new UserModel("user2", 2, "2024-11-17"))
+        );
+
+        when(mockApp.getMessages()).thenReturn(mockConversations);
+
+        List<Conversation> result = controller.getMessages();
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals("user1", result.get(0).getWithUser().getUsername());
+        assertEquals("user2", result.get(1).getWithUser().getUsername());
+        verify(mockApp).getMessages();
     }
 
-    // todo
     @Test
     public void testGetCurrentConversation() throws Exception {
         Conversation mockConversation = new Conversation(new UserModel("sara", 1, "2024-11-15"));
+        List<Conversation> mockConversations = List.of(
+                new Conversation(new UserModel("user1", 2, "2024-11-17")),
+                new Conversation(new UserModel("user2", 3, "2024-11-17")),
+                mockConversation
+        );
+
+        when(mockApp.getAllConversations()).thenReturn(mockConversations);
+
+        Conversation result = controller.getCurrentConversation(1);
+
+        assertNotNull(result);
+        assertEquals(mockConversation, result);
+        verify(mockApp).getAllConversations();
     }
 }
