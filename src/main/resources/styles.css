@@ -993,6 +993,33 @@ StackPane, BorderPane {
     -fx-padding: 5 5 5 0;
 }
 
+/* kieli sivu */
+
+.menuLanguageButton {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-font-size: 13px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.menuLanguageButton:hover {
+    -fx-background-color: #0056b3;
+}
+
+.menuLanguageButton:pressed {
+    -fx-background-color: #0056b3;
+}
+
+.menuLanguageButton:selected {
+    -fx-background-color: linear-gradient(to bottom, #b235dc, #7823c8);
+    -fx-text-fill: white;
+    -fx-padding: 8px 16px;
+    -fx-font-size: 13px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
 
 
 

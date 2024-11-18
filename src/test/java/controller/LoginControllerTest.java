@@ -1,7 +1,7 @@
 package controller;
 
 
-public class LoginControllerTest{
+public class LoginControllerTest {
 
 
 }

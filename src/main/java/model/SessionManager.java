@@ -1,6 +1,7 @@
 package model;
 
 import controller.MainController;
+import controller.ProfileController;
 
 public class SessionManager {
 
@@ -8,6 +9,7 @@ public class SessionManager {
     private static UserModel loggedUser;
     private static Language selectedLanguage;
     private MainController mainController;
+    private ProfileController profileController;
 
     private SessionManager() {
     }
@@ -44,5 +46,13 @@ public class SessionManager {
 
     public MainController getMainController() {
         return mainController;
+    }
+
+    public ProfileController getProfileController() {
+        return profileController;
+    }
+
+    public void setProfileController(ProfileController profileController) {
+        this.profileController = profileController;
     }
 }

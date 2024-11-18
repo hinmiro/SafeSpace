@@ -24,7 +24,8 @@ public class LocalizedButtonsTest {
             "home", "profile", "createPicPost", "createTextPost",
             "editProfile", "editInfo", "logOut",
             "saveChanges", "uploadImage", "cancel", "updatePassword", "post",
-            "chooseImage", "follow", "message", "addComment", "friendsPosts", "allPosts"
+            "chooseImage", "follow", "message", "addComment", "friendsPosts", "allPosts", "menuButton0", "menuButton1",
+            "menuButton2", "menuButton3", "menuButton4"
     };
 
 
@@ -53,8 +54,12 @@ public class LocalizedButtonsTest {
                 "Message",
                 "Add a comment",
                 "Following",
-                "All"
-
+                "All",
+                "Change Language",
+                "Edit Profile",
+                "Change Password",
+                "Switch Theme",
+                "Log Out"
         };
 
         for (int i = 0; i < buttons.length; i++) {
@@ -88,7 +93,12 @@ public class LocalizedButtonsTest {
                 "Lähetä viesti",
                 "Lisää kommentti",
                 "Seuraamasi",
-                "Kaikki"
+                "Kaikki",
+                "Vaihda kieltä",
+                "Muokkaa profiilia",
+                "Vaihda salasana",
+                "Vaihda teemaa",
+                "Kirjaudu ulos"
         };
 
         for (int i = 0; i < buttons.length; i++) {
@@ -122,7 +132,12 @@ public class LocalizedButtonsTest {
                 "メッセージ",
                 "コメントを追加",
                 "フォローしている投稿",
-                "全ての投稿"
+                "全ての投稿",
+                "言語を変更",
+                "プロフィールを編集",
+                "パスワードを変更",
+                "テーマを変更",
+                "ログアウト"
         };
 
         for (int i = 0; i < buttons.length; i++) {
@@ -156,7 +171,12 @@ public class LocalizedButtonsTest {
                 "Сообщение",
                 "Добавить комментарий",
                 "Подписки",
-                "Все"
+                "Все",
+                "Сменить язык",
+                "Редактировать профиль",
+                "Изменить пароль",
+                "Сменить тему",
+                "Выйти"
         };
 
         for (int i = 0; i < buttons.length; i++) {

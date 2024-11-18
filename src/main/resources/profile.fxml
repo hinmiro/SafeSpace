@@ -31,8 +31,6 @@
                 </center>
                 <right>
                     <HBox alignment="CENTER" spacing="5">
-                        <ComboBox fx:id="languageBox" styleClass="languageBoxProfile" onAction="#changeLanguage">
-                        </ComboBox>
                         <Button fx:id="settingsProfileID" styleClass="settingsProfile" text="≡">
                             <HBox.margin>
                                 <Insets right="10" />

@@ -62,34 +62,14 @@ public class ProfileController {
     private Label followersLabel;
     @FXML
     private Label followingLabel;
-    @FXML
-    private ComboBox<String> languageBox;
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
+        SessionManager.getInstance().setProfileController(this);
         alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
         fields = ResourceBundle.getBundle("Fields", locale);
-
-        languageBox.getItems().setAll(
-                Language.EN.getDisplayName(),
-                Language.FI.getDisplayName(),
-                Language.JP.getDisplayName(),
-                Language.RU.getDisplayName()
-        );
-
-        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
-        languageBox.setValue(currentLanguage.getDisplayName());
-
-        languageBox.setOnAction(event -> {
-            try {
-                changeLanguage();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-
 
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
@@ -152,7 +132,6 @@ public class ProfileController {
         displayUserPosts();
 
         updateLanguage();
-
     }
 
     private void updateTexts() {
@@ -168,28 +147,7 @@ public class ProfileController {
         });
     }
 
-    @FXML
-    private void changeLanguage() throws Exception {
-        String selectedLanguage = languageBox.getValue();
-
-        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
-            SessionManager.getInstance().setLanguage(Language.FI);
-        } else if (selectedLanguage.equals(Language.JP.getDisplayName())) {
-            SessionManager.getInstance().setLanguage(Language.JP);
-        } else if (selectedLanguage.equals(Language.RU.getDisplayName())) {
-            SessionManager.getInstance().setLanguage(Language.RU);
-        } else {
-            SessionManager.getInstance().setLanguage(Language.EN);
-        }
-
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-        updateLanguage();
-        refreshUIComponents();
-        mainView.showProfile();
-        //mainView.showProfile();
-    }
-
-    private void updateLanguage() {
+    protected void updateLanguage() {
         alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
@@ -245,10 +203,13 @@ public class ProfileController {
             LogOutController logOutController = loader.getController();
             logOutController.setDialogStage(dialogStage);
             logOutController.setMainController(mainController);
+
             Stage primaryStage = (Stage) profileButton.getScene().getWindow();
             logOutController.setPrimaryStage(primaryStage);
+
             Scene logoutScene = new Scene(logoutRoot);
             logoutScene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+
             Stage dialogStage = new Stage();
             dialogStage.setScene(logoutScene);
             logOutController.setDialogStage(dialogStage);
@@ -277,7 +238,6 @@ public class ProfileController {
             scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
             stage.setScene(scene);
             stage.getScene().getStylesheets().set(0, getClass().getResource(Theme.getTheme()).toExternalForm());
-
 
             stage.show();
         } catch (IOException e) {
@@ -354,7 +314,7 @@ public class ProfileController {
             e.printStackTrace();
         }
     }
-    // Tästä
+
     private void showLanguageSelectionModal() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/languageSelection.fxml"));
@@ -365,22 +325,15 @@ public class ProfileController {
             controller.setStage(modalStage);
 
             modalStage.initModality(Modality.APPLICATION_MODAL);
-            modalStage.setTitle("Change Language");
-            modalStage.setScene(new Scene(root));
+            modalStage.setResizable(false);
+            Scene scene = new Scene(root, 200, 300);
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+            modalStage.setScene(scene);
             modalStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    // Tähän
-    private void refreshUIComponents() {
-        updateLanguage();
-        usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
-        registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
-        bioLabel.setText(SessionManager.getInstance().getLoggedUser().getBio() == null ? "..." : SessionManager.getInstance().getLoggedUser().getBio());
-        // Update other UI components as needed
-    }
-
 
     public void setControllerForView(ControllerForView controller) {
         controllerForView = controller;
