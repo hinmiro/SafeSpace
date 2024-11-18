@@ -3,7 +3,7 @@ package services;
 public class Theme {
     private static final String DARK = "/stylesdark.css";
     private static final String LIGHT = "/styles.css";
-    private static String THEME = DARK;
+    private static String THEME = LIGHT;
 
     public static String getTheme() {
         return THEME;
@@ -16,5 +16,4 @@ public class Theme {
             THEME = LIGHT;
         }
     }
-
 }
