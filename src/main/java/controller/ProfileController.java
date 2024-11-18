@@ -10,11 +10,11 @@ import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
 import services.Theme;
 import view.*;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -111,9 +111,13 @@ public class ProfileController {
         homeButton.setOnAction(event -> navigateTo("/main.fxml"));
         profileButton.setOnAction(event -> navigateTo("/profile.fxml"));
 
-
         // menu profiilissa
         settingsContextMenu = new ContextMenu();
+
+        MenuItem changeLanguageItem = new MenuItem("Change Language");
+        changeLanguageItem.setOnAction(event -> showLanguageSelectionModal());
+        settingsContextMenu.getItems().add(changeLanguageItem);
+
         MenuItem editProfileItem = new MenuItem("Edit Profile");
         editProfileItem.setOnAction(event -> openEditProfilePage());
         editProfileItem.setText(buttons.getString("editProfile"));
@@ -180,6 +184,8 @@ public class ProfileController {
 
         locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
         updateLanguage();
+        refreshUIComponents();
+        mainView.showProfile();
         //mainView.showProfile();
     }
 
@@ -335,13 +341,46 @@ public class ProfileController {
 
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("main"));
-            MainController mainController = fxmlLoader.getController();
-            mainController.setMainView(mainView);
+
+            if (fxmlFile.equals("/main.fxml")) {
+                MainController mainController = fxmlLoader.getController();
+                mainController.setMainView(mainView);
+            } else if (fxmlFile.equals("/profile.fxml")) {
+                ProfileController profileController = fxmlLoader.getController();
+                profileController.setMainView(mainView);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    // Tästä
+    private void showLanguageSelectionModal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/languageSelection.fxml"));
+            Parent root = loader.load();
+
+            LanguageSelectionController controller = loader.getController();
+            Stage modalStage = new Stage();
+            controller.setStage(modalStage);
+
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setTitle("Change Language");
+            modalStage.setScene(new Scene(root));
+            modalStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    // Tähän
+    private void refreshUIComponents() {
+        updateLanguage();
+        usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
+        registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
+        bioLabel.setText(SessionManager.getInstance().getLoggedUser().getBio() == null ? "..." : SessionManager.getInstance().getLoggedUser().getBio());
+        // Update other UI components as needed
+    }
+
 
     public void setControllerForView(ControllerForView controller) {
         controllerForView = controller;
