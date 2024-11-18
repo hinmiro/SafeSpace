@@ -127,6 +127,10 @@ public class NewPostController {
                 .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif",
                         "*.webp", "*.svg"));
         selectedFile = fileChooser.showOpenDialog(imageView.getScene().getWindow());
+        if (selectedFile.length() > 5242880) {
+            showAlert(alerts.getString("fileSize"));
+            return;
+        }
 
         if (selectedFile != null) {
             try {
