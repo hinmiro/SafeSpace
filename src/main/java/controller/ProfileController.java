@@ -10,11 +10,11 @@ import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
 import services.Theme;
 import view.*;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -62,34 +62,14 @@ public class ProfileController {
     private Label followersLabel;
     @FXML
     private Label followingLabel;
-    @FXML
-    private ComboBox<String> languageBox;
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
+        SessionManager.getInstance().setProfileController(this);
         alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
         fields = ResourceBundle.getBundle("Fields", locale);
-
-        languageBox.getItems().setAll(
-                Language.EN.getDisplayName(),
-                Language.FI.getDisplayName(),
-                Language.JP.getDisplayName(),
-                Language.RU.getDisplayName()
-        );
-
-        Language currentLanguage = SessionManager.getInstance().getSelectedLanguage();
-        languageBox.setValue(currentLanguage.getDisplayName());
-
-        languageBox.setOnAction(event -> {
-            try {
-                changeLanguage();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-
 
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
@@ -111,9 +91,13 @@ public class ProfileController {
         homeButton.setOnAction(event -> navigateTo("/main.fxml"));
         profileButton.setOnAction(event -> navigateTo("/profile.fxml"));
 
-
         // menu profiilissa
         settingsContextMenu = new ContextMenu();
+
+        MenuItem changeLanguageItem = new MenuItem("Change Language");
+        changeLanguageItem.setOnAction(event -> showLanguageSelectionModal());
+        settingsContextMenu.getItems().add(changeLanguageItem);
+
         MenuItem editProfileItem = new MenuItem("Edit Profile");
         editProfileItem.setOnAction(event -> openEditProfilePage());
         editProfileItem.setText(buttons.getString("editProfile"));
@@ -148,7 +132,6 @@ public class ProfileController {
         displayUserPosts();
 
         updateLanguage();
-
     }
 
     private void updateTexts() {
@@ -164,26 +147,7 @@ public class ProfileController {
         });
     }
 
-    @FXML
-    private void changeLanguage() throws Exception {
-        String selectedLanguage = languageBox.getValue();
-
-        if (selectedLanguage.equals(Language.FI.getDisplayName())) {
-            SessionManager.getInstance().setLanguage(Language.FI);
-        } else if (selectedLanguage.equals(Language.JP.getDisplayName())) {
-            SessionManager.getInstance().setLanguage(Language.JP);
-        } else if (selectedLanguage.equals(Language.RU.getDisplayName())) {
-            SessionManager.getInstance().setLanguage(Language.RU);
-        } else {
-            SessionManager.getInstance().setLanguage(Language.EN);
-        }
-
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-        updateLanguage();
-        //mainView.showProfile();
-    }
-
-    private void updateLanguage() {
+    protected void updateLanguage() {
         alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
@@ -239,10 +203,13 @@ public class ProfileController {
             LogOutController logOutController = loader.getController();
             logOutController.setDialogStage(dialogStage);
             logOutController.setMainController(mainController);
+
             Stage primaryStage = (Stage) profileButton.getScene().getWindow();
             logOutController.setPrimaryStage(primaryStage);
+
             Scene logoutScene = new Scene(logoutRoot);
             logoutScene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+
             Stage dialogStage = new Stage();
             dialogStage.setScene(logoutScene);
             logOutController.setDialogStage(dialogStage);
@@ -271,7 +238,6 @@ public class ProfileController {
             scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
             stage.setScene(scene);
             stage.getScene().getStylesheets().set(0, getClass().getResource(Theme.getTheme()).toExternalForm());
-
 
             stage.show();
         } catch (IOException e) {
@@ -335,9 +301,35 @@ public class ProfileController {
 
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("main"));
-            MainController mainController = fxmlLoader.getController();
-            mainController.setMainView(mainView);
 
+            if (fxmlFile.equals("/main.fxml")) {
+                MainController mainController = fxmlLoader.getController();
+                mainController.setMainView(mainView);
+            } else if (fxmlFile.equals("/profile.fxml")) {
+                ProfileController profileController = fxmlLoader.getController();
+                profileController.setMainView(mainView);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showLanguageSelectionModal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/languageSelection.fxml"));
+            Parent root = loader.load();
+
+            LanguageSelectionController controller = loader.getController();
+            Stage modalStage = new Stage();
+            controller.setStage(modalStage);
+
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setResizable(false);
+            Scene scene = new Scene(root, 200, 300);
+            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+            modalStage.setScene(scene);
+            modalStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
