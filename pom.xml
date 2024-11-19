@@ -16,6 +16,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
             <plugin>
@@ -130,7 +137,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
-            <version>3.3.3</version>
+            <version>3.3.4</version>
         </dependency>
 
     </dependencies>
