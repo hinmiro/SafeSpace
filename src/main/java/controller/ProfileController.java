@@ -330,6 +330,9 @@ public class ProfileController {
             scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
             modalStage.setScene(scene);
             modalStage.showAndWait();
+
+            navigateTo("/profile.fxml");
+
         } catch (IOException e) {
             e.printStackTrace();
         }

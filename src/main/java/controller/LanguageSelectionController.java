@@ -61,11 +61,13 @@ public class LanguageSelectionController {
         highlightSelectedLanguage();
     }
 
+
     private void changeLanguage(Language language) {
         SessionManager.getInstance().setLanguage(language);
         refreshUI();
         stage.close();
     }
+
 
     private void refreshUI() {
         ProfileController profileController = SessionManager.getInstance().getProfileController();
@@ -77,13 +79,8 @@ public class LanguageSelectionController {
             profileController = loader.getController();
             profileController.setMainController(SessionManager.getInstance().getMainController());
 
-            Stage stage = new Stage();
-            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", SessionManager.getInstance().getSelectedLanguage().getLocale());
-            stage.setTitle(pageTitle.getString("profile"));
-            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
-            stage.setScene(scene);
-            stage.show();
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
