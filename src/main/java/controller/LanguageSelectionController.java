@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Language;
 import model.ScreenUtil;
@@ -14,6 +15,9 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
 public class LanguageSelectionController {
+
+    @FXML
+    private VBox languageSelectionWindow;
 
     private Stage stage;
     @FXML
@@ -52,6 +56,11 @@ public class LanguageSelectionController {
         changeLanguage(Language.RU);
     }
 
+    @FXML
+    public void initialize() {
+        highlightSelectedLanguage();
+    }
+
     private void changeLanguage(Language language) {
         SessionManager.getInstance().setLanguage(language);
         refreshUI();
@@ -78,4 +87,23 @@ public class LanguageSelectionController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-}}
+    }
+
+    private void highlightSelectedLanguage() {
+        Language selectedLanguage = SessionManager.getInstance().getSelectedLanguage();
+        switch (selectedLanguage) {
+            case EN:
+                englishButton.getStyleClass().add("menuLanguageButtonSelected");
+                break;
+            case FI:
+                finnishButton.getStyleClass().add("menuLanguageButtonSelected");
+                break;
+            case JP:
+                japaneseButton.getStyleClass().add("menuLanguageButtonSelected");
+                break;
+            case RU:
+                russianButton.getStyleClass().add("menuLanguageButtonSelected");
+                break;
+        }
+    }
+}
