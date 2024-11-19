@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import model.Language;
 import model.ScreenUtil;
 import model.SessionManager;
+import model.StageUtil;
 import services.Theme;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class View extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
+        StageUtil.setCloseRequestHandler(stage);
         showLogin();
     }
 
