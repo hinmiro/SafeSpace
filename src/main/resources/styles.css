@@ -310,6 +310,10 @@ StackPane, BorderPane {
     -fx-text-fill: #ffff;
 }
 
+.context-menu .menu-item .text {
+    -fx-fill: #FFFFFF;
+}
+
 .context-menu .menu-item {
     -fx-padding: 6 3;
     -fx-text-fill: #ffff;

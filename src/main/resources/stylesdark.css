@@ -268,6 +268,7 @@ StackPane, BorderPane, ScrollPane {
     -fx-border-width: 1px;
     -fx-border-radius: 10px;
     -fx-padding: 0;
+    -fx-text-fill: #ffffff;
     -fx-color-label-visible: #FFFFFF;
 
 }
@@ -279,6 +280,11 @@ StackPane, BorderPane, ScrollPane {
     -fx-font-size: 11px;
     -fx-border-color: #007bff;
 }
+
+.context-menu .menu-item .text {
+    -fx-fill: #FFFFFF;
+}
+
 
 .context-menu .menu-item:hover {
 
