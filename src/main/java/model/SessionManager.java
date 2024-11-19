@@ -4,10 +4,9 @@ import controller.MainController;
 import controller.ProfileController;
 
 public class SessionManager {
-
     private static SessionManager INSTANCE;
     private static UserModel loggedUser;
-    private static Language selectedLanguage;
+    private static Language selectedLanguage = Language.EN;
     private MainController mainController;
     private ProfileController profileController;
 
@@ -32,7 +31,7 @@ public class SessionManager {
         INSTANCE = null;
     }
 
-    public void setLanguage(Language language) {
+    public static void setLanguage(Language language) {
         selectedLanguage = language;
     }
 

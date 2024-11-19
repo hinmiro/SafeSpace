@@ -42,8 +42,6 @@ public class RegisterController {
     private Button backButton;
     @FXML
     private Label passwordStrengthLabel;
-    @FXML
-    private ComboBox<String> languageBox;
 
     private ResourceBundle labels;
     private ResourceBundle buttons;
