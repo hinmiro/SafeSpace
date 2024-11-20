@@ -46,6 +46,16 @@ public class LoginControllerTest extends ApplicationTest {
     }
 
     @Test
+    public void testThatElementsExist() {
+        verifyThat("#loginButton", NodeMatchers.isVisible());
+        sleep(1000);
+        verifyThat("#registerButton", NodeMatchers.isVisible());
+        sleep(1000);
+        verifyThat("#languageBox", NodeMatchers.isVisible());
+        sleep(1000);
+    }
+
+    @Test
     public void testLoginButtonServerError() {
         clickOn(usernameField).write("username");
         clickOn(passwordField).write("password");

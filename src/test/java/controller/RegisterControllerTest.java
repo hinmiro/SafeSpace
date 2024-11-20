@@ -58,7 +58,7 @@ public class RegisterControllerTest extends ApplicationTest {
 
     @Test
     public void testRegisterButtonSuccess() {
-        clickOn(usernameField).write("username3");
+        clickOn(usernameField).write("username10");
         clickOn(passwordField).write("password");
         clickOn(confirmPasswordField).write("password");
         sleep(1000);
