@@ -5,16 +5,13 @@ import javafx.scene.*;
 import javafx.scene.canvas.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
+import javafx.scene.input.*;
+import javafx.scene.paint.*;
 import javafx.stage.*;
-import model.ScreenUtil;
-import model.SessionManager;
+import model.*;
 import services.Theme;
-
 import java.io.*;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class NewPostController {
 
@@ -27,20 +24,13 @@ public class NewPostController {
     private MainController mainController;
     private File selectedFile;
 
-    @FXML
-    private Button chooseImageButton;
-    @FXML
-    private ImageView imageView;
-    @FXML
-    private Button postButton;
-    @FXML
-    private Button closeButton;
-    @FXML
-    private TextArea captionTextArea;
-    @FXML
-    private Label headerLabel;
-    @FXML
-    private Label captionLabel;
+    @FXML private Button chooseImageButton;
+    @FXML private ImageView imageView;
+    @FXML private Button postButton;
+    @FXML private Button closeButton;
+    @FXML private TextArea captionTextArea;
+    @FXML private Label headerLabel;
+    @FXML private Label captionLabel;
 
     @FXML
     private void initialize() {
@@ -49,6 +39,7 @@ public class NewPostController {
         closeButton.setOnAction(event -> handleClose());
         postButton.setOnAction(event -> handleNewPost());
         imageView.setImage(createPlaceholderImage(200, 225));
+
         clickChooseButton(chooseImageButton);
     }
 
@@ -95,11 +86,10 @@ public class NewPostController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
             Parent root = loader.load();
 
-            MainController mainController = loader.getController();
-
             Stage stage = (Stage) closeButton.getScene().getWindow();
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("main"));
+
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
             stage.setScene(scene);
@@ -112,11 +102,11 @@ public class NewPostController {
     private WritableImage createPlaceholderImage(int width, int height) {
         WritableImage image = new WritableImage(width, height);
         Canvas canvas = new Canvas(width, height);
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
         gc.setFill(Color.LIGHTGRAY);
-
         gc.getCanvas().snapshot(null, image);
+
         return image;
     }
 
@@ -143,9 +133,7 @@ public class NewPostController {
     }
 
     private void clickChooseButton(Button chooseImageButton) {
-        chooseImageButton.setOnMouseClicked((MouseEvent event) -> {
-            postPicture();
-        });
+        chooseImageButton.setOnMouseClicked((MouseEvent event) -> postPicture());
     }
 
     public void setMainController(MainController mainController) {

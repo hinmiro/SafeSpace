@@ -3,14 +3,11 @@ package controller;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-import model.ScreenUtil;
-import model.SessionManager;
+import javafx.stage.*;
+import model.*;
 import services.Theme;
-
-import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.io.*;
+import java.util.*;
 
 public class NewTextController {
 
@@ -22,18 +19,12 @@ public class NewTextController {
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
     private MainController mainController;
 
-    @FXML
-    private Button postButton;
-    @FXML
-    private Button closeButton;
-    @FXML
-    private TextArea textPostArea;
-    @FXML
-    private Label inspirationText;
-    @FXML
-    private Label needInspo;
-    @FXML
-    private Label whatOnMind;
+    @FXML private Button postButton;
+    @FXML private Button closeButton;
+    @FXML private TextArea textPostArea;
+    @FXML private Label inspirationText;
+    @FXML private Label needInspo;
+    @FXML private Label whatOnMind;
 
     @FXML
     private void initialize() {
@@ -41,6 +32,7 @@ public class NewTextController {
 
         closeButton.setOnAction(event -> handleClose());
         postButton.setOnAction(event -> handlePost());
+
         setRandomQuote();
     }
 
@@ -87,11 +79,10 @@ public class NewTextController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
             Parent root = loader.load();
 
-            MainController mainController = loader.getController();
-
             Stage stage = (Stage) closeButton.getScene().getWindow();
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("main"));
+
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
             scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
             stage.setScene(scene);
@@ -103,7 +94,6 @@ public class NewTextController {
 
     @FXML
     private void setRandomQuote() {
-
         String[] inspirationsArray = new String[] {
                 labels.getString("inspiration1"),
                 labels.getString("inspiration2"),
