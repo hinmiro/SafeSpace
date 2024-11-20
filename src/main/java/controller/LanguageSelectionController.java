@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Language;
 import model.ScreenUtil;
@@ -14,6 +15,9 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
 public class LanguageSelectionController {
+
+    @FXML
+    private VBox languageSelectionWindow;
 
     private Stage stage;
     @FXML
@@ -52,11 +56,18 @@ public class LanguageSelectionController {
         changeLanguage(Language.RU);
     }
 
+    @FXML
+    public void initialize() {
+        highlightSelectedLanguage();
+    }
+
+
     private void changeLanguage(Language language) {
         SessionManager.getInstance().setLanguage(language);
         refreshUI();
         stage.close();
     }
+
 
     private void refreshUI() {
         ProfileController profileController = SessionManager.getInstance().getProfileController();
@@ -68,14 +79,28 @@ public class LanguageSelectionController {
             profileController = loader.getController();
             profileController.setMainController(SessionManager.getInstance().getMainController());
 
-            Stage stage = new Stage();
-            ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", SessionManager.getInstance().getSelectedLanguage().getLocale());
-            stage.setTitle(pageTitle.getString("profile"));
-            Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
-            stage.setScene(scene);
-            stage.show();
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-}}
+    }
+
+    private void highlightSelectedLanguage() {
+        Language selectedLanguage = SessionManager.getInstance().getSelectedLanguage();
+        switch (selectedLanguage) {
+            case EN:
+                englishButton.getStyleClass().add("menuLanguageButtonSelected");
+                break;
+            case FI:
+                finnishButton.getStyleClass().add("menuLanguageButtonSelected");
+                break;
+            case JP:
+                japaneseButton.getStyleClass().add("menuLanguageButtonSelected");
+                break;
+            case RU:
+                russianButton.getStyleClass().add("menuLanguageButtonSelected");
+                break;
+        }
+    }
+}
