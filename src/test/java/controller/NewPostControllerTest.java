@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Language;
-import model.Post;
 import model.SessionManager;
 import model.UserModel;
 import org.junit.Before;
@@ -62,13 +61,45 @@ public class NewPostControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void testPostButtonSuccess() {
+    public void testPostButtonSuccess() { // still not working
         verifyThat("#captionTextArea", NodeMatchers.isVisible());
         verifyThat("#chooseImageButton", NodeMatchers.isVisible());
         clickOn(chooseImageButton);
+// choose an image here
 
         clickOn(captionTextArea).write("This is a test post");
         assertThat(captionTextArea.getText()).isEqualTo("This is a test post");
     }
 
+    @Test
+    public void testPostButtonWithoutCaption() { // still not working
+        verifyThat("#captionTextArea", NodeMatchers.isVisible());
+        verifyThat("#chooseImageButton", NodeMatchers.isVisible());
+        clickOn(chooseImageButton);
+
+        clickOn(postButton);
+        assertThat(captionTextArea.getText()).isEqualTo("");
+        verifyThat(".alert", NodeMatchers.isVisible());
+        DialogPane dialogPane = lookup(".alert").queryAs(DialogPane.class);
+        assertThat(dialogPane).isNotNull();
+        assertThat(dialogPane.getContentText()).isEqualTo("New post sent successfully!");
+    }
+
+    @Test
+    public void testCloseButton() {
+        verifyThat("#closeButton", NodeMatchers.isVisible());
+        clickOn(closeButton);
+        sleep(500);
+    }
+
+    @Test
+    public void testImageRequired() {
+        verifyThat("#postButton", NodeMatchers.isVisible());
+        clickOn(postButton);
+        verifyThat(".alert", NodeMatchers.isVisible());
+        DialogPane dialogPane = lookup(".alert").queryAs(DialogPane.class);
+        assertThat(dialogPane).isNotNull();
+        assertThat(dialogPane.getContentText()).isEqualTo("Please add an image to your post.");
+        sleep(1000);
+    }
 }
