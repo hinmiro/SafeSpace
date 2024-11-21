@@ -31,7 +31,7 @@ public class SessionManager {
         INSTANCE = null;
     }
 
-    public static void setLanguage(Language language) {
+    public void setLanguage(Language language) {
         selectedLanguage = language;
     }
 

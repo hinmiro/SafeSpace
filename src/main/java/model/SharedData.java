@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import services.Theme;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -113,8 +114,12 @@ public class SharedData {
 
 
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-            scene.getStylesheets().add(SharedData.class.getResource(Theme.getTheme()).toExternalForm());
-
+            URL themeUrl = SharedData.class.getResource(Theme.getTheme());
+            if (themeUrl != null) {
+                scene.getStylesheets().add(themeUrl.toExternalForm());
+            } else {
+                System.err.println("Theme URL is null");
+            }
             primaryStage.setScene(scene);
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             primaryStage.setTitle(userId == loggedInUserId ? pageTitle.getString("profile") : pageTitle.getString("userProfile"));

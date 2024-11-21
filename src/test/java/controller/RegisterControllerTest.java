@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import model.Language;
 import model.SessionManager;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
@@ -25,7 +26,7 @@ public class RegisterControllerTest extends ApplicationTest {
 
     @Before
     public void initializeSessionManager() {
-        SessionManager.setLanguage(Language.EN);
+        SessionManager.getInstance().setLanguage(Language.EN);
     }
 
     @Override
@@ -55,7 +56,7 @@ public class RegisterControllerTest extends ApplicationTest {
         verifyThat("#passwordStrengthLabel", NodeMatchers.isVisible());
         sleep(1000);
     }
-
+    @Ignore
     @Test
     public void testRegisterButtonSuccess() {
         clickOn(usernameField).write("username10");

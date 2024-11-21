@@ -6,7 +6,7 @@ public class Message {
     private int sender;
     private int receiver;
     private String date;
-    private String type;
+    private final String type;
 
     public Message(String type, String message, String dateOfMessage) {
         this.message = message;

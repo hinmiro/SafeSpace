@@ -15,6 +15,7 @@ import model.StageUtil;
 import services.Theme;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -50,8 +51,19 @@ public class View extends Application {
             primaryStage.setTitle(titles.getString("login"));
             primaryStage.setResizable(false);
             //scene.getStylesheets().remove(getClass().getResource("/styles.css").toExternalForm());
-            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
-            primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/kuvat/safespacelogo.png")));
+            URL themeUrl = getClass().getResource(Theme.getTheme());
+            if (themeUrl != null) {
+                scene.getStylesheets().add(themeUrl.toExternalForm());
+            } else {
+                System.err.println("Theme URL is null");
+            }
+         //   primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/kuvat/safespacelogo.png")));
+            URL logoUrl = getClass().getResource("/kuvat/safespacelogo.png");
+            if (logoUrl != null) {
+                primaryStage.getIcons().add(new Image(logoUrl.toExternalForm()));
+            } else {
+                System.err.println("Logo URL is null");
+            }
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

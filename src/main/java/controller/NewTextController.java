@@ -7,6 +7,7 @@ import javafx.stage.*;
 import model.*;
 import services.Theme;
 import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 public class NewTextController {
@@ -84,8 +85,12 @@ public class NewTextController {
             stage.setTitle(pageTitle.getString("main"));
 
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
-            stage.setScene(scene);
+            URL themeUrl = getClass().getResource(Theme.getTheme());
+            if (themeUrl != null) {
+                scene.getStylesheets().add(themeUrl.toExternalForm());
+            } else {
+                System.err.println("Theme URL is null");
+            }            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

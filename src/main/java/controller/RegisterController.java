@@ -15,6 +15,7 @@ import model.UserModel;
 import services.Theme;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -158,8 +159,12 @@ public class RegisterController {
 
                 Stage stage = (Stage) registerButton.getScene().getWindow();
                 Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-                scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
-
+                URL themeUrl = getClass().getResource(Theme.getTheme());
+                if (themeUrl != null) {
+                    stage.getScene().getStylesheets().set(0, themeUrl.toExternalForm());
+                } else {
+                    System.err.println("Theme URL is null");
+                }
                 stage.setScene(scene);
                 ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
                 stage.setTitle(pageTitle.getString("main"));
@@ -179,9 +184,15 @@ public class RegisterController {
             LoginController loginController = loader.getController();
 
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
 
+            URL themeUrl = getClass().getResource(Theme.getTheme());
+            if (themeUrl != null) {
+                scene.getStylesheets().add(themeUrl.toExternalForm());
+            } else {
+                System.err.println("Theme URL is null");
+            }
             Stage stage = (Stage) backButton.getScene().getWindow();
+
             stage.setScene(scene);
 
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);

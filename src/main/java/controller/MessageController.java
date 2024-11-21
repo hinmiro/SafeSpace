@@ -12,6 +12,7 @@ import model.*;
 import services.Theme;
 import view.View;
 import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 public class MessageController {
@@ -147,8 +148,12 @@ public class MessageController {
 
             Stage stage = (Stage) homeButton.getScene().getWindow();
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
-            stage.setScene(scene);
+            URL themeUrl = getClass().getResource(Theme.getTheme());
+            if (themeUrl != null) {
+                scene.getStylesheets().add(themeUrl.toExternalForm());
+            } else {
+                System.err.println("Theme URL is null");
+            }            stage.setScene(scene);
 
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("messages"));
@@ -163,8 +168,12 @@ public class MessageController {
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-        scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
-        stage.setScene(scene);
+        URL themeUrl = getClass().getResource(Theme.getTheme());
+        if (themeUrl != null) {
+            scene.getStylesheets().add(themeUrl.toExternalForm());
+        } else {
+            System.err.println("Theme URL is null");
+        }        stage.setScene(scene);
         stage.setTitle(title);
 
         if (fxmlFile.equals("/profile.fxml")) {

@@ -303,7 +303,6 @@ public class ApiClient {
     // Images
 
     public static HttpResponse<byte[]> getProfileImg(int userId) throws IOException, InterruptedException {
-        HttpResponse<byte[]> response = null;
 
         UserModel user = ControllerForView.getInstance().getUserById(userId);
 
@@ -313,12 +312,10 @@ public class ApiClient {
                 .GET()
                 .build();
 
-        response = client.send(req, HttpResponse.BodyHandlers.ofByteArray());
-        return response;
+        return client.send(req, HttpResponse.BodyHandlers.ofByteArray());
     }
 
     public static HttpResponse<byte[]> getPostImage(String id) throws IOException, InterruptedException {
-        HttpResponse<byte[]> res = null;
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(postPictureGet + id))
@@ -326,8 +323,7 @@ public class ApiClient {
                 .GET()
                 .build();
 
-        res = client.send(req, HttpResponse.BodyHandlers.ofByteArray());
-        return res;
+        return client.send(req, HttpResponse.BodyHandlers.ofByteArray());
     }
 
     // Comments

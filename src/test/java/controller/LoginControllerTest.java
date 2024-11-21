@@ -24,7 +24,7 @@ public class LoginControllerTest extends ApplicationTest {
 
     @Before
     public void initializeSessionManager() {
-        SessionManager.setLanguage(Language.EN);
+        SessionManager.getInstance().setLanguage(Language.EN);
     }
 
     @Override
@@ -127,6 +127,8 @@ public class LoginControllerTest extends ApplicationTest {
         clickOn("русский");
         assertThat(languageBox.getValue()).isEqualTo("русский");
         assertThat(loginButton.getText()).isEqualTo("Войти");
+        clickOn("#languageBox");
+        clickOn("English");
     }
 }
 
