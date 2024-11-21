@@ -6,7 +6,6 @@ public class Comment {
     private String username;
     private String commentContent;
 
-
     public Comment(int commentID, int userID, String username, String commentContent) {
         this.commentID = commentID;
         this.userID = userID;
@@ -45,5 +44,4 @@ public class Comment {
     public void setCommentContent(String commentContent) {
         this.commentContent = commentContent;
     }
-
 }

@@ -23,7 +23,7 @@ public class ApiClient {
         ApiClient.client = client;
     }
 
-    public static boolean isServerAvailable() throws IOException, InterruptedException {
+    public static boolean isServerAvailable() {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create("http://10.120.32.76/"))
                 .header("Content-Type", "application/json")
@@ -39,7 +39,7 @@ public class ApiClient {
         }
     }
 
-    public static HttpResponse<String> postLogin(String json) throws IOException, InterruptedException {
+    public static HttpResponse<String> postLogin(String json) throws InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(authUrl + "/login"))
                 .header("Content-Type", "application/json")

@@ -1,45 +1,18 @@
 package controller;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import model.Language;
-import model.ScreenUtil;
-import model.SessionManager;
-import model.UserModel;
-import services.ApiClient;
-import services.Theme;
+import javafx.scene.*;
+import javafx.fxml.*;
+import model.*;
+import services.*;
 import view.View;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class LoginController {
-
-    @FXML
-    public Label serverError;
-    public Label usernameLabel;
-    @FXML
-    private TextField usernameField;
-    @FXML
-    private PasswordField passwordField;
-    @FXML
-    private Button loginButton;
-    @FXML
-    private Button registerButton;
-    @FXML
-    private Label passwordLabel;
-    @FXML
-    private Label dontHaveLabel;
-    @FXML
-    private ComboBox<String> languageBox;
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private View mainView;
@@ -47,6 +20,16 @@ public class LoginController {
     private ResourceBundle buttons;
     private ResourceBundle labels;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+
+    @FXML public Label serverError;
+    @FXML public Label usernameLabel;
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private Button loginButton;
+    @FXML private Button registerButton;
+    @FXML private Label passwordLabel;
+    @FXML private Label dontHaveLabel;
+    @FXML private ComboBox<String> languageBox;
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
@@ -139,14 +122,15 @@ public class LoginController {
                 Stage stage = (Stage) loginButton.getScene().getWindow();
 
                 Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
                 URL themeUrl = getClass().getResource(Theme.getTheme());
                 if (themeUrl != null) {
                     scene.getStylesheets().add(themeUrl.toExternalForm());
                 } else {
                     System.err.println("Theme URL is null");
                 }
-                stage.setScene(scene);
 
+                stage.setScene(scene);
                 ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
                 stage.setTitle(pageTitle.getString("main"));
             } catch (IOException e) {
@@ -162,17 +146,17 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/register.fxml"));
             Parent root = loader.load();
 
-            RegisterController registerController = loader.getController();
-
             Stage stage = (Stage) registerButton.getScene().getWindow();
 
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
             }
+
             stage.setScene(scene);
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("register"));
@@ -192,6 +176,5 @@ public class LoginController {
     public void setMainView(View view) {
         mainView = view;
     }
-
 }
 

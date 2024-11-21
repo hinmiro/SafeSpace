@@ -1,23 +1,16 @@
 package view;
 
 import controller.LoginController;
-import controller.ProfileController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
-import model.Language;
-import model.ScreenUtil;
-import model.SessionManager;
-import model.StageUtil;
+import model.*;
 import services.Theme;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class View extends Application {
 
@@ -31,7 +24,7 @@ public class View extends Application {
         showLogin();
     }
 
-    public void showLogin() throws Exception {
+    public void showLogin() {
         try {
             if (SessionManager.getInstance().getSelectedLanguage() == null) {
                 SessionManager.getInstance().setLanguage(Language.EN);
@@ -50,27 +43,24 @@ public class View extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle(titles.getString("login"));
             primaryStage.setResizable(false);
-            //scene.getStylesheets().remove(getClass().getResource("/styles.css").toExternalForm());
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
             }
-         //   primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/kuvat/safespacelogo.png")));
+
             URL logoUrl = getClass().getResource("/kuvat/safespacelogo.png");
             if (logoUrl != null) {
                 primaryStage.getIcons().add(new Image(logoUrl.toExternalForm()));
             } else {
                 System.err.println("Logo URL is null");
             }
+
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

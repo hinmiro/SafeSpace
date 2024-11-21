@@ -12,8 +12,7 @@ import view.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.*;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class UserMessagesController {
 
@@ -28,16 +27,11 @@ public class UserMessagesController {
     private MainController mainController;
     private Conversation currentConversation;
 
-    @FXML
-    private Label usernameLabelMessage;
-    @FXML
-    private VBox messageListVBox;
-    @FXML
-    private TextField messageTextField;
-    @FXML
-    private Button sendMessageButton;
-    @FXML
-    private Button closeButton;
+    @FXML private Label usernameLabelMessage;
+    @FXML private VBox messageListVBox;
+    @FXML private TextField messageTextField;
+    @FXML private Button sendMessageButton;
+    @FXML private Button closeButton;
 
     public void initialize(int userId) {
         updateLanguage();
@@ -147,13 +141,16 @@ public class UserMessagesController {
             Stage stage = new Stage();
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("messages"));
+
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
             }
+
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

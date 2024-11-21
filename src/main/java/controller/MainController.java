@@ -28,32 +28,19 @@ public class MainController {
     private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
-    @FXML
-    private Button homeButton;
-    @FXML
-    private Button profileButton;
-    @FXML
-    private Button newPostButton;
-    @FXML
-    private Button leaveMessageButton;
-    @FXML
-    private HBox postMenu;
-    @FXML
-    private Button createPicPostButton;
-    @FXML
-    private Button createTextPostButton;
-    @FXML
-    private ListView<Post> feedListView;
-    @FXML
-    private TextField usernameSearchField;
-    @FXML
-    private Button searchButton;
-    @FXML
-    private VBox searchResultsBox;
-    @FXML
-    private RadioButton friendsOption;
-    @FXML
-    private RadioButton allOption;
+    @FXML private Button homeButton;
+    @FXML private Button profileButton;
+    @FXML private Button newPostButton;
+    @FXML private Button leaveMessageButton;
+    @FXML private HBox postMenu;
+    @FXML private Button createPicPostButton;
+    @FXML private Button createTextPostButton;
+    @FXML private ListView<Post> feedListView;
+    @FXML private TextField usernameSearchField;
+    @FXML private Button searchButton;
+    @FXML private VBox searchResultsBox;
+    @FXML private RadioButton friendsOption;
+    @FXML private RadioButton allOption;
 
     public MainController() {
         this.posts = new ArrayList<>();
@@ -204,13 +191,15 @@ public class MainController {
         }
 
         Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
         URL themeUrl = getClass().getResource(Theme.getTheme());
         if (themeUrl != null) {
             scene.getStylesheets().add(themeUrl.toExternalForm());
         } else {
             System.err.println("Theme URL is null");
         }
-        stage.setScene(scene);        stage.setScene(scene);
+
+        stage.setScene(scene);
         stage.setTitle(title);
     }
 
@@ -242,13 +231,16 @@ public class MainController {
 
             Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
+
             Scene scene = new Scene(newPostPane, 360, ScreenUtil.getScaledHeight());
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
             }
+
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -266,13 +258,16 @@ public class MainController {
 
             Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
+
             Scene scene = new Scene(newPostPane2, 360, ScreenUtil.getScaledHeight());
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
             }
+
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

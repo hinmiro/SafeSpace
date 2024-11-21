@@ -41,7 +41,7 @@ public class NewPostController {
         postButton.setOnAction(event -> handleNewPost());
         imageView.setImage(createPlaceholderImage(200, 225));
 
-        clickChooseButton(chooseImageButton);
+        chooseImageButton.setOnAction(event -> clickChooseButton());
     }
 
     private void updateTexts() {
@@ -79,6 +79,20 @@ public class NewPostController {
             }
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    private void clickChooseButton() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Image");
+        File file = fileChooser.showOpenDialog(null);
+
+        if (file != null) {
+            selectedFile = file;
+            imageView.setImage(new Image(file.toURI().toString()));
+        } else {
+            System.out.println("No file selected");
         }
     }
 

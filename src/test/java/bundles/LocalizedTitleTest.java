@@ -1,12 +1,8 @@
 package bundles;
 
 import org.junit.Test;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.*;
+import static org.junit.Assert.*;
 
 public class LocalizedTitleTest {
     private final Locale localeEN = new Locale("en", "US");
@@ -34,7 +30,6 @@ public class LocalizedTitleTest {
             assertTrue("Missing required key in English: " + title, titlesEN.containsKey(title));
             assertEquals("Value for key '" + title + "' does not match the expected value.", expected[i], titlesEN.getString(title));
         }
-
     }
 
     @Test
@@ -87,5 +82,4 @@ public class LocalizedTitleTest {
             assertEquals("Value for key '" + title + "' does not match the expected value.", expected[i], titlesRU.getString(title));
         }
     }
-
 }

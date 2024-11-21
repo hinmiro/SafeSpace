@@ -1,16 +1,11 @@
 package controller;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Language;
-import model.Post;
-import model.SessionManager;
-import model.UserModel;
-import org.junit.Before;
-import org.junit.Test;
+import model.*;
+import org.junit.*;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -167,5 +162,4 @@ public class MainControllerTest extends ApplicationTest {
         assertThat(homeButton).isNotNull();
         assertThat(homeButton.getText()).isEqualTo("Home");
     }
-
 }

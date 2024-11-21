@@ -1,19 +1,15 @@
 package controller;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.*;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.ScreenUtil;
-import model.SessionManager;
+import model.*;
 import services.Theme;
 import view.View;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class UpdateInfoController {
 
@@ -26,32 +22,19 @@ public class UpdateInfoController {
     private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
-    @FXML
-    private Label newPassword;
-    @FXML
-    private PasswordField passwordField;
-    @FXML
-    private PasswordField confirmPasswordField;
-    @FXML
-    private Label confirmPasswordLabel;
-    @FXML
-    private Button closeButton;
-    @FXML
-    private Label passwordStrengthLabel;
-    @FXML
-    private View mainView;
-    @FXML
-    private Button mainButton;
-    @FXML
-    private Label changePasswordLabel;
-    @FXML
-    private Label requirement1;
-    @FXML
-    private Label requirement2;
-    @FXML
-    private Label requirement3;
-    @FXML
-    private Label requirement4;
+    @FXML private Label newPassword;
+    @FXML private PasswordField passwordField;
+    @FXML private PasswordField confirmPasswordField;
+    @FXML private Label confirmPasswordLabel;
+    @FXML private Button closeButton;
+    @FXML private Label passwordStrengthLabel;
+    @FXML private View mainView;
+    @FXML private Button mainButton;
+    @FXML private Label changePasswordLabel;
+    @FXML private Label requirement1;
+    @FXML private Label requirement2;
+    @FXML private Label requirement3;
+    @FXML private Label requirement4;
 
     @FXML
     private void initialize() {
@@ -100,13 +83,16 @@ public class UpdateInfoController {
             Stage stage = new Stage();
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("profile"));
+
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
             }
+
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -172,6 +158,7 @@ public class UpdateInfoController {
                 e.printStackTrace();
                 showAlert(Alert.AlertType.ERROR, alerts.getString("failedInfo"), alerts.getString("errorInfo"));
             }
+
             passwordField.clear();
             confirmPasswordField.clear();
         } else {
@@ -191,7 +178,6 @@ public class UpdateInfoController {
         alert.showAndWait();
     }
 
-
     public void setProfileController(ProfileController controller) {
         profileController = controller;
     }
@@ -199,5 +185,4 @@ public class UpdateInfoController {
     public void setMainView(View mainView) { this.mainView = mainView; }
 
     public void setMainController(MainController mainController) { this.mainController = mainController; }
-
 }

@@ -1,12 +1,8 @@
 package bundles;
 
 import org.junit.Test;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.*;
+import static org.junit.Assert.*;
 
 public class LocalizedAlertsTest {
     private final Locale localeEN = new Locale("en", "US");
@@ -134,5 +130,4 @@ public class LocalizedAlertsTest {
             assertEquals("Value for key '" + key + "' does not match the expected value.", expectedValues[i], alertsRU.getString(key));
         }
     }
-
 }

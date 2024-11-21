@@ -1,4 +1,3 @@
-
 package controller;
 
 import javafx.event.*;
@@ -7,17 +6,16 @@ import javafx.scene.*;
 import javafx.scene.canvas.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
+import javafx.scene.input.*;
+import javafx.scene.paint.*;
 import javafx.stage.*;
 import model.*;
 import services.Theme;
 import view.View;
 import java.io.*;
 import java.net.URL;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import javafx.scene.shape.Circle;
+import java.util.*;
+import javafx.scene.shape.*;
 
 public class EditProfileController {
 
@@ -33,26 +31,16 @@ public class EditProfileController {
     private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
-    @FXML
-    private ImageView profileImageView;
-    @FXML
-    private View mainView;
-    @FXML
-    public Label usernameLabel;
-    @FXML
-    public Label registeredLabel;
-    @FXML
-    public Label bioLabel;
-    @FXML
-    private Button closeButton;
-    @FXML
-    private TextField usernameField;
-    @FXML
-    private TextArea bioField;
-    @FXML
-    private Button saveChangesButton;
-    @FXML
-    private Button uploadImageButton;
+    @FXML private ImageView profileImageView;
+    @FXML private View mainView;
+    @FXML public Label usernameLabel;
+    @FXML public Label registeredLabel;
+    @FXML public Label bioLabel;
+    @FXML private Button closeButton;
+    @FXML private TextField usernameField;
+    @FXML private TextArea bioField;
+    @FXML private Button saveChangesButton;
+    @FXML private Button uploadImageButton;
 
     @FXML
     public void initialize() {
@@ -60,15 +48,17 @@ public class EditProfileController {
 
         usernameLabel.setText(SessionManager.getInstance().getLoggedUser().getUsername());
         registeredLabel.setText(SessionManager.getInstance().getLoggedUser().getDateOfCreation());
+
         if (SessionManager.getInstance().getLoggedUser().getProfilePictureUrl().equals("default")) {
             profileImageView.setImage(createPlaceholderImage(150, 150));
         } else {
             profileImageView.setImage(controllerForView.getProfilePicture(SessionManager.getInstance().getLoggedUser().getUserId()));
         }
-        makeCircle(profileImageView);
 
+        makeCircle(profileImageView);
         clickProfilePic(profileImageView);
         profileImageView.setCursor(Cursor.HAND);
+
         closeButton.setOnAction(event -> handleClose());
         saveChangesButton.setOnAction(this::handleSaveChanges);
     }
@@ -103,13 +93,16 @@ public class EditProfileController {
             Stage stage = new Stage();
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("profile"));
+
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
             }
+
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
@@ -169,16 +162,19 @@ public class EditProfileController {
                 .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif",
                         "*.webp", "*.svg"));
         selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
-        System.out.println(selectedFile.length() / 1000000 + " kuvan koko mb");
+
+        if (selectedFile == null) {
+            System.out.println("No file selected");
+            return null;
+        }
+
         if (selectedFile.length() > 5000000) {
             showAlert(alerts.getString("fileSize"), Alert.AlertType.ERROR);
             return null;
         }
 
         if (selectedFile != null) {
-
             try {
-
                 newImage = new Image(selectedFile.toURI().toString());
                 profileImageView.setImage(newImage);
                 makeCircle(profileImageView);
@@ -219,5 +215,4 @@ public class EditProfileController {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
-
 }

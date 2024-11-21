@@ -7,17 +7,15 @@ import javafx.scene.*;
 import javafx.scene.canvas.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.paint.*;
+import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import model.*;
 import services.Theme;
 import view.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class UserProfileController {
     private ControllerForView controllerForView = ControllerForView.getInstance();
@@ -37,22 +35,14 @@ public class UserProfileController {
     @FXML private Button followButton;
     @FXML private Button messageButton;
     @FXML private Label noPostsLabel;
-    @FXML
-    private Button homeButton;
-    @FXML
-    private Button profileButton;
-    @FXML
-    private Button leaveMessageButton;
-    @FXML
-    private ListView<Post> feedListView;
-    @FXML
-    private Label followersCountLabel;
-    @FXML
-    private Label followingCountLabel;
-    @FXML
-    private Label followers;
-    @FXML
-    private Label following;
+    @FXML private Button homeButton;
+    @FXML private Button profileButton;
+    @FXML private Button leaveMessageButton;
+    @FXML private ListView<Post> feedListView;
+    @FXML private Label followersCountLabel;
+    @FXML private Label followingCountLabel;
+    @FXML private Label followers;
+    @FXML private Label following;
 
     public void initialize(int userId) throws IOException, InterruptedException {
         updateLanguage();
@@ -113,12 +103,14 @@ public class UserProfileController {
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
         URL themeUrl = getClass().getResource(Theme.getTheme());
         if (themeUrl != null) {
             scene.getStylesheets().add(themeUrl.toExternalForm());
         } else {
             System.err.println("Theme URL is null");
         }
+
         stage.setScene(scene);
         stage.setTitle(title);
 
@@ -192,7 +184,7 @@ public class UserProfileController {
                 followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);");
             }
         }
-        }
+    }
 
     public void displayUserPosts(ListView<Post> feedListView, Label noPostsLabel, int userId) {
         List<Post> posts;
@@ -214,7 +206,6 @@ public class UserProfileController {
 
             ObservableList<Post> observablePosts = FXCollections.observableArrayList(posts);
             feedListView.setItems(observablePosts);
-
 
             feedListView.setCellFactory(listView -> new PostListCell());
         }
@@ -264,13 +255,16 @@ public class UserProfileController {
             userMessagesController.initialize(userId);
 
             Stage stage = (Stage) messageButton.getScene().getWindow();
+
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
             }
+
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("messages"));
             stage.setScene(scene);
@@ -308,5 +302,4 @@ public class UserProfileController {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
-
 }

@@ -1,12 +1,8 @@
 package bundles;
 
 import org.junit.Test;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.*;
+import static org.junit.Assert.*;
 
 public class LocalizedButtonsTest {
     private final Locale localeEN = new Locale("en", "US");
@@ -185,6 +181,4 @@ public class LocalizedButtonsTest {
             assertEquals("Incorrect value for key in Russian: " + button, expectedValues[i], buttonsRU.getString(button));
         }
     }
-
-
 }

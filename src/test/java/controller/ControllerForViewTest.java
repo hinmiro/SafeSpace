@@ -2,15 +2,10 @@ package controller;
 
 import javafx.scene.image.Image;
 import model.*;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import java.io.File;
-import java.io.IOException;
+import org.junit.*;
+import java.io.*;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

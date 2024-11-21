@@ -1,12 +1,8 @@
 package controller;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.*;
 import services.Theme;
@@ -17,17 +13,6 @@ import java.util.*;
 
 public class MessageController {
 
-    @FXML
-    private Button homeButton;
-    @FXML
-    private Button profileButton;
-    @FXML
-    private Button leaveMessageButton;
-    @FXML
-    private Label noMessagesLabel;
-    @FXML
-    private ListView<Message> conversationListView;
-
     private View mainView;
     private MainController mainController;
     private ControllerForView controllerForView = ControllerForView.getInstance();
@@ -36,6 +21,12 @@ public class MessageController {
     private ResourceBundle labels;
     private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+
+    @FXML private Button homeButton;
+    @FXML private Button profileButton;
+    @FXML private Button leaveMessageButton;
+    @FXML private Label noMessagesLabel;
+    @FXML private ListView<Message> conversationListView;
 
     @FXML
     private void initialize() {
@@ -132,7 +123,6 @@ public class MessageController {
         }
 
         conversationListView.getItems().sort(Comparator.comparing(Message::getDateOfMessage).reversed());
-
         conversationListView.setCellFactory(param -> new MessageListCell());
         checkIfNoMessages();
     }
@@ -147,13 +137,17 @@ public class MessageController {
             userMessagesController.initialize(userId);
 
             Stage stage = (Stage) homeButton.getScene().getWindow();
+
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
-            }            stage.setScene(scene);
+            }
+
+            stage.setScene(scene);
 
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("messages"));
@@ -168,12 +162,15 @@ public class MessageController {
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
         URL themeUrl = getClass().getResource(Theme.getTheme());
         if (themeUrl != null) {
             scene.getStylesheets().add(themeUrl.toExternalForm());
         } else {
             System.err.println("Theme URL is null");
-        }        stage.setScene(scene);
+        }
+
+        stage.setScene(scene);
         stage.setTitle(title);
 
         if (fxmlFile.equals("/profile.fxml")) {
@@ -205,5 +202,4 @@ public class MessageController {
     public void setMainView(View view) {
         this.mainView = view;
     }
-
 }

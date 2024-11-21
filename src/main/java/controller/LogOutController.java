@@ -1,29 +1,15 @@
-
 package controller;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.ScreenUtil;
-import model.SessionManager;
+import model.*;
 import services.Theme;
-
 import java.net.URL;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class LogOutController {
-
-    @FXML
-    private Button logOutButton;
-    @FXML
-    private Button cancelButton;
-    @FXML
-    private Label logOut;
 
     private Stage dialogStage;
     private MainController mainController;
@@ -33,6 +19,10 @@ public class LogOutController {
     private ResourceBundle labels;
     private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+
+    @FXML private Button logOutButton;
+    @FXML private Button cancelButton;
+    @FXML private Label logOut;
 
     @FXML
     private void initialize() {
@@ -73,7 +63,9 @@ public class LogOutController {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
         Parent loginRoot = loader.load();
+
         Scene loginScene = new Scene(loginRoot, 360, ScreenUtil.getScaledHeight());
+
         URL themeUrl = getClass().getResource(Theme.getTheme());
         if (themeUrl != null) {
             loginScene.getStylesheets().add(themeUrl.toExternalForm());
@@ -103,5 +95,4 @@ public class LogOutController {
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
-
 }

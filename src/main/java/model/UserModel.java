@@ -82,5 +82,4 @@ public class UserModel {
         this.likedPosts = likedPosts;
         this.posts = posts;
     }
-
 }
