@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.RadioButton?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 
 <BorderPane maxHeight="800.0" minHeight="0.0" styleClass="borderWide" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
 
@@ -20,9 +12,7 @@
             <BorderPane styleClass="header-background">
                 <left>
                     <ImageView fitHeight="100" fitWidth="80" preserveRatio="true">
-                        <image>
-                            <Image url="@/kuvat/safespacelogo.png" />
-                        </image>
+                        <Image url="@/kuvat/safespacelogo.png"/>
                     </ImageView>
                 </left>
                 <center>
@@ -89,5 +79,4 @@
             </HBox>
         </VBox>
     </bottom>
-
 </BorderPane>

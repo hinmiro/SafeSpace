@@ -2,24 +2,20 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controller.UpdateInfoController"
-            prefHeight="400.0" prefWidth="600.0"
-            >
+            prefHeight="400.0" prefWidth="600.0">
 
     <top>
         <VBox>
             <BorderPane styleClass="header-background">
                 <left>
                     <ImageView fitHeight="100" fitWidth="80" preserveRatio="true">
-                        <image>
-                            <Image url="@/kuvat/safespacelogo.png" />
-                        </image>
+                        <Image url="@/kuvat/safespacelogo.png"/>
                     </ImageView>
                 </left>
                 <center>
@@ -52,33 +48,25 @@
                     <!-- Vaatimukset -->
                     <HBox spacing="10" alignment="CENTER">
                         <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
-                            <image>
-                                <Image url="@/kuvat/thumb.png" />
-                            </image>
+                            <Image url="@/kuvat/thumb.png"/>
                         </ImageView>
                         <Label fx:id="requirement1" text="At least 8 characters long" styleClass="password-requirements" />
                     </HBox>
                     <HBox spacing="10" alignment="CENTER">
                         <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
-                            <image>
-                                <Image url="@/kuvat/thumb.png" />
-                            </image>
+                            <Image url="@/kuvat/thumb.png"/>
                         </ImageView>
                         <Label fx:id="requirement2" text="Contains an uppercase letter" styleClass="password-requirements" />
                     </HBox>
                     <HBox spacing="10" alignment="CENTER">
                         <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
-                            <image>
-                                <Image url="@/kuvat/thumb.png" />
-                            </image>
+                            <Image url="@/kuvat/thumb.png"/>
                         </ImageView>
                         <Label fx:id="requirement3" text="Contains a lowercase letter" styleClass="password-requirements" />
                     </HBox>
                     <HBox spacing="10" alignment="CENTER">
                         <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
-                            <image>
-                                <Image url="@/kuvat/thumb.png" />
-                            </image>
+                            <Image url="@/kuvat/thumb.png"/>
                         </ImageView>
                         <Label fx:id="requirement4" text="Contains a number" styleClass="password-requirements" />
                     </HBox>
@@ -137,5 +125,4 @@
             </ImageView>
         </StackPane>
     </center>
-
 </BorderPane>
