@@ -12,6 +12,7 @@ import model.ScreenUtil;
 import model.SessionManager;
 import services.Theme;
 
+import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -73,7 +74,12 @@ public class LogOutController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
         Parent loginRoot = loader.load();
         Scene loginScene = new Scene(loginRoot, 360, ScreenUtil.getScaledHeight());
-        loginScene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+        URL themeUrl = getClass().getResource(Theme.getTheme());
+        if (themeUrl != null) {
+            loginScene.getStylesheets().add(themeUrl.toExternalForm());
+        } else {
+            System.err.println("Theme URL is null");
+        }
 
         primaryStage.setScene(loginScene);
         ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);

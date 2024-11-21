@@ -32,7 +32,7 @@ public class ProfileControllerTest extends ApplicationTest {
     @Before
     public void initializeSessionManager() {
         SessionManager.setLanguage(Language.EN);
-        SessionManager.getInstance().getLoggedUser().setUsername("sara");
+        SessionManager.getInstance().setLoggedUser(new UserModel("sara", 1111, "date"));
     }
 
     @Override

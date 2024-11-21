@@ -1,8 +1,8 @@
 package model;
 
 public class Like {
-    private int postID;
-    private int userID;
+    private final int postID;
+    private final int userID;
 
     public Like(int userID, int postID) {
         this.userID = userID;

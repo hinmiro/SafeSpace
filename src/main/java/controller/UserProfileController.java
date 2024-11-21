@@ -14,6 +14,7 @@ import model.*;
 import services.Theme;
 import view.*;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -112,8 +113,12 @@ public class UserProfileController {
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-        scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
-
+        URL themeUrl = getClass().getResource(Theme.getTheme());
+        if (themeUrl != null) {
+            scene.getStylesheets().add(themeUrl.toExternalForm());
+        } else {
+            System.err.println("Theme URL is null");
+        }
         stage.setScene(scene);
         stage.setTitle(title);
 
@@ -260,8 +265,12 @@ public class UserProfileController {
 
             Stage stage = (Stage) messageButton.getScene().getWindow();
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
-
+            URL themeUrl = getClass().getResource(Theme.getTheme());
+            if (themeUrl != null) {
+                scene.getStylesheets().add(themeUrl.toExternalForm());
+            } else {
+                System.err.println("Theme URL is null");
+            }
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("messages"));
             stage.setScene(scene);

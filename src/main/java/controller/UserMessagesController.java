@@ -10,6 +10,7 @@ import model.*;
 import services.Theme;
 import view.*;
 import java.io.IOException;
+import java.net.URL;
 import java.time.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -147,8 +148,12 @@ public class UserMessagesController {
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("messages"));
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
-
+            URL themeUrl = getClass().getResource(Theme.getTheme());
+            if (themeUrl != null) {
+                scene.getStylesheets().add(themeUrl.toExternalForm());
+            } else {
+                System.err.println("Theme URL is null");
+            }
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

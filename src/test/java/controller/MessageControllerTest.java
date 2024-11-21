@@ -25,7 +25,7 @@ public class MessageControllerTest extends ApplicationTest {
 
     @Before
     public void initializeSessionManager() {
-        SessionManager.setLanguage(Language.EN);
+        SessionManager.getInstance().setLanguage(Language.EN);
         user = new UserModel("sara", 115, "2024-09-27");
         SessionManager.getInstance().setLoggedUser(user);
     }

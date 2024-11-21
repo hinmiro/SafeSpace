@@ -8,6 +8,7 @@ import java.net.http.*;
 public class Feed implements Runnable {
 
     private static String url = "http://10.120.32.76:8080/api/v1/events";
+    private BlockingQueue<Post> queue;
     private Gson gson;
 
     public Feed() {
@@ -66,6 +67,16 @@ public class Feed implements Runnable {
             }
         }
     }
+
+    public void updateLikeCount(Like like) {
+        for (Post post : SharedData.getInstance().getPosts()) {
+            if (post.getPostID() == like.getPostId()) {
+                post.setLikeCount(post.getLikeCount() + 1);
+                break;
+            }
+        }
+    }
+
 
     @Override
     public void run() {

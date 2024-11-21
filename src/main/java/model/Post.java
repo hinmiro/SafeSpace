@@ -11,10 +11,8 @@ public class Post {
     private String postPictureID;
     private String postDate;
     private int likeCount;
-    private List<Integer> likers;
     private boolean likedByUser;
     private int commentCount;
-
 
 
     public Post(int postID, int postCreatorID, String postCreatorName, String postContent, String postPictureID, String postDate, int likeCount, int commentCount) {
@@ -36,7 +34,9 @@ public class Post {
         return postCreatorID;
     }
 
-    public String getPostCreatorName() { return postCreatorName; }
+    public String getPostCreatorName() {
+        return postCreatorName;
+    }
 
     public String getPostContent() {
         return postContent;
@@ -66,10 +66,6 @@ public class Post {
         return likeCount;
     }
 
-    public boolean isLikedByUser(Post item) {
-        ArrayList<Integer> likedPosts = SessionManager.getInstance().getLoggedUser().getLikedPosts();
-        return likedPosts != null && !likedPosts.contains(item.postID);
-    }
 
     public void setLikedByUser(boolean likedByUser) {
         this.likedByUser = likedByUser;

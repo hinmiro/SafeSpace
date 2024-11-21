@@ -10,6 +10,7 @@ import model.*;
 import services.Theme;
 import view.View;
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import static model.SharedData.createClickableUsername;
@@ -203,8 +204,13 @@ public class MainController {
         }
 
         Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
-        scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
-        stage.setScene(scene);
+        URL themeUrl = getClass().getResource(Theme.getTheme());
+        if (themeUrl != null) {
+            scene.getStylesheets().add(themeUrl.toExternalForm());
+        } else {
+            System.err.println("Theme URL is null");
+        }
+        stage.setScene(scene);        stage.setScene(scene);
         stage.setTitle(title);
     }
 
@@ -237,7 +243,12 @@ public class MainController {
             Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
             Scene scene = new Scene(newPostPane, 360, ScreenUtil.getScaledHeight());
-            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+            URL themeUrl = getClass().getResource(Theme.getTheme());
+            if (themeUrl != null) {
+                scene.getStylesheets().add(themeUrl.toExternalForm());
+            } else {
+                System.err.println("Theme URL is null");
+            }
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -256,7 +267,12 @@ public class MainController {
             Stage stage = (Stage) feedListView.getScene().getWindow();
             stage.setResizable(false);
             Scene scene = new Scene(newPostPane2, 360, ScreenUtil.getScaledHeight());
-            scene.getStylesheets().add(getClass().getResource(Theme.getTheme()).toExternalForm());
+            URL themeUrl = getClass().getResource(Theme.getTheme());
+            if (themeUrl != null) {
+                scene.getStylesheets().add(themeUrl.toExternalForm());
+            } else {
+                System.err.println("Theme URL is null");
+            }
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
