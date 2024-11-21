@@ -1,22 +1,15 @@
 package model;
 
-import controller.MainController;
-import controller.ProfileController;
-import controller.UserProfileController;
+import controller.*;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import services.Theme;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class SharedData {
     private static SharedData instance;
@@ -99,7 +92,6 @@ public class SharedData {
             } else {
                 loader = new FXMLLoader(SharedData.class.getResource("/userProfile.fxml"));
             }
-
             Parent root = loader.load();
 
             if (userId == loggedInUserId) {
@@ -112,15 +104,17 @@ public class SharedData {
                 userProfileController.setMainController(new MainController());
             }
 
-
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
             URL themeUrl = SharedData.class.getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
             }
+
             primaryStage.setScene(scene);
+
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             primaryStage.setTitle(userId == loggedInUserId ? pageTitle.getString("profile") : pageTitle.getString("userProfile"));
         } catch (IOException e) {

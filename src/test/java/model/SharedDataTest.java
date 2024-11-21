@@ -1,25 +1,18 @@
 package model;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
+import org.junit.*;
 import java.util.Locale;
 import java.util.concurrent.BlockingQueue;
-
 import static org.junit.Assert.*;
 
 public class SharedDataTest {
     private Locale locale;
-
 
     @Before
     public void setUp() throws Exception {
         if (SessionManager.getInstance().getSelectedLanguage() == null) {
             SessionManager.getInstance().setLanguage(Language.EN);
         }
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-
         locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
     }
 
@@ -80,5 +73,4 @@ public class SharedDataTest {
     public void getPosts() {
         assertNotNull("Posts list should not be null", SharedData.getInstance().getPosts());
     }
-
 }

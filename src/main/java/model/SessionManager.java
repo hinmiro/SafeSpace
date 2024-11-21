@@ -1,7 +1,6 @@
 package model;
 
-import controller.MainController;
-import controller.ProfileController;
+import controller.*;
 
 public class SessionManager {
     private static SessionManager INSTANCE;

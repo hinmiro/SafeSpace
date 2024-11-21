@@ -1,17 +1,12 @@
 package controller;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import model.Language;
-import model.SessionManager;
-import model.UserModel;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import model.*;
+import org.junit.*;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -63,11 +58,12 @@ public class NewPostControllerTest extends ApplicationTest {
 
     @Ignore
     @Test
-    public void testPostButtonSuccess() { // still not working
+    public void testPostButtonSuccess() {
         verifyThat("#captionTextArea", NodeMatchers.isVisible());
         verifyThat("#chooseImageButton", NodeMatchers.isVisible());
         clickOn(chooseImageButton);
-// choose an image here
+
+        // choose an image here
 
         clickOn(captionTextArea).write("This is a test post");
         assertThat(captionTextArea.getText()).isEqualTo("This is a test post");
@@ -75,7 +71,7 @@ public class NewPostControllerTest extends ApplicationTest {
 
     @Ignore
     @Test
-    public void testPostButtonWithoutCaption() { // still not working
+    public void testPostButtonWithoutCaption() {
         verifyThat("#captionTextArea", NodeMatchers.isVisible());
         verifyThat("#chooseImageButton", NodeMatchers.isVisible());
         clickOn(chooseImageButton);

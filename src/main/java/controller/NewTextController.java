@@ -110,7 +110,6 @@ public class NewTextController {
         inspirationText.setText(inspirationsArray[randomIndex]);
     }
 
-
     @FXML
     private void insertEmojiSmile() {
         insertEmoji("😊");

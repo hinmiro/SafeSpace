@@ -1,26 +1,16 @@
 package services;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-
+import org.junit.*;
 import java.io.IOException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-
+import java.net.http.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ApiClientTest {
     public static HttpClient client;
     public static HttpResponse<String> res;
     private ApiClient apiClient;
-
 
     @BeforeClass
     public static void init() {
@@ -53,8 +43,6 @@ public class ApiClientTest {
         String actualResponse = response.body();
 
         assertEquals(expectation, actualResponse);
-
-
     }
 
     @Test

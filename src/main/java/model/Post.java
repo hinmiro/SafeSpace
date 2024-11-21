@@ -1,8 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Post {
     private int postID;
     private int postCreatorID;
@@ -13,7 +10,6 @@ public class Post {
     private int likeCount;
     private boolean likedByUser;
     private int commentCount;
-
 
     public Post(int postID, int postCreatorID, String postCreatorName, String postContent, String postPictureID, String postDate, int likeCount, int commentCount) {
         this.postID = postID;
@@ -65,7 +61,6 @@ public class Post {
     public int getLikeCount() {
         return likeCount;
     }
-
 
     public void setLikedByUser(boolean likedByUser) {
         this.likedByUser = likedByUser;

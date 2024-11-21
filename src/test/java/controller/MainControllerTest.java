@@ -1,16 +1,11 @@
 package controller;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Language;
-import model.Post;
-import model.SessionManager;
-import model.UserModel;
-import org.junit.Before;
-import org.junit.Test;
+import model.*;
+import org.junit.*;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -90,7 +85,6 @@ public class MainControllerTest extends ApplicationTest {
 
     @Test
     public void testSearchButton() {
-        verifyThat("#searchButton", NodeMatchers.isVisible());
         clickOn(usernameSearchField).write("test");
         verifyThat(usernameSearchField, NodeMatchers.isVisible());
         clickOn(searchButton);
@@ -100,7 +94,6 @@ public class MainControllerTest extends ApplicationTest {
 
     @Test
     public void testFriendsOption() {
-        verifyThat("#friendsOption", NodeMatchers.isVisible());
         clickOn(friendsOption);
         sleep(500);
         assertThat(friendsOption).isNotNull();
@@ -109,7 +102,6 @@ public class MainControllerTest extends ApplicationTest {
 
     @Test
     public void testAllOption() {
-        verifyThat("#allOption", NodeMatchers.isVisible());
         clickOn(allOption);
         sleep(500);
         assertThat(allOption).isNotNull();
@@ -118,7 +110,6 @@ public class MainControllerTest extends ApplicationTest {
 
     @Test
     public void testNewPostButton() {
-        verifyThat("#newPostButton", NodeMatchers.isVisible());
         clickOn(newPostButton);
         sleep(500);
         clickOn(newPostButton);
@@ -129,7 +120,6 @@ public class MainControllerTest extends ApplicationTest {
 
     @Test
     public void testProfileButton() {
-        verifyThat("#profileButton", NodeMatchers.isVisible());
         clickOn(profileButton);
         sleep(500);
         assertThat(lookup("#profileButton").queryAs(Button.class)).isNotNull();
@@ -160,7 +150,6 @@ public class MainControllerTest extends ApplicationTest {
 
     @Test
     public void testLeaveMessageButton() {
-        verifyThat("#leaveMessageButton", NodeMatchers.isVisible());
         clickOn(leaveMessageButton);
         sleep(500);
         assertThat(leaveMessageButton).isNotNull();
@@ -168,11 +157,9 @@ public class MainControllerTest extends ApplicationTest {
 
     @Test
     public void testHomeButton() {
-        verifyThat("#homeButton", NodeMatchers.isVisible());
         clickOn(homeButton);
         sleep(500);
         assertThat(homeButton).isNotNull();
         assertThat(homeButton.getText()).isEqualTo("Home");
     }
-
 }

@@ -1,23 +1,15 @@
 package model;
 
 import com.google.gson.Gson;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
+import org.junit.*;
+import org.mockito.*;
 import services.ApiClient;
-
 import java.io.IOException;
-import java.net.http.HttpClient;
-import java.net.http.HttpResponse;
+import java.net.http.*;
 import java.util.HashMap;
-
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class SoftwareModelTest {
     public static HttpClient client;
@@ -77,7 +69,6 @@ public class SoftwareModelTest {
         assertNotNull(user);
         assertEquals("tester", user.getUsername());
         assertEquals("JWTTOKEN123", user.getJwt());
-
     }
 
     @Test
@@ -91,9 +82,7 @@ public class SoftwareModelTest {
 
         boolean result = softwareModel.createNewPost("TESTINGTEEEEEEST");
 
-
         assertTrue(result);
-
     }
 
     @AfterClass

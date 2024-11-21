@@ -8,19 +8,16 @@ import javafx.scene.canvas.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.paint.*;
+import javafx.scene.shape.*;
+import javafx.stage.*;
 import model.*;
 import services.Theme;
 import view.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.*;
+import java.util.concurrent.atomic.*;
 
 public class ProfileController {
 
@@ -33,36 +30,21 @@ public class ProfileController {
     private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
-    @FXML
-    public Label followersCountLabel;
-    @FXML
-    public Label followingCountLabel;
-    @FXML
-    private ImageView profileImageView;
-    @FXML
-    private Button homeButton;
-    @FXML
-    private Button profileButton;
-    @FXML
-    private Button settingsProfileID;
-    @FXML
-    private Label noPostsLabel;
-    @FXML
-    private View mainView;
-    @FXML
-    private Stage dialogStage;
-    @FXML
-    public Label usernameLabel;
-    @FXML
-    public Label registeredLabel;
-    @FXML
-    public Label bioLabel;
-    @FXML
-    private ListView<Post> feedListView;
-    @FXML
-    private Label followersLabel;
-    @FXML
-    private Label followingLabel;
+    @FXML public Label followersCountLabel;
+    @FXML public Label followingCountLabel;
+    @FXML private ImageView profileImageView;
+    @FXML private Button homeButton;
+    @FXML private Button profileButton;
+    @FXML private Button settingsProfileID;
+    @FXML private Label noPostsLabel;
+    @FXML private View mainView;
+    @FXML private Stage dialogStage;
+    @FXML public Label usernameLabel;
+    @FXML public Label registeredLabel;
+    @FXML public Label bioLabel;
+    @FXML private ListView<Post> feedListView;
+    @FXML private Label followersLabel;
+    @FXML private Label followingLabel;
 
     @FXML
     public void initialize() throws IOException, InterruptedException {
@@ -92,7 +74,14 @@ public class ProfileController {
         homeButton.setOnAction(event -> navigateTo("/main.fxml"));
         profileButton.setOnAction(event -> navigateTo("/profile.fxml"));
 
-        // menu profiilissa
+        menuInProfile();
+        settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
+        displayUserPosts();
+
+        updateLanguage();
+    }
+
+    private void menuInProfile() {
         settingsContextMenu = new ContextMenu();
 
         MenuItem changeLanguageItem = new MenuItem("Change Language");
@@ -118,25 +107,29 @@ public class ProfileController {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/profile.fxml"));
                 Parent root = fxmlLoader.load();
+
                 Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
                 URL themeUrl = getClass().getResource(Theme.getTheme());
                 if (themeUrl != null) {
                     scene.getStylesheets().add(themeUrl.toExternalForm());
                 } else {
                     System.err.println("Theme URL is null");
-                }                stage.setScene(scene);
+                }
+
+                stage.setScene(scene);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
+
         changeThemeItem.setText(buttons.getString("switchTheme"));
 
-
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, changeThemeItem, logOutItem);
-        settingsProfileID.setOnMouseClicked(event -> showContextMenu(event));
-        displayUserPosts();
+    }
 
-        updateLanguage();
+    private void showContextMenu(MouseEvent event) {
+        settingsContextMenu.show(settingsProfileID, Side.BOTTOM, 0, 0);
     }
 
     private void updateTexts() {
@@ -196,10 +189,6 @@ public class ProfileController {
         }
     }
 
-    private void showContextMenu(MouseEvent event) {
-        settingsContextMenu.show(settingsProfileID, Side.BOTTOM, 0, 0);
-    }
-
     private void showLogOut() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/logOut.fxml"));
@@ -213,12 +202,14 @@ public class ProfileController {
             logOutController.setPrimaryStage(primaryStage);
 
             Scene logoutScene = new Scene(logoutRoot);
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 logoutScene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
             }
+
             Stage dialogStage = new Stage();
             dialogStage.setScene(logoutScene);
             logOutController.setDialogStage(dialogStage);
@@ -243,19 +234,25 @@ public class ProfileController {
             Stage stage = (Stage) profileButton.getScene().getWindow();
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("updateinfo"));
+
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
-            }            stage.setScene(scene);
+            }
+
+            stage.setScene(scene);
+
             URL themeUrl2 = getClass().getResource(Theme.getTheme());
             if (themeUrl2 != null) {
                 stage.getScene().getStylesheets().set(0, themeUrl2.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
             }
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -275,13 +272,17 @@ public class ProfileController {
             Stage stage = (Stage) profileButton.getScene().getWindow();
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             stage.setTitle(pageTitle.getString("editprofile"));
+
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
-            }            stage.setScene(scene);
+            }
+
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -315,12 +316,14 @@ public class ProfileController {
             Parent root = fxmlLoader.load();
 
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
             }
+
             Stage stage = (Stage) homeButton.getScene().getWindow();
             stage.setScene(scene);
 
@@ -334,7 +337,6 @@ public class ProfileController {
                 ProfileController profileController = fxmlLoader.getController();
                 profileController.setMainView(mainView);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -351,17 +353,20 @@ public class ProfileController {
 
             modalStage.initModality(Modality.APPLICATION_MODAL);
             modalStage.setResizable(false);
+
             Scene scene = new Scene(root, 200, 300);
+
             URL themeUrl = getClass().getResource(Theme.getTheme());
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 System.err.println("Theme URL is null");
-            }            modalStage.setScene(scene);
+            }
+
+            modalStage.setScene(scene);
             modalStage.showAndWait();
 
             navigateTo("/profile.fxml");
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -382,5 +387,4 @@ public class ProfileController {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
-
 }

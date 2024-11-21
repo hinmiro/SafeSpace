@@ -1,8 +1,7 @@
 package bundles;
 
 import org.junit.Test;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 import static org.junit.Assert.*;
 
 public class LocalizedLabelsTest {

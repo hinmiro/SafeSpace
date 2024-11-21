@@ -1,24 +1,17 @@
 package model;
 
 import controller.ControllerForView;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.geometry.*;
+import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.text.*;
+import javafx.stage.*;
 import services.Theme;
-
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PostListCell extends ListCell<Post> {
     private final SoftwareModel softwareModel = new SoftwareModel();
@@ -78,12 +71,14 @@ public class PostListCell extends ListCell<Post> {
     private void openPostDetailModal(Post item, Stage primaryStage) {
         Stage modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
+
         InputStream logoStream = getClass().getResourceAsStream("/kuvat/safespacelogo.png");
         if (logoStream != null) {
             primaryStage.getIcons().add(new Image(logoStream));
         } else {
             System.err.println("Logo stream is null");
         }
+
         VBox contentBox = new VBox();
         contentBox.setSpacing(5);
         contentBox.setPadding(new Insets(10));
@@ -130,15 +125,17 @@ public class PostListCell extends ListCell<Post> {
         ScrollPane scrollPane = new ScrollPane(contentBox);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
+
         Scene scene = new Scene(scrollPane, 300, 550);
+
         URL themeUrl = SharedData.class.getResource(Theme.getTheme());
         if (themeUrl != null) {
             scene.getStylesheets().add(themeUrl.toExternalForm());
         } else {
             System.err.println("Theme URL is null");
         }
-        modalStage.setScene(scene);
 
+        modalStage.setScene(scene);
         modalStage.setTitle(labels.getString("postDetailTitle"));
         modalStage.showAndWait();
     }

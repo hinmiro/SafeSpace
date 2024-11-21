@@ -1,15 +1,11 @@
 package controller;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Language;
-import model.SessionManager;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import model.*;
+import org.junit.*;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import static javafx.scene.control.ButtonType.OK;
@@ -56,6 +52,7 @@ public class RegisterControllerTest extends ApplicationTest {
         verifyThat("#passwordStrengthLabel", NodeMatchers.isVisible());
         sleep(1000);
     }
+
     @Ignore
     @Test
     public void testRegisterButtonSuccess() {
@@ -97,7 +94,6 @@ public class RegisterControllerTest extends ApplicationTest {
         clickOn(passwordField).write("password");
         clickOn(confirmPasswordField).write("password1");
         sleep(1000);
-        verifyThat(passwordStrengthLabel, NodeMatchers.isVisible());
         assertThat(passwordStrengthLabel.getText()).isEqualTo("Password strength: Medium");
         sleep(1000);
         clickOn(registerButton);

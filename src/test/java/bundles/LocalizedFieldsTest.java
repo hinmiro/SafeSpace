@@ -1,12 +1,8 @@
 package bundles;
 
 import org.junit.Test;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.*;
+import static org.junit.Assert.*;
 
 public class LocalizedFieldsTest {
     private final Locale localeEN = new Locale("en", "US");

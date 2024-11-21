@@ -2,53 +2,35 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import model.Language;
-import model.ScreenUtil;
-import model.SessionManager;
-import model.UserModel;
+import model.*;
 import services.Theme;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class RegisterController {
-
-    @FXML
-    public Label usernameLabel;
-    @FXML
-    public Label passwordLabel;
-    @FXML
-    public Label confirmPasswordLabel;
-    @FXML
-    public Label alreadyLabel;
-    @FXML
-    public Label registerHero;
-    @FXML
-    private TextField usernameField;
-    @FXML
-    private PasswordField passwordField;
-    @FXML
-    private PasswordField confirmPasswordField;
-    @FXML
-    private Button registerButton;
-    @FXML
-    private Button backButton;
-    @FXML
-    private Label passwordStrengthLabel;
 
     private ResourceBundle labels;
     private ResourceBundle buttons;
     private ResourceBundle alerts;
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+
+    @FXML public Label usernameLabel;
+    @FXML public Label passwordLabel;
+    @FXML public Label confirmPasswordLabel;
+    @FXML public Label alreadyLabel;
+    @FXML public Label registerHero;
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private PasswordField confirmPasswordField;
+    @FXML private Button registerButton;
+    @FXML private Button backButton;
+    @FXML private Label passwordStrengthLabel;
 
     @FXML
     public void initialize() {
@@ -60,6 +42,7 @@ public class RegisterController {
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
             updatePasswordStrength(newValue);
         });
+
         updateLanguage();
     }
 
@@ -155,16 +138,17 @@ public class RegisterController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
                 Parent root = loader.load();
 
-                MainController mainController = loader.getController();
-
                 Stage stage = (Stage) registerButton.getScene().getWindow();
+
                 Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
+
                 URL themeUrl = getClass().getResource(Theme.getTheme());
                 if (themeUrl != null) {
                     stage.getScene().getStylesheets().set(0, themeUrl.toExternalForm());
                 } else {
                     System.err.println("Theme URL is null");
                 }
+
                 stage.setScene(scene);
                 ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
                 stage.setTitle(pageTitle.getString("main"));
@@ -181,8 +165,6 @@ public class RegisterController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
             Parent root = loader.load();
 
-            LoginController loginController = loader.getController();
-
             Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
 
             URL themeUrl = getClass().getResource(Theme.getTheme());
@@ -191,8 +173,8 @@ public class RegisterController {
             } else {
                 System.err.println("Theme URL is null");
             }
-            Stage stage = (Stage) backButton.getScene().getWindow();
 
+            Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(scene);
 
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);

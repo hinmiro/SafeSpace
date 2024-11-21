@@ -1,21 +1,15 @@
 package model;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
+import org.junit.*;
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 public class UserDataTest {
     private UserData userData;
 
-
     @Before
     public void setUp() throws Exception {
         userData = new UserData();
-
     }
 
     @After
@@ -28,7 +22,6 @@ public class UserDataTest {
         assertEquals("Following count should be 0", 0, userData.getFollowingCount());
         userData.setFollowingCount(1);
         assertEquals("Following count should be 1", 1, userData.getFollowingCount());
-
     }
 
     @Test

@@ -2,16 +2,11 @@ package controller;
 
 import javafx.scene.image.Image;
 import model.*;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.io.*;
+import java.util.*;
 
 public class ControllerForView extends Controller {
 
-    public static BlockingQueue<Post> feedQueue = new LinkedBlockingQueue<>();
     private static ControllerForView INSTANCE;
 
     private ControllerForView() {}
@@ -45,7 +40,6 @@ public class ControllerForView extends Controller {
                 app.startMainFeedThread();
                 return user;
             }
-
         } catch (InterruptedException | IOException e) {
             System.out.println("Error: " + e.getMessage());
         }

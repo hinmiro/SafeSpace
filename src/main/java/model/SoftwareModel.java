@@ -2,11 +2,8 @@ package model;
 
 import com.google.gson.*;
 import javafx.scene.image.Image;
-import services.ApiClient;
-import services.Feed;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
+import services.*;
+import java.io.*;
 import java.net.http.HttpResponse;
 import java.util.*;
 
@@ -132,6 +129,7 @@ public class SoftwareModel {
 
     public Post getPostById(String postId) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getPostById(postId);
+
         if (res.statusCode() == 200) {
             return gson.fromJson(res.body(), Post.class);
         }
@@ -140,7 +138,6 @@ public class SoftwareModel {
 
     public Image getProfileImage(int userId) throws IOException, InterruptedException {
         HttpResponse<byte[]> res = ApiClient.getProfileImg(userId);
-        System.out.println("kuva " + res.statusCode());
 
         if (res.statusCode() == 200) {
             byte[] imageBytes = res.body();
@@ -153,6 +150,7 @@ public class SoftwareModel {
 
     public Image getPostImage(String id) throws IOException, InterruptedException {
         HttpResponse<byte[]> res = ApiClient.getPostImage(id);
+
         if (res.statusCode() == 200) {
             byte[] imageBytes = res.body();
             return new Image(new ByteArrayInputStream(imageBytes));
@@ -163,6 +161,7 @@ public class SoftwareModel {
 
     public UserModel getUserById(int id) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getUserById(id);
+
         if (res.statusCode() == 200) {
             UserModel user = gson.fromJson(res.body(), UserModel.class);
             return user;
@@ -197,7 +196,7 @@ public class SoftwareModel {
 
     public ArrayList<Comment> getCommentsByPostId(String id) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getCommentsByPostId(id);
-        System.out.println("comment res " + res.body());
+
         if (res.statusCode() == 200) {
             Comment[] commentsArray = gson.fromJson(res.body(), Comment[].class);
             return new ArrayList<>(Arrays.asList(commentsArray));
@@ -213,8 +212,6 @@ public class SoftwareModel {
 
         try {
             HttpResponse<String> res = ApiClient.postComment(jsonData, postId);
-            System.out.println("comments body " + res.body());
-
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
         }
@@ -318,14 +315,6 @@ public class SoftwareModel {
             return friendsList.contains(friendId);
         }
         return false;
-    }
-
-    public UserModel getMe() throws IOException, InterruptedException {
-        HttpResponse<String> res = ApiClient.getMe();
-        if (res.statusCode() == 200) {
-            return gson.fromJson(res.body(), UserModel.class);
-        }
-        return null;
     }
 }
 
