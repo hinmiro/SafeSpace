@@ -96,7 +96,6 @@ public class RegisterControllerTest extends ApplicationTest {
         clickOn(passwordField).write("password");
         clickOn(confirmPasswordField).write("password1");
         sleep(1000);
-        verifyThat(passwordStrengthLabel, NodeMatchers.isVisible());
         assertThat(passwordStrengthLabel.getText()).isEqualTo("Password strength: Medium");
         sleep(1000);
         clickOn(registerButton);

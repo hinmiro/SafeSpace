@@ -1,24 +1,14 @@
 package services;
 
 import com.google.gson.Gson;
-import model.Like;
-import model.Post;
-import model.SessionManager;
-import model.SharedData;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-
-import java.util.concurrent.BlockingQueue;
-
+import model.*;
+import java.net.*;
+import java.net.http.*;
 
 public class Feed implements Runnable {
 
     private static String url = "http://10.120.32.76:8080/api/v1/events";
-    private BlockingQueue<Post> queue;
     private Gson gson;
-
 
     public Feed() {
         gson = new Gson();
@@ -76,16 +66,6 @@ public class Feed implements Runnable {
             }
         }
     }
-
-    public void updateLikeCount(Like like) {
-        for (Post post : SharedData.getInstance().getPosts()) {
-            if (post.getPostID() == like.getPostId()) {
-                post.setLikeCount(post.getLikeCount() + 1);
-                break;
-            }
-        }
-    }
-
 
     @Override
     public void run() {

@@ -1,36 +1,19 @@
 package controller;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import model.Language;
-import model.ScreenUtil;
-import model.SessionManager;
-import services.Theme;
-import java.io.IOException;
-import java.util.ResourceBundle;
-import javafx.scene.control.Button;
+import javafx.fxml.*;
+import javafx.stage.*;
+import model.*;
+import java.io.*;
+import javafx.scene.control.*;
 
 public class LanguageSelectionController {
 
-    @FXML
-    private VBox languageSelectionWindow;
-
     private Stage stage;
-    @FXML
-    private Button englishButton;
 
-    @FXML
-    private Button finnishButton;
-
-    @FXML
-    private Button japaneseButton;
-
-    @FXML
-    private Button russianButton;
+    @FXML private Button englishButton;
+    @FXML private Button finnishButton;
+    @FXML private Button japaneseButton;
+    @FXML private Button russianButton;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -68,19 +51,15 @@ public class LanguageSelectionController {
         stage.close();
     }
 
-
     private void refreshUI() {
         ProfileController profileController = SessionManager.getInstance().getProfileController();
         profileController.updateLanguage();
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/profile.fxml"));
-            Parent root = loader.load();
+            loader.load();
             profileController = loader.getController();
             profileController.setMainController(SessionManager.getInstance().getMainController());
-
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,20 +1,13 @@
 package services;
 
 import controller.ControllerForView;
-import model.SessionManager;
-import model.UserModel;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import model.*;
+import java.io.*;
+import java.net.*;
+import java.net.http.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.UUID;
+import java.nio.file.*;
+import java.util.*;
 
 public class ApiClient {
 
@@ -101,7 +94,6 @@ public class ApiClient {
         return HttpRequest.BodyPublishers.ofByteArrays(byteArrays);
     }
 
-
     public static HttpResponse<String> updateUser(String data) throws IOException, InterruptedException {
         UserModel user = SessionManager.getInstance().getLoggedUser();
 
@@ -118,25 +110,6 @@ public class ApiClient {
         return res;
     }
 
-
-    public static HttpResponse<String> sendLike() {
-        return null;
-    }
-
-
-    public static int deleteUser() throws IOException, InterruptedException {
-        UserModel user = SessionManager.getInstance().getLoggedUser();
-
-        HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url + "/user/" + user.getUserId()))
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + user.getJwt())
-                .DELETE().build();
-
-        res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        return res.statusCode();
-    }
-
     public static HttpResponse<String> getUserByName(String name) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url + "/users/search?name=" + name))
@@ -148,18 +121,7 @@ public class ApiClient {
         return res;
     }
 
-    public static HttpResponse<String> getAllUsers() throws IOException, InterruptedException {
-        HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url + "/users"))
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
-                .GET().build();
-
-        res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        return res;
-    }
-
-    public static HttpResponse<String>  removeFriend(int id) throws IOException, InterruptedException {
+    public static HttpResponse<String> removeFriend(int id) throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url + "/users/friends/" + id))
                 .header("Content-Type", "application/json")
@@ -230,36 +192,12 @@ public class ApiClient {
         return res;
     }
 
-    public static int updatePost(String postId, String json) throws IOException, InterruptedException {
-
-        HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url + "/post/" + postId))
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
-                .POST(HttpRequest.BodyPublishers.ofString(json))
-                .build();
-
-        res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        return res.statusCode();
-    }
-
     public static HttpResponse<String> getPosts() throws IOException, InterruptedException {
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url + "/post"))
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
                 .GET().build();
-
-        res = client.send(req, HttpResponse.BodyHandlers.ofString());
-        return res;
-    }
-
-    public static HttpResponse<String> deletePost(String postId) throws IOException, InterruptedException {
-        HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url + "/post/" + postId))
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + SessionManager.getInstance().getLoggedUser().getJwt())
-                .DELETE().build();
 
         res = client.send(req, HttpResponse.BodyHandlers.ofString());
         return res;
