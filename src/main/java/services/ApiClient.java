@@ -9,6 +9,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
 
+// Main connection between SafeSpace interface and server
+
 public class ApiClient {
 
     private static HttpClient client = HttpClient.newHttpClient();

@@ -9,6 +9,8 @@ public class ControllerForView extends Controller {
 
     private static ControllerForView INSTANCE;
 
+    // Singleton controller between software model and javafx controllers
+
     private ControllerForView() {}
 
     public static ControllerForView getInstance() {

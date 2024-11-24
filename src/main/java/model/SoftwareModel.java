@@ -7,6 +7,8 @@ import java.io.*;
 import java.net.http.HttpResponse;
 import java.util.*;
 
+// Connection between controllers and Api services
+
 public class SoftwareModel {
     Gson gson = new Gson();
 

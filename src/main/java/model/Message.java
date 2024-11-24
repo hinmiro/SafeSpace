@@ -2,14 +2,14 @@ package model;
 
 public class Message {
     private int messageID;
-    private String message;
+    private String messageText;
     private int sender;
     private int receiver;
     private String date;
     private final String type;
 
     public Message(String type, String message, String dateOfMessage) {
-        this.message = message;
+        this.messageText = message;
         this.date = dateOfMessage;
         this.type = type;
     }
@@ -23,11 +23,11 @@ public class Message {
     }
 
     public String getMessageContent() {
-        return message;
+        return messageText;
     }
 
     public void setMessageContent(String messageContent) {
-        this.message = messageContent;
+        this.messageText = messageContent;
     }
 
     public int getSenderId() {

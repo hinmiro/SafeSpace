@@ -22,6 +22,9 @@ public class SharedData {
     private ArrayList<Post> posts;
     private ArrayList<Like> likes;
 
+    // This is used for getting events and saving them trough SSH connection, even if user is not in
+    //  main page.
+
     private SharedData() {
         postQueue = new LinkedBlockingQueue<>();
         likeQueue = new LinkedBlockingQueue<>();

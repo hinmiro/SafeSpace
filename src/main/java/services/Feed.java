@@ -5,6 +5,8 @@ import model.*;
 import java.net.*;
 import java.net.http.*;
 
+// SSH connection thread to get events from server
+
 public class Feed implements Runnable {
 
     private static String url = "http://10.120.32.76:8080/api/v1/events";
