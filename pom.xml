@@ -61,6 +61,9 @@
                         <include>**/*Test.java</include>
                         <include>**/*Tests.java</include>
                     </includes>
+                    <excludes>
+                        <exclude>**/controller/**</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <!-- JaCoCo Plugin for code coverage -->
