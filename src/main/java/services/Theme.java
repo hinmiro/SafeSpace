@@ -1,5 +1,7 @@
 package services;
 
+// Theme class
+
 public class Theme {
     private static final String DARK = "/stylesdark.css";
     private static final String LIGHT = "/styles.css";

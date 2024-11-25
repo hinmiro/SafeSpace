@@ -8,6 +8,8 @@ import java.net.http.HttpResponse;
 import java.util.*;
 import java.util.logging.Logger;
 
+// Connection between controllers and Api services
+
 public class SoftwareModel {
     Gson gson = new Gson();
     private static final Logger logger = Logger.getLogger(SoftwareModel.class.getName());

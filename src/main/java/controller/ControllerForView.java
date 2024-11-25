@@ -11,6 +11,8 @@ public class ControllerForView extends Controller {
     private static ControllerForView instance;
     private static final Logger logger = Logger.getLogger(ControllerForView.class.getName());
 
+    // Singleton controller between software model and javafx controllers
+
     private ControllerForView() {}
 
     public static ControllerForView getInstance() {

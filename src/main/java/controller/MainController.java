@@ -276,6 +276,8 @@ public class MainController {
         }
     }
 
+    // Handling data events from Feed thread depending on what kind of event is coming.
+
     private synchronized void startQueueProcessing() {
         stopQueueProcessingFlag = false;
 

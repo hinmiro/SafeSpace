@@ -10,6 +10,8 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.logging.Logger;
 
+// Main connection between SafeSpace interface and server
+
 public class ApiClient {
 
     private static HttpClient client = HttpClient.newHttpClient();

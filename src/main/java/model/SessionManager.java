@@ -9,6 +9,8 @@ public class SessionManager {
     private MainController mainController;
     private ProfileController profileController;
 
+    // Data class to save logged userdata for session and selected localization
+
     private SessionManager() {
     }
 
