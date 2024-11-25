@@ -1,6 +1,6 @@
 package model;
 
-public class Message {
+public class Messages {
     private int messageID;
     private String message;
     private int sender;
@@ -8,7 +8,7 @@ public class Message {
     private String date;
     private final String type;
 
-    public Message(String type, String message, String dateOfMessage) {
+    public Messages(String type, String message, String dateOfMessage) {
         this.message = message;
         this.date = dateOfMessage;
         this.type = type;

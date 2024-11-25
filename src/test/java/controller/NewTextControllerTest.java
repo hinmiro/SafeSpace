@@ -51,7 +51,7 @@ public class NewTextControllerTest extends ApplicationTest {
         sleep(500);
     }
 
-    @Ignore
+    @Ignore // Ignored because it fails on other tests
     @Test
     public void testPostButtonSuccess() {
         clickOn("#textPostArea").write("This is a test post");

@@ -12,18 +12,18 @@ import services.Theme;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class PostListCell extends ListCell<Post> {
     private final SoftwareModel softwareModel = new SoftwareModel();
-    private ResourceBundle alerts;
     private final ResourceBundle buttons;
     private final ResourceBundle labels;
     private final ResourceBundle fields;
     private Locale locale;
+    private static final Logger logger = Logger.getLogger(PostListCell.class.getName());
 
     public PostListCell() {
         locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-        alerts = ResourceBundle.getBundle("alerts", locale);
         buttons = ResourceBundle.getBundle("buttons", locale);
         labels = ResourceBundle.getBundle("labels", locale);
         fields = ResourceBundle.getBundle("fields", locale);
@@ -57,9 +57,9 @@ public class PostListCell extends ListCell<Post> {
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
-            hBox.setOnMousePressed(evt -> {
-                openPostDetailModal(item, (Stage) hBox.getScene().getWindow());
-            });
+            hBox.setOnMousePressed(evt ->
+                openPostDetailModal(item, (Stage) hBox.getScene().getWindow())
+            );
 
             hBox.getChildren().addAll(contentBox, spacer);
             hBox.getStyleClass().add("post-cell");
@@ -76,7 +76,7 @@ public class PostListCell extends ListCell<Post> {
         if (logoStream != null) {
             primaryStage.getIcons().add(new Image(logoStream));
         } else {
-            System.err.println("Logo stream is null");
+            logger.warning("Logo stream is null");
         }
 
         VBox contentBox = new VBox();
@@ -132,7 +132,7 @@ public class PostListCell extends ListCell<Post> {
         if (themeUrl != null) {
             scene.getStylesheets().add(themeUrl.toExternalForm());
         } else {
-            System.err.println("Theme URL is null");
+            logger.warning("Theme URL is null");
         }
 
         modalStage.setScene(scene);
@@ -170,16 +170,16 @@ public class PostListCell extends ListCell<Post> {
     }
 
     private void addBottomSection(VBox contentBox, Post item) {
-        VBox bottomBox = createBottomSection(contentBox, item, true);
+        VBox bottomBox = createBottomSection(item, true);
         contentBox.getChildren().add(bottomBox);
     }
 
     private void addBottomSectionModal(VBox contentBox, Post item) {
-        VBox bottomBox = createBottomSection(contentBox, item, false);
+        VBox bottomBox = createBottomSection(item, false);
         contentBox.getChildren().add(bottomBox);
     }
 
-    private VBox createBottomSection(VBox contentBox, Post item, boolean isModal) {
+    private VBox createBottomSection(Post item, boolean isModal) {
         VBox bottomBox = new VBox();
         bottomBox.setAlignment(Pos.CENTER_LEFT);
         bottomBox.setSpacing(10);
@@ -271,6 +271,9 @@ public class PostListCell extends ListCell<Post> {
                     }
                 }
             } catch (IOException | InterruptedException e) {
+                if (e instanceof InterruptedException) {
+                    Thread.currentThread().interrupt();
+                }
                 e.printStackTrace();
             }
         });

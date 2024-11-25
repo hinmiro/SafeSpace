@@ -11,6 +11,7 @@ import view.View;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class LoginController {
 
@@ -20,6 +21,7 @@ public class LoginController {
     private ResourceBundle buttons;
     private ResourceBundle labels;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
     @FXML public Label serverError;
     @FXML public Label usernameLabel;
@@ -32,7 +34,7 @@ public class LoginController {
     @FXML private ComboBox<String> languageBox;
 
     @FXML
-    public void initialize() throws IOException, InterruptedException {
+    public void initialize() {
         languageBox.getItems().setAll(
                 Language.EN.getDisplayName(),
                 Language.FI.getDisplayName(),
@@ -46,9 +48,9 @@ public class LoginController {
         languageBox.setOnAction(event -> changeLanguage());
 
         loginButton.setOnMouseClicked(event -> handleLogin());
-        registerButton.setOnMouseClicked(event -> handleRegisterLink(event));
-        usernameField.setOnKeyPressed(event -> handleEnterKey(event));
-        passwordField.setOnKeyPressed(event -> handleEnterKey(event));
+        registerButton.setOnMouseClicked(this::handleRegisterLink);
+        usernameField.setOnKeyPressed(this::handleEnterKey);
+        passwordField.setOnKeyPressed(this::handleEnterKey);
 
         serverError.setVisible(!ApiClient.isServerAvailable());
         updateLanguage();
@@ -99,15 +101,16 @@ public class LoginController {
     private void handleLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
+        String failedTitle = alerts.getString("failedTitle");
 
         if (username.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, alerts.getString("failedTitle"), alerts.getString("failedMessage"));
+            showAlert(Alert.AlertType.ERROR, failedTitle, alerts.getString("failedMessage"));
             return;
         }
 
         UserModel user = controllerForView.login(username, password);
         if (user == null) {
-            showAlert(Alert.AlertType.ERROR, alerts.getString("failedTitle"), alerts.getString("incorrectCredentials"));
+            showAlert(Alert.AlertType.ERROR, failedTitle, alerts.getString("incorrectCredentials"));
             return;
         }
 
@@ -127,7 +130,7 @@ public class LoginController {
                 if (themeUrl != null) {
                     scene.getStylesheets().add(themeUrl.toExternalForm());
                 } else {
-                    System.err.println("Theme URL is null");
+                    logger.warning("Theme URL is null");
                 }
 
                 stage.setScene(scene);
@@ -154,7 +157,7 @@ public class LoginController {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
+                logger.warning("Theme URL is null");
             }
 
             stage.setScene(scene);

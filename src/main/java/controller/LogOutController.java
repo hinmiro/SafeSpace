@@ -6,19 +6,21 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.*;
 import services.Theme;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class LogOutController {
 
     private Stage dialogStage;
     private MainController mainController;
     private Stage primaryStage;
-    private ResourceBundle alerts;
     private ResourceBundle buttons;
     private ResourceBundle labels;
-    private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+    private static final Logger logger = Logger.getLogger(LogOutController.class.getName());
 
     @FXML private Button logOutButton;
     @FXML private Button cancelButton;
@@ -45,10 +47,8 @@ public class LogOutController {
     }
 
     private void updateLanguage() {
-        alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
-        fields = ResourceBundle.getBundle("Fields", locale);
         updateTexts();
     }
 
@@ -56,7 +56,7 @@ public class LogOutController {
         this.dialogStage = dialogStage;
     }
 
-    private void handleLogOut() throws Exception {
+    private void handleLogOut() throws IOException {
         mainController.stopQueueProcessing();
 
         SessionManager.getInstance().closeSession();
@@ -70,7 +70,7 @@ public class LogOutController {
         if (themeUrl != null) {
             loginScene.getStylesheets().add(themeUrl.toExternalForm());
         } else {
-            System.err.println("Theme URL is null");
+            logger.warning("Theme URL is null");
         }
 
         primaryStage.setScene(loginScene);

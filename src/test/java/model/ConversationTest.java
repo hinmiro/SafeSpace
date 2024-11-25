@@ -7,13 +7,13 @@ import static org.junit.Assert.*;
 public class ConversationTest {
     Conversation conversation;
     UserModel user;
-    Message message;
+    Messages message;
 
     @Before
     public void setUp() {
         user = new UserModel("username", 1, "testing day");
         conversation = new Conversation(user);
-        message = new Message("text", "Hello", "2024-11-14");
+        message = new Messages("text", "Hello", "2024-11-14");
     }
 
     @After
@@ -53,7 +53,7 @@ public class ConversationTest {
 
     @Test
     public void testSetMessages() {
-        List<Message> messages = new ArrayList<>();
+        List<Messages> messages = new ArrayList<>();
         messages.add(message);
         conversation.setMessages(messages);
         assertEquals("Should be", 1, conversation.getMessages().size());

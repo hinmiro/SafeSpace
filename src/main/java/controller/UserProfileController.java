@@ -1,7 +1,6 @@
 package controller;
 
 import javafx.collections.*;
-import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.canvas.*;
@@ -16,17 +15,17 @@ import view.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class UserProfileController {
     private ControllerForView controllerForView = ControllerForView.getInstance();
-    private ResourceBundle alerts;
     private ResourceBundle buttons;
     private ResourceBundle labels;
-    private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
     private View mainView;
     private int userId;
     private MainController mainController;
+    private static final Logger logger = Logger.getLogger(UserProfileController.class.getName());
 
     @FXML private Label usernameLabel;
     @FXML private Label bioLabel;
@@ -90,10 +89,8 @@ public class UserProfileController {
     }
 
     private void updateLanguage() {
-        alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
-        fields = ResourceBundle.getBundle("Fields", locale);
         updateTexts();
     }
 
@@ -108,7 +105,7 @@ public class UserProfileController {
         if (themeUrl != null) {
             scene.getStylesheets().add(themeUrl.toExternalForm());
         } else {
-            System.err.println("Theme URL is null");
+            logger.warning("Theme URL is null");
         }
 
         stage.setScene(scene);
@@ -165,35 +162,35 @@ public class UserProfileController {
             }
 
             if (loggedUser.getUserData() != null && loggedUser.getUserData().getFollowing() != null) {
-                for (UserModel following : loggedUser.getUserData().getFollowing()) {
-                    if (following.getUserId() == userId) {
+                for (UserModel usersFollowing : loggedUser.getUserData().getFollowing()) {
+                    if (usersFollowing.getUserId() == userId) {
                         isFollowing = true;
                         break;
                     }
                 }
             }
 
-            if (isFriend) {
-                followButton.setText(labels.getString("followingUser"));
-                followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
-            } else if (isFollowing) {
-                followButton.setText(labels.getString("followingUser"));
-                followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);");
+            String followingUser = labels.getString("followingUser");
+            String follow = labels.getString("follow");
+            String followButtonText;
+            String followButtonStyle;
+
+            if (isFriend || isFollowing) {
+                followButtonText = followingUser;
+                followButtonStyle = "-fx-background-color: linear-gradient(to bottom, #0095ff, #1564ba);";
             } else {
-                followButton.setText(labels.getString("follow"));
-                followButton.setStyle("-fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);");
+                followButtonText = follow;
+                followButtonStyle = "-fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);";
             }
+
+            followButton.setText(followButtonText);
+            followButton.setStyle(followButtonStyle);
         }
     }
 
-    public void displayUserPosts(ListView<Post> feedListView, Label noPostsLabel, int userId) {
+    public void displayUserPosts(ListView<Post> feedListView, Label noPostsLabel, int userId) throws IOException, InterruptedException {
         List<Post> posts;
-        try {
-            posts = controllerForView.getUserPostsOwnProfile(userId);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            return;
-        }
+        posts = controllerForView.getUserPostsOwnProfile(userId);
 
         if (posts.isEmpty()) {
             noPostsLabel.setVisible(true);
@@ -211,7 +208,7 @@ public class UserProfileController {
         }
     }
 
-    public void handleFollowButton(ActionEvent actionEvent) {
+    public void handleFollowButton() {
         UserModel userToFollow = controllerForView.getUserById(userId);
         int friendId = userToFollow.getUserId();
         UserModel loggedUser = SessionManager.getInstance().getLoggedUser();
@@ -262,7 +259,7 @@ public class UserProfileController {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
+                 logger.warning("Theme URL is null");
             }
 
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);

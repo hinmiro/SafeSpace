@@ -1,14 +1,14 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class UserData {
     private int followingCount;
     private int followersCount;
     private int friendsCount;
-    private ArrayList<UserModel> following;
-    private ArrayList<UserModel> followers;
-    private ArrayList<UserModel> friends;
+    private List<UserModel> following;
+    private List<UserModel> followers;
+    private List<UserModel> friends;
 
     public UserData() {
         following = new ArrayList<>();
@@ -28,27 +28,27 @@ public class UserData {
         return friendsCount;
     }
 
-    public ArrayList<UserModel> getFollowing() {
+    public List<UserModel> getFollowing() {
         return following;
     }
 
-    public ArrayList<UserModel> getFollowers() {
+    public List<UserModel> getFollowers() {
         return followers;
     }
 
-    public ArrayList<UserModel> getFriends() {
+    public List<UserModel> getFriends() {
         return friends;
     }
 
-    public void setFollowing(ArrayList<UserModel> following) {
+    public void setFollowing(List<UserModel> following) {
         this.following = following;
     }
 
-    public void setFollowers(ArrayList<UserModel> followers) {
+    public void setFollowers(List<UserModel> followers) {
         this.followers = followers;
     }
 
-    public void setFriends(ArrayList<UserModel> friends) {
+    public void setFriends(List<UserModel> friends) {
         this.friends = friends;
     }
 
@@ -74,7 +74,7 @@ public class UserData {
         followersCount = followers.size();
     }
 
-    public ArrayList<Integer> getFollowingUserIds() {
+    public List<Integer> getFollowingUserIds() {
         ArrayList<Integer> followingUserIds = new ArrayList<>();
         for (UserModel user : following) {
             followingUserIds.add(user.getUserId());
@@ -82,7 +82,7 @@ public class UserData {
         return followingUserIds;
     }
 
-    public ArrayList<Integer> getFriendsIds() {
+    public List<Integer> getFriendsIds() {
         ArrayList<Integer> friendsIds = new ArrayList<>();
         for (UserModel user : friends) {
             friendsIds.add(user.getUserId());

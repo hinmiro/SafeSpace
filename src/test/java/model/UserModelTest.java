@@ -8,13 +8,13 @@ public class UserModelTest {
     UserModel user;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         user = new UserModel("tester", 1, "testing day");
         user.setJwt("JWTJWT");
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         user = null;
     }
 
@@ -55,13 +55,14 @@ public class UserModelTest {
     @Test
     public void getBio() {
         user.setBio("BIO");
-        assertEquals("Should have set to ", "BIO", user.getBio());
+        assertEquals("Bio should have been updated to 'BIO'", "BIO", user.getBio());
     }
+
 
     @Test
     public void getProfilePictureUrl() {
         user.setProfilePictureUrl("catImage");
-        assertEquals("Should be set to ", "catImage", user.getProfilePictureUrl());
+        assertEquals("Profile Picture should have been updated to 'catImage' ", "catImage", user.getProfilePictureUrl());
     }
 
     @Test
@@ -106,7 +107,7 @@ public class UserModelTest {
     @Test
     public void addLikedPost() {
         user.addLikedPost(2);
-        assertEquals("liked post should be", 1, user.getLikedPosts().size());
+        assertEquals("Liked post should be updated to ", 1, user.getLikedPosts().size());
     }
 
     @Test
@@ -130,6 +131,6 @@ public class UserModelTest {
     public void setUserData() {
         UserData data = new UserData();
         user.setUserData(data);
-        assertEquals("should be same as", data, user.getUserData());
+        assertEquals("Should be the same as", data, user.getUserData());
     }
 }

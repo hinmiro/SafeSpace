@@ -11,6 +11,7 @@ import services.Theme;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class RegisterController {
 
@@ -19,6 +20,7 @@ public class RegisterController {
     private ResourceBundle alerts;
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+    private static final Logger logger = Logger.getLogger(RegisterController.class.getName());
 
     @FXML public Label usernameLabel;
     @FXML public Label passwordLabel;
@@ -36,12 +38,11 @@ public class RegisterController {
     public void initialize() {
         registerButton.setOnAction(event -> handleRegister());
         backButton.setOnAction(event -> backLogin());
-        usernameField.setOnKeyPressed(event -> handleEnterKey(event));
-        passwordField.setOnKeyPressed(event -> handleEnterKey(event));
-        confirmPasswordField.setOnKeyPressed(event -> handleEnterKey(event));
-        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
-            updatePasswordStrength(newValue);
-        });
+        usernameField.setOnKeyPressed(this::handleEnterKey);
+        passwordField.setOnKeyPressed(this::handleEnterKey);
+        confirmPasswordField.setOnKeyPressed(this::handleEnterKey);
+        passwordField.textProperty().addListener((observable, oldValue, newValue) ->
+            updatePasswordStrength(newValue));
 
         updateLanguage();
     }
@@ -61,10 +62,10 @@ public class RegisterController {
     }
 
     private void updateLanguage() {
-        Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
-        labels = ResourceBundle.getBundle("Labels", locale);
-        buttons = ResourceBundle.getBundle("Buttons", locale);
-        alerts = ResourceBundle.getBundle("Alerts", locale);
+        Locale localeLanguage = SessionManager.getInstance().getSelectedLanguage().getLocale();
+        labels = ResourceBundle.getBundle("Labels", localeLanguage);
+        buttons = ResourceBundle.getBundle("Buttons", localeLanguage);
+        alerts = ResourceBundle.getBundle("Alerts", localeLanguage);
         updateTexts();
     }
 
@@ -109,9 +110,10 @@ public class RegisterController {
         String username = usernameField.getText();
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
+        String registrationFailed = alerts.getString("registrationFailed");
 
         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, alerts.getString("registrationFailed"), alerts.getString("registerFill"));
+            showAlert(Alert.AlertType.ERROR, registrationFailed, alerts.getString("registerFill"));
             return;
         }
 
@@ -128,7 +130,7 @@ public class RegisterController {
 
         UserModel user = controllerForView.register(username, password);
         if (user == null) {
-            showAlert(Alert.AlertType.INFORMATION, alerts.getString("registrationFailed"), alerts.getString("usernameTaken"));
+            showAlert(Alert.AlertType.INFORMATION, registrationFailed, alerts.getString("usernameTaken"));
             return;
         }
 
@@ -144,9 +146,9 @@ public class RegisterController {
 
                 URL themeUrl = getClass().getResource(Theme.getTheme());
                 if (themeUrl != null) {
-                    stage.getScene().getStylesheets().set(0, themeUrl.toExternalForm());
+                    scene.getStylesheets().add(themeUrl.toExternalForm());
                 } else {
-                    System.err.println("Theme URL is null");
+                    logger.warning("Theme URL is null");
                 }
 
                 stage.setScene(scene);
@@ -171,7 +173,7 @@ public class RegisterController {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
+                logger.warning("Theme URL is null");
             }
 
             Stage stage = (Stage) backButton.getScene().getWindow();

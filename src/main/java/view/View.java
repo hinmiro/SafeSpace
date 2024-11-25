@@ -11,11 +11,12 @@ import services.Theme;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class View extends Application {
 
     private Stage primaryStage;
-    private Locale locale;
+    private static final Logger logger = Logger.getLogger(View.class.getName());
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -25,11 +26,11 @@ public class View extends Application {
     }
 
     public void showLogin() {
+        Locale locale;
         try {
             if (SessionManager.getInstance().getSelectedLanguage() == null) {
                 SessionManager.getInstance().setLanguage(Language.EN);
             }
-            locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
 
             locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
             ResourceBundle titles = ResourceBundle.getBundle("PageTitles", locale);
@@ -48,14 +49,14 @@ public class View extends Application {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
+                logger.warning("Theme URL is null");
             }
 
             URL logoUrl = getClass().getResource("/kuvat/safespacelogo.png");
             if (logoUrl != null) {
                 primaryStage.getIcons().add(new Image(logoUrl.toExternalForm()));
             } else {
-                System.err.println("Logo URL is null");
+                logger.warning("Logo URL is null");
             }
 
             primaryStage.show();

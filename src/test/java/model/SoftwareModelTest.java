@@ -32,14 +32,13 @@ public class SoftwareModelTest {
     }
 
     @Test
-    public void loginTest() throws IOException, InterruptedException {
+    public void loginTest() throws InterruptedException {
         String username = "testuser";
         String password = "password";
         String responseBody = "{\"jwt\": \"JWTTOKEN123\", \"username\": \"testuser\"}";
         HashMap<String, String> data = new HashMap<>();
         data.put("username", username);
         data.put("password", password);
-        String jsonData = gson.toJson(data);
 
         when(res.body()).thenReturn(responseBody);
         when(res.statusCode()).thenReturn(200);

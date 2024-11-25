@@ -67,18 +67,19 @@ public class LanguageSelectionController {
 
     private void highlightSelectedLanguage() {
         Language selectedLanguage = SessionManager.getInstance().getSelectedLanguage();
+        String selectedLanguageStyle = "menuLanguageButtonSelected";
         switch (selectedLanguage) {
             case EN:
-                englishButton.getStyleClass().add("menuLanguageButtonSelected");
+                englishButton.getStyleClass().add(selectedLanguageStyle);
                 break;
             case FI:
-                finnishButton.getStyleClass().add("menuLanguageButtonSelected");
+                finnishButton.getStyleClass().add(selectedLanguageStyle);
                 break;
             case JP:
-                japaneseButton.getStyleClass().add("menuLanguageButtonSelected");
+                japaneseButton.getStyleClass().add(selectedLanguageStyle);
                 break;
             case RU:
-                russianButton.getStyleClass().add("menuLanguageButtonSelected");
+                russianButton.getStyleClass().add(selectedLanguageStyle);
                 break;
         }
     }

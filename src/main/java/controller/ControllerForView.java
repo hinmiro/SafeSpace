@@ -4,16 +4,18 @@ import javafx.scene.image.Image;
 import model.*;
 import java.io.*;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class ControllerForView extends Controller {
 
-    private static ControllerForView INSTANCE;
+    private static ControllerForView instance;
+    private static final Logger logger = Logger.getLogger(ControllerForView.class.getName());
 
     private ControllerForView() {}
 
     public static ControllerForView getInstance() {
-        INSTANCE = INSTANCE == null ? new ControllerForView() : INSTANCE;
-        return INSTANCE;
+        instance = instance == null ? new ControllerForView() : instance;
+        return instance;
     }
 
     public UserModel login(String username, String password) {
@@ -26,7 +28,11 @@ public class ControllerForView extends Controller {
                 return user;
             }
         } catch (InterruptedException | IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
+            logger.info("Error: " + e.getMessage());
         }
         return null;
     }
@@ -41,7 +47,11 @@ public class ControllerForView extends Controller {
                 return user;
             }
         } catch (InterruptedException | IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
+            logger.info("Error: " + e.getMessage());
         }
         return null;
     }
@@ -69,7 +79,11 @@ public class ControllerForView extends Controller {
         try {
             img = app.getProfileImage(userId);
         } catch (InterruptedException | IOException e) {
-            System.out.println(e.getMessage());
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
+            logger.warning(e.getMessage());
         }
         return img;
     }
@@ -79,7 +93,11 @@ public class ControllerForView extends Controller {
         try {
             img = app.getPostImage(id);
         }catch (InterruptedException | IOException e) {
-            System.out.println(e.getMessage());
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
+            logger.warning(e.getMessage());
         }
         return img;
     }
@@ -122,7 +140,11 @@ public class ControllerForView extends Controller {
         try {
             return app.getUserById(userId);
         } catch (IOException | InterruptedException e) {
-            System.out.println("Error fetching user: " + e.getMessage());
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
+            logger.info("Error fetching user: " + e.getMessage());
             return null;
         }
     }
@@ -131,6 +153,10 @@ public class ControllerForView extends Controller {
         try {
             return app.getUserByName(username);
         } catch (IOException | InterruptedException e) {
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
             return null;
         }
     }
@@ -139,16 +165,20 @@ public class ControllerForView extends Controller {
         try {
             return app.getCommentsByPostId(id);
         } catch (InterruptedException | IOException e) {
-            System.out.println(e.getMessage());
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
+            logger.info(e.getMessage());
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public void addComment(String comment, int postId) {
         app.postComment(comment, String.valueOf(postId));
     }
 
-    public boolean sendMessage(Message message) throws IOException, InterruptedException {
+    public boolean sendMessage(Messages message) throws IOException, InterruptedException {
         return app.sendMessage(message);
     }
 
@@ -156,6 +186,10 @@ public class ControllerForView extends Controller {
         try {
             return app.getMessages();
         } catch (IOException | InterruptedException e) {
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
             return new ArrayList<>();
         }
     }
@@ -171,6 +205,10 @@ public class ControllerForView extends Controller {
             }
             return null;
         } catch (IOException | InterruptedException e) {
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
             return null;
         }
     }
@@ -183,6 +221,10 @@ public class ControllerForView extends Controller {
         try {
             return app.removeFriend(userId);
         } catch (IOException | InterruptedException e) {
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
             return false;
         }
     }
@@ -191,6 +233,10 @@ public class ControllerForView extends Controller {
         try {
             return app.isFriend(userId, friendId);
         } catch (IOException | InterruptedException e) {
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
             return false;
         }
     }

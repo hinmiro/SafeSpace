@@ -10,23 +10,23 @@ import view.View;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class MessageController {
 
     private View mainView;
     private MainController mainController;
     private ControllerForView controllerForView = ControllerForView.getInstance();
-    private ResourceBundle alerts;
     private ResourceBundle buttons;
     private ResourceBundle labels;
-    private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+    private static final Logger logger = Logger.getLogger(MessageController.class.getName());
 
     @FXML private Button homeButton;
     @FXML private Button profileButton;
     @FXML private Button leaveMessageButton;
     @FXML private Label noMessagesLabel;
-    @FXML private ListView<Message> conversationListView;
+    @FXML private ListView<Messages> conversationListView;
 
     @FXML
     private void initialize() {
@@ -65,7 +65,7 @@ public class MessageController {
         loadMessages();
 
         conversationListView.setOnMouseClicked(event -> {
-            Message selectedMessage = conversationListView.getSelectionModel().getSelectedItem();
+            Messages selectedMessage = conversationListView.getSelectionModel().getSelectedItem();
             if (selectedMessage != null) {
                 UserModel loggedInUser = SessionManager.getInstance().getLoggedUser();
                 int conversationPartnerId;
@@ -88,10 +88,8 @@ public class MessageController {
     }
 
     private void updateLanguage() {
-        alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
-        fields = ResourceBundle.getBundle("Fields", locale);
         updateTexts();
     }
 
@@ -110,10 +108,10 @@ public class MessageController {
             String conversationPartner = withUser.getUsername();
 
             if (!conversationPartner.equals(loggedInUser.getUsername()) && uniqueConversationPartners.add(conversationPartner)) {
-                List<Message> messages = conversation.getMessages();
+                List<Messages> messages = conversation.getMessages();
 
-                Message latestMessage = messages.stream()
-                        .max(Comparator.comparing(Message::getDateOfMessage))
+                Messages latestMessage = messages.stream()
+                        .max(Comparator.comparing(Messages::getDateOfMessage))
                         .orElse(null);
 
                 if (latestMessage != null) {
@@ -122,7 +120,7 @@ public class MessageController {
             }
         }
 
-        conversationListView.getItems().sort(Comparator.comparing(Message::getDateOfMessage).reversed());
+        conversationListView.getItems().sort(Comparator.comparing(Messages::getDateOfMessage).reversed());
         conversationListView.setCellFactory(param -> new MessageListCell());
         checkIfNoMessages();
     }
@@ -144,7 +142,7 @@ public class MessageController {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
+                logger.warning("Theme URL is null");
             }
 
             stage.setScene(scene);
@@ -167,7 +165,7 @@ public class MessageController {
         if (themeUrl != null) {
             scene.getStylesheets().add(themeUrl.toExternalForm());
         } else {
-            System.err.println("Theme URL is null");
+            logger.warning("Theme URL is null");
         }
 
         stage.setScene(scene);
@@ -180,8 +178,8 @@ public class MessageController {
         }
 
         if (fxmlFile.equals("/main.fxml")) {
-            MainController mainController = fxmlLoader.getController();
-            mainController.setMainView(mainView);
+            MainController mainControllerLoader = fxmlLoader.getController();
+            mainControllerLoader.setMainView(mainView);
         }
     }
 

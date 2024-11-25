@@ -8,12 +8,12 @@ public class UserDataTest {
     private UserData userData;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         userData = new UserData();
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         userData = null;
     }
 

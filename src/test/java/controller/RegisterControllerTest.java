@@ -53,7 +53,7 @@ public class RegisterControllerTest extends ApplicationTest {
         sleep(1000);
     }
 
-    @Ignore
+    @Ignore // Ignored because it fails on other tests
     @Test
     public void testRegisterButtonSuccess() {
         clickOn(usernameField).write("username10");

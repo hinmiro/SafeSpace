@@ -9,6 +9,7 @@ import services.Theme;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class NewTextController {
 
@@ -19,6 +20,7 @@ public class NewTextController {
     private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
     private MainController mainController;
+    private static final Logger logger = Logger.getLogger(NewTextController.class.getName());
 
     @FXML private Button postButton;
     @FXML private Button closeButton;
@@ -70,7 +72,11 @@ public class NewTextController {
                 showAlert(alerts.getString("post.error"));
             }
         } catch (IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
+            logger.warning(e.getMessage());
         }
     }
 
@@ -89,7 +95,7 @@ public class NewTextController {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
+                logger.warning("Theme URL is null");
             }            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -106,7 +112,8 @@ public class NewTextController {
                 labels.getString("inspiration4")
         };
 
-        int randomIndex = (int) (Math.random() * inspirationsArray.length);
+        Random random = new Random();
+        int randomIndex = random.nextInt(inspirationsArray.length);
         inspirationText.setText(inspirationsArray[randomIndex]);
     }
 

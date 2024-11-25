@@ -9,7 +9,7 @@ public class SharedDataTest {
     private Locale locale;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         if (SessionManager.getInstance().getSelectedLanguage() == null) {
             SessionManager.getInstance().setLanguage(Language.EN);
         }
@@ -17,7 +17,7 @@ public class SharedDataTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         locale = null;
     }
 
@@ -30,7 +30,6 @@ public class SharedDataTest {
 
     @Test
     public void addEvent() {
-        BlockingQueue<Post> events = SharedData.getInstance().getEventQueue();
         SharedData.getInstance().addEvent(new Post(0, 0, "test", "test", null, "testingDay", 5, 5));
         BlockingQueue<Post> updatedEvents = SharedData.getInstance().getEventQueue();
         assertEquals("Event queue should contain 1 event", 1, updatedEvents.size());
@@ -38,7 +37,6 @@ public class SharedDataTest {
 
     @Test
     public void addLike() {
-        BlockingQueue<Like> likes = SharedData.getInstance().getLikeQueue();
         SharedData.getInstance().addLike(new Like(0, 0));
         BlockingQueue<Like> updatedLikes = SharedData.getInstance().getLikeQueue();
         assertEquals("Like queue should contain 1 like", 1, updatedLikes.size());

@@ -8,12 +8,12 @@ public class CommentTest {
     Comment comment;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         comment = new Comment(0, 0, "tester", "This is comment");
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         comment = null;
     }
 

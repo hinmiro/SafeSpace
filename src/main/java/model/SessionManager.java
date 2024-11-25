@@ -3,7 +3,7 @@ package model;
 import controller.*;
 
 public class SessionManager {
-    private static SessionManager INSTANCE;
+    private static SessionManager instance;
     private static UserModel loggedUser;
     private static Language selectedLanguage = Language.EN;
     private MainController mainController;
@@ -13,11 +13,11 @@ public class SessionManager {
     }
 
     public static SessionManager getInstance() {
-        INSTANCE = INSTANCE == null ? new SessionManager() : INSTANCE;
-        return INSTANCE;
+        instance = instance == null ? new SessionManager() : instance;
+        return instance;
     }
 
-    public void setLoggedUser(UserModel user) {
+    public static void setLoggedUser(UserModel user) {
         loggedUser = user;
     }
 
@@ -25,12 +25,12 @@ public class SessionManager {
         return loggedUser;
     }
 
-    public void closeSession() {
+    public static void closeSession() {
         loggedUser = null;
-        INSTANCE = null;
+        instance = null;
     }
 
-    public void setLanguage(Language language) {
+    public static void setLanguage(Language language) {
         selectedLanguage = language;
     }
 

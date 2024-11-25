@@ -5,7 +5,7 @@ import java.util.*;
 public class Conversation {
     private UserModel withUser;
     private int messageCount;
-    private List<Message> messages;
+    private List<Messages> messages;
 
     public Conversation(UserModel withUser) {
         this.withUser = withUser;
@@ -28,15 +28,15 @@ public class Conversation {
         this.messageCount = messageCount;
     }
 
-    public List<Message> getMessages() {
+    public List<Messages> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<Message> messages) {
+    public void setMessages(List<Messages> messages) {
         this.messages = messages;
     }
 
-    public void addMessage(Message message) {
+    public void addMessage(Messages message) {
         messages.add(message);
     }
 }

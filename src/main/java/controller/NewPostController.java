@@ -13,6 +13,7 @@ import services.Theme;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class NewPostController {
 
@@ -24,6 +25,7 @@ public class NewPostController {
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
     private MainController mainController;
     private File selectedFile;
+    private static final Logger logger = Logger.getLogger(NewPostController.class.getName());
 
     @FXML private Button chooseImageButton;
     @FXML private ImageView imageView;
@@ -41,7 +43,7 @@ public class NewPostController {
         postButton.setOnAction(event -> handleNewPost());
         imageView.setImage(createPlaceholderImage(200, 225));
 
-        chooseImageButton.setOnAction(event -> clickChooseButton());
+        clickChooseButton(chooseImageButton);
     }
 
     private void updateTexts() {
@@ -78,21 +80,11 @@ public class NewPostController {
                 showAlert(alerts.getString("post.error"));
             }
         } catch (InterruptedException | IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @FXML
-    private void clickChooseButton() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose Image");
-        File file = fileChooser.showOpenDialog(null);
-
-        if (file != null) {
-            selectedFile = file;
-            imageView.setImage(new Image(file.toURI().toString()));
-        } else {
-            System.out.println("No file selected");
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
+            logger.info(e.getMessage());
         }
     }
 
@@ -110,8 +102,10 @@ public class NewPostController {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
-            }            stage.setScene(scene);
+                logger.warning("Theme URL is null");
+            }
+
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
