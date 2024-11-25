@@ -13,6 +13,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.*;
 import java.util.logging.Logger;
+import javafx.geometry.Pos;
 
 public class PostListCell extends ListCell<Post> {
     private final SoftwareModel softwareModel = new SoftwareModel();

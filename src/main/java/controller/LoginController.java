@@ -1,6 +1,8 @@
 package controller;
 
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
 import javafx.scene.*;
