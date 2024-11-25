@@ -4,7 +4,7 @@ import controller.ControllerForView;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.*;
 
-public class MessageListCell extends ListCell<Message> {
+public class MessageListCell extends ListCell<Messages> {
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private HBox hBox = new HBox();
     private Label usernameLabel = new Label();
@@ -16,7 +16,7 @@ public class MessageListCell extends ListCell<Message> {
     }
 
     @Override
-    protected void updateItem(Message message, boolean empty) {
+    protected void updateItem(Messages message, boolean empty) {
         super.updateItem(message, empty);
         if (empty || message == null) {
             setText(null);

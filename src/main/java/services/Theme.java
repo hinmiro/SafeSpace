@@ -5,17 +5,17 @@ package services;
 public class Theme {
     private static final String DARK = "/stylesdark.css";
     private static final String LIGHT = "/styles.css";
-    private static String THEME = LIGHT;
+    private static String themeOfApp = LIGHT;
 
     public static String getTheme() {
-        return THEME;
+        return themeOfApp;
     }
 
     public static void switchTheme() {
-        if (THEME.equals(LIGHT)) {
-            THEME = DARK;
+        if (themeOfApp.equals(LIGHT)) {
+            themeOfApp = DARK;
         } else {
-            THEME = LIGHT;
+            themeOfApp = LIGHT;
         }
     }
 }

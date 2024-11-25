@@ -10,10 +10,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.logging.Logger;
 
 public class SharedData {
     private static SharedData instance;
     private static Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+    private static final Logger logger = Logger.getLogger(SharedData.class.getName());
 
     private BlockingQueue<Post> postQueue;
     private BlockingQueue<Like> likeQueue;
@@ -67,7 +69,7 @@ public class SharedData {
 
     public BlockingQueue<Like> getLikeQueue() { return likeQueue; }
 
-    public ArrayList<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
@@ -113,25 +115,26 @@ public class SharedData {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
+                logger.info("Theme URL is null");
             }
 
             primaryStage.setScene(scene);
 
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
             primaryStage.setTitle(userId == loggedInUserId ? pageTitle.getString("profile") : pageTitle.getString("userProfile"));
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 
-    public ArrayList<Post> getFollowedPosts() {
+    public List<Post> getFollowedPosts() {
         ArrayList<Post> followedPosts = new ArrayList<>();
 
-        ArrayList<Integer> followingUserIds = SessionManager.getInstance().getLoggedUser().getUserData().getFollowingUserIds();
-        ArrayList<Integer> friendIds = SessionManager.getInstance().getLoggedUser().getUserData().getFriendsIds();
+        List<Integer> followingUserIds = SessionManager.getInstance().getLoggedUser().getUserData().getFollowingUserIds();
+        List<Integer> friendIds = SessionManager.getInstance().getLoggedUser().getUserData().getFriendsIds();
 
         for (Post post : posts) {
             if (followingUserIds.contains(post.getPostCreatorID()) || friendIds.contains(post.getPostCreatorID())) {

@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
+
 import static model.SharedData.createClickableUsername;
 
 public class MainController {
@@ -22,11 +24,11 @@ public class MainController {
     private Thread queueThread;
     private View mainView;
     private ArrayList<Post> posts;
-    private ResourceBundle alerts;
     private ResourceBundle buttons;
     private ResourceBundle labels;
     private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+    private static final Logger logger = Logger.getLogger(MainController.class.getName());
 
     @FXML private Button homeButton;
     @FXML private Button profileButton;
@@ -104,8 +106,7 @@ public class MainController {
     }
 
     void updateLanguage() {
-        locale = SessionManager.getInstance().getSelectedLanguage().getLocale(); // tämä lisätty
-        alerts = ResourceBundle.getBundle("Alerts", locale);
+        locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
         fields = ResourceBundle.getBundle("Fields", locale);
@@ -196,7 +197,7 @@ public class MainController {
         if (themeUrl != null) {
             scene.getStylesheets().add(themeUrl.toExternalForm());
         } else {
-            System.err.println("Theme URL is null");
+            logger.warning("Theme URL is null");
         }
 
         stage.setScene(scene);
@@ -238,7 +239,7 @@ public class MainController {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
+                logger.warning("Theme URL is null");
             }
 
             stage.setScene(scene);
@@ -265,7 +266,7 @@ public class MainController {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
+                logger.warning("Theme URL is null");
             }
 
             stage.setScene(scene);

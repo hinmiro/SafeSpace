@@ -13,19 +13,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.*;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class UserMessagesController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private ResourceBundle alerts;
-    private ResourceBundle buttons;
-    private ResourceBundle labels;
     private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
     private View mainView;
     private int userId;
     private MainController mainController;
     private Conversation currentConversation;
+    private static final Logger logger = Logger.getLogger(UserMessagesController.class.getName());
 
     @FXML private Label usernameLabelMessage;
     @FXML private VBox messageListVBox;
@@ -51,8 +51,6 @@ public class UserMessagesController {
 
     private void updateLanguage() {
         alerts = ResourceBundle.getBundle("Alerts", locale);
-        buttons = ResourceBundle.getBundle("Buttons", locale);
-        labels = ResourceBundle.getBundle("Labels", locale);
         fields = ResourceBundle.getBundle("Fields", locale);
         updateTexts();
     }
@@ -76,13 +74,13 @@ public class UserMessagesController {
             usernameLabelMessage.setText(currentConversation.getWithUser().getUsername());
 
             messageListVBox.getChildren().clear();
-            for (Message message : currentConversation.getMessages()) {
+            for (Messages message : currentConversation.getMessages()) {
                 displayMessage(message);
             }
         }
     }
 
-    private void displayMessage(Message message) {
+    private void displayMessage(Messages message) {
         currentConversation = controllerForView.getCurrentConversation(userId);
         String username = message.getType().equals("sent") ?
                 SessionManager.getInstance().getLoggedUser().getUsername() : currentConversation.getWithUser().getUsername();
@@ -108,7 +106,7 @@ public class UserMessagesController {
         }
 
         if (!messageContent.isEmpty()) {
-            Message message = new Message("sent", messageContent, LocalDateTime.now().toString());
+            Messages message = new Messages("sent", messageContent, LocalDateTime.now().toString());
             message.setSenderId(SessionManager.getInstance().getLoggedUser().getUserId());
             message.setReceiverId(currentConversation.getWithUser().getUserId());
 
@@ -120,6 +118,9 @@ public class UserMessagesController {
                     messageTextField.clear();
                 }
             } catch (IOException | InterruptedException e) {
+                if (e instanceof InterruptedException) {
+                    Thread.currentThread().interrupt();
+                }
                 e.printStackTrace();
                 showError(alerts.getString("error.message"));
             }
@@ -148,7 +149,7 @@ public class UserMessagesController {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
+                logger.warning("Theme URL is null");
             }
 
             stage.setScene(scene);

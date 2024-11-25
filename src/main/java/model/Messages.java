@@ -1,15 +1,15 @@
 package model;
 
-public class Message {
+public class Messages {
     private int messageID;
-    private String messageText;
+    private String message;
     private int sender;
     private int receiver;
     private String date;
     private final String type;
 
-    public Message(String type, String message, String dateOfMessage) {
-        this.messageText = message;
+    public Messages(String type, String message, String dateOfMessage) {
+        this.message = message;
         this.date = dateOfMessage;
         this.type = type;
     }
@@ -23,11 +23,11 @@ public class Message {
     }
 
     public String getMessageContent() {
-        return messageText;
+        return message;
     }
 
     public void setMessageContent(String messageContent) {
-        this.messageText = messageContent;
+        this.message = messageContent;
     }
 
     public int getSenderId() {

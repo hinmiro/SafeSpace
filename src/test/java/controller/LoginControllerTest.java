@@ -15,7 +15,6 @@ public class LoginControllerTest extends ApplicationTest {
     private TextField usernameField;
     private PasswordField passwordField;
     private Button loginButton;
-    private Button registerButton;
     private ComboBox<String> languageBox;
     private Label serverError;
 
@@ -37,7 +36,6 @@ public class LoginControllerTest extends ApplicationTest {
         usernameField = lookup("#usernameField").queryAs(TextField.class);
         passwordField = lookup("#passwordField").queryAs(PasswordField.class);
         loginButton = lookup("#loginButton").queryAs(Button.class);
-        registerButton = lookup("#registerButton").queryAs(Button.class);
         languageBox = lookup("#languageBox").queryAs(ComboBox.class);
         serverError = lookup("#serverError").queryAs(Label.class);
     }

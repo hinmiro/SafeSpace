@@ -10,6 +10,7 @@ import view.View;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class UpdateInfoController {
 
@@ -21,6 +22,7 @@ public class UpdateInfoController {
     private ResourceBundle labels;
     private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+    private static final Logger logger = Logger.getLogger(UpdateInfoController.class.getName());
 
     @FXML private Label newPassword;
     @FXML private PasswordField passwordField;
@@ -41,9 +43,9 @@ public class UpdateInfoController {
         updateLanguage();
         closeButton.setOnAction(event -> handleClose());
 
-        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
-            updatePasswordStrength(newValue);
-        });
+        passwordField.textProperty().addListener((observable, oldValue, newValue) ->
+                updatePasswordStrength(newValue)
+        );
     }
 
     private void updateTexts() {
@@ -76,9 +78,9 @@ public class UpdateInfoController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/profile.fxml"));
             Parent root = loader.load();
 
-            ProfileController profileController = loader.getController();
-            profileController.setMainView(mainView);
-            profileController.setMainController(mainController);
+            ProfileController profileControllerForLoader = loader.getController();
+            profileControllerForLoader.setMainView(mainView);
+            profileControllerForLoader.setMainController(mainController);
 
             Stage stage = new Stage();
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
@@ -90,7 +92,7 @@ public class UpdateInfoController {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
+                logger.warning("Theme URL is null");
             }
 
             stage.setScene(scene);
@@ -104,12 +106,13 @@ public class UpdateInfoController {
         int strength = calculatePasswordStrength(password);
         String strengthText;
         String strengthClass;
+        String medium = labels.getString("medium");
 
         if (strength < 2) {
             strengthText = labels.getString("weak");
             strengthClass = "weak";
         } else if (strength < 3) {
-            strengthText = labels.getString("medium");
+            strengthText = medium;
             strengthClass = "medium";
         } else {
             strengthText = labels.getString("strong");
@@ -155,6 +158,9 @@ public class UpdateInfoController {
                     showAlert(Alert.AlertType.ERROR, alerts.getString("failedInfo"), alerts.getString("failedPassword"));
                 }
             } catch (IOException | InterruptedException e) {
+                if (e instanceof InterruptedException) {
+                    Thread.currentThread().interrupt();
+                }
                 e.printStackTrace();
                 showAlert(Alert.AlertType.ERROR, alerts.getString("failedInfo"), alerts.getString("errorInfo"));
             }

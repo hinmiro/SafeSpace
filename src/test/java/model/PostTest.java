@@ -11,7 +11,7 @@ public class PostTest {
     Post post;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         post = new Post(1, 1, "tester", "posted post", "555", "testing day", 1, 1);
         if (SessionManager.getInstance().getSelectedLanguage() == null) {
             SessionManager.getInstance().setLanguage(Language.EN);
@@ -23,7 +23,7 @@ public class PostTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         post = null;
         locale = null;
         user = null;
@@ -85,7 +85,7 @@ public class PostTest {
     @Test
     public void isLikedByUser() {
         user.addLikedPost(1);
-        ArrayList<Integer> likedPosts = SessionManager.getInstance().getLoggedUser().getLikedPosts();
+        List<Integer> likedPosts = SessionManager.getInstance().getLoggedUser().getLikedPosts();
         assertTrue("Should contain post id", likedPosts.contains(1));
     }
 

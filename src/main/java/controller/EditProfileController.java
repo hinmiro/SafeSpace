@@ -15,12 +15,13 @@ import view.View;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
+
 import javafx.scene.shape.*;
 
 public class EditProfileController {
 
     private final ControllerForView controllerForView = ControllerForView.getInstance();
-    public Label nameLabel;
     private MainController mainController;
     private ProfileController profileController;
     private Image newImage;
@@ -30,7 +31,9 @@ public class EditProfileController {
     private ResourceBundle labels;
     private ResourceBundle fields;
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
+    private static final Logger logger = Logger.getLogger(EditProfileController.class.getName());
 
+    @FXML private Label nameLabel;
     @FXML private ImageView profileImageView;
     @FXML private View mainView;
     @FXML public Label usernameLabel;
@@ -100,10 +103,11 @@ public class EditProfileController {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                System.err.println("Theme URL is null");
+                logger.info("Theme URL is null");
             }
 
             stage.setScene(scene);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -133,6 +137,9 @@ public class EditProfileController {
                 showAlert(alerts.getString("changesSaved"), Alert.AlertType.INFORMATION);
             }
         } catch (IOException | InterruptedException e) {
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
             e.printStackTrace();
             showAlert(alerts.getString("failedSave"), Alert.AlertType.ERROR);
         }
@@ -164,7 +171,7 @@ public class EditProfileController {
         selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
 
         if (selectedFile == null) {
-            System.out.println("No file selected");
+            logger.info("No file selected");
             return null;
         }
 
@@ -199,9 +206,9 @@ public class EditProfileController {
     }
 
     private void clickProfilePic(ImageView profileImageView) {
-        profileImageView.setOnMouseClicked((MouseEvent event) -> {
-            changeProfilePicture();
-        });
+        profileImageView.setOnMouseClicked((MouseEvent event) ->
+            changeProfilePicture()
+        );
     }
 
     public void setProfileController(ProfileController controller) {

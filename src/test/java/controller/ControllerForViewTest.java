@@ -170,7 +170,7 @@ public class ControllerForViewTest {
 
     @Test
     public void testSendMessage() throws IOException, InterruptedException {
-        Message mockMessage = new Message("type", "saran viesti", "2024-11-15");
+        Messages mockMessage = new Messages("type", "saran viesti", "2024-11-15");
         when(mockApp.sendMessage(mockMessage)).thenReturn(true);
 
         boolean result = controller.sendMessage(mockMessage);

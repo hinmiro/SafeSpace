@@ -6,13 +6,15 @@ import services.*;
 import java.io.*;
 import java.net.http.HttpResponse;
 import java.util.*;
+import java.util.logging.Logger;
 
 // Connection between controllers and Api services
 
 public class SoftwareModel {
     Gson gson = new Gson();
+    private static final Logger logger = Logger.getLogger(SoftwareModel.class.getName());
 
-    public UserModel login(String username, String password) throws IOException, InterruptedException {
+    public UserModel login(String username, String password) throws InterruptedException {
         Map<String, String> loginData = new HashMap<>();
         loginData.put("username", username);
         loginData.put("password", password);
@@ -72,7 +74,7 @@ public class SoftwareModel {
             return false;
         }
         UserModel updatedUser = gson.fromJson(res.body(), UserModel.class);
-        System.out.println(updatedUser.getJwt());
+        logger.info(updatedUser.getJwt());
         SessionManager.getInstance().setLoggedUser(updatedUser);
 
         return true;
@@ -165,8 +167,7 @@ public class SoftwareModel {
         HttpResponse<String> res = ApiClient.getUserById(id);
 
         if (res.statusCode() == 200) {
-            UserModel user = gson.fromJson(res.body(), UserModel.class);
-            return user;
+            return gson.fromJson(res.body(), UserModel.class);
         }
         return null;
     }
@@ -192,7 +193,7 @@ public class SoftwareModel {
 
             user.setArrays(userFromId.getLikedPosts(), userFromId.getPosts());
         } else {
-            System.out.println("Error: Unable to fetch user data. Status code: " + res.statusCode());
+            logger.info("Error: Unable to fetch user data. Status code: " + res.statusCode());
         }
     }
 
@@ -213,13 +214,18 @@ public class SoftwareModel {
         String jsonData = gson.toJson(data);
 
         try {
-            HttpResponse<String> res = ApiClient.postComment(jsonData, postId);
+            ApiClient.postComment(jsonData, postId);
         } catch (InterruptedException | IOException e) {
-            System.out.println(e.getMessage());
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
+            e.printStackTrace();
+            logger.info(e.getMessage());
         }
+
     }
 
-    public boolean sendMessage(Message message) throws IOException, InterruptedException {
+    public boolean sendMessage(Messages message) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.sendMessage(message.getReceiverId(), message.getMessageContent());
 
         if (res.statusCode() == 200) {
@@ -240,7 +246,7 @@ public class SoftwareModel {
         Map<Integer, Conversation> conversationsMap = new HashMap<>();
 
         for (JsonElement element : sentMessagesArray) {
-            Message message = gson.fromJson(element, Message.class);
+            Messages message = gson.fromJson(element, Messages.class);
             int receiverId = message.getReceiverId();
 
             UserModel receiverUser = getUserById(receiverId);
@@ -250,7 +256,7 @@ public class SoftwareModel {
         }
 
         for (JsonElement element : receivedMessagesArray) {
-            Message message = gson.fromJson(element, Message.class);
+            Messages message = gson.fromJson(element, Messages.class);
             int senderId = message.getSenderId();
 
             UserModel senderUser = getUserById(senderId);
@@ -298,6 +304,9 @@ public class SoftwareModel {
                 }
             }
         } catch (IOException | InterruptedException e) {
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
             e.printStackTrace();
         }
         return false;

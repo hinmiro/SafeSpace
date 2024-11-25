@@ -58,6 +58,7 @@ public class NewPostControllerTest extends ApplicationTest {
 
     @Ignore
     @Test
+    // Ignored because it fails on other tests
     public void testPostButtonSuccess() {
         verifyThat("#captionTextArea", NodeMatchers.isVisible());
         verifyThat("#chooseImageButton", NodeMatchers.isVisible());
@@ -71,13 +72,14 @@ public class NewPostControllerTest extends ApplicationTest {
 
     @Ignore
     @Test
+    // Ignored because it fails on other tests
     public void testPostButtonWithoutCaption() {
         verifyThat("#captionTextArea", NodeMatchers.isVisible());
         verifyThat("#chooseImageButton", NodeMatchers.isVisible());
         clickOn(chooseImageButton);
 
         clickOn(postButton);
-        assertThat(captionTextArea.getText()).isEqualTo("");
+        assertThat(captionTextArea.getText()).isEmpty();
         verifyThat(".alert", NodeMatchers.isVisible());
         DialogPane dialogPane = lookup(".alert").queryAs(DialogPane.class);
         assertThat(dialogPane).isNotNull();

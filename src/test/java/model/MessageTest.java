@@ -4,15 +4,15 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 public class MessageTest {
-    Message message;
+    Messages message;
 
     @Before
-    public void setUp() throws Exception {
-        message = new Message("text", "Hello", "2024-11-14");
+    public void setUp() {
+        message = new Messages("text", "Hello", "2024-11-14");
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         message = null;
     }
 

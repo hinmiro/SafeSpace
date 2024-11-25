@@ -951,8 +951,8 @@ StackPane, BorderPane {
 }
 
 .date-label {
-    font-size: 8px;
-    text-fill: #888;
+    -fx-font-size: 8px;
+    -fx-text-fill: #888;
 }
 
 /* message sivu */

@@ -1,6 +1,6 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class UserModel {
     private String username;
@@ -10,8 +10,8 @@ public class UserModel {
     private int id;
     private UserData userData;
     private String dateOfCreation;
-    private ArrayList<Integer> likedPosts;
-    private ArrayList<Integer> posts;
+    private List<Integer> likedPosts;
+    private List<Integer> posts;
 
     public UserModel(String username, int id, String dateOfCreation) {
         this.username = username;
@@ -46,19 +46,19 @@ public class UserModel {
 
     public String getDateOfCreation() { return dateOfCreation; }
 
-    public ArrayList<Integer> getLikedPosts() {
+    public List<Integer> getLikedPosts() {
         return likedPosts;
     }
 
-    public void setLikedPosts(ArrayList<Integer> likedPosts) {
+    public void setLikedPosts(List<Integer> likedPosts) {
         this.likedPosts = likedPosts;
     }
 
-    public ArrayList<Integer> getPosts() {
+    public List<Integer> getPosts() {
         return posts;
     }
 
-    public void setPosts(ArrayList<Integer> posts) {
+    public void setPosts(List<Integer> posts) {
         this.posts = posts;
     }
 
@@ -78,7 +78,7 @@ public class UserModel {
         this.userData = userData;
     }
 
-    public void setArrays(ArrayList<Integer> likedPosts, ArrayList<Integer> posts) {
+    public void setArrays(List<Integer> likedPosts, List<Integer> posts) {
         this.likedPosts = likedPosts;
         this.posts = posts;
     }
