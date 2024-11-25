@@ -22,7 +22,6 @@ import javafx.scene.shape.*;
 public class EditProfileController {
 
     private final ControllerForView controllerForView = ControllerForView.getInstance();
-    public Label nameLabel;
     private MainController mainController;
     private ProfileController profileController;
     private Image newImage;
@@ -34,6 +33,7 @@ public class EditProfileController {
     private Locale locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
     private static final Logger logger = Logger.getLogger(EditProfileController.class.getName());
 
+    @FXML private Label nameLabel;
     @FXML private ImageView profileImageView;
     @FXML private View mainView;
     @FXML public Label usernameLabel;
