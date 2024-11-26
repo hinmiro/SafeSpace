@@ -15,6 +15,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Controller class for handling the creation of new posts with images.
+ */
 public class NewPostController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
@@ -35,6 +38,9 @@ public class NewPostController {
     @FXML private Label headerLabel;
     @FXML private Label captionLabel;
 
+    /**
+     * Initializes the controller class. This method is automatically called after the fxml file has been loaded.
+     */
     @FXML
     private void initialize() {
         updateLanguage();
@@ -46,6 +52,9 @@ public class NewPostController {
         clickChooseButton(chooseImageButton);
     }
 
+    /**
+     * Updates the text of UI elements based on the selected language.
+     */
     private void updateTexts() {
         postButton.setText(buttons.getString("post"));
         captionTextArea.setPromptText(fields.getString("caption"));
@@ -54,6 +63,9 @@ public class NewPostController {
         captionLabel.setText(labels.getString("captionLabel"));
     }
 
+    /**
+     * Updates the language of the application based on the selected locale.
+     */
     private void updateLanguage() {
         alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
@@ -62,6 +74,9 @@ public class NewPostController {
         updateTexts();
     }
 
+    /**
+     * Handles the action of creating a new post with an image.
+     */
     @FXML
     private void handleNewPost() {
         String text = captionTextArea.getText();
@@ -88,6 +103,9 @@ public class NewPostController {
         }
     }
 
+    /**
+     * Handles the action of closing the new post window.
+     */
     private void handleClose() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
@@ -112,6 +130,12 @@ public class NewPostController {
         }
     }
 
+    /**
+     * Creates a placeholder image with the specified width and height.
+     * @param width the width of the placeholder image
+     * @param height the height of the placeholder image
+     * @return the created placeholder image
+     */
     private WritableImage createPlaceholderImage(int width, int height) {
         WritableImage image = new WritableImage(width, height);
         Canvas canvas = new Canvas(width, height);
@@ -123,6 +147,9 @@ public class NewPostController {
         return image;
     }
 
+    /**
+     * Handles the action of posting a picture.
+     */
     private void postPicture() {
         FileChooser fileChooser = new FileChooser();
         fileChooser
@@ -145,14 +172,26 @@ public class NewPostController {
         }
     }
 
+    /**
+     * Sets the action for the choose image button.
+     * @param chooseImageButton the button to set the action for
+     */
     private void clickChooseButton(Button chooseImageButton) {
         chooseImageButton.setOnMouseClicked((MouseEvent event) -> postPicture());
     }
 
+    /**
+     * Sets the main controller of the application.
+     * @param mainController the main controller to be set
+     */
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
+    /**
+     * Shows an alert with the specified message.
+     * @param message the message to be displayed in the alert
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alerts.getString("post.information");

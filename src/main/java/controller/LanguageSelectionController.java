@@ -6,6 +6,9 @@ import model.*;
 import java.io.*;
 import javafx.scene.control.*;
 
+/**
+ * Controller class for handling language selection in the application.
+ */
 public class LanguageSelectionController {
 
     private Stage stage;
@@ -15,42 +18,69 @@ public class LanguageSelectionController {
     @FXML private Button japaneseButton;
     @FXML private Button russianButton;
 
+    /**
+     * Sets the stage for this controller.
+     *
+     * @param stage the stage to set
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * Handles the action when the English button is clicked.
+     */
     @FXML
     private void handleEnglish() {
         changeLanguage(Language.EN);
     }
 
+    /**
+     * Handles the action when the Finnish button is clicked.
+     */
     @FXML
     private void handleFinnish() {
         changeLanguage(Language.FI);
     }
 
+    /**
+     * Handles the action when the Japanese button is clicked.
+     */
     @FXML
     private void handleJapanese() {
         changeLanguage(Language.JP);
     }
 
+    /**
+     * Handles the action when the Russian button is clicked.
+     */
     @FXML
     private void handleRussian() {
         changeLanguage(Language.RU);
     }
 
+    /**
+     * Initializes the controller. Highlights the selected language button.
+     */
     @FXML
     public void initialize() {
         highlightSelectedLanguage();
     }
 
-
+    /**
+     * Changes the application language and refreshes the UI.
+     *
+     * @param language the language to change to
+     */
     private void changeLanguage(Language language) {
         SessionManager.getInstance().setLanguage(language);
         refreshUI();
         stage.close();
     }
 
+    /**
+     * Refreshes the user interface to reflect the selected language.
+     */
     private void refreshUI() {
         ProfileController profileController = SessionManager.getInstance().getProfileController();
         profileController.updateLanguage();
@@ -65,6 +95,9 @@ public class LanguageSelectionController {
         }
     }
 
+    /**
+     * Highlights the button corresponding to the currently selected language.
+     */
     private void highlightSelectedLanguage() {
         Language selectedLanguage = SessionManager.getInstance().getSelectedLanguage();
         String selectedLanguageStyle = "menuLanguageButtonSelected";

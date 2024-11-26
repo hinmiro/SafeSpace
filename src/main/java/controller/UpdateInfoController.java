@@ -12,6 +12,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Controller class for handling the update of user information.
+ */
 public class UpdateInfoController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
@@ -38,6 +41,9 @@ public class UpdateInfoController {
     @FXML private Label requirement3;
     @FXML private Label requirement4;
 
+    /**
+     * Initializes the controller class. This method is automatically called after the FXML file has been loaded.
+     */
     @FXML
     private void initialize() {
         updateLanguage();
@@ -48,6 +54,9 @@ public class UpdateInfoController {
         );
     }
 
+    /**
+     * Updates the text of UI elements based on the selected language.
+     */
     private void updateTexts() {
         newPassword.setText(labels.getString("passwordNew"));
         passwordField.setPromptText(fields.getString("passwordNewField"));
@@ -62,6 +71,9 @@ public class UpdateInfoController {
         requirement4.setText(labels.getString("passwordReq4"));
     }
 
+    /**
+     * Updates the language of the application based on the selected locale.
+     */
     private void updateLanguage() {
         alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
@@ -70,6 +82,9 @@ public class UpdateInfoController {
         updateTexts();
     }
 
+    /**
+     * Handles the action of closing the update info window.
+     */
     @FXML
     private void handleClose() {
         closeButton.getScene().getWindow().hide();
@@ -102,6 +117,10 @@ public class UpdateInfoController {
         }
     }
 
+    /**
+     * Updates the password strength label based on the entered password.
+     * @param password the entered password
+     */
     private void updatePasswordStrength(String password) {
         int strength = calculatePasswordStrength(password);
         String strengthText;
@@ -125,6 +144,11 @@ public class UpdateInfoController {
         passwordField.getStyleClass().add(strengthClass);
     }
 
+    /**
+     * Calculates the strength of the entered password.
+     * @param password the entered password
+     * @return the strength of the password
+     */
     private int calculatePasswordStrength(String password) {
         int strength = 0;
         if (password.length() >= 6) strength++;
@@ -134,6 +158,9 @@ public class UpdateInfoController {
         return strength;
     }
 
+    /**
+     * Handles the action of updating the password.
+     */
     @FXML
     private void updatePassword() {
         String password = passwordField.getText().trim();
@@ -172,6 +199,12 @@ public class UpdateInfoController {
         }
     }
 
+    /**
+     * Shows an alert with the specified message.
+     * @param alertType the type of alert
+     * @param title the title of the alert
+     * @param message the message to be displayed in the alert
+     */
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -184,11 +217,23 @@ public class UpdateInfoController {
         alert.showAndWait();
     }
 
+    /**
+     * Sets the profile controller.
+     * @param controller the profile controller to be set
+     */
     public void setProfileController(ProfileController controller) {
         profileController = controller;
     }
 
+    /**
+     * Sets the main view of the application.
+     * @param mainView the main view to be set
+     */
     public void setMainView(View mainView) { this.mainView = mainView; }
 
+    /**
+     * Sets the main controller of the application.
+     * @param mainController the main controller to be set
+     */
     public void setMainController(MainController mainController) { this.mainController = mainController; }
 }

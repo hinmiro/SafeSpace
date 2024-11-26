@@ -17,6 +17,9 @@ import java.util.logging.Logger;
 
 import static model.SharedData.createClickableUsername;
 
+/**
+ * MainController class handles the main application logic and user interactions.
+ */
 public class MainController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
@@ -44,10 +47,16 @@ public class MainController {
     @FXML private RadioButton friendsOption;
     @FXML private RadioButton allOption;
 
+    /**
+     * Constructor initializes the posts list.
+     */
     public MainController() {
         this.posts = new ArrayList<>();
     }
 
+    /**
+     * Initializes the controller class. This method is automatically called after the fxml file has been loaded.
+     */
     @FXML
     private void initialize() {
         SessionManager.getInstance().setMainController(this);
@@ -95,6 +104,9 @@ public class MainController {
         selectOption();
     }
 
+    /**
+     * Updates the text of UI elements based on the selected language.
+     */
     private void updateTexts() {
         homeButton.setText(buttons.getString("home"));
         profileButton.setText(buttons.getString("profile"));
@@ -105,6 +117,9 @@ public class MainController {
         allOption.setText(buttons.getString("allPosts"));
     }
 
+    /**
+     * Updates the language of the application based on the selected locale.
+     */
     void updateLanguage() {
         locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
         buttons = ResourceBundle.getBundle("Buttons", locale);
@@ -113,19 +128,31 @@ public class MainController {
         updateTexts();
     }
 
+    /**
+     * Toggles the visibility of the post menu.
+     */
     private void togglePostMenu() {
         postMenu.setVisible(!postMenu.isVisible());
         postMenu.setManaged(!postMenu.isManaged());
     }
 
+    /**
+     * Opens the form for creating a picture post.
+     */
     private void openPicPostForm() {
         showNewPostWindow();
     }
 
+    /**
+     * Opens the form for creating a text post.
+     */
     private void openTextPostForm() {
         showNewTextWindow();
     }
 
+    /**
+     * Sets up the toggle group for search options and handles the selection.
+     */
     private void selectOption() {
         ToggleGroup searchGroup = new ToggleGroup();
         friendsOption.setToggleGroup(searchGroup);
@@ -140,6 +167,9 @@ public class MainController {
         });
     }
 
+    /**
+     * Handles the selection of the friends option.
+     */
     private void handleFriendsOption() {
         stopQueueProcessing();
 
@@ -149,6 +179,9 @@ public class MainController {
         });
     }
 
+    /**
+     * Handles the selection of the all option.
+     */
     private void handleAllOption() {
         ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
         allOption.setOnAction(event -> {
@@ -160,12 +193,17 @@ public class MainController {
         });
     }
 
+    /**
+     * Switches the scene to the specified FXML file and sets the title.
+     * @param fxmlFile the FXML file to load
+     * @param title the title of the new scene
+     * @throws IOException if the FXML file cannot be loaded
+     */
     protected void switchScene(String fxmlFile, String title) throws IOException {
         Stage stage = (Stage) homeButton.getScene().getWindow();
         stage.setResizable(false);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = fxmlLoader.load();
-
 
         if (fxmlFile.equals("/profile.fxml")) {
             stopQueueProcessing();
@@ -204,6 +242,9 @@ public class MainController {
         stage.setTitle(title);
     }
 
+    /**
+     * Handles the search action for a username.
+     */
     @FXML
     private void handleSearch() {
         String username = usernameSearchField.getText().trim();
@@ -222,6 +263,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Shows the window for creating a new post.
+     */
     private void showNewPostWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/newPost.fxml"));
@@ -249,6 +293,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Shows the window for creating a new text post.
+     */
     private void showNewTextWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/newText.fxml"));
@@ -276,8 +323,9 @@ public class MainController {
         }
     }
 
-    // Handling data events from Feed thread depending on what kind of event is coming.
-
+    /**
+     * Starts processing the event queue in a separate thread.
+     */
     private synchronized void startQueueProcessing() {
         stopQueueProcessingFlag = false;
 
@@ -326,6 +374,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Stops processing the event queue.
+     */
     public synchronized void stopQueueProcessing() {
         stopQueueProcessingFlag = true;
         if (queueThread != null) {
@@ -333,11 +384,18 @@ public class MainController {
         }
     }
 
+    /**
+     * Loads the events into the feed list view.
+     */
     public void loadEvents() {
         feedListView.getItems().setAll(SharedData.getInstance().getPosts());
         feedListView.scrollTo(feedListView.getItems().size() - 1);
     }
 
+    /**
+     * Handles the addition of a like to a post.
+     * @param like the like to be added
+     */
     public void handleLikeAdded(Like like) {
         int i = 0;
         for (Post post : feedListView.getItems()) {
@@ -351,6 +409,10 @@ public class MainController {
         }
     }
 
+    /**
+     * Handles the removal of a like from a post.
+     * @param like the like to be removed
+     */
     public void handleLikeRemoved(Like like) {
         int i = 0;
         for (Post post : feedListView.getItems()) {
@@ -364,6 +426,10 @@ public class MainController {
         }
     }
 
+    /**
+     * Sets the main view of the application.
+     * @param view the main view to be set
+     */
     public void setMainView(View view) {
         mainView = view;
     }

@@ -15,6 +15,9 @@ import java.util.*;
 import java.util.logging.Logger;
 import javafx.geometry.Pos;
 
+/**
+ * Custom ListCell implementation for displaying Post objects.
+ */
 public class PostListCell extends ListCell<Post> {
     private final SoftwareModel softwareModel = new SoftwareModel();
     private final ResourceBundle buttons;
@@ -23,6 +26,9 @@ public class PostListCell extends ListCell<Post> {
     private Locale locale;
     private static final Logger logger = Logger.getLogger(PostListCell.class.getName());
 
+    /**
+     * Constructs a new PostListCell.
+     */
     public PostListCell() {
         locale = SessionManager.getInstance().getSelectedLanguage().getLocale();
         buttons = ResourceBundle.getBundle("buttons", locale);
@@ -30,6 +36,12 @@ public class PostListCell extends ListCell<Post> {
         fields = ResourceBundle.getBundle("fields", locale);
     }
 
+    /**
+     * Updates the item in the cell.
+     *
+     * @param item the Post item to update
+     * @param empty whether the cell is empty
+     */
     @Override
     public void updateItem(Post item, boolean empty) {
         super.updateItem(item, empty);
@@ -59,7 +71,7 @@ public class PostListCell extends ListCell<Post> {
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
             hBox.setOnMousePressed(evt ->
-                openPostDetailModal(item, (Stage) hBox.getScene().getWindow())
+                    openPostDetailModal(item, (Stage) hBox.getScene().getWindow())
             );
 
             hBox.getChildren().addAll(contentBox, spacer);
@@ -69,6 +81,12 @@ public class PostListCell extends ListCell<Post> {
         }
     }
 
+    /**
+     * Opens a modal window displaying detailed information about the post.
+     *
+     * @param item the Post item to display
+     * @param primaryStage the primary stage of the application
+     */
     private void openPostDetailModal(Post item, Stage primaryStage) {
         Stage modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
@@ -141,6 +159,12 @@ public class PostListCell extends ListCell<Post> {
         modalStage.showAndWait();
     }
 
+    /**
+     * Adds user information to the content box.
+     *
+     * @param contentBox the VBox to add user information to
+     * @param item the Post item containing user information
+     */
     private void addUserInfo(VBox contentBox, Post item) {
         VBox usernameBox = new VBox();
         usernameBox.setPadding(new Insets(5));
@@ -153,6 +177,12 @@ public class PostListCell extends ListCell<Post> {
         contentBox.getChildren().add(usernameBox);
     }
 
+    /**
+     * Adds post details to the content box.
+     *
+     * @param contentBox the VBox to add post details to
+     * @param item the Post item containing post details
+     */
     private void addPostDetails(VBox contentBox, Post item) {
         Text postDate = new Text(item.getPostDate());
         postDate.getStyleClass().add("detail-post-date");
@@ -170,16 +200,35 @@ public class PostListCell extends ListCell<Post> {
         contentBox.getChildren().add(postContent);
     }
 
+    /**
+     * Adds the bottom section to the content box.
+     *
+     * @param contentBox the VBox to add the bottom section to
+     * @param item the Post item containing bottom section details
+     */
     private void addBottomSection(VBox contentBox, Post item) {
         VBox bottomBox = createBottomSection(item, true);
         contentBox.getChildren().add(bottomBox);
     }
 
+    /**
+     * Adds the bottom section to the content box in the modal.
+     *
+     * @param contentBox the VBox to add the bottom section to
+     * @param item the Post item containing bottom section details
+     */
     private void addBottomSectionModal(VBox contentBox, Post item) {
         VBox bottomBox = createBottomSection(item, false);
         contentBox.getChildren().add(bottomBox);
     }
 
+    /**
+     * Creates the bottom section of the post.
+     *
+     * @param item the Post item containing bottom section details
+     * @param isModal whether the bottom section is in a modal
+     * @return the VBox containing the bottom section
+     */
     private VBox createBottomSection(Post item, boolean isModal) {
         VBox bottomBox = new VBox();
         bottomBox.setAlignment(Pos.CENTER_LEFT);
@@ -237,6 +286,12 @@ public class PostListCell extends ListCell<Post> {
         return bottomBox;
     }
 
+    /**
+     * Creates the like button for the post.
+     *
+     * @param item the Post item containing like button details
+     * @return the HBox containing the like button
+     */
     private HBox createLikeButton(Post item) {
         HBox likeBox = new HBox();
         likeBox.setAlignment(Pos.CENTER_LEFT);
@@ -283,6 +338,12 @@ public class PostListCell extends ListCell<Post> {
         return likeBox;
     }
 
+    /**
+     * Creates the comment button for the post.
+     *
+     * @param item the Post item containing comment button details
+     * @return the HBox containing the comment button
+     */
     private HBox createCommentButton(Post item) {
         HBox commentBox = new HBox();
         commentBox.setAlignment(Pos.CENTER_LEFT);
@@ -304,6 +365,12 @@ public class PostListCell extends ListCell<Post> {
         return commentBox;
     }
 
+    /**
+     * Retrieves and displays comments for the post.
+     *
+     * @param contenbox the VBox to add comments to
+     * @param item the Post item containing comments
+     */
     private void getComments(VBox contenbox, Post item) {
         VBox commentSection = new VBox();
         commentSection.setSpacing(10);
@@ -344,10 +411,22 @@ public class PostListCell extends ListCell<Post> {
         contenbox.getChildren().add(commentSection);
     }
 
+    /**
+     * Handles adding a comment to the post.
+     *
+     * @param text the comment text
+     * @param postId the ID of the post to add the comment to
+     */
     private void handleComment(String text, int postId) {
-        ControllerForView.getInstance().addComment(text,postId);
+        ControllerForView.getInstance().addComment(text, postId);
     }
 
+    /**
+     * Adds an image to the post content box.
+     *
+     * @param contentBox the VBox to add the image to
+     * @param item the Post item containing the image
+     */
     private void addPostImage(VBox contentBox, Post item) {
         StackPane imageSection = new StackPane();
         Image image = ControllerForView.getInstance().getPostPicture(item.getPostPictureID());

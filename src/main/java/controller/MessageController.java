@@ -12,6 +12,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Controller class for handling message-related functionalities in the application.
+ */
 public class MessageController {
 
     private View mainView;
@@ -28,10 +31,12 @@ public class MessageController {
     @FXML private Label noMessagesLabel;
     @FXML private ListView<Messages> conversationListView;
 
+    /**
+     * Initializes the controller class. This method is automatically called after the fxml file has been loaded.
+     */
     @FXML
     private void initialize() {
         updateLanguage();
-
         checkIfNoMessages();
 
         leaveMessageButton.setText("x");
@@ -81,18 +86,27 @@ public class MessageController {
         });
     }
 
+    /**
+     * Updates the text of UI elements based on the selected language.
+     */
     private void updateTexts() {
         homeButton.setText(buttons.getString("home"));
         profileButton.setText(buttons.getString("profile"));
         noMessagesLabel.setText(labels.getString("noMessages"));
     }
 
+    /**
+     * Updates the language of the application based on the selected locale.
+     */
     private void updateLanguage() {
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
         updateTexts();
     }
 
+    /**
+     * Loads the messages into the conversation list view.
+     */
     private void loadMessages() {
         conversationListView.getItems().clear();
 
@@ -125,6 +139,10 @@ public class MessageController {
         checkIfNoMessages();
     }
 
+    /**
+     * Opens the user messages window for the specified user ID.
+     * @param userId the ID of the user whose messages are to be displayed
+     */
     private void openUserMessages(int userId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/userMessages.fxml"));
@@ -154,6 +172,12 @@ public class MessageController {
         }
     }
 
+    /**
+     * Switches the scene to the specified FXML file and sets the title.
+     * @param fxmlFile the FXML file to load
+     * @param title the title of the new scene
+     * @throws IOException if the FXML file cannot be loaded
+     */
     private void switchScene(String fxmlFile, String title) throws IOException {
         Stage stage = (Stage) homeButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -183,6 +207,9 @@ public class MessageController {
         }
     }
 
+    /**
+     * Checks if there are no messages and updates the UI accordingly.
+     */
     public void checkIfNoMessages() {
         if (conversationListView.getItems().isEmpty()) {
             noMessagesLabel.setVisible(true);
@@ -193,10 +220,18 @@ public class MessageController {
         }
     }
 
+    /**
+     * Sets the main controller of the application.
+     * @param mainController the main controller to be set
+     */
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
+    /**
+     * Sets the main view of the application.
+     * @param view the main view to be set
+     */
     public void setMainView(View view) {
         this.mainView = view;
     }

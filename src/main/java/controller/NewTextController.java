@@ -11,6 +11,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Controller class for handling the creation of new text posts.
+ */
 public class NewTextController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
@@ -29,6 +32,9 @@ public class NewTextController {
     @FXML private Label needInspo;
     @FXML private Label whatOnMind;
 
+    /**
+     * Initializes the controller class. This method is automatically called after the fxml file has been loaded.
+     */
     @FXML
     private void initialize() {
         updateLanguage();
@@ -39,6 +45,9 @@ public class NewTextController {
         setRandomQuote();
     }
 
+    /**
+     * Updates the text of UI elements based on the selected language.
+     */
     private void updateTexts() {
         postButton.setText(buttons.getString("post"));
         needInspo.setText(labels.getString("needInspo"));
@@ -46,6 +55,9 @@ public class NewTextController {
         textPostArea.setPromptText(fields.getString("enterText"));
     }
 
+    /**
+     * Updates the language of the application based on the selected locale.
+     */
     private void updateLanguage() {
         alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
@@ -54,6 +66,9 @@ public class NewTextController {
         updateTexts();
     }
 
+    /**
+     * Handles the action of posting a new text post.
+     */
     @FXML
     private void handlePost() {
         String postText = textPostArea.getText().trim();
@@ -80,6 +95,9 @@ public class NewTextController {
         }
     }
 
+    /**
+     * Handles the action of closing the new post window.
+     */
     @FXML
     private void handleClose() {
         try {
@@ -96,13 +114,17 @@ public class NewTextController {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
                 logger.warning("Theme URL is null");
-            }            stage.setScene(scene);
+            }
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Sets a random inspirational quote in the inspiration text label.
+     */
     @FXML
     private void setRandomQuote() {
         String[] inspirationsArray = new String[] {
@@ -117,35 +139,59 @@ public class NewTextController {
         inspirationText.setText(inspirationsArray[randomIndex]);
     }
 
+    /**
+     * Inserts a smile emoji at the current caret position in the text area.
+     */
     @FXML
     private void insertEmojiSmile() {
         insertEmoji("😊");
     }
 
+    /**
+     * Inserts a thumbs up emoji at the current caret position in the text area.
+     */
     @FXML
     private void insertEmojiThumbsUp() {
         insertEmoji("👍");
     }
 
+    /**
+     * Inserts a laugh emoji at the current caret position in the text area.
+     */
     @FXML
     private void insertEmojiLaugh() {
         insertEmoji("😂");
     }
 
+    /**
+     * Inserts a star emoji at the current caret position in the text area.
+     */
     @FXML
     private void insertEmojiStar() {
         insertEmoji("🌟");
     }
 
+    /**
+     * Inserts the specified emoji at the current caret position in the text area.
+     * @param emoji the emoji to be inserted
+     */
     private void insertEmoji(String emoji) {
         int caretPosition = textPostArea.getCaretPosition();
         textPostArea.insertText(caretPosition, emoji);
     }
 
+    /**
+     * Sets the main controller of the application.
+     * @param mainController the main controller to be set
+     */
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
+    /**
+     * Shows an alert with the specified message.
+     * @param message the message to be displayed in the alert
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alerts.getString("post.information");

@@ -15,6 +15,9 @@ import java.time.*;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Controller class for handling user messages.
+ */
 public class UserMessagesController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
@@ -33,6 +36,10 @@ public class UserMessagesController {
     @FXML private Button sendMessageButton;
     @FXML private Button closeButton;
 
+    /**
+     * Initializes the controller with the given user ID.
+     * @param userId the ID of the user
+     */
     public void initialize(int userId) {
         updateLanguage();
 
@@ -45,22 +52,36 @@ public class UserMessagesController {
         messageTextField.setOnKeyPressed(this::handleEnterKey);
     }
 
+    /**
+     * Updates the text of UI elements based on the selected language.
+     */
     private void updateTexts() {
         messageTextField.setPromptText(fields.getString("sendMessage"));
     }
 
+    /**
+     * Updates the language of the application based on the selected locale.
+     */
     private void updateLanguage() {
         alerts = ResourceBundle.getBundle("Alerts", locale);
         fields = ResourceBundle.getBundle("Fields", locale);
         updateTexts();
     }
 
+    /**
+     * Handles the Enter key press event to send a message.
+     * @param event the key event
+     */
     private void handleEnterKey(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             handleSendMessage();
         }
     }
 
+    /**
+     * Fetches the user information based on the user ID.
+     * @param userId the ID of the user
+     */
     private void fetchUser(int userId) {
         UserModel user = controllerForView.getUserById(userId);
         if (user != null) {
@@ -68,6 +89,9 @@ public class UserMessagesController {
         }
     }
 
+    /**
+     * Loads the conversation for the current user.
+     */
     private void loadConversation() {
         currentConversation = controllerForView.getCurrentConversation(userId);
         if (currentConversation != null) {
@@ -80,6 +104,10 @@ public class UserMessagesController {
         }
     }
 
+    /**
+     * Displays a message in the message list.
+     * @param message the message to be displayed
+     */
     private void displayMessage(Messages message) {
         currentConversation = controllerForView.getCurrentConversation(userId);
         String username = message.getType().equals("sent") ?
@@ -97,6 +125,9 @@ public class UserMessagesController {
         messageListVBox.getChildren().add(messageLabel);
     }
 
+    /**
+     * Handles the action of sending a message.
+     */
     private void handleSendMessage() {
         String messageContent = messageTextField.getText();
 
@@ -127,6 +158,9 @@ public class UserMessagesController {
         }
     }
 
+    /**
+     * Handles the action of closing the user messages window.
+     */
     @FXML
     private void handleClose() {
         closeButton.getScene().getWindow().hide();
@@ -159,10 +193,18 @@ public class UserMessagesController {
         }
     }
 
+    /**
+     * Sets the user ID.
+     * @param userId the ID of the user
+     */
     public void setUserId(int userId) {
         this.userId = userId;
     }
 
+    /**
+     * Shows an error alert with the specified message.
+     * @param message the message to be displayed in the alert
+     */
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(alerts.getString("error.title"));
@@ -171,4 +213,3 @@ public class UserMessagesController {
         alert.showAndWait();
     }
 }
-

@@ -6,19 +6,27 @@ import java.net.*;
 import java.net.http.*;
 import java.util.logging.Logger;
 
-// SSH connection thread to get events from server
-
+/**
+ * The Feed class implements Runnable and is responsible for establishing an SSE (Server-Sent Events) connection
+ * to receive events from the server and process them.
+ */
 public class Feed implements Runnable {
 
     private static String url = "http://10.120.32.76:8080/api/v1/events";
     private Gson gson;
     private static final Logger logger = Logger.getLogger(Feed.class.getName());
 
-
+    /**
+     * Constructs a new Feed instance and initializes the Gson object.
+     */
     public Feed() {
         gson = new Gson();
     }
 
+    /**
+     * Starts listening to the SSE stream from the server. It sends an HTTP request to the server and processes
+     * the incoming events asynchronously.
+     */
     public void startListeningToSSE() {
         HttpClient client = HttpClient.newBuilder().build();
         HttpRequest req = HttpRequest.newBuilder()
@@ -48,6 +56,12 @@ public class Feed implements Runnable {
                 .join();
     }
 
+    /**
+     * Processes an individual event received from the SSE stream. It parses the event type and data,
+     * and updates the shared data accordingly.
+     *
+     * @param event the raw event data as a string
+     */
     private void processEvent(String event) {
         logger.info(event);
         String[] lines = event.split("\n");
@@ -72,6 +86,9 @@ public class Feed implements Runnable {
         }
     }
 
+    /**
+     * The run method is called when the thread is started. It initiates the SSE listening process.
+     */
     @Override
     public void run() {
         startListeningToSSE();

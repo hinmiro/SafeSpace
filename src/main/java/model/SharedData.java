@@ -24,9 +24,9 @@ public class SharedData {
     private ArrayList<Post> posts;
     private ArrayList<Like> likes;
 
-    // This is used for getting events and saving them trough SSH connection, even if user is not in
-    //  main page.
-
+    /**
+     * Private constructor to initialize the queues and lists.
+     */
     private SharedData() {
         postQueue = new LinkedBlockingQueue<>();
         likeQueue = new LinkedBlockingQueue<>();
@@ -35,11 +35,21 @@ public class SharedData {
         likes = new ArrayList<>();
     }
 
+    /**
+     * Returns the singleton instance of SharedData.
+     *
+     * @return the singleton instance
+     */
     public static synchronized SharedData getInstance() {
         instance = instance == null ? new SharedData() : instance;
         return instance;
     }
 
+    /**
+     * Adds a post event to the queue and list.
+     *
+     * @param event the post event to add
+     */
     public void addEvent(Post event) {
         try {
             postQueue.put(event);
@@ -50,29 +60,68 @@ public class SharedData {
         }
     }
 
+    /**
+     * Adds a like to the queue and list.
+     *
+     * @param like the like to add
+     */
     public void addLike(Like like) {
         likeQueue.add(like);
         likes.add(like);
     }
 
+    /**
+     * Returns the queue of removed likes.
+     *
+     * @return the queue of removed likes
+     */
     public BlockingQueue<Like> getRemovedLikeQueue() {
         return removedLikeQueue;
     }
 
+    /**
+     * Adds a removed like to the queue.
+     *
+     * @param like the like to remove
+     */
     public void addRemoveLike(Like like) {
         removedLikeQueue.add(like);
     }
 
+    /**
+     * Returns the queue of post events.
+     *
+     * @return the queue of post events
+     */
     public BlockingQueue<Post> getEventQueue() {
         return postQueue;
     }
 
+    /**
+     * Returns the queue of likes.
+     *
+     * @return the queue of likes
+     */
     public BlockingQueue<Like> getLikeQueue() { return likeQueue; }
 
+    /**
+     * Returns the list of posts.
+     *
+     * @return the list of posts
+     */
     public List<Post> getPosts() {
         return posts;
     }
 
+    /**
+     * Creates a clickable username label.
+     *
+     * @param username the username to display
+     * @param userId the ID of the user
+     * @param primaryStage the primary stage of the application
+     * @param modalStage the modal stage to close on click
+     * @return the clickable username label
+     */
     public static Label createClickableUsername(String username, int userId, Stage primaryStage, Stage modalStage) {
         Label usernameLabel = new Label(username);
         usernameLabel.getStyleClass().add("username");
@@ -87,6 +136,12 @@ public class SharedData {
         return usernameLabel;
     }
 
+    /**
+     * Opens the user profile in a new scene.
+     *
+     * @param primaryStage the primary stage of the application
+     * @param userId the ID of the user to display
+     */
     public static void openUserProfile(Stage primaryStage, int userId) {
         try {
             int loggedInUserId = SessionManager.getInstance().getLoggedUser().getUserId();
@@ -130,6 +185,11 @@ public class SharedData {
         }
     }
 
+    /**
+     * Returns the list of posts from followed users.
+     *
+     * @return the list of followed posts
+     */
     public List<Post> getFollowedPosts() {
         ArrayList<Post> followedPosts = new ArrayList<>();
 

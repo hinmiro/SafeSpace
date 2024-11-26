@@ -14,6 +14,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Controller class for handling user registration.
+ */
 public class RegisterController {
 
     private ResourceBundle labels;
@@ -35,6 +38,9 @@ public class RegisterController {
     @FXML private Button backButton;
     @FXML private Label passwordStrengthLabel;
 
+    /**
+     * Initializes the controller class. This method is automatically called after the FXML file has been loaded.
+     */
     @FXML
     public void initialize() {
         registerButton.setOnAction(event -> handleRegister());
@@ -43,11 +49,14 @@ public class RegisterController {
         passwordField.setOnKeyPressed(this::handleEnterKey);
         confirmPasswordField.setOnKeyPressed(this::handleEnterKey);
         passwordField.textProperty().addListener((observable, oldValue, newValue) ->
-            updatePasswordStrength(newValue));
+                updatePasswordStrength(newValue));
 
         updateLanguage();
     }
 
+    /**
+     * Updates the text of UI elements based on the selected language.
+     */
     private void updateTexts() {
         registerHero.setText(labels.getString("registerHero"));
         usernameLabel.setText(labels.getString("username"));
@@ -62,6 +71,9 @@ public class RegisterController {
         backButton.setText(buttons.getString("backToLogin"));
     }
 
+    /**
+     * Updates the language of the application based on the selected locale.
+     */
     private void updateLanguage() {
         Locale localeLanguage = SessionManager.getInstance().getSelectedLanguage().getLocale();
         labels = ResourceBundle.getBundle("Labels", localeLanguage);
@@ -70,12 +82,20 @@ public class RegisterController {
         updateTexts();
     }
 
+    /**
+     * Handles the Enter key press event to trigger registration.
+     * @param event the key event
+     */
     private void handleEnterKey(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             handleRegister();
         }
     }
 
+    /**
+     * Updates the password strength label based on the entered password.
+     * @param password the entered password
+     */
     private void updatePasswordStrength(String password) {
         int strength = calculatePasswordStrength(password);
         String strengthText;
@@ -98,6 +118,11 @@ public class RegisterController {
         passwordField.getStyleClass().add(strengthClass);
     }
 
+    /**
+     * Calculates the strength of the entered password.
+     * @param password the entered password
+     * @return the strength of the password
+     */
     private int calculatePasswordStrength(String password) {
         int strength = 0;
         if (password.length() >= 6) strength++;
@@ -107,6 +132,9 @@ public class RegisterController {
         return strength;
     }
 
+    /**
+     * Handles the registration process.
+     */
     private void handleRegister() {
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -163,6 +191,9 @@ public class RegisterController {
         }
     }
 
+    /**
+     * Navigates back to the login screen.
+     */
     private void backLogin() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
@@ -187,6 +218,12 @@ public class RegisterController {
         }
     }
 
+    /**
+     * Shows an alert with the specified message.
+     * @param alertType the type of alert
+     * @param title the title of the alert
+     * @param message the message to be displayed in the alert
+     */
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -195,4 +232,3 @@ public class RegisterController {
         alert.showAndWait();
     }
 }
-

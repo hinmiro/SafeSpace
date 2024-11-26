@@ -17,6 +17,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Controller class for handling the user profile functionalities in the application.
+ */
 public class UserProfileController {
     private ControllerForView controllerForView = ControllerForView.getInstance();
     private ResourceBundle buttons;
@@ -43,6 +46,12 @@ public class UserProfileController {
     @FXML private Label followers;
     @FXML private Label following;
 
+    /**
+     * Initializes the controller with the given user ID.
+     * @param userId the ID of the user
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the operation is interrupted
+     */
     public void initialize(int userId) throws IOException, InterruptedException {
         updateLanguage();
 
@@ -80,6 +89,9 @@ public class UserProfileController {
         displayUserPosts(feedListView, noPostsLabel, userId);
     }
 
+    /**
+     * Updates the text of UI elements based on the selected language.
+     */
     private void updateTexts() {
         homeButton.setText(buttons.getString("home"));
         profileButton.setText(buttons.getString("profile"));
@@ -88,12 +100,21 @@ public class UserProfileController {
         messageButton.setText(buttons.getString("message"));
     }
 
+    /**
+     * Updates the language of the application based on the selected locale.
+     */
     private void updateLanguage() {
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
         updateTexts();
     }
 
+    /**
+     * Switches the scene to the specified FXML file.
+     * @param fxmlFile the FXML file to switch to
+     * @param title the title of the new scene
+     * @throws IOException if an I/O error occurs
+     */
     private void switchScene(String fxmlFile, String title) throws IOException {
         Stage stage = (Stage) homeButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -124,6 +145,10 @@ public class UserProfileController {
         }
     }
 
+    /**
+     * Fetches the user data based on the user ID.
+     * @param userId the ID of the user
+     */
     private void fetchUserData(int userId) {
         UserModel user = controllerForView.getUserById(userId);
         if (user != null) {
@@ -188,6 +213,14 @@ public class UserProfileController {
         }
     }
 
+    /**
+     * Displays the posts of the user in the feed list view.
+     * @param feedListView the list view to display the posts
+     * @param noPostsLabel the label to display when there are no posts
+     * @param userId the ID of the user
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the operation is interrupted
+     */
     public void displayUserPosts(ListView<Post> feedListView, Label noPostsLabel, int userId) throws IOException, InterruptedException {
         List<Post> posts;
         posts = controllerForView.getUserPostsOwnProfile(userId);
@@ -208,6 +241,9 @@ public class UserProfileController {
         }
     }
 
+    /**
+     * Handles the action of following or unfollowing a user.
+     */
     public void handleFollowButton() {
         UserModel userToFollow = controllerForView.getUserById(userId);
         int friendId = userToFollow.getUserId();
@@ -241,6 +277,9 @@ public class UserProfileController {
         }
     }
 
+    /**
+     * Handles the action of opening the user messages window.
+     */
     @FXML
     private void handleMessageButton() {
         try {
@@ -259,7 +298,7 @@ public class UserProfileController {
             if (themeUrl != null) {
                 scene.getStylesheets().add(themeUrl.toExternalForm());
             } else {
-                 logger.warning("Theme URL is null");
+                logger.warning("Theme URL is null");
             }
 
             ResourceBundle pageTitle = ResourceBundle.getBundle("PageTitles", locale);
@@ -271,6 +310,10 @@ public class UserProfileController {
         }
     }
 
+    /**
+     * Makes the given ImageView circular.
+     * @param imageView the ImageView to be made circular
+     */
     private void makeCircle(ImageView imageView) {
         Circle clip = new Circle(
                 imageView.getFitWidth() / 2,
@@ -280,6 +323,12 @@ public class UserProfileController {
         imageView.setClip(clip);
     }
 
+    /**
+     * Creates a placeholder image with the specified width and height.
+     * @param width the width of the placeholder image
+     * @param height the height of the placeholder image
+     * @return the created placeholder image
+     */
     private WritableImage createPlaceholderImage(int width, int height) {
         WritableImage image = new WritableImage(width, height);
         Canvas canvas = new Canvas(width, height);
@@ -292,10 +341,18 @@ public class UserProfileController {
         return image;
     }
 
+    /**
+     * Sets the controller for view.
+     * @param controller the controller to be set
+     */
     public void setControllerForView(ControllerForView controller) {
         controllerForView = controller;
     }
 
+    /**
+     * Sets the main controller of the application.
+     * @param mainController the main controller to be set
+     */
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }

@@ -13,11 +13,20 @@ import java.net.URL;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * The View class extends Application and serves as the main entry point for the JavaFX application.
+ */
 public class View extends Application {
 
     private Stage primaryStage;
     private static final Logger logger = Logger.getLogger(View.class.getName());
 
+    /**
+     * The start method is called when the application is launched. It sets up the primary stage and shows the login view.
+     *
+     * @param stage the primary stage for this application
+     * @throws Exception if an error occurs during loading the login view
+     */
     @Override
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
@@ -25,6 +34,9 @@ public class View extends Application {
         showLogin();
     }
 
+    /**
+     * Shows the login view. It loads the login FXML, sets the scene, and applies the theme and icon.
+     */
     public void showLogin() {
         Locale locale;
         try {

@@ -19,6 +19,9 @@ import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.logging.Logger;
 
+/**
+ * Controller class for handling the profile-related functionalities in the application.
+ */
 public class ProfileController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
@@ -47,6 +50,9 @@ public class ProfileController {
     @FXML private Label followersLabel;
     @FXML private Label followingLabel;
 
+    /**
+     * Initializes the controller class. This method is automatically called after the FXML file has been loaded.
+     */
     @FXML
     public void initialize() {
         SessionManager.getInstance().setProfileController(this);
@@ -80,6 +86,9 @@ public class ProfileController {
         updateLanguage();
     }
 
+    /**
+     * Creates the context menu for the profile settings.
+     */
     private void menuInProfile() {
         settingsContextMenu = new ContextMenu();
 
@@ -127,10 +136,16 @@ public class ProfileController {
         settingsContextMenu.getItems().addAll(editProfileItem, editInfoItem, changeThemeItem, logOutItem);
     }
 
+    /**
+     * Shows the context menu for profile settings.
+     */
     private void showContextMenu() {
         settingsContextMenu.show(settingsProfileID, Side.BOTTOM, 0, 0);
     }
 
+    /**
+     * Updates the text of UI elements based on the selected language.
+     */
     private void updateTexts() {
         homeButton.setText(buttons.getString("home"));
         profileButton.setText(buttons.getString("profile"));
@@ -144,12 +159,19 @@ public class ProfileController {
         });
     }
 
+    /**
+     * Updates the language of the application based on the selected locale.
+     */
     protected void updateLanguage() {
         buttons = ResourceBundle.getBundle("Buttons", locale);
         labels = ResourceBundle.getBundle("Labels", locale);
         updateTexts();
     }
 
+    /**
+     * Fetches the followers and following count for the user.
+     * @param userId the ID of the user
+     */
     private void fetchUserFollowers(int userId) {
         UserModel user = controllerForView.getUserById(userId);
 
@@ -161,6 +183,9 @@ public class ProfileController {
         followingCountLabel.setText(String.valueOf(followingCount));
     }
 
+    /**
+     * Displays the posts of the user in the feed list view.
+     */
     public void displayUserPosts() {
         List<Post> posts;
         try {
@@ -186,6 +211,9 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Shows the log out confirmation dialog.
+     */
     private void showLogOut() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/logOut.fxml"));
@@ -217,6 +245,9 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Opens the update info page.
+     */
     private void openUpdateInfoPage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/updateInfo.fxml"));
@@ -256,6 +287,9 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Opens the edit profile page.
+     */
     private void openEditProfilePage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/editProfile.fxml"));
@@ -286,6 +320,10 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Makes the given ImageView circular.
+     * @param imageView the ImageView to be made circular
+     */
     private void makeCircle(ImageView imageView) {
         Circle clip = new Circle(
                 imageView.getFitWidth() / 2,
@@ -295,6 +333,12 @@ public class ProfileController {
         imageView.setClip(clip);
     }
 
+    /**
+     * Creates a placeholder image with the specified width and height.
+     * @param width the width of the placeholder image
+     * @param height the height of the placeholder image
+     * @return the created placeholder image
+     */
     private WritableImage createPlaceholderImage(int width, int height) {
         WritableImage image = new WritableImage(width, height);
         Canvas canvas = new Canvas(width, height);
@@ -307,6 +351,10 @@ public class ProfileController {
         return image;
     }
 
+    /**
+     * Navigates to the specified FXML file.
+     * @param fxmlFile the FXML file to navigate to
+     */
     private void navigateTo(String fxmlFile) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -339,6 +387,9 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Shows the language selection modal.
+     */
     private void showLanguageSelectionModal() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/languageSelection.fxml"));
@@ -369,18 +420,34 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Sets the controller for view.
+     * @param controller the controller to be set
+     */
     public void setControllerForView(ControllerForView controller) {
         controllerForView = controller;
     }
 
+    /**
+     * Sets the main view of the application.
+     * @param view the main view to be set
+     */
     public void setMainView(View view) {
         this.mainView = view;
     }
 
+    /**
+     * Sets the dialog stage.
+     * @param dialogStage the dialog stage to be set
+     */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
+    /**
+     * Sets the main controller of the application.
+     * @param mainController the main controller to be set
+     */
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }

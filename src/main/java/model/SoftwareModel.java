@@ -8,12 +8,21 @@ import java.net.http.HttpResponse;
 import java.util.*;
 import java.util.logging.Logger;
 
-// Connection between controllers and Api services
-
+/**
+ * Manages the connection between controllers and API services.
+ */
 public class SoftwareModel {
     Gson gson = new Gson();
     private static final Logger logger = Logger.getLogger(SoftwareModel.class.getName());
 
+    /**
+     * Logs in a user with the given username and password.
+     *
+     * @param username the username of the user
+     * @param password the password of the user
+     * @return the logged-in user model, or null if login failed
+     * @throws InterruptedException if the thread is interrupted
+     */
     public UserModel login(String username, String password) throws InterruptedException {
         Map<String, String> loginData = new HashMap<>();
         loginData.put("username", username);
@@ -26,6 +35,15 @@ public class SoftwareModel {
         return gson.fromJson(res.body(), UserModel.class);
     }
 
+    /**
+     * Registers a new user with the given username and password.
+     *
+     * @param username the username of the new user
+     * @param password the password of the new user
+     * @return the registered user model, or null if registration failed
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public UserModel postRegister(String username, String password) throws IOException, InterruptedException {
         Map<String, String> registerData = new HashMap<>();
         registerData.put("username", username);
@@ -39,6 +57,15 @@ public class SoftwareModel {
         return gson.fromJson(res.body(), UserModel.class);
     }
 
+    /**
+     * Uploads a picture to the specified endpoint.
+     *
+     * @param file the file to upload
+     * @param endpoint the endpoint to upload the file to
+     * @return the response body from the server
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public String postPicture(File file, String endpoint) throws IOException, InterruptedException {
         String trimmedFileName = file.getName().replace(" ", "");
         File trimmedFile = new File(file.getParent(), trimmedFileName);
@@ -51,6 +78,17 @@ public class SoftwareModel {
         return res.body();
     }
 
+    /**
+     * Updates the user information.
+     *
+     * @param username the new username, or null to keep the current username
+     * @param password the new password, or null to keep the current password
+     * @param bio the new bio, or null to keep the current bio
+     * @param profilePictureId the new profile picture ID, or null to keep the current profile picture
+     * @return true if the update was successful, false otherwise
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public boolean updateUser(String username, String password, String bio, String profilePictureId) throws IOException, InterruptedException {
         Map<String, String> dataMap = new HashMap<>();
         if (username != null) {
@@ -80,6 +118,14 @@ public class SoftwareModel {
         return true;
     }
 
+    /**
+     * Retrieves a user by their username.
+     *
+     * @param name the username of the user
+     * @return the user model, or null if the user was not found
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public UserModel getUserByName(String name) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getUserByName(name);
         if (res.statusCode() == 200) {
@@ -88,6 +134,14 @@ public class SoftwareModel {
         return null;
     }
 
+    /**
+     * Creates a new post with the given text content.
+     *
+     * @param text the text content of the post
+     * @return true if the post was created successfully, false otherwise
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public boolean createNewPost(String text) throws IOException, InterruptedException {
         Map<String, String> data = new HashMap<>();
         data.put("post_content", text);
@@ -97,6 +151,15 @@ public class SoftwareModel {
         return res.statusCode() == 201;
     }
 
+    /**
+     * Creates a new post with the given text content and image ID.
+     *
+     * @param text the text content of the post
+     * @param imageId the ID of the image to include in the post
+     * @return true if the post was created successfully, false otherwise
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public boolean createNewPostWithImage(String text, String imageId) throws IOException, InterruptedException {
         Map<String, String> data = new HashMap<>();
         data.put("post_content", text);
@@ -107,6 +170,12 @@ public class SoftwareModel {
         return res.statusCode() == 201;
     }
 
+    /**
+     * Starts a thread to fetch and display the main feed.
+     *
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public void startMainFeedThread() throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getPosts();
         if (res.statusCode() == 200) {
@@ -121,16 +190,40 @@ public class SoftwareModel {
         }
     }
 
+    /**
+     * Likes a post with the given post ID.
+     *
+     * @param postId the ID of the post to like
+     * @return true if the post was liked successfully, false otherwise
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public boolean likePost(String postId) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.likePost(postId);
         return res.statusCode() == 200;
     }
 
+    /**
+     * Removes a like from a post with the given post ID.
+     *
+     * @param postId the ID of the post to remove the like from
+     * @return true if the like was removed successfully, false otherwise
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public boolean removeLike(String postId) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.removeLike(postId);
         return res.statusCode() == 200;
     }
 
+    /**
+     * Retrieves a post by its ID.
+     *
+     * @param postId the ID of the post
+     * @return the post model, or null if the post was not found
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public Post getPostById(String postId) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getPostById(postId);
 
@@ -140,6 +233,14 @@ public class SoftwareModel {
         return null;
     }
 
+    /**
+     * Retrieves the profile image of a user by their ID.
+     *
+     * @param userId the ID of the user
+     * @return the profile image
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public Image getProfileImage(int userId) throws IOException, InterruptedException {
         HttpResponse<byte[]> res = ApiClient.getProfileImg(userId);
 
@@ -151,7 +252,14 @@ public class SoftwareModel {
         }
     }
 
-
+    /**
+     * Retrieves the image of a post by its ID.
+     *
+     * @param id the ID of the post
+     * @return the post image
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public Image getPostImage(String id) throws IOException, InterruptedException {
         HttpResponse<byte[]> res = ApiClient.getPostImage(id);
 
@@ -163,6 +271,14 @@ public class SoftwareModel {
         }
     }
 
+    /**
+     * Retrieves a user by their ID.
+     *
+     * @param id the ID of the user
+     * @return the user model, or null if the user was not found
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public UserModel getUserById(int id) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getUserById(id);
 
@@ -172,6 +288,12 @@ public class SoftwareModel {
         return null;
     }
 
+    /**
+     * Retrieves and updates the user arrays for the logged-in user.
+     *
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public void getUserArrays() throws IOException, InterruptedException {
         UserModel user = SessionManager.getInstance().getLoggedUser();
         HttpResponse<String> res = ApiClient.getUserById(user.getUserId());
@@ -197,6 +319,14 @@ public class SoftwareModel {
         }
     }
 
+    /**
+     * Retrieves comments for a post by its ID.
+     *
+     * @param id the ID of the post
+     * @return a list of comments for the post
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public ArrayList<Comment> getCommentsByPostId(String id) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getCommentsByPostId(id);
 
@@ -208,6 +338,12 @@ public class SoftwareModel {
         }
     }
 
+    /**
+     * Posts a comment on a post.
+     *
+     * @param comment the content of the comment
+     * @param postId the ID of the post to comment on
+     */
     public void postComment(String comment, String postId) {
         HashMap<String, String> data = new HashMap<>();
         data.put("commentContent", comment);
@@ -222,9 +358,16 @@ public class SoftwareModel {
             e.printStackTrace();
             logger.info(e.getMessage());
         }
-
     }
 
+    /**
+     * Sends a message to a user.
+     *
+     * @param message the message to send
+     * @return true if the message was sent successfully, false otherwise
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public boolean sendMessage(Messages message) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.sendMessage(message.getReceiverId(), message.getMessageContent());
 
@@ -235,6 +378,13 @@ public class SoftwareModel {
         }
     }
 
+    /**
+     * Retrieves messages for the logged-in user.
+     *
+     * @return a list of conversations
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public List<Conversation> getMessages() throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getMessages();
 
@@ -268,6 +418,13 @@ public class SoftwareModel {
         return new ArrayList<>(conversationsMap.values());
     }
 
+    /**
+     * Retrieves all conversations for the logged-in user.
+     *
+     * @return a list of conversations
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public List<Conversation> getAllConversations() throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getConversations();
 
@@ -275,6 +432,13 @@ public class SoftwareModel {
         return Arrays.asList(conversationsArray);
     }
 
+    /**
+     * Adds a friend for the logged-in user.
+     *
+     * @param userId the ID of the logged-in user
+     * @param friendId the ID of the friend to add
+     * @return true if the friend was added successfully, false otherwise
+     */
     public boolean addFriend(int userId, int friendId) {
         try {
             UserModel user = SessionManager.getInstance().getLoggedUser();
@@ -312,11 +476,28 @@ public class SoftwareModel {
         return false;
     }
 
+    /**
+     * Removes a friend for the logged-in user.
+     *
+     * @param id the ID of the friend to remove
+     * @return true if the friend was removed successfully, false otherwise
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public boolean removeFriend(int id) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.removeFriend(id);
         return res.statusCode() == 200;
     }
 
+    /**
+     * Checks if a user is a friend of the logged-in user.
+     *
+     * @param userId the ID of the logged-in user
+     * @param friendId the ID of the friend to check
+     * @return true if the user is a friend, false otherwise
+     * @throws IOException if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public boolean isFriend(int userId, int friendId) throws IOException, InterruptedException {
         HttpResponse<String> res = ApiClient.getAllFriends();
         if (res.statusCode() == 200) {
@@ -328,4 +509,3 @@ public class SoftwareModel {
         return false;
     }
 }
-

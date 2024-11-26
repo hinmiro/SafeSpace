@@ -15,6 +15,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Controller class for handling user login.
+ */
 public class LoginController {
 
     private ControllerForView controllerForView = ControllerForView.getInstance();
@@ -35,6 +38,9 @@ public class LoginController {
     @FXML private Label dontHaveLabel;
     @FXML private ComboBox<String> languageBox;
 
+    /**
+     * Initializes the controller. Sets up event handlers and updates UI texts.
+     */
     @FXML
     public void initialize() {
         languageBox.getItems().setAll(
@@ -58,6 +64,9 @@ public class LoginController {
         updateLanguage();
     }
 
+    /**
+     * Updates the texts of UI elements based on the selected language.
+     */
     private void updateTexts() {
         loginButton.setText(buttons.getString("login"));
         registerButton.setText(buttons.getString("register"));
@@ -69,6 +78,9 @@ public class LoginController {
         dontHaveLabel.setText(labels.getString("dontHave"));
     }
 
+    /**
+     * Changes the application language based on the selected value in the language combo box.
+     */
     @FXML
     private void changeLanguage() {
         String selectedLanguage = languageBox.getValue();
@@ -77,7 +89,7 @@ public class LoginController {
             SessionManager.getInstance().setLanguage(Language.FI);
         } else if (selectedLanguage.equals(Language.JP.getDisplayName())) {
             SessionManager.getInstance().setLanguage(Language.JP);
-            } else if (selectedLanguage.equals(Language.RU.getDisplayName())) {
+        } else if (selectedLanguage.equals(Language.RU.getDisplayName())) {
             SessionManager.getInstance().setLanguage(Language.RU);
         } else {
             SessionManager.getInstance().setLanguage(Language.EN);
@@ -87,6 +99,9 @@ public class LoginController {
         updateLanguage();
     }
 
+    /**
+     * Updates the language resources and UI texts.
+     */
     private void updateLanguage() {
         alerts = ResourceBundle.getBundle("Alerts", locale);
         buttons = ResourceBundle.getBundle("Buttons", locale);
@@ -94,12 +109,20 @@ public class LoginController {
         updateTexts();
     }
 
+    /**
+     * Handles the Enter key press event to trigger login.
+     *
+     * @param event the key event
+     */
     private void handleEnterKey(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             handleLogin();
         }
     }
 
+    /**
+     * Handles the login process. Validates user credentials and navigates to the main view if successful.
+     */
     private void handleLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -146,6 +169,11 @@ public class LoginController {
         }
     }
 
+    /**
+     * Handles the register link click event to navigate to the register view.
+     *
+     * @param event the mouse event
+     */
     private void handleRegisterLink(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/register.fxml"));
@@ -170,6 +198,13 @@ public class LoginController {
         }
     }
 
+    /**
+     * Shows an alert dialog with the specified type, title, and message.
+     *
+     * @param alertType the type of alert
+     * @param title the title of the alert
+     * @param message the message of the alert
+     */
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -178,8 +213,12 @@ public class LoginController {
         alert.showAndWait();
     }
 
+    /**
+     * Sets the main view for this controller.
+     *
+     * @param view the main view to set
+     */
     public void setMainView(View view) {
         mainView = view;
     }
 }
-
