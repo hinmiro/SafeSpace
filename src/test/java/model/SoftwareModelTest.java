@@ -84,6 +84,78 @@ public class SoftwareModelTest {
         assertTrue(result);
     }
 
+    @Test
+    public void updateUserTest() throws IOException, InterruptedException {
+        String username = "newUser";
+        String password = "newPassword";
+        String bio = "Updated bio";
+        String profilePictureId = "12345";
+        String responseBody = "{\"username\": \"newUser1\", \"bio\": \"Updated bio\"}";
+
+        when(res.body()).thenReturn(responseBody);
+        when(res.statusCode()).thenReturn(200);
+        mockedApiClient.when(() -> ApiClient.updateUser(any(String.class))).thenReturn(res);
+
+        boolean result = softwareModel.updateUser(username, password, bio, profilePictureId);
+
+        assertTrue(result);
+        UserModel loggedUser = SessionManager.getInstance().getLoggedUser();
+        assertNotNull(loggedUser);
+        assertEquals("newUser1", loggedUser.getUsername());
+        assertEquals("Updated bio", loggedUser.getBio());
+    }
+
+    @Test
+    public void getUserByNameTest() throws IOException, InterruptedException {
+        String username = "testuser";
+        String responseBody = "{\"username\": \"testuser\"}";
+
+        when(res.body()).thenReturn(responseBody);
+        when(res.statusCode()).thenReturn(200);
+        mockedApiClient.when(() -> ApiClient.getUserByName(username)).thenReturn(res);
+
+        UserModel user = softwareModel.getUserByName(username);
+
+        assertNotNull(user);
+        assertEquals("testuser", user.getUsername());
+    }
+
+    @Test
+    public void likePostTest() throws IOException, InterruptedException {
+        String postId = "1";
+
+        when(res.statusCode()).thenReturn(200);
+        mockedApiClient.when(() -> ApiClient.likePost(postId)).thenReturn(res);
+
+        boolean result = softwareModel.likePost(postId);
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void removeLikeTest() throws IOException, InterruptedException {
+        String postId = "1";
+
+        when(res.statusCode()).thenReturn(200);
+        mockedApiClient.when(() -> ApiClient.removeLike(postId)).thenReturn(res);
+
+        boolean result = softwareModel.removeLike(postId);
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void removeFriendSuccessTest() throws IOException, InterruptedException {
+        int friendId = 2;
+
+        when(res.statusCode()).thenReturn(200);
+        mockedApiClient.when(() -> ApiClient.removeFriend(friendId)).thenReturn(res);
+
+        boolean result = softwareModel.removeFriend(friendId);
+
+        assertTrue(result);
+    }
+
     @AfterClass
     public static void tearDown() {
         client = null;
