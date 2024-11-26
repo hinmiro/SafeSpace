@@ -168,8 +168,6 @@ public class EditProfileController {
             if (updateSuccess) {
                 if (newImage != null) {
                     profileImageView.setImage(newImage);
-                } else {
-                    profileImageView.setImage(createPlaceholderImage(150, 150));
                 }
                 showAlert(alerts.getString("changesSaved"), Alert.AlertType.INFORMATION);
             }
