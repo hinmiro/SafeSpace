@@ -2,6 +2,7 @@
 
 Frontend client for SafeSpace — a modern and secure application designed for individuals aged 13 and
 above to stay connected with friends and socialize online.
+
 ---
 
 ### Programming Languages:
