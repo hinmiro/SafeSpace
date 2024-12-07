@@ -116,6 +116,9 @@ public class ProfileController {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/profile.fxml"));
                 Parent root = fxmlLoader.load();
 
+                ProfileController controller = fxmlLoader.getController();
+                controller.setMainController(mainController);
+
                 Scene scene = new Scene(root, 360, ScreenUtil.getScaledHeight());
 
                 URL themeUrl = getClass().getResource(Theme.getTheme());
