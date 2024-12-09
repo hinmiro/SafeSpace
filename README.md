@@ -1,6 +1,11 @@
 # SafeSpace
+&nbsp;
+
+### Introduction
 
 Project was conducted during 2nd year ICT studies at metropolia UAS. Goal for this project was to learn and apply software engineering methodologies. The project followed agile software development using scrum.
+
+SafeSpace is anonymous social media platform. Software was developed using Java as main programming language.
 
 ---
 
