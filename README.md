@@ -7,6 +7,11 @@ Project was conducted during 2nd year ICT studies at metropolia UAS. Goal for th
 
 SafeSpace is anonymous social media platform. Software was developed using Java as main programming language.
 
+For complete project overview:
+- [Final documentation](documents/SafeSpace_documentation.pdf)
+
+
+
 ---
 
 ### Programming Languages:
