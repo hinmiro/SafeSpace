@@ -1,7 +1,6 @@
 # SafeSpace
 
-Frontend client for SafeSpace — a modern and secure application designed for individuals aged 13 and
-above to stay connected with friends and socialize online.
+Project was conducted during 2nd year ICT studies at metropolia UAS. Goal for this project was to learn and apply software engineering methodologies. The project followed agile software development using scrum.
 
 ---
 
@@ -24,36 +23,51 @@ above to stay connected with friends and socialize online.
 
 ---
 
-### Requirements:
-To run this project, ensure you have the following:
-
-
-  - A computer running Windows, Linux or macOS.
-  - Java Jdk21 installed.
-  - Git installed.
----
-
 ### Setup and Installation
 
 Follow these steps to set up and run the frontend client:
 
-1. #### Clone the Repository
+### Prerequisites
+
+Before installing, ensure the following are installed on your computer: 
+
+- [Git](https://git-scm.com/downloads)
+
+- [Java Developement Kit (JDK)](https://www.oracle.com/java/technologies/downloads/#java21) Version 21 or higher 
+
+- [Apache Maven](https://maven.apache.org/) version 3.13 or higher. 
+
+- Metropolia VPN: [GlobalProtect](https://wiki.metropolia.fi/display/tietohallinto/VPN-yhteys+GlobalProtect-palvelun+kautta).  
+
+#### Clone the Repository
+1. Open terminal or command prompt.
+2. Run the following command to clone the repository:
 ```
 git clone https://github.com/hinmiro/SafeSpace
 ```
-2. #### Install Maven
-- Download and install Maven from [Maven’s official site](https://maven.apache.org/).
-3. #### Build the Project
-- Navigate to the cloned repository and execute the following command in your terminal:
+3. Navigate to the project directory:
+```
+cd SafeSpace/
+```
+
+#### Build the Project
+1. Ensure all dependencies are downloaded by running the following command in your terminal:
 ```
 mvn clean install
 ```
-4. #### Run the Application
-- Execute the generated .jar file to launch the software.
+2. Verify the build completes without errors.
 
-### Note
-You will also need the backend server for application to work.
-Find and set up the backend from [this repository](https://github.com/JoelPalu/SafeSpace_Backend/).
+#### Run the Application
+**Note:** Ensure VPN is active during this step
+1. Run the project by running the following command:
+```
+mvn javafx:run
+```
+Ensure you are in the project's root directory when running the command.
+
+---
+
+Project API can be found here: [SafeSpace RestAPI](https://github.com/JoelPalu/SafeSpace_Backend/).
 
 ---
 
